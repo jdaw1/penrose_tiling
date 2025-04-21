@@ -1,0 +1,56 @@
+<svg width='960' height='1357.047035649' viewBox='-2.837195102 -3.178810661 4.438322226 6.357621323' preserveAspectRatio='xMidYMid meet' id='Penrose_Arcs_00' xmlns='http://www.w3.org/2000/svg'>
+<!-- TilingId = 0;  NumFats = 2;  NumThins = 1;  ==> #tiles= 3;  NumPathsClosed = 0;  NumPathsOpen = 1 -->
+<!-- Licence = "GNU General Public License, Version 3, 29 June 2007"; URL = "https://github.com/jdaw1/penrose_tiling/"; Author = "Julian D. A. Wiseman of www.jdawiseman.com". -->
+<!-- EdgeLength = 3.23606797749979. -->
+<!-- Browser fail for large SVG? Bug report at https://issues.chromium.org/issues/390969197 -->
+<g transform='scale(1,-1)'> <!-- PostScript and Excel positive y goes up the page, SVG it goes down. This reflection makes SVG behave as the others. -->
+<g transform='scale(1.61803398874989)'> <!-- edgeLength/2 -->
+<style>
+	.sf {stroke: #000;  stroke-width: 0.1;  paint-order: fill stroke markers;} <!-- sf = stroke's formatting -->
+	.c5r_o  {fill: #FFF;}
+	.c5p_o  {fill: #FFF;}
+	.c15_o  {fill: #FFF;}
+	.c25_o  {fill: #FFF;}
+	.c55_o  {fill: #FFF;}
+	.c105_o {fill: #FFF;}
+	.c215_o {fill: #FFF;}
+	.c5r_e  {fill: #FFF;}
+	.c5p_e  {fill: #003D99;} <!-- Dark blue -->
+	.c15_e  {fill: #B30000;} <!-- Dark red -->
+	.c25_e  {fill: #0F0;} <!-- Green -->
+	.c55_e  {fill: #FC0;} <!-- Yellow-gold -->
+	.c105_e {fill: #4DFFFF;} <!-- Light cyan -->
+	.c215_e {fill: #B3A1B3;} <!-- Grey-grey-red -->
+	.cBig   {fill: #FFF;}
+</style>
+
+<!-- Arcs, not part of a closed loop, in thins. -->
+<path class='sf' fill='none' d='
+	M 0.927050983 0.951056516 A 1 1 0 0 0 0.309016994 0.951056516
+	M 0.309016994 -0.951056516 A 1 1 0 0 0 0.927050983 -0.951056516
+'/> <!-- End of stroking of loose ends not in a closed path that are in thins. -->
+
+<!-- Arcs, not part of a closed loop, in fats. -->
+<path class='sf' fill='none' d='
+	M -1.690983006 -0.951056516 A 1 1 0 0 0 -0.381966011 -1.902113033
+	M 0.309016994 -0.951056516 A 1 1 0 0 0 -1 0
+	A 1 1 0 0 0 0.309016994 0.951056516
+	M -0.381966011 1.902113033 A 1 1 0 0 0 -1.690983006 0.951056516
+'/> <!-- End of stroking of loose ends not in a closed path that are in fats. -->
+
+</g> <!-- scale(edgeLength/2) -->
+
+<!-- If gridlines wanted, uncomment these. -->
+<!-- Gridlines, start, commented out 
+<path vector-effect='non-scaling-stroke' stroke-width='3px' stroke='#000' opacity='0.2' d='
+	M -4 -4  h 6   M -4 -3  h 6   M -4 -2  h 6   M -4 -1  h 6   M -4 0  h 6   M -4 1  h 6   M -4 2  h 6   M -4 3  h 6
+	M -4 -4  v 8   M -3 -4  v 8   M -2 -4  v 8   M -1 -4  v 8   M 0 -4  v 8   M 1 -4  v 8   M 2 -4  v 8
+'/>
+<g font-size='0.2' paint-order='stroke fill' stroke-width='0.04' stroke='#FFF' stroke-linejoin='round' fill='#000' opacity='1' text-anchor='middle'>
+	<g transform='translate(-3,-3)'><text text-anchor='start' alignment-baseline='baseline' transform='scale(1,-1)'>(&#8722;3,&#8722;3)</text></g>
+	<g transform='translate(2,3)'><text text-anchor='end' alignment-baseline='hanging' transform='scale(1,-1)'>(+2,+3)</text></g>
+</g>
+Gridlines, end, commented out -->
+
+</g> <!-- scale(1,-1) -->
+</svg>

@@ -1,0 +1,58 @@
+<svg width='960' height='1467.486721509' viewBox='-3.916601966 -5.04229657 6.597135955 10.08459314' preserveAspectRatio='xMidYMid meet' id='Penrose_Rhombii_01' xmlns='http://www.w3.org/2000/svg'>
+<!-- TilingId = 1;  NumFats = 9;  NumThins = 4;  ==> #tiles= 13;  NumPathsClosed = 0;  NumPathsOpen = 3 -->
+<!-- Licence = "GNU General Public License, Version 3, 29 June 2007"; URL = "https://github.com/jdaw1/penrose_tiling/"; Author = "Julian D. A. Wiseman of www.jdawiseman.com". -->
+<!-- EdgeLength = 2; stroke-width defined to be EdgeLength / 16. If changing stroke-width, need to alter viewBox, for which it might help to know that, without line, and assuming inclusion of all the C-generated rhombii, values would be -3.854101966 -4.97979657 6.472135955 9.95959314. -->
+<!-- Browser fail for large SVG? Bug report at https://issues.chromium.org/issues/390969197 -->
+<g transform='scale(1,-1)'> <!-- PostScript and Excel positive y goes up the page, SVG it goes down. This reflection makes SVG behave as the others. -->
+
+<defs>
+	<path id='t' d='M 0 0   L -0.6180339887499 1.90211303259031   -1.23606797749979 0   -0.6180339887499 -1.90211303259031  Z'/> <!-- thin -->
+	<path id='f' d='M 0 0   L -1.6180339887499 1.17557050458495   -3.23606797749979 0   -1.6180339887499 -1.17557050458495  Z'/> <!-- fat (closed paths) -->
+	<path id='o' d='M 0 0   L -1.6180339887499 1.17557050458495   -3.23606797749979 0   -1.6180339887499 -1.17557050458495  Z'/> <!-- fat (open paths, separate for editability) -->
+	<!-- To locate holes, and some other debugging, replace previous line with:  <g id='o'><path d='M 0 0   L -1.6180339887499 1.17557050458495   -3.23606797749979 0   -1.6180339887499 -1.17557050458495  Z'/><circle stroke='#000' fill='#6F6' opacity='1' cx='-1.6180339887499' r='0.33333333333333'/></g>  -->
+</defs>
+
+<g stroke-width='0.125' stroke='#000' paint-order='fill stroke' stroke-linejoin='round' stroke-opacity='1'>  <!-- all rhombii -->
+
+<g fill='#CCC' opacity='1'>  <!-- thins not otherwise inside a path. -->
+	<use href='#t'  transform='translate(-1,3.077683537)'/>
+	<use href='#t'  transform='translate(0.381966011,1.175570505) rotate(72)'/>
+	<use href='#t'  transform='translate(0.381966011,-1.175570505) rotate(288)'/>
+	<use href='#t'  transform='translate(-1,-3.077683537)'/>
+</g>  <!-- thins not otherwise inside a path -->
+
+
+<!-- Paint open paths -->
+
+<g fill='#333' opacity='1' stroke='#000'>  <!-- Fats, open, PathLength=3: dark grey, to give whole tiling appearance of a serrated edge -->
+<!-- <animate attributeName='fill' attributeType='XML' values='#333;#FFF' keyTimes='0;0.8' dur='10s' begin='0s' calcMode='discrete' repeatCount='indefinite'/> -->
+	<use href='#o'  transform='translate(2) rotate(72)'/> <!-- 0 -->
+	<use href='#o'  transform='translate(-1.618033989,-1.175570505) rotate(144)'/>
+	<use href='#o'  transform='translate(-1.618033989,-4.97979657) rotate(216)'/>
+	<use href='#o'  transform='translate(-3.236067977) rotate(252)'/> <!-- 1 -->
+	<use href='#o'  transform='translate(-3.236067977) rotate(180)'/>
+	<use href='#o'  transform='translate(-3.236067977) rotate(108)'/>
+	<use href='#o'  transform='translate(-1.618033989,4.97979657) rotate(144)'/> <!-- 2 -->
+	<use href='#o'  transform='translate(-1.618033989,1.175570505) rotate(216)'/>
+	<use href='#o'  transform='translate(2) rotate(288)'/>
+</g>  <!-- Fats, open, PathLength=3 -->
+
+
+<!-- Paint closed paths not otherwise inside a larger path. Comment is pathId. -->
+
+</g>  <!-- all rhombii, stroke -->
+
+<!-- If gridlines wanted, uncomment these. -->
+<!-- Gridlines, start, commented out 
+<path vector-effect='non-scaling-stroke' stroke-width='3px' stroke='#000' opacity='0.2' d='
+	M -4 -5  h 7   M -4 -4  h 7   M -4 -3  h 7   M -4 -2  h 7   M -4 -1  h 7   M -4 0  h 7   M -4 1  h 7   M -4 2  h 7   M -4 3  h 7   M -4 4  h 7
+	M -4 -5  v 10   M -3 -5  v 10   M -2 -5  v 10   M -1 -5  v 10   M 0 -5  v 10   M 1 -5  v 10   M 2 -5  v 10
+'/>
+<g font-size='0.2' paint-order='stroke fill' stroke-width='0.04' stroke='#FFF' stroke-linejoin='round' fill='#000' opacity='1' text-anchor='middle'>
+	<g transform='translate(-3,-4)'><text text-anchor='start' alignment-baseline='baseline' transform='scale(1,-1)'>(&#8722;3,&#8722;4)</text></g>
+	<g transform='translate(2,4)'><text text-anchor='end' alignment-baseline='hanging' transform='scale(1,-1)'>(+2,+4)</text></g>
+</g>
+Gridlines, end, commented out -->
+
+</g>  <!-- End of the global reflection -->
+</svg>

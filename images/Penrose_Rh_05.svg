@@ -1,0 +1,740 @@
+<svg width='960' height='1334.159509949' viewBox='-6.099288571 -7.617570757 10.962509164 15.235141515' preserveAspectRatio='xMidYMid meet' id='Penrose_Rhombii_05' xmlns='http://www.w3.org/2000/svg'>
+<!-- TilingId = 5;  NumFats = 776;  NumThins = 464;  ==> #tiles= 1240;  NumPathsClosed = 73;  NumPathsOpen = 31 -->
+<!-- Licence = "GNU General Public License, Version 3, 29 June 2007"; URL = "https://github.com/jdaw1/penrose_tiling/"; Author = "Julian D. A. Wiseman of www.jdawiseman.com". -->
+<!-- EdgeLength = 0.29179606750063; stroke-width defined to be EdgeLength / 16. If changing stroke-width, need to alter viewBox, for which it might help to know that, without line, and assuming inclusion of all the C-generated rhombii, values would be -6.090169944 -7.60845213 10.94427191 15.216904261. -->
+<!-- Browser fail for large SVG? Bug report at https://issues.chromium.org/issues/390969197 -->
+<g transform='scale(1,-1)'> <!-- PostScript and Excel positive y goes up the page, SVG it goes down. This reflection makes SVG behave as the others. -->
+
+<defs>
+	<path id='t' d='M 0 0   L -0.09016994374947 0.27751455142578   -0.18033988749895 0   -0.09016994374947 -0.27751455142578  Z'/> <!-- thin -->
+	<path id='f' d='M 0 0   L -0.23606797749979 0.17151342515381   -0.47213595499958 0   -0.23606797749979 -0.17151342515381  Z'/> <!-- fat (closed paths) -->
+	<path id='o' d='M 0 0   L -0.23606797749979 0.17151342515381   -0.47213595499958 0   -0.23606797749979 -0.17151342515381  Z'/> <!-- fat (open paths, separate for editability) -->
+	<!-- To locate holes, and some other debugging, replace previous line with:  <g id='o'><path d='M 0 0   L -0.23606797749979 0.17151342515381   -0.47213595499958 0   -0.23606797749979 -0.17151342515381  Z'/><circle stroke='#000' fill='#6F6' opacity='1' cx='-0.23606797749979' r='0.04863267791677'/></g>  -->
+	<g id='c5r'>
+		<g fill='#CCC' opacity='1'>  <!-- Thins: light grey -->
+			<use href='#t'  transform='translate(0.291796068) rotate(180)'/>
+			<use href='#t'  transform='translate(0.090169944,-0.277514551) rotate(108)'/>
+			<use href='#t'  transform='translate(-0.236067977,-0.171513425) rotate(36)'/>
+			<use href='#t'  transform='translate(-0.236067977,0.171513425) rotate(324)'/>
+			<use href='#t'  transform='translate(0.090169944,0.277514551) rotate(252)'/>
+		</g>  <!-- thins, fill='#CCC' -->
+		<g fill='#FFF' opacity='1'>  <!-- Fats, closed PathLength=5 round: white -->
+			<use href='#f'  transform='translate(0.381966011,0.277514551) rotate(36)'/>
+			<use href='#f'  transform='translate(0.381966011,-0.277514551) rotate(324)'/>
+			<use href='#f'  transform='translate(-0.145898034,-0.449027977) rotate(252)'/>
+			<use href='#f'  transform='translate(-0.472135955) rotate(180)'/>
+			<use href='#f'  transform='translate(-0.145898034,0.449027977) rotate(108)'/>
+		</g>  <!-- fill='#FFF' -->
+		<circle r='0.072949017' fill='#FFF' opacity='1'/>  <!-- circle inside non-pointy closed 5 paths If not wanted, delete this one line -->
+	</g>  <!-- id='c5r' -->
+	<g id='c5p'>
+		<g fill='#9F9' opacity='1'>  <!-- Fats, closed PathLength=5 pointy: light green -->
+			<use href='#f'  transform='rotate(252)'/>
+			<use href='#f'  transform='rotate(180)'/>
+			<use href='#f'  transform='rotate(108)'/>
+			<use href='#f'  transform='rotate(36)'/>
+			<use href='#f'  transform='rotate(324)'/>
+		</g>  <!-- fill='#9F9' -->
+	</g>  <!-- id='c5p' -->
+	<g id='c15'>
+		<use href='#c5r' transform='rotate(36)'/>
+		<g fill='#004C00' opacity='1'>  <!-- Fats, closed, PathLength=15: very dark green -->
+			<use href='#f'  transform='translate(0.236067977,0.726542528) rotate(36)'/>
+			<use href='#f'  transform='translate(0.236067977,0.726542528) rotate(108)'/>
+			<use href='#f'  transform='translate(0.763932023,0.555029103) rotate(36)'/>
+			<use href='#f'  transform='translate(0.763932023) rotate(324)'/>
+			<use href='#f'  transform='translate(0.763932023) rotate(36)'/>
+			<use href='#f'  transform='translate(0.763932023,-0.555029103) rotate(324)'/>
+			<use href='#f'  transform='translate(0.236067977,-0.726542528) rotate(252)'/>
+			<use href='#f'  transform='translate(0.236067977,-0.726542528) rotate(324)'/>
+			<use href='#f'  transform='translate(-0.291796068,-0.898055953) rotate(252)'/>
+			<use href='#f'  transform='translate(-0.618033989,-0.449027977) rotate(180)'/>
+			<use href='#f'  transform='translate(-0.618033989,-0.449027977) rotate(252)'/>
+			<use href='#f'  transform='translate(-0.94427191) rotate(180)'/>
+			<use href='#f'  transform='translate(-0.618033989,0.449027977) rotate(108)'/>
+			<use href='#f'  transform='translate(-0.618033989,0.449027977) rotate(180)'/>
+			<use href='#f'  transform='translate(-0.291796068,0.898055953) rotate(108)'/>
+		</g>  <!-- fill='#004C00' -->
+	</g>  <!-- id='c15' -->
+	<g id='c25'>
+		<g fill='#CCC' opacity='1'>  <!-- Thins: light grey -->
+			<use href='#t'  transform='translate(0,-0.555029103) rotate(324)'/>
+			<use href='#t'  transform='translate(-0.326237921,-0.449027977) rotate(180)'/>
+			<use href='#t'  transform='translate(0.326237921,-0.449027977) rotate(252)'/>
+			<use href='#t'  transform='translate(0.527864045,-0.171513425) rotate(36)'/>
+			<use href='#t'  transform='translate(-0.527864045,-0.171513425) rotate(252)'/>
+			<use href='#t'  transform='translate(-0.527864045,0.171513425) rotate(108)'/>
+			<use href='#t'  transform='translate(0.527864045,0.171513425) rotate(324)'/>
+			<use href='#t'  transform='translate(0.326237921,0.449027977) rotate(108)'/>
+			<use href='#t'  transform='translate(-0.326237921,0.449027977) rotate(180)'/>
+			<use href='#t'  transform='translate(0,0.555029103) rotate(36)'/>
+		</g>  <!-- thins, fill='#CCC' -->
+		<use href='#c5p' transform='rotate(36)'/>
+		<g fill='#009' opacity='1'>  <!-- Fats, closed, PathLength=25: dark blue -->
+			<use href='#f'  transform='translate(0.090169944,0.277514551) rotate(252)'/>
+			<use href='#f'  transform='translate(0.618033989,0.449027977) rotate(324)'/>
+			<use href='#f'  transform='translate(0.618033989,0.449027977) rotate(252)'/>
+			<use href='#f'  transform='translate(0.618033989,0.449027977) rotate(180)'/>
+			<use href='#f'  transform='translate(0.618033989,0.449027977) rotate(108)'/>
+			<use href='#f'  transform='translate(0.291796068) rotate(180)'/>
+			<use href='#f'  transform='translate(0.618033989,-0.449027977) rotate(252)'/>
+			<use href='#f'  transform='translate(0.618033989,-0.449027977) rotate(180)'/>
+			<use href='#f'  transform='translate(0.618033989,-0.449027977) rotate(108)'/>
+			<use href='#f'  transform='translate(0.618033989,-0.449027977) rotate(36)'/>
+			<use href='#f'  transform='translate(0.090169944,-0.277514551) rotate(108)'/>
+			<use href='#f'  transform='translate(-0.236067977,-0.726542528) rotate(180)'/>
+			<use href='#f'  transform='translate(-0.236067977,-0.726542528) rotate(108)'/>
+			<use href='#f'  transform='translate(-0.236067977,-0.726542528) rotate(36)'/>
+			<use href='#f'  transform='translate(-0.236067977,-0.726542528) rotate(324)'/>
+			<use href='#f'  transform='translate(-0.236067977,-0.171513425) rotate(36)'/>
+			<use href='#f'  transform='translate(-0.763932023) rotate(108)'/>
+			<use href='#f'  transform='translate(-0.763932023) rotate(36)'/>
+			<use href='#f'  transform='translate(-0.763932023) rotate(324)'/>
+			<use href='#f'  transform='translate(-0.763932023) rotate(252)'/>
+			<use href='#f'  transform='translate(-0.236067977,0.171513425) rotate(324)'/>
+			<use href='#f'  transform='translate(-0.236067977,0.726542528) rotate(36)'/>
+			<use href='#f'  transform='translate(-0.236067977,0.726542528) rotate(324)'/>
+			<use href='#f'  transform='translate(-0.236067977,0.726542528) rotate(252)'/>
+			<use href='#f'  transform='translate(-0.236067977,0.726542528) rotate(180)'/>
+		</g>  <!-- fill='#009' -->
+	</g>  <!-- id='c25' -->
+</defs>
+
+<g stroke-width='0.018237254' stroke='#000' paint-order='fill stroke' stroke-linejoin='round' stroke-opacity='1'>  <!-- all rhombii -->
+
+<g fill='#CCC' opacity='1'>  <!-- thins not otherwise inside a path. -->
+	<use href='#t'  transform='translate(-0.673762079,7.330937579)'/>
+	<use href='#t'  transform='translate(-0.472135955,7.053423028) rotate(72)'/>
+	<use href='#t'  transform='translate(-0.472135955,6.710396177) rotate(288)'/>
+	<use href='#t'  transform='translate(-0.673762079,6.432881626)'/>
+	<use href='#t'  transform='translate(-0.673762079,5.877852523)'/>
+	<use href='#t'  transform='translate(-0.472135955,5.600337971) rotate(72)'/>
+	<use href='#t'  transform='translate(0.381966011,5.534825673) rotate(144)'/>
+	<use href='#t'  transform='translate(-1.618033989,5.534825673) rotate(36)'/>
+	<use href='#t'  transform='translate(0.708203932,5.428824546)'/>
+	<use href='#t'  transform='translate(-1.94427191,5.428824546) rotate(180)'/>
+	<use href='#t'  transform='translate(0.05572809,5.428824546) rotate(72)'/>
+	<use href='#t'  transform='translate(-1.291796068,5.428824546) rotate(108)'/>
+	<use href='#t'  transform='translate(-1.090169944,5.151309995) rotate(324)'/>
+	<use href='#t'  transform='translate(0.909830056,5.151309995) rotate(72)'/>
+	<use href='#t'  transform='translate(-2.145898034,5.151309995) rotate(108)'/>
+	<use href='#t'  transform='translate(0.909830056,4.808283145) rotate(288)'/>
+	<use href='#t'  transform='translate(-2.145898034,4.808283145) rotate(252)'/>
+	<use href='#t'  transform='translate(-1.090169944,4.808283145) rotate(36)'/>
+	<use href='#t'  transform='translate(0.05572809,4.530768593) rotate(288)'/>
+	<use href='#t'  transform='translate(-1.291796068,4.530768593) rotate(252)'/>
+	<use href='#t'  transform='translate(0.708203932,4.530768593)'/>
+	<use href='#t'  transform='translate(-1.94427191,4.530768593) rotate(180)'/>
+	<use href='#t'  transform='translate(0.381966011,4.424767467) rotate(216)'/>
+	<use href='#t'  transform='translate(-1.618033989,4.424767467) rotate(324)'/>
+	<use href='#t'  transform='translate(-0.472135955,4.359255168) rotate(288)'/>
+	<use href='#t'  transform='translate(-0.673762079,4.081740617)'/>
+	<use href='#t'  transform='translate(0.94427191,3.804226065) rotate(252)'/>
+	<use href='#t'  transform='translate(-2.180339887,3.804226065) rotate(288)'/>
+	<use href='#t'  transform='translate(0.618033989,3.698224939) rotate(324)'/>
+	<use href='#t'  transform='translate(-1.854101966,3.698224939) rotate(216)'/>
+	<use href='#t'  transform='translate(1.472135955,3.63271264) rotate(252)'/>
+	<use href='#t'  transform='translate(-2.708203932,3.63271264) rotate(288)'/>
+	<use href='#t'  transform='translate(-0.673762079,3.526711514)'/>
+	<use href='#t'  transform='translate(1.673762079,3.355198089) rotate(180)'/>
+	<use href='#t'  transform='translate(-2.909830056,3.355198089)'/>
+	<use href='#t'  transform='translate(0.291796068,3.249196962) rotate(324)'/>
+	<use href='#t'  transform='translate(-1.527864045,3.249196962) rotate(216)'/>
+	<use href='#t'  transform='translate(-0.472135955,3.249196962) rotate(72)'/>
+	<use href='#t'  transform='translate(-0.472135955,2.906170112) rotate(288)'/>
+	<use href='#t'  transform='translate(0.291796068,2.906170112) rotate(36)'/>
+	<use href='#t'  transform='translate(-1.527864045,2.906170112) rotate(144)'/>
+	<use href='#t'  transform='translate(1.673762079,2.800168986) rotate(180)'/>
+	<use href='#t'  transform='translate(-2.909830056,2.800168986)'/>
+	<use href='#t'  transform='translate(-0.673762079,2.628655561)'/>
+	<use href='#t'  transform='translate(1.472135955,2.522654434) rotate(108)'/>
+	<use href='#t'  transform='translate(-2.708203932,2.522654434) rotate(72)'/>
+	<use href='#t'  transform='translate(2.618033989,2.457142135) rotate(144)'/>
+	<use href='#t'  transform='translate(0.618033989,2.457142135) rotate(36)'/>
+	<use href='#t'  transform='translate(-1.854101966,2.457142135) rotate(144)'/>
+	<use href='#t'  transform='translate(-3.854101966,2.457142135) rotate(36)'/>
+	<use href='#t'  transform='translate(2.94427191,2.351141009)'/>
+	<use href='#t'  transform='translate(-4.180339887,2.351141009) rotate(180)'/>
+	<use href='#t'  transform='translate(2.291796068,2.351141009) rotate(72)'/>
+	<use href='#t'  transform='translate(0.94427191,2.351141009) rotate(108)'/>
+	<use href='#t'  transform='translate(-2.180339887,2.351141009) rotate(72)'/>
+	<use href='#t'  transform='translate(-3.527864045,2.351141009) rotate(108)'/>
+	<use href='#t'  transform='translate(2.090169944,2.073626458) rotate(216)'/>
+	<use href='#t'  transform='translate(-3.326237921,2.073626458) rotate(324)'/>
+	<use href='#t'  transform='translate(-0.673762079,2.073626458)'/>
+	<use href='#t'  transform='translate(3.145898034,2.073626458) rotate(72)'/>
+	<use href='#t'  transform='translate(-4.381966011,2.073626458) rotate(108)'/>
+	<use href='#t'  transform='translate(3.145898034,1.730599607) rotate(288)'/>
+	<use href='#t'  transform='translate(-4.381966011,1.730599607) rotate(252)'/>
+	<use href='#t'  transform='translate(-0.472135955,1.796111906) rotate(72)'/>
+	<use href='#t'  transform='translate(2.090169944,1.730599607) rotate(144)'/>
+	<use href='#t'  transform='translate(-1.618033989,1.730599607) rotate(36)'/>
+	<use href='#t'  transform='translate(-3.326237921,1.730599607) rotate(36)'/>
+	<use href='#t'  transform='translate(0.381966011,1.730599607) rotate(144)'/>
+	<use href='#t'  transform='translate(-1.94427191,1.624598481) rotate(180)'/>
+	<use href='#t'  transform='translate(0.708203932,1.624598481)'/>
+	<use href='#t'  transform='translate(0.05572809,1.624598481) rotate(72)'/>
+	<use href='#t'  transform='translate(-1.291796068,1.624598481) rotate(108)'/>
+	<use href='#t'  transform='translate(2.94427191,1.453085056)'/>
+	<use href='#t'  transform='translate(-4.180339887,1.453085056) rotate(180)'/>
+	<use href='#t'  transform='translate(-1.090169944,1.34708393) rotate(324)'/>
+	<use href='#t'  transform='translate(0.909830056,1.34708393) rotate(72)'/>
+	<use href='#t'  transform='translate(-2.145898034,1.34708393) rotate(108)'/>
+	<use href='#t'  transform='translate(1.763932023,1.281571631) rotate(144)'/>
+	<use href='#t'  transform='translate(-3,1.281571631) rotate(36)'/>
+	<use href='#t'  transform='translate(-2.673762079,1.175570505) rotate(108)'/>
+	<use href='#t'  transform='translate(1.437694101,1.175570505) rotate(72)'/>
+	<use href='#t'  transform='translate(-1.090169944,1.004057079) rotate(36)'/>
+	<use href='#t'  transform='translate(2.94427191,0.898055953)'/>
+	<use href='#t'  transform='translate(-4.180339887,0.898055953) rotate(180)'/>
+	<use href='#t'  transform='translate(0.05572809,0.726542528) rotate(288)'/>
+	<use href='#t'  transform='translate(-1.291796068,0.726542528) rotate(252)'/>
+	<use href='#t'  transform='translate(0.381966011,0.620541402) rotate(216)'/>
+	<use href='#t'  transform='translate(-1.618033989,0.620541402) rotate(324)'/>
+	<use href='#t'  transform='translate(-0.472135955,0.555029103) rotate(288)'/>
+	<use href='#t'  transform='translate(3.145898034,0.620541402) rotate(72)'/>
+	<use href='#t'  transform='translate(-4.381966011,0.620541402) rotate(108)'/>
+	<use href='#t'  transform='translate(4,0.555029103) rotate(144)'/>
+	<use href='#t'  transform='translate(-5.236067977,0.555029103) rotate(36)'/>
+	<use href='#t'  transform='translate(4.326237921,0.449027977)'/>
+	<use href='#t'  transform='translate(-5.562305899,0.449027977) rotate(180)'/>
+	<use href='#t'  transform='translate(3.673762079,0.449027977) rotate(72)'/>
+	<use href='#t'  transform='translate(-4.909830056,0.449027977) rotate(108)'/>
+	<use href='#t'  transform='translate(-0.673762079,0.277514551)'/>
+	<use href='#t'  transform='translate(-1.94427191,0.171513425) rotate(324)'/>
+	<use href='#t'  transform='translate(0.708203932,0.171513425) rotate(216)'/>
+	<use href='#t'  transform='translate(4.527864045,0.171513425) rotate(72)'/>
+	<use href='#t'  transform='translate(-5.763932023,0.171513425) rotate(108)'/>
+	<use href='#t'  transform='translate(4.527864045,-0.171513425) rotate(288)'/>
+	<use href='#t'  transform='translate(-5.763932023,-0.171513425) rotate(252)'/>
+	<use href='#t'  transform='translate(-1.94427191,-0.171513425) rotate(36)'/>
+	<use href='#t'  transform='translate(0.708203932,-0.171513425) rotate(144)'/>
+	<use href='#t'  transform='translate(-0.673762079,-0.277514551)'/>
+	<use href='#t'  transform='translate(3.673762079,-0.449027977) rotate(288)'/>
+	<use href='#t'  transform='translate(-4.909830056,-0.449027977) rotate(252)'/>
+	<use href='#t'  transform='translate(4.326237921,-0.449027977)'/>
+	<use href='#t'  transform='translate(-5.562305899,-0.449027977) rotate(180)'/>
+	<use href='#t'  transform='translate(4,-0.555029103) rotate(216)'/>
+	<use href='#t'  transform='translate(-5.236067977,-0.555029103) rotate(324)'/>
+	<use href='#t'  transform='translate(3.145898034,-0.620541402) rotate(288)'/>
+	<use href='#t'  transform='translate(-4.381966011,-0.620541402) rotate(252)'/>
+	<use href='#t'  transform='translate(-0.472135955,-0.555029103) rotate(72)'/>
+	<use href='#t'  transform='translate(0.381966011,-0.620541402) rotate(144)'/>
+	<use href='#t'  transform='translate(-1.618033989,-0.620541402) rotate(36)'/>
+	<use href='#t'  transform='translate(-1.291796068,-0.726542528) rotate(108)'/>
+	<use href='#t'  transform='translate(0.05572809,-0.726542528) rotate(72)'/>
+	<use href='#t'  transform='translate(-4.180339887,-0.898055953) rotate(180)'/>
+	<use href='#t'  transform='translate(2.94427191,-0.898055953)'/>
+	<use href='#t'  transform='translate(-1.090169944,-1.004057079) rotate(324)'/>
+	<use href='#t'  transform='translate(1.437694101,-1.175570505) rotate(288)'/>
+	<use href='#t'  transform='translate(-2.673762079,-1.175570505) rotate(252)'/>
+	<use href='#t'  transform='translate(1.763932023,-1.281571631) rotate(216)'/>
+	<use href='#t'  transform='translate(-3,-1.281571631) rotate(324)'/>
+	<use href='#t'  transform='translate(0.909830056,-1.34708393) rotate(288)'/>
+	<use href='#t'  transform='translate(-2.145898034,-1.34708393) rotate(252)'/>
+	<use href='#t'  transform='translate(-1.090169944,-1.34708393) rotate(36)'/>
+	<use href='#t'  transform='translate(2.94427191,-1.453085056)'/>
+	<use href='#t'  transform='translate(-4.180339887,-1.453085056) rotate(180)'/>
+	<use href='#t'  transform='translate(0.05572809,-1.624598481) rotate(288)'/>
+	<use href='#t'  transform='translate(-1.291796068,-1.624598481) rotate(252)'/>
+	<use href='#t'  transform='translate(0.708203932,-1.624598481)'/>
+	<use href='#t'  transform='translate(-1.94427191,-1.624598481) rotate(180)'/>
+	<use href='#t'  transform='translate(0.381966011,-1.730599607) rotate(216)'/>
+	<use href='#t'  transform='translate(2.090169944,-1.730599607) rotate(216)'/>
+	<use href='#t'  transform='translate(-3.326237921,-1.730599607) rotate(324)'/>
+	<use href='#t'  transform='translate(-1.618033989,-1.730599607) rotate(324)'/>
+	<use href='#t'  transform='translate(-0.472135955,-1.796111906) rotate(288)'/>
+	<use href='#t'  transform='translate(3.145898034,-1.730599607) rotate(72)'/>
+	<use href='#t'  transform='translate(-4.381966011,-1.730599607) rotate(108)'/>
+	<use href='#t'  transform='translate(3.145898034,-2.073626458) rotate(288)'/>
+	<use href='#t'  transform='translate(-4.381966011,-2.073626458) rotate(252)'/>
+	<use href='#t'  transform='translate(-0.673762079,-2.073626458)'/>
+	<use href='#t'  transform='translate(2.090169944,-2.073626458) rotate(144)'/>
+	<use href='#t'  transform='translate(-3.326237921,-2.073626458) rotate(36)'/>
+	<use href='#t'  transform='translate(2.291796068,-2.351141009) rotate(288)'/>
+	<use href='#t'  transform='translate(0.94427191,-2.351141009) rotate(252)'/>
+	<use href='#t'  transform='translate(-3.527864045,-2.351141009) rotate(252)'/>
+	<use href='#t'  transform='translate(-2.180339887,-2.351141009) rotate(288)'/>
+	<use href='#t'  transform='translate(2.94427191,-2.351141009)'/>
+	<use href='#t'  transform='translate(-4.180339887,-2.351141009) rotate(180)'/>
+	<use href='#t'  transform='translate(2.618033989,-2.457142135) rotate(216)'/>
+	<use href='#t'  transform='translate(-3.854101966,-2.457142135) rotate(324)'/>
+	<use href='#t'  transform='translate(0.618033989,-2.457142135) rotate(324)'/>
+	<use href='#t'  transform='translate(-1.854101966,-2.457142135) rotate(216)'/>
+	<use href='#t'  transform='translate(1.472135955,-2.522654434) rotate(252)'/>
+	<use href='#t'  transform='translate(-2.708203932,-2.522654434) rotate(288)'/>
+	<use href='#t'  transform='translate(-0.673762079,-2.628655561)'/>
+	<use href='#t'  transform='translate(1.673762079,-2.800168986) rotate(180)'/>
+	<use href='#t'  transform='translate(-2.909830056,-2.800168986)'/>
+	<use href='#t'  transform='translate(0.291796068,-2.906170112) rotate(324)'/>
+	<use href='#t'  transform='translate(-1.527864045,-2.906170112) rotate(216)'/>
+	<use href='#t'  transform='translate(-0.472135955,-2.906170112) rotate(72)'/>
+	<use href='#t'  transform='translate(-0.472135955,-3.249196962) rotate(288)'/>
+	<use href='#t'  transform='translate(0.291796068,-3.249196962) rotate(36)'/>
+	<use href='#t'  transform='translate(-1.527864045,-3.249196962) rotate(144)'/>
+	<use href='#t'  transform='translate(-2.909830056,-3.355198089)'/>
+	<use href='#t'  transform='translate(1.673762079,-3.355198089) rotate(180)'/>
+	<use href='#t'  transform='translate(-0.673762079,-3.526711514)'/>
+	<use href='#t'  transform='translate(-2.708203932,-3.63271264) rotate(72)'/>
+	<use href='#t'  transform='translate(1.472135955,-3.63271264) rotate(108)'/>
+	<use href='#t'  transform='translate(-1.854101966,-3.698224939) rotate(144)'/>
+	<use href='#t'  transform='translate(0.618033989,-3.698224939) rotate(36)'/>
+	<use href='#t'  transform='translate(-2.180339887,-3.804226065) rotate(72)'/>
+	<use href='#t'  transform='translate(0.94427191,-3.804226065) rotate(108)'/>
+	<use href='#t'  transform='translate(-0.673762079,-4.081740617)'/>
+	<use href='#t'  transform='translate(-0.472135955,-4.359255168) rotate(72)'/>
+	<use href='#t'  transform='translate(-1.618033989,-4.424767467) rotate(36)'/>
+	<use href='#t'  transform='translate(0.381966011,-4.424767467) rotate(144)'/>
+	<use href='#t'  transform='translate(-1.94427191,-4.530768593) rotate(180)'/>
+	<use href='#t'  transform='translate(0.708203932,-4.530768593)'/>
+	<use href='#t'  transform='translate(-1.291796068,-4.530768593) rotate(108)'/>
+	<use href='#t'  transform='translate(0.05572809,-4.530768593) rotate(72)'/>
+	<use href='#t'  transform='translate(-1.090169944,-4.808283145) rotate(324)'/>
+	<use href='#t'  transform='translate(-2.145898034,-4.808283145) rotate(108)'/>
+	<use href='#t'  transform='translate(0.909830056,-4.808283145) rotate(72)'/>
+	<use href='#t'  transform='translate(-2.145898034,-5.151309995) rotate(252)'/>
+	<use href='#t'  transform='translate(0.909830056,-5.151309995) rotate(288)'/>
+	<use href='#t'  transform='translate(-1.090169944,-5.151309995) rotate(36)'/>
+	<use href='#t'  transform='translate(0.05572809,-5.428824546) rotate(288)'/>
+	<use href='#t'  transform='translate(-1.291796068,-5.428824546) rotate(252)'/>
+	<use href='#t'  transform='translate(-1.94427191,-5.428824546) rotate(180)'/>
+	<use href='#t'  transform='translate(0.708203932,-5.428824546)'/>
+	<use href='#t'  transform='translate(-1.618033989,-5.534825673) rotate(324)'/>
+	<use href='#t'  transform='translate(0.381966011,-5.534825673) rotate(216)'/>
+	<use href='#t'  transform='translate(-0.472135955,-5.600337971) rotate(288)'/>
+	<use href='#t'  transform='translate(-0.673762079,-5.877852523)'/>
+	<use href='#t'  transform='translate(-0.673762079,-6.432881626)'/>
+	<use href='#t'  transform='translate(-0.472135955,-6.710396177) rotate(72)'/>
+	<use href='#t'  transform='translate(-0.472135955,-7.053423028) rotate(288)'/>
+	<use href='#t'  transform='translate(-0.673762079,-7.330937579)'/>
+</g>  <!-- thins not otherwise inside a path -->
+
+
+<!-- Paint open paths -->
+
+<g fill='#333' opacity='1' stroke='#000'>  <!-- Fats, open, PathLength=3: dark grey, to give whole tiling appearance of a serrated edge -->
+<!-- <animate attributeName='fill' attributeType='XML' values='#333;#FFF' keyTimes='0;0.8' dur='10s' begin='0s' calcMode='discrete' repeatCount='indefinite'/> -->
+	<use href='#o'  transform='translate(-0.236067977,-6.881909602) rotate(72)'/> <!-- 90 -->
+	<use href='#o'  transform='translate(-0.763932023,-7.053423028) rotate(144)'/>
+	<use href='#o'  transform='translate(-0.763932023,-7.60845213) rotate(216)'/>
+	<use href='#o'  transform='translate(1.145898034,-4.97979657) rotate(72)'/> <!-- 91 -->
+	<use href='#o'  transform='translate(0.618033989,-5.151309995) rotate(144)'/>
+	<use href='#o'  transform='translate(0.618033989,-5.706339098) rotate(216)'/>
+	<use href='#o'  transform='translate(-2.381966011,-4.97979657) rotate(108)'/> <!-- 92 -->
+	<use href='#o'  transform='translate(-1.854101966,-5.151309995) rotate(36)'/>
+	<use href='#o'  transform='translate(-1.854101966,-5.706339098) rotate(324)'/>
+	<use href='#o'  transform='translate(-4.618033989,-1.902113033) rotate(108)'/> <!-- 93 -->
+	<use href='#o'  transform='translate(-4.090169944,-2.073626458) rotate(36)'/>
+	<use href='#o'  transform='translate(-4.090169944,-2.628655561) rotate(324)'/>
+	<use href='#o'  transform='translate(3.381966011,-1.902113033) rotate(72)'/> <!-- 94 -->
+	<use href='#o'  transform='translate(2.854101966,-2.073626458) rotate(144)'/>
+	<use href='#o'  transform='translate(2.854101966,-2.628655561) rotate(216)'/>
+	<use href='#o'  transform='translate(-6) rotate(108)'/> <!-- 95 -->
+	<use href='#o'  transform='translate(-5.472135955,-0.171513425) rotate(36)'/>
+	<use href='#o'  transform='translate(-5.472135955,-0.726542528) rotate(324)'/>
+	<use href='#o'  transform='translate(4.763932023) rotate(72)'/> <!-- 96 -->
+	<use href='#o'  transform='translate(4.236067977,-0.171513425) rotate(144)'/>
+	<use href='#o'  transform='translate(4.236067977,-0.726542528) rotate(216)'/>
+	<use href='#o'  transform='translate(-5.472135955,0.726542528) rotate(36)'/> <!-- 97 -->
+	<use href='#o'  transform='translate(-5.472135955,0.171513425) rotate(324)'/>
+	<use href='#o'  transform='translate(-6) rotate(252)'/>
+	<use href='#o'  transform='translate(4.236067977,0.726542528) rotate(144)'/> <!-- 98 -->
+	<use href='#o'  transform='translate(4.236067977,0.171513425) rotate(216)'/>
+	<use href='#o'  transform='translate(4.763932023) rotate(288)'/>
+	<use href='#o'  transform='translate(-4.090169944,2.628655561) rotate(36)'/> <!-- 99 -->
+	<use href='#o'  transform='translate(-4.090169944,2.073626458) rotate(324)'/>
+	<use href='#o'  transform='translate(-4.618033989,1.902113033) rotate(252)'/>
+	<use href='#o'  transform='translate(2.854101966,2.628655561) rotate(144)'/> <!-- 100 -->
+	<use href='#o'  transform='translate(2.854101966,2.073626458) rotate(216)'/>
+	<use href='#o'  transform='translate(3.381966011,1.902113033) rotate(288)'/>
+	<use href='#o'  transform='translate(-1.854101966,5.706339098) rotate(36)'/> <!-- 101 -->
+	<use href='#o'  transform='translate(-1.854101966,5.151309995) rotate(324)'/>
+	<use href='#o'  transform='translate(-2.381966011,4.97979657) rotate(252)'/>
+	<use href='#o'  transform='translate(0.618033989,5.706339098) rotate(144)'/> <!-- 102 -->
+	<use href='#o'  transform='translate(0.618033989,5.151309995) rotate(216)'/>
+	<use href='#o'  transform='translate(1.145898034,4.97979657) rotate(288)'/>
+	<use href='#o'  transform='translate(-0.763932023,7.60845213) rotate(144)'/> <!-- 103 -->
+	<use href='#o'  transform='translate(-0.763932023,7.053423028) rotate(216)'/>
+	<use href='#o'  transform='translate(-0.236067977,6.881909602) rotate(288)'/>
+</g>  <!-- Fats, open, PathLength=3 -->
+
+<g fill='#333' opacity='1' stroke='#000'>  <!-- Fats, open, PathLength=4: dark grey, to give whole tiling appearance of a serrated edge -->
+<!-- <animate attributeName='fill' attributeType='XML' values='#333;#FFF' keyTimes='0;0.8' dur='10s' begin='0s' calcMode='discrete' repeatCount='indefinite'/> -->
+	<use href='#o'  transform='translate(-1,-6.881909602) rotate(324)'/> <!-- 84 -->
+	<use href='#o'  transform='translate(-1,-6.881909602) rotate(252)'/>
+	<use href='#o'  transform='translate(-1,-6.881909602) rotate(180)'/>
+	<use href='#o'  transform='translate(-1,-6.881909602) rotate(108)'/>
+	<use href='#o'  transform='translate(2,-3.804226065) rotate(216)'/> <!-- 85 -->
+	<use href='#o'  transform='translate(2,-3.804226065) rotate(288)'/>
+	<use href='#o'  transform='translate(2,-3.804226065)'/>
+	<use href='#o'  transform='translate(2,-3.804226065) rotate(72)'/>
+	<use href='#o'  transform='translate(-3.236067977,-3.804226065) rotate(324)'/> <!-- 86 -->
+	<use href='#o'  transform='translate(-3.236067977,-3.804226065) rotate(252)'/>
+	<use href='#o'  transform='translate(-3.236067977,-3.804226065) rotate(180)'/>
+	<use href='#o'  transform='translate(-3.236067977,-3.804226065) rotate(108)'/>
+	<use href='#o'  transform='translate(-3.236067977,3.804226065) rotate(36)'/> <!-- 87 -->
+	<use href='#o'  transform='translate(-3.236067977,3.804226065) rotate(108)'/>
+	<use href='#o'  transform='translate(-3.236067977,3.804226065) rotate(180)'/>
+	<use href='#o'  transform='translate(-3.236067977,3.804226065) rotate(252)'/>
+	<use href='#o'  transform='translate(2,3.804226065) rotate(144)'/> <!-- 88 -->
+	<use href='#o'  transform='translate(2,3.804226065) rotate(72)'/>
+	<use href='#o'  transform='translate(2,3.804226065)'/>
+	<use href='#o'  transform='translate(2,3.804226065) rotate(288)'/>
+	<use href='#o'  transform='translate(-1,6.881909602) rotate(36)'/> <!-- 89 -->
+	<use href='#o'  transform='translate(-1,6.881909602) rotate(108)'/>
+	<use href='#o'  transform='translate(-1,6.881909602) rotate(180)'/>
+	<use href='#o'  transform='translate(-1,6.881909602) rotate(252)'/>
+</g>  <!-- Fats, open, PathLength=4 -->
+
+<g fill='#FFF' opacity='1'>  <!-- Fats, open PathLength=11: white -->
+	<use href='#o'  transform='translate(0.618033989,-5.706339098) rotate(72)'/> <!-- 78 -->
+	<use href='#o'  transform='translate(0.618033989,-5.706339098)'/>
+	<use href='#o'  transform='translate(0.291796068,-5.257311121) rotate(72)'/>
+	<use href='#o'  transform='translate(-0.236067977,-5.428824546) rotate(144)'/>
+	<use href='#o'  transform='translate(-0.236067977,-5.428824546) rotate(72)'/>
+	<use href='#o'  transform='translate(-0.763932023,-5.600337971) rotate(144)'/>
+	<use href='#o'  transform='translate(-0.763932023,-6.155367074) rotate(216)'/>
+	<use href='#o'  transform='translate(-0.763932023,-6.155367074) rotate(144)'/>
+	<use href='#o'  transform='translate(-0.763932023,-6.710396177) rotate(216)'/>
+	<use href='#o'  transform='translate(-0.236067977,-6.881909602) rotate(288)'/>
+	<use href='#o'  transform='translate(-0.236067977,-6.881909602) rotate(216)'/>
+	<use href='#o'  transform='translate(-5.472135955,-0.726542528) rotate(108)'/> <!-- 79 -->
+	<use href='#o'  transform='translate(-5.472135955,-0.726542528) rotate(180)'/>
+	<use href='#o'  transform='translate(-5.145898034,-0.277514551) rotate(108)'/>
+	<use href='#o'  transform='translate(-4.618033989,-0.449027977) rotate(36)'/>
+	<use href='#o'  transform='translate(-4.618033989,-0.449027977) rotate(108)'/>
+	<use href='#o'  transform='translate(-4.090169944,-0.620541402) rotate(36)'/>
+	<use href='#o'  transform='translate(-4.090169944,-1.175570505) rotate(324)'/>
+	<use href='#o'  transform='translate(-4.090169944,-1.175570505) rotate(36)'/>
+	<use href='#o'  transform='translate(-4.090169944,-1.730599607) rotate(324)'/>
+	<use href='#o'  transform='translate(-4.618033989,-1.902113033) rotate(252)'/>
+	<use href='#o'  transform='translate(-4.618033989,-1.902113033) rotate(324)'/>
+	<use href='#o'  transform='translate(4.236067977,-0.726542528) rotate(72)'/> <!-- 80 -->
+	<use href='#o'  transform='translate(4.236067977,-0.726542528)'/>
+	<use href='#o'  transform='translate(3.909830056,-0.277514551) rotate(72)'/>
+	<use href='#o'  transform='translate(3.381966011,-0.449027977) rotate(144)'/>
+	<use href='#o'  transform='translate(3.381966011,-0.449027977) rotate(72)'/>
+	<use href='#o'  transform='translate(2.854101966,-0.620541402) rotate(144)'/>
+	<use href='#o'  transform='translate(2.854101966,-1.175570505) rotate(216)'/>
+	<use href='#o'  transform='translate(2.854101966,-1.175570505) rotate(144)'/>
+	<use href='#o'  transform='translate(2.854101966,-1.730599607) rotate(216)'/>
+	<use href='#o'  transform='translate(3.381966011,-1.902113033) rotate(288)'/>
+	<use href='#o'  transform='translate(3.381966011,-1.902113033) rotate(216)'/>
+	<use href='#o'  transform='translate(-4.618033989,1.902113033) rotate(36)'/> <!-- 81 -->
+	<use href='#o'  transform='translate(-4.618033989,1.902113033) rotate(108)'/>
+	<use href='#o'  transform='translate(-4.090169944,1.730599607) rotate(36)'/>
+	<use href='#o'  transform='translate(-4.090169944,1.175570505) rotate(324)'/>
+	<use href='#o'  transform='translate(-4.090169944,1.175570505) rotate(36)'/>
+	<use href='#o'  transform='translate(-4.090169944,0.620541402) rotate(324)'/>
+	<use href='#o'  transform='translate(-4.618033989,0.449027977) rotate(252)'/>
+	<use href='#o'  transform='translate(-4.618033989,0.449027977) rotate(324)'/>
+	<use href='#o'  transform='translate(-5.145898034,0.277514551) rotate(252)'/>
+	<use href='#o'  transform='translate(-5.472135955,0.726542528) rotate(180)'/>
+	<use href='#o'  transform='translate(-5.472135955,0.726542528) rotate(252)'/>
+	<use href='#o'  transform='translate(3.381966011,1.902113033) rotate(144)'/> <!-- 82 -->
+	<use href='#o'  transform='translate(3.381966011,1.902113033) rotate(72)'/>
+	<use href='#o'  transform='translate(2.854101966,1.730599607) rotate(144)'/>
+	<use href='#o'  transform='translate(2.854101966,1.175570505) rotate(216)'/>
+	<use href='#o'  transform='translate(2.854101966,1.175570505) rotate(144)'/>
+	<use href='#o'  transform='translate(2.854101966,0.620541402) rotate(216)'/>
+	<use href='#o'  transform='translate(3.381966011,0.449027977) rotate(288)'/>
+	<use href='#o'  transform='translate(3.381966011,0.449027977) rotate(216)'/>
+	<use href='#o'  transform='translate(3.909830056,0.277514551) rotate(288)'/>
+	<use href='#o'  transform='translate(4.236067977,0.726542528)'/>
+	<use href='#o'  transform='translate(4.236067977,0.726542528) rotate(288)'/>
+	<use href='#o'  transform='translate(-0.236067977,6.881909602) rotate(144)'/> <!-- 83 -->
+	<use href='#o'  transform='translate(-0.236067977,6.881909602) rotate(72)'/>
+	<use href='#o'  transform='translate(-0.763932023,6.710396177) rotate(144)'/>
+	<use href='#o'  transform='translate(-0.763932023,6.155367074) rotate(216)'/>
+	<use href='#o'  transform='translate(-0.763932023,6.155367074) rotate(144)'/>
+	<use href='#o'  transform='translate(-0.763932023,5.600337971) rotate(216)'/>
+	<use href='#o'  transform='translate(-0.236067977,5.428824546) rotate(288)'/>
+	<use href='#o'  transform='translate(-0.236067977,5.428824546) rotate(216)'/>
+	<use href='#o'  transform='translate(0.291796068,5.257311121) rotate(288)'/>
+	<use href='#o'  transform='translate(0.618033989,5.706339098)'/>
+	<use href='#o'  transform='translate(0.618033989,5.706339098) rotate(288)'/>
+</g>  <!-- Fats, open, PathLength=11 -->
+
+<g fill='#FFF' opacity='1'>  <!-- Fats, open PathLength=20: white -->
+	<use href='#o'  transform='translate(-2.381966011,-4.97979657) rotate(324)'/> <!-- 76 -->
+	<use href='#o'  transform='translate(-2.381966011,-4.97979657) rotate(252)'/>
+	<use href='#o'  transform='translate(-1.854101966,-4.808283145) rotate(324)'/>
+	<use href='#o'  transform='translate(-1.854101966,-4.253254042) rotate(36)'/>
+	<use href='#o'  transform='translate(-1.854101966,-4.253254042) rotate(324)'/>
+	<use href='#o'  transform='translate(-1.854101966,-4.253254042) rotate(252)'/>
+	<use href='#o'  transform='translate(-1.854101966,-4.253254042) rotate(180)'/>
+	<use href='#o'  transform='translate(-1.527864045,-4.702282018) rotate(252)'/>
+	<use href='#o'  transform='translate(-1,-4.530768593) rotate(324)'/>
+	<use href='#o'  transform='translate(-1,-4.530768593) rotate(252)'/>
+	<use href='#o'  transform='translate(-1,-4.530768593) rotate(180)'/>
+	<use href='#o'  transform='translate(-1,-4.530768593) rotate(108)'/>
+	<use href='#o'  transform='translate(-1.326237921,-4.97979657) rotate(180)'/>
+	<use href='#o'  transform='translate(-1,-5.428824546) rotate(252)'/>
+	<use href='#o'  transform='translate(-1,-5.428824546) rotate(180)'/>
+	<use href='#o'  transform='translate(-1,-5.428824546) rotate(108)'/>
+	<use href='#o'  transform='translate(-1,-5.428824546) rotate(36)'/>
+	<use href='#o'  transform='translate(-1.527864045,-5.257311121) rotate(108)'/>
+	<use href='#o'  transform='translate(-1.854101966,-5.706339098) rotate(180)'/>
+	<use href='#o'  transform='translate(-1.854101966,-5.706339098) rotate(108)'/>
+	<use href='#o'  transform='translate(-2.381966011,4.97979657) rotate(36)'/> <!-- 77 -->
+	<use href='#o'  transform='translate(-2.381966011,4.97979657) rotate(108)'/>
+	<use href='#o'  transform='translate(-1.854101966,4.808283145) rotate(36)'/>
+	<use href='#o'  transform='translate(-1.854101966,4.253254042) rotate(324)'/>
+	<use href='#o'  transform='translate(-1.854101966,4.253254042) rotate(36)'/>
+	<use href='#o'  transform='translate(-1.854101966,4.253254042) rotate(108)'/>
+	<use href='#o'  transform='translate(-1.854101966,4.253254042) rotate(180)'/>
+	<use href='#o'  transform='translate(-1.527864045,4.702282018) rotate(108)'/>
+	<use href='#o'  transform='translate(-1,4.530768593) rotate(36)'/>
+	<use href='#o'  transform='translate(-1,4.530768593) rotate(108)'/>
+	<use href='#o'  transform='translate(-1,4.530768593) rotate(180)'/>
+	<use href='#o'  transform='translate(-1,4.530768593) rotate(252)'/>
+	<use href='#o'  transform='translate(-1.326237921,4.97979657) rotate(180)'/>
+	<use href='#o'  transform='translate(-1,5.428824546) rotate(108)'/>
+	<use href='#o'  transform='translate(-1,5.428824546) rotate(180)'/>
+	<use href='#o'  transform='translate(-1,5.428824546) rotate(252)'/>
+	<use href='#o'  transform='translate(-1,5.428824546) rotate(324)'/>
+	<use href='#o'  transform='translate(-1.527864045,5.257311121) rotate(252)'/>
+	<use href='#o'  transform='translate(-1.854101966,5.706339098) rotate(180)'/>
+	<use href='#o'  transform='translate(-1.854101966,5.706339098) rotate(252)'/>
+</g>  <!-- Fats, open, PathLength=20 -->
+
+<g fill='#FFF' opacity='1'>  <!-- Fats, open PathLength=43: white -->
+	<use href='#o'  transform='translate(2.854101966,-2.628655561) rotate(72)'/> <!-- 74 -->
+	<use href='#o'  transform='translate(2.854101966,-2.628655561)'/>
+	<use href='#o'  transform='translate(2.527864045,-2.179627584) rotate(72)'/>
+	<use href='#o'  transform='translate(2,-2.351141009) rotate(144)'/>
+	<use href='#o'  transform='translate(2,-2.351141009) rotate(72)'/>
+	<use href='#o'  transform='translate(2,-2.351141009)'/>
+	<use href='#o'  transform='translate(2,-2.351141009) rotate(288)'/>
+	<use href='#o'  transform='translate(2.326237921,-1.902113033)'/>
+	<use href='#o'  transform='translate(2,-1.453085056) rotate(72)'/>
+	<use href='#o'  transform='translate(2,-1.453085056)'/>
+	<use href='#o'  transform='translate(1.673762079,-1.004057079) rotate(72)'/>
+	<use href='#o'  transform='translate(1.145898034,-1.175570505) rotate(144)'/>
+	<use href='#o'  transform='translate(1.145898034,-1.175570505) rotate(72)'/>
+	<use href='#o'  transform='translate(0.618033989,-1.34708393) rotate(144)'/>
+	<use href='#o'  transform='translate(0.618033989,-1.902113033) rotate(216)'/>
+	<use href='#o'  transform='translate(0.618033989,-1.902113033) rotate(144)'/>
+	<use href='#o'  transform='translate(0.618033989,-1.902113033) rotate(72)'/>
+	<use href='#o'  transform='translate(0.618033989,-1.902113033)'/>
+	<use href='#o'  transform='translate(0.291796068,-1.453085056) rotate(72)'/>
+	<use href='#o'  transform='translate(-0.236067977,-1.624598481) rotate(144)'/>
+	<use href='#o'  transform='translate(-0.236067977,-1.624598481) rotate(72)'/>
+	<use href='#o'  transform='translate(-0.763932023,-1.796111906) rotate(144)'/>
+	<use href='#o'  transform='translate(-0.763932023,-2.351141009) rotate(216)'/>
+	<use href='#o'  transform='translate(-0.763932023,-2.351141009) rotate(144)'/>
+	<use href='#o'  transform='translate(-0.763932023,-2.906170112) rotate(216)'/>
+	<use href='#o'  transform='translate(-0.236067977,-3.077683537) rotate(288)'/>
+	<use href='#o'  transform='translate(-0.236067977,-3.077683537) rotate(216)'/>
+	<use href='#o'  transform='translate(-0.236067977,-3.077683537) rotate(144)'/>
+	<use href='#o'  transform='translate(-0.236067977,-3.077683537) rotate(72)'/>
+	<use href='#o'  transform='translate(-0.763932023,-3.249196962) rotate(144)'/>
+	<use href='#o'  transform='translate(-0.763932023,-3.804226065) rotate(216)'/>
+	<use href='#o'  transform='translate(-0.763932023,-3.804226065) rotate(144)'/>
+	<use href='#o'  transform='translate(-0.763932023,-4.359255168) rotate(216)'/>
+	<use href='#o'  transform='translate(-0.236067977,-4.530768593) rotate(288)'/>
+	<use href='#o'  transform='translate(-0.236067977,-4.530768593) rotate(216)'/>
+	<use href='#o'  transform='translate(0.291796068,-4.702282018) rotate(288)'/>
+	<use href='#o'  transform='translate(0.618033989,-4.253254042)'/>
+	<use href='#o'  transform='translate(0.618033989,-4.253254042) rotate(288)'/>
+	<use href='#o'  transform='translate(0.618033989,-4.253254042) rotate(216)'/>
+	<use href='#o'  transform='translate(0.618033989,-4.253254042) rotate(144)'/>
+	<use href='#o'  transform='translate(0.618033989,-4.808283145) rotate(216)'/>
+	<use href='#o'  transform='translate(1.145898034,-4.97979657) rotate(288)'/>
+	<use href='#o'  transform='translate(1.145898034,-4.97979657) rotate(216)'/>
+	<use href='#o'  transform='translate(1.145898034,4.97979657) rotate(144)'/> <!-- 75 -->
+	<use href='#o'  transform='translate(1.145898034,4.97979657) rotate(72)'/>
+	<use href='#o'  transform='translate(0.618033989,4.808283145) rotate(144)'/>
+	<use href='#o'  transform='translate(0.618033989,4.253254042) rotate(216)'/>
+	<use href='#o'  transform='translate(0.618033989,4.253254042) rotate(144)'/>
+	<use href='#o'  transform='translate(0.618033989,4.253254042) rotate(72)'/>
+	<use href='#o'  transform='translate(0.618033989,4.253254042)'/>
+	<use href='#o'  transform='translate(0.291796068,4.702282018) rotate(72)'/>
+	<use href='#o'  transform='translate(-0.236067977,4.530768593) rotate(144)'/>
+	<use href='#o'  transform='translate(-0.236067977,4.530768593) rotate(72)'/>
+	<use href='#o'  transform='translate(-0.763932023,4.359255168) rotate(144)'/>
+	<use href='#o'  transform='translate(-0.763932023,3.804226065) rotate(216)'/>
+	<use href='#o'  transform='translate(-0.763932023,3.804226065) rotate(144)'/>
+	<use href='#o'  transform='translate(-0.763932023,3.249196962) rotate(216)'/>
+	<use href='#o'  transform='translate(-0.236067977,3.077683537) rotate(288)'/>
+	<use href='#o'  transform='translate(-0.236067977,3.077683537) rotate(216)'/>
+	<use href='#o'  transform='translate(-0.236067977,3.077683537) rotate(144)'/>
+	<use href='#o'  transform='translate(-0.236067977,3.077683537) rotate(72)'/>
+	<use href='#o'  transform='translate(-0.763932023,2.906170112) rotate(144)'/>
+	<use href='#o'  transform='translate(-0.763932023,2.351141009) rotate(216)'/>
+	<use href='#o'  transform='translate(-0.763932023,2.351141009) rotate(144)'/>
+	<use href='#o'  transform='translate(-0.763932023,1.796111906) rotate(216)'/>
+	<use href='#o'  transform='translate(-0.236067977,1.624598481) rotate(288)'/>
+	<use href='#o'  transform='translate(-0.236067977,1.624598481) rotate(216)'/>
+	<use href='#o'  transform='translate(0.291796068,1.453085056) rotate(288)'/>
+	<use href='#o'  transform='translate(0.618033989,1.902113033)'/>
+	<use href='#o'  transform='translate(0.618033989,1.902113033) rotate(288)'/>
+	<use href='#o'  transform='translate(0.618033989,1.902113033) rotate(216)'/>
+	<use href='#o'  transform='translate(0.618033989,1.902113033) rotate(144)'/>
+	<use href='#o'  transform='translate(0.618033989,1.34708393) rotate(216)'/>
+	<use href='#o'  transform='translate(1.145898034,1.175570505) rotate(288)'/>
+	<use href='#o'  transform='translate(1.145898034,1.175570505) rotate(216)'/>
+	<use href='#o'  transform='translate(1.673762079,1.004057079) rotate(288)'/>
+	<use href='#o'  transform='translate(2,1.453085056)'/>
+	<use href='#o'  transform='translate(2,1.453085056) rotate(288)'/>
+	<use href='#o'  transform='translate(2.326237921,1.902113033)'/>
+	<use href='#o'  transform='translate(2,2.351141009) rotate(72)'/>
+	<use href='#o'  transform='translate(2,2.351141009)'/>
+	<use href='#o'  transform='translate(2,2.351141009) rotate(288)'/>
+	<use href='#o'  transform='translate(2,2.351141009) rotate(216)'/>
+	<use href='#o'  transform='translate(2.527864045,2.179627584) rotate(288)'/>
+	<use href='#o'  transform='translate(2.854101966,2.628655561)'/>
+	<use href='#o'  transform='translate(2.854101966,2.628655561) rotate(288)'/>
+</g>  <!-- Fats, open, PathLength=43 -->
+
+<g fill='#FFF' opacity='1'>  <!-- Fats, open PathLength=63: white -->
+	<use href='#o'  transform='translate(-4.090169944,2.628655561) rotate(252)'/> <!-- 73 -->
+	<use href='#o'  transform='translate(-4.090169944,2.628655561) rotate(180)'/>
+	<use href='#o'  transform='translate(-3.763932023,2.179627584) rotate(252)'/>
+	<use href='#o'  transform='translate(-3.236067977,2.351141009) rotate(324)'/>
+	<use href='#o'  transform='translate(-3.236067977,2.351141009) rotate(252)'/>
+	<use href='#o'  transform='translate(-3.236067977,2.351141009) rotate(180)'/>
+	<use href='#o'  transform='translate(-3.236067977,2.351141009) rotate(108)'/>
+	<use href='#o'  transform='translate(-3.562305899,1.902113033) rotate(180)'/>
+	<use href='#o'  transform='translate(-3.236067977,1.453085056) rotate(252)'/>
+	<use href='#o'  transform='translate(-3.236067977,1.453085056) rotate(180)'/>
+	<use href='#o'  transform='translate(-2.909830056,1.004057079) rotate(252)'/>
+	<use href='#o'  transform='translate(-2.381966011,1.175570505) rotate(324)'/>
+	<use href='#o'  transform='translate(-2.381966011,1.175570505) rotate(252)'/>
+	<use href='#o'  transform='translate(-1.854101966,1.34708393) rotate(324)'/>
+	<use href='#o'  transform='translate(-1.854101966,1.902113033) rotate(36)'/>
+	<use href='#o'  transform='translate(-1.854101966,1.902113033) rotate(324)'/>
+	<use href='#o'  transform='translate(-1.854101966,1.902113033) rotate(252)'/>
+	<use href='#o'  transform='translate(-1.854101966,1.902113033) rotate(180)'/>
+	<use href='#o'  transform='translate(-1.527864045,1.453085056) rotate(252)'/>
+	<use href='#o'  transform='translate(-1,1.624598481) rotate(324)'/>
+	<use href='#o'  transform='translate(-1,1.624598481) rotate(252)'/>
+	<use href='#o'  transform='translate(-1,1.624598481) rotate(180)'/>
+	<use href='#o'  transform='translate(-1,1.624598481) rotate(108)'/>
+	<use href='#o'  transform='translate(-1.326237921,1.175570505) rotate(180)'/>
+	<use href='#o'  transform='translate(-1,0.726542528) rotate(252)'/>
+	<use href='#o'  transform='translate(-1,0.726542528) rotate(180)'/>
+	<use href='#o'  transform='translate(-1,0.726542528) rotate(108)'/>
+	<use href='#o'  transform='translate(-1,0.726542528) rotate(36)'/>
+	<use href='#o'  transform='translate(-1.527864045,0.898055953) rotate(108)'/>
+	<use href='#o'  transform='translate(-1.854101966,0.449027977) rotate(180)'/>
+	<use href='#o'  transform='translate(-1.854101966,0.449027977) rotate(108)'/>
+	<use href='#o'  transform='translate(-2.180339887) rotate(180)'/>
+	<use href='#o'  transform='translate(-1.854101966,-0.449027977) rotate(252)'/>
+	<use href='#o'  transform='translate(-1.854101966,-0.449027977) rotate(180)'/>
+	<use href='#o'  transform='translate(-1.527864045,-0.898055953) rotate(252)'/>
+	<use href='#o'  transform='translate(-1,-0.726542528) rotate(324)'/>
+	<use href='#o'  transform='translate(-1,-0.726542528) rotate(252)'/>
+	<use href='#o'  transform='translate(-1,-0.726542528) rotate(180)'/>
+	<use href='#o'  transform='translate(-1,-0.726542528) rotate(108)'/>
+	<use href='#o'  transform='translate(-1.326237921,-1.175570505) rotate(180)'/>
+	<use href='#o'  transform='translate(-1,-1.624598481) rotate(252)'/>
+	<use href='#o'  transform='translate(-1,-1.624598481) rotate(180)'/>
+	<use href='#o'  transform='translate(-1,-1.624598481) rotate(108)'/>
+	<use href='#o'  transform='translate(-1,-1.624598481) rotate(36)'/>
+	<use href='#o'  transform='translate(-1.527864045,-1.453085056) rotate(108)'/>
+	<use href='#o'  transform='translate(-1.854101966,-1.902113033) rotate(180)'/>
+	<use href='#o'  transform='translate(-1.854101966,-1.902113033) rotate(108)'/>
+	<use href='#o'  transform='translate(-1.854101966,-1.902113033) rotate(36)'/>
+	<use href='#o'  transform='translate(-1.854101966,-1.902113033) rotate(324)'/>
+	<use href='#o'  transform='translate(-1.854101966,-1.34708393) rotate(36)'/>
+	<use href='#o'  transform='translate(-2.381966011,-1.175570505) rotate(108)'/>
+	<use href='#o'  transform='translate(-2.381966011,-1.175570505) rotate(36)'/>
+	<use href='#o'  transform='translate(-2.909830056,-1.004057079) rotate(108)'/>
+	<use href='#o'  transform='translate(-3.236067977,-1.453085056) rotate(180)'/>
+	<use href='#o'  transform='translate(-3.236067977,-1.453085056) rotate(108)'/>
+	<use href='#o'  transform='translate(-3.562305899,-1.902113033) rotate(180)'/>
+	<use href='#o'  transform='translate(-3.236067977,-2.351141009) rotate(252)'/>
+	<use href='#o'  transform='translate(-3.236067977,-2.351141009) rotate(180)'/>
+	<use href='#o'  transform='translate(-3.236067977,-2.351141009) rotate(108)'/>
+	<use href='#o'  transform='translate(-3.236067977,-2.351141009) rotate(36)'/>
+	<use href='#o'  transform='translate(-3.763932023,-2.179627584) rotate(108)'/>
+	<use href='#o'  transform='translate(-4.090169944,-2.628655561) rotate(180)'/>
+	<use href='#o'  transform='translate(-4.090169944,-2.628655561) rotate(108)'/>
+</g>  <!-- Fats, open, PathLength=63 -->
+
+
+<!-- Paint closed paths not otherwise inside a larger path. Comment is pathId. -->
+
+	<use href='#c25' transform='translate(-3.236067977) rotate(36)'/> <!-- 0 -->
+	<use href='#c25' transform='translate(2)'/> <!-- 1 -->
+	<use href='#c15' transform='translate(-2.236067977,-3.077683537) rotate(36)'/> <!-- 2 -->
+	<use href='#c15' transform='translate(1,-3.077683537)'/> <!-- 3 -->
+	<use href='#c15' transform='rotate(36)'/> <!-- 4 -->
+	<use href='#c15' transform='translate(-2.236067977,3.077683537) rotate(36)'/> <!-- 5 -->
+	<use href='#c15' transform='translate(1,3.077683537)'/> <!-- 6 -->
+	<use href='#c5p' transform='translate(0.381966011,-4.97979657)'/> <!-- 7 -->
+	<use href='#c5p' transform='translate(-1.618033989,-4.97979657) rotate(36)'/> <!-- 8 -->
+	<use href='#c5p' transform='translate(-1,-3.077683537)'/> <!-- 9 -->
+	<use href='#c5p' transform='translate(2.618033989,-1.902113033)'/> <!-- 10 -->
+	<use href='#c5p' transform='translate(-3.854101966,-1.902113033) rotate(36)'/> <!-- 11 -->
+	<use href='#c5p' transform='translate(-1.618033989,-1.175570505) rotate(36)'/> <!-- 12 -->
+	<use href='#c5p' transform='translate(0.381966011,-1.175570505)'/> <!-- 13 -->
+	<use href='#c5p' transform='translate(-5.236067977) rotate(36)'/> <!-- 16 -->
+	<use href='#c5p' transform='translate(4)'/> <!-- 17 -->
+	<use href='#c5p' transform='translate(-1.618033989,1.175570505) rotate(36)'/> <!-- 18 -->
+	<use href='#c5p' transform='translate(0.381966011,1.175570505)'/> <!-- 19 -->
+	<use href='#c5p' transform='translate(-3.854101966,1.902113033) rotate(36)'/> <!-- 20 -->
+	<use href='#c5p' transform='translate(2.618033989,1.902113033)'/> <!-- 21 -->
+	<use href='#c5p' transform='translate(-1,3.077683537)'/> <!-- 22 -->
+	<use href='#c5p' transform='translate(-1.618033989,4.97979657) rotate(36)'/> <!-- 23 -->
+	<use href='#c5p' transform='translate(0.381966011,4.97979657)'/> <!-- 24 -->
+	<use href='#c5r' transform='translate(0,-6.155367074)'/> <!-- 25 -->
+	<use href='#c5r' transform='translate(-1.236067977,-6.155367074) rotate(36)'/> <!-- 26 -->
+	<use href='#c5r' transform='translate(-0.381966011,-4.97979657) rotate(36)'/> <!-- 27 -->
+	<use href='#c5r' transform='translate(1.381966011,-4.253254042)'/> <!-- 28 -->
+	<use href='#c5r' transform='translate(-2.618033989,-4.253254042) rotate(36)'/> <!-- 29 -->
+	<use href='#c5r' transform='translate(-1.236067977,-3.804226065) rotate(36)'/> <!-- 30 -->
+	<use href='#c5r' transform='translate(0,-3.804226065)'/> <!-- 31 -->
+	<use href='#c5r' transform='translate(-3.472135955,-3.077683537) rotate(36)'/> <!-- 32 -->
+	<use href='#c5r' transform='translate(2.236067977,-3.077683537)'/> <!-- 35 -->
+	<use href='#c5r' transform='translate(-1.236067977,-2.351141009) rotate(36)'/> <!-- 36 -->
+	<use href='#c5r' transform='translate(0,-2.351141009)'/> <!-- 37 -->
+	<use href='#c5r' transform='translate(-2.618033989,-1.902113033) rotate(36)'/> <!-- 38 -->
+	<use href='#c5r' transform='translate(1.381966011,-1.902113033)'/> <!-- 39 -->
+	<use href='#c5r' transform='translate(-3.618033989,-1.175570505)'/> <!-- 40 -->
+	<use href='#c5r' transform='translate(-4.854101966,-1.175570505) rotate(36)'/> <!-- 41 -->
+	<use href='#c5r' transform='translate(-0.381966011,-1.175570505) rotate(36)'/> <!-- 42 -->
+	<use href='#c5r' transform='translate(2.381966011,-1.175570505) rotate(36)'/> <!-- 43 -->
+	<use href='#c5r' transform='translate(3.618033989,-1.175570505)'/> <!-- 44 -->
+	<use href='#c5r' transform='translate(-2.236067977,-0.726542528)'/> <!-- 45 -->
+	<use href='#c5r' transform='translate(1,-0.726542528) rotate(36)'/> <!-- 46 -->
+	<use href='#c5r' transform='translate(-4.472135955)'/> <!-- 47 -->
+	<use href='#c5r' transform='translate(3.236067977) rotate(36)'/> <!-- 48 -->
+	<use href='#c5r' transform='translate(-1.236067977) rotate(36)'/> <!-- 50 -->
+	<use href='#c5r' transform='translate(1,0.726542528) rotate(36)'/> <!-- 51 -->
+	<use href='#c5r' transform='translate(-2.236067977,0.726542528)'/> <!-- 52 -->
+	<use href='#c5r' transform='translate(-4.854101966,1.175570505) rotate(36)'/> <!-- 53 -->
+	<use href='#c5r' transform='translate(-3.618033989,1.175570505)'/> <!-- 54 -->
+	<use href='#c5r' transform='translate(-0.381966011,1.175570505) rotate(36)'/> <!-- 55 -->
+	<use href='#c5r' transform='translate(2.381966011,1.175570505) rotate(36)'/> <!-- 56 -->
+	<use href='#c5r' transform='translate(3.618033989,1.175570505)'/> <!-- 57 -->
+	<use href='#c5r' transform='translate(-2.618033989,1.902113033) rotate(36)'/> <!-- 58 -->
+	<use href='#c5r' transform='translate(1.381966011,1.902113033)'/> <!-- 59 -->
+	<use href='#c5r' transform='translate(-1.236067977,2.351141009) rotate(36)'/> <!-- 60 -->
+	<use href='#c5r' transform='translate(0,2.351141009)'/> <!-- 61 -->
+	<use href='#c5r' transform='translate(-3.472135955,3.077683537) rotate(36)'/> <!-- 62 -->
+	<use href='#c5r' transform='translate(2.236067977,3.077683537)'/> <!-- 65 -->
+	<use href='#c5r' transform='translate(-1.236067977,3.804226065) rotate(36)'/> <!-- 66 -->
+	<use href='#c5r' transform='translate(0,3.804226065)'/> <!-- 67 -->
+	<use href='#c5r' transform='translate(-2.618033989,4.253254042) rotate(36)'/> <!-- 68 -->
+	<use href='#c5r' transform='translate(1.381966011,4.253254042)'/> <!-- 69 -->
+	<use href='#c5r' transform='translate(-0.381966011,4.97979657) rotate(36)'/> <!-- 70 -->
+	<use href='#c5r' transform='translate(-1.236067977,6.155367074) rotate(36)'/> <!-- 71 -->
+	<use href='#c5r' transform='translate(0,6.155367074)'/> <!-- 72 -->
+</g>  <!-- all rhombii, stroke -->
+
+<!-- If gridlines wanted, uncomment these. -->
+<!-- Gridlines, start, commented out 
+<path vector-effect='non-scaling-stroke' stroke-width='3px' stroke='#000' opacity='0.2' d='
+	M -7 -8  h 12   M -7 -7  h 12   M -7 -6  h 12   M -7 -5  h 12   M -7 -4  h 12   M -7 -3  h 12   M -7 -2  h 12   M -7 -1  h 12   M -7 0  h 12   M -7 1  h 12   M -7 2  h 12   M -7 3  h 12   M -7 4  h 12   M -7 5  h 12   M -7 6  h 12   M -7 7  h 12
+	M -7 -8  v 16   M -6 -8  v 16   M -5 -8  v 16   M -4 -8  v 16   M -3 -8  v 16   M -2 -8  v 16   M -1 -8  v 16   M 0 -8  v 16   M 1 -8  v 16   M 2 -8  v 16   M 3 -8  v 16   M 4 -8  v 16
+'/>
+<g font-size='0.2' paint-order='stroke fill' stroke-width='0.04' stroke='#FFF' stroke-linejoin='round' fill='#000' opacity='1' text-anchor='middle'>
+	<g transform='translate(-6,-7)'><text text-anchor='start' alignment-baseline='baseline' transform='scale(1,-1)'>(&#8722;6,&#8722;7)</text></g>
+	<g transform='translate(4,7)'><text text-anchor='end' alignment-baseline='hanging' transform='scale(1,-1)'>(+4,+7)</text></g>
+</g>
+Gridlines, end, commented out -->
+
+</g>  <!-- End of the global reflection -->
+</svg>

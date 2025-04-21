@@ -1,0 +1,241 @@
+%!PS
+
+/DataAsOf (D:20250421143557) def
+/Licence (GNU General Public License, Version 3, 29 June 2007) def
+/URL (https://githubcom/jdaw1/penrose_tiling/) def
+/Author (Julian D A Wiseman of wwwjdawisemancom) def
+/TilingId 2 def
+/NumFats 32 def
+/NumThins 18 def
+/EdgeLength 1.23606797749979E+00 def
+
+/XMin -5.23606797749979 def
+/XMax 4 def
+/YMin -6.155367074350506 def
+/YMax 6.155367074350506 def
+
+/ToPaint_XMin -6 def  % User changeable
+/ToPaint_XMax +4 def
+/ToPaint_YMin -7 def
+/ToPaint_YMax +7 def
+
+/R 0.618033988749895 def
+
+/LongestPathToBeFilled 215 def  % User alterable If being increased, might need to add more colours to PaintPath
+
+
+
+
+/PageWidth  297 360 mul 127 div def  % A3, long side.  User alterable: for US Tabloid use "11 72 mul".
+/PageHeight 420 360 mul 127 div def  % A3, short side.  User alterable: for US Tabloid use "17 72 mul".
+/OnPageTileCentreX PageWidth  0.5 mul def  % User alterable. This has tiling positioned wrt centre of paper page.
+/OnPageTileCentreY PageHeight 0.5 mul def  % User alterable. This has tiling positioned wrt centre of paper page.
+/Margin 18 def  % 18pt = 0.25" = 6.35mm. Enlarge if the printer can't work so close to the edge. Used only for default value of scale.
+
+/Actual_XMin  XMin ToPaint_XMin  2 copy lt {exch} if pop  def
+/Actual_YMin  YMin ToPaint_YMin  2 copy lt {exch} if pop  def
+/Actual_XMax  XMax ToPaint_XMax  2 copy gt {exch} if pop  def
+/Actual_YMax  YMax ToPaint_YMax  2 copy gt {exch} if pop  def
+/ScaleFactor
+	PageWidth  Margin 2 mul sub  Actual_XMax Actual_XMin sub  div  % Tight-fiting x.
+	PageHeight Margin 2 mul sub  Actual_YMax Actual_YMin sub  div  % Tight-fiting y.
+	2 copy gt {exch} if pop  % Lesser of them.
+	% pop 150  % For endpapers, on A3, with TilingId=9,  perhaps choose X -3.4 to 2.4,  Y -4 to 4,  then scaling of 150. But YMMV.
+def  % /ScaleFactor. User alterable. Could be of form "6 EdgeLength div", making an edge be 6pt on the paper.
+
+% Expands box to match whole page (which might have different aspect ratio to original ToPaint_ choices). If unwanted, delete next four lines.
+/Actual_XMin            OnPageTileCentreX neg ScaleFactor div  Actual_XMin Actual_XMax add 2 div add
+/Actual_XMax PageWidth  OnPageTileCentreX sub ScaleFactor div  Actual_XMin Actual_XMax add 2 div add  def def
+/Actual_YMin            OnPageTileCentreY neg ScaleFactor div  Actual_YMin Actual_YMax add 2 div add
+/Actual_YMax PageHeight OnPageTileCentreY sub ScaleFactor div  Actual_YMin Actual_YMax add 2 div add  def def
+
+<< /PageSize [PageWidth PageHeight] >> setpagedevice
+/PaperMatrix matrix currentmatrix def
+OnPageTileCentreX OnPageTileCentreY translate   ScaleFactor dup scale
+Actual_XMax Actual_XMin add -2 div  Actual_YMax Actual_YMin add -2 div  translate  % User alterable. Optional specification of which point in tiling is to be in the specifed point of page.
+% 0 rotate  % User alterable. Optional rotation, angle in degrees, positive rotating image anti-clockise. By default commented out.
+/TileMatrix matrix currentmatrix def
+
+/StrokeMulti  % User changable. Allows multi-layer strokes, such as black outer and white inner.
+{
+	//TileMatrix setmatrix   1 setlinejoin  [] 0 setdash
+	[
+		% {gsave  0 setgray  0 setlinecap  EdgeLength 20 div setlinewidth  stroke  grestore}  % #gsave ... grestore for each stroke, except the last. At finish path should be empty.
+		% {       1 setgray  1 setlinecap  EdgeLength 60 div setlinewidth  stroke          }  % This pair paints thick black, then thin inner white. If uncommented, delete next line.
+		{0 setgray  1 setlinecap  EdgeLength 30 div setlinewidth  stroke}  % Thin black only.
+	] {exec} forall
+} bind def  % StrokeMulti
+
+mark
+	/CreationDate (D:20250421143557)
+	/Title (Penrose tiling)
+	/Author (Julian D. A. Wiseman)
+	/Subject (http://github.com/jdaw1/penrose_tiling/)
+	/Keywords (Penrose tiling arcs)
+	/Creator (C and PostScript coded by Julian D. A. Wiseman of www.jdawiseman.com/author.html)
+/DOCINFO pdfmark
+
+% Functions taken from https://github.com/jdaw1/placemat/blob/main/PostScript/placemat.ps
+/ToString
+{
+	1 dict begin  dup type cvlit /Type exch def
+	1 {
+		Type /integertype  eq {11 string cvs exit ( ) Concatenate} if
+		Type /realtype     eq {16 string cvs exit ( ) Concatenate} if
+		Type /nametype     eq {dup length string cvs exit} if
+		Type /stringtype   eq {exit} if
+		Type /booleantype  eq {5 string cvs exit} if
+		Type /operatortype eq {127 string cvs exit} if
+		Type /marktype     eq {pop (mark) exit} if
+		Type /nulltype     eq {pop (null) exit} if
+		pop (-- not handled --)  % fall-back
+	} repeat  end
+} bind def  % /ToString
+
+/Concatenate {2 copy length exch length dup 3 1 roll add string dup dup 5 3 roll exch putinterval 3 -1 roll 0 exch putinterval} bind def
+
+% mark string|number|other ... string|number|other  ConcatenateToMark  string
+/ConcatenateToMark
+{
+	4 dict begin
+	counttomark /ctm exch def  /n 0 def
+	ctm {ToString  dup length n add /n exch def  ctm 1 roll} repeat
+	/p 0 def  /s n 65535 2 copy gt {exch} if pop string def
+	ctm  -1  0
+	{
+		dup 0 gt
+		{
+			-1 roll   dup length p add  65532 le
+				{s exch p exch dup length p add /p exch def putinterval}
+				{s exch p exch 0 65532 p sub getinterval putinterval  s 65532 (...) putinterval  cleartomark  s  exit}
+			ifelse  % too long
+		} {pop pop s} ifelse
+	} for
+	end
+} bind def  % /ConcatenateToMark
+
+() =
+/NumRhombii NumFats NumThins add def
+[/TilingId /DataAsOf /NumFats /NumThins /NumRhombii /EdgeLength  /XMin /XMax /YMin /YMax  /ToPaint_XMin /ToPaint_XMax /ToPaint_YMin /ToPaint_YMax]
+{
+	dup 12 string cvs ( = ) Concatenate  exch load
+	dup type /stringtype eq {(") exch (") Concatenate Concatenate} {16 string cvs} ifelse
+	Concatenate =
+} forall
+mark (\nPageWidth = ) PageWidth  (pt = ) PageWidth 72 div  (" = ) PageWidth  127 mul 360 div (mm) ConcatenateToMark =
+mark   (PageHeight = ) PageHeight (pt = ) PageHeight 72 div (" = ) PageHeight 127 mul 360 div (mm) ConcatenateToMark =
+mark (T, B, L, and R margins each = ) Margin (pt = ) Margin 72 div (" = ) Margin 127 mul 360 div (mm) ConcatenateToMark =
+mark (ScaleFactor = ) ScaleFactor ConcatenateToMark =
+mark (On paper, length of an edge is ) EdgeLength ScaleFactor mul (pt = ) 1 index 72 div (" = 1"/) 1 2 index div ( = ) 5 index 127 mul 360 div (mm = 1mm/) 1 2 index div ConcatenateToMark =
+mark (Actual_XMin = ) Actual_XMin (;  Actual_XMax = ) Actual_XMax (;  Actual_YMin = ) Actual_YMin (;  Actual_YMax = ) Actual_YMax ConcatenateToMark =
+
+false  % Testing
+{
+	gsave  TileMatrix setmatrix
+	Actual_XMin Actual_YMin moveto
+	Actual_XMin Actual_YMax lineto
+	Actual_XMax Actual_YMax lineto
+	Actual_XMax Actual_YMin lineto
+	closepath  PaperMatrix setmatrix  18 setlinewidth  0.8 setgray  stroke
+	grestore
+} if   % Testing
+
+
+/PaintPath
+{
+	6 dict begin
+	/LengthsGoingOut exch def  /PathId exch def  /YMax exch def  /XMax exch def  /YMin exch def  /XMin exch def
+	XMax Actual_XMin ge  XMin Actual_XMax le  YMax Actual_YMin ge  YMin Actual_YMax le  and and and
+	{
+		LengthsGoingOut length 1 sub  -1  0
+		{
+			dup  LengthsGoingOut exch get //LongestPathToBeFilled le
+			{
+				1 add  LengthsGoingOut exch  0 exch  getinterval
+				/LengthsGoingOut exch def  exit
+			} {pop} ifelse
+		} for
+
+		//PaperMatrix setmatrix
+		1 {
+			LengthsGoingOut 0 get  //LongestPathToBeFilled  gt {exit} if
+			LengthsGoingOut length 2 mod 0 eq       {gsave 0 0 0 0 setcmykcolor fill grestore exit} if
+			% Because of odd-even rules, colours never touch +-2 that are strictly longer than 5. All other pairs can neighbour.
+			%                                  Cyan Mgnt Ylw Blk
+			LengthsGoingOut 0 get   5 eq {gsave 1    0.6  0  0.4  setcmykcolor fill grestore exit} if  % Dark blue
+			LengthsGoingOut 0 get  15 eq {gsave 0    1    1  0.3  setcmykcolor fill grestore exit} if  % Dark red
+			LengthsGoingOut 0 get  25 eq {gsave 1    0    1  0    setcmykcolor fill grestore exit} if  % Green
+			LengthsGoingOut 0 get  55 eq {gsave 0    0.2  1  0    setcmykcolor fill grestore exit} if  % Yellow-gold
+			LengthsGoingOut 0 get 105 eq {gsave 0.7  0    0  0    setcmykcolor fill grestore exit} if  % Light cyan
+			LengthsGoingOut 0 get 215 eq {gsave 0    0.1  0  0.3  setcmykcolor fill grestore exit} if  % Grey-grey-red
+			% This list needs to go as far as LongestPathToBeFilled ==> bigger LongestPathToBeFilled can require more colours here.
+		} repeat  % 1, as exit'able.
+		StrokeMulti
+	} {newpath} ifelse  % In box
+	end
+} bind def  % /PaintPath
+
+
+
+
+//TileMatrix setmatrix
+3.427050983 0.587785252 moveto  3.236067977 0 R 72 180 arc   2.190983006 0.587785252 moveto  2.381966011 1.175570505 R 252 360 arc
+3 -1.175570505 moveto  2.381966011 -1.175570505 R 0 108 arc   2.618033989 0 moveto  3.236067977 0 R 180 288 arc
+1.190983006 -1.31432778 moveto  1 -0.726542528 R -72 36 arc   2.190983006 -0.587785252 moveto  2.381966011 -1.175570505 R 108 216 arc
+0.5 0.363271264 moveto  1 0.726542528 R -144 -36 arc   1.5 -0.363271264 moveto  1 -0.726542528 R 36 144 arc
+1.881966011 1.538841769 moveto  2.381966011 1.175570505 R 144 252 arc   1.5 0.363271264 moveto  1 0.726542528 R -36 72 arc
+-2.427050983 1.31432778 moveto  -2.236067977 0.726542528 R 108 216 arc   -3.427050983 0.587785252 moveto  -3.618033989 1.175570505 R -72 36 arc
+-1.736067977 -0.363271264 moveto  -2.236067977 -0.726542528 R 36 144 arc   -2.736067977 0.363271264 moveto  -2.236067977 0.726542528 R 216 324 arc
+-3.118033989 -1.538841769 moveto  -3.618033989 -1.175570505 R -36 72 arc   -2.736067977 -0.363271264 moveto  -2.236067977 -0.726542528 R 144 252 arc
+-4.663118961 -0.587785252 moveto  -4.472135955 0 R -108 0 arc   -3.427050983 -0.587785252 moveto  -3.618033989 -1.175570505 R 72 180 arc
+-4.236067977 1.175570505 moveto  -3.618033989 1.175570505 R -180 -72 arc   -3.854101966 0 moveto  -4.472135955 0 R 0 108 arc
+-2.427050983 2.489898285 moveto  -2.618033989 1.902113033 R 72 180 arc   -3.663118961 2.489898285 moveto  -3.472135955 3.077683537 R 252 360 arc
+-1.736067977 2.714412273 moveto  -1.236067977 2.351141009 R 144 252 arc   -2.118033989 1.538841769 moveto  -2.618033989 1.902113033 R -36 72 arc
+-0.190983006 1.763355757 moveto  -0.381966011 1.175570505 R 72 180 arc   -1.427050983 1.763355757 moveto  -1.236067977 2.351141009 R 252 360 arc
+-0.618033989 0 moveto  -1.236067977 0 R 0 108 arc   -1 1.175570505 moveto  -0.381966011 1.175570505 R 180 288 arc
+-0.190983006 -0.587785252 moveto  -0.381966011 -1.175570505 R 72 180 arc   -1.427050983 -0.587785252 moveto  -1.236067977 0 R 252 360 arc
+-0.618033989 -2.351141009 moveto  -1.236067977 -2.351141009 R 0 108 arc   -1 -1.175570505 moveto  -0.381966011 -1.175570505 R 180 288 arc
+-2.427050983 -2.489898285 moveto  -2.618033989 -1.902113033 R -72 36 arc   -1.427050983 -1.763355757 moveto  -1.236067977 -2.351141009 R 108 216 arc
+-2.854101966 -3.077683537 moveto  -3.472135955 -3.077683537 R 0 108 arc   -3.236067977 -1.902113033 moveto  -2.618033989 -1.902113033 R 180 288 arc
+1.190983006 -2.489898285 moveto  1.381966011 -1.902113033 R -108 0 arc   2.427050983 -2.489898285 moveto  2.236067977 -3.077683537 R 72 180 arc
+0.5 -2.714412273 moveto  0 -2.351141009 R -36 72 arc   0.881966011 -1.538841769 moveto  1.381966011 -1.902113033 R 144 252 arc
+0.5 -3.440954801 moveto  0 -3.804226065 R 36 144 arc   -0.5 -2.714412273 moveto  0 -2.351141009 R 216 324 arc
+1.190983006 -3.665468789 moveto  1.381966011 -4.253254042 R 108 216 arc   0.190983006 -4.392011317 moveto  0 -3.804226065 R -72 36 arc
+1.618033989 3.077683537 moveto  2.236067977 3.077683537 R -180 -72 arc   2 1.902113033 moveto  1.381966011 1.902113033 R 0 108 arc
+1.190983006 2.489898285 moveto  1.381966011 1.902113033 R 108 216 arc   0.190983006 1.763355757 moveto  0 2.351141009 R -72 36 arc
+0.5 2.714412273 moveto  0 2.351141009 R 36 144 arc   -0.5 3.440954801 moveto  0 3.804226065 R 216 324 arc
+0.5 3.440954801 moveto  0 3.804226065 R -36 72 arc   0.881966011 4.616525306 moveto  1.381966011 4.253254042 R 144 252 arc
+-1.736067977 -3.440954801 moveto  -1.236067977 -3.804226065 R 144 252 arc   -2.118033989 -4.616525306 moveto  -2.618033989 -4.253254042 R -36 72 arc
+-0.190983006 -4.392011317 moveto  -0.381966011 -4.97979657 R 72 180 arc   -1.427050983 -4.392011317 moveto  -1.236067977 -3.804226065 R 252 360 arc
+-0.618033989 -6.155367074 moveto  -1.236067977 -6.155367074 R 0 108 arc   -1 -4.97979657 moveto  -0.381966011 -4.97979657 R 180 288 arc
+-0.190983006 5.567581822 moveto  -0.381966011 4.97979657 R 72 180 arc   -1.427050983 5.567581822 moveto  -1.236067977 6.155367074 R 252 360 arc
+-0.618033989 3.804226065 moveto  -1.236067977 3.804226065 R 0 108 arc   -1 4.97979657 moveto  -0.381966011 4.97979657 R 180 288 arc
+-2.427050983 3.665468789 moveto  -2.618033989 4.253254042 R -72 36 arc   -1.427050983 4.392011317 moveto  -1.236067977 3.804226065 R 108 216 arc
+-0.190983006 5.567581822 moveto  0 6.155367074 R -108 -72 arc   0.190983006 4.392011317 moveto  0 3.804226065 R 72 108 arc
+-0.618033989 3.804226065 moveto  0 3.804226065 R -180 -144 arc   -1.618033989 3.077683537 moveto  -2.236067977 3.077683537 R 0 36 arc
+-1.736067977 2.714412273 moveto  -2.236067977 3.077683537 R -36 0 arc   -0.5 2.714412273 moveto  0 2.351141009 R 144 180 arc
+-4.236067977 1.175570505 moveto  -4.854101966 1.175570505 R 0 36 arc   -3.236067977 1.902113033 moveto  -2.618033989 1.902113033 R 180 216 arc
+1.881966011 1.538841769 moveto  1.381966011 1.902113033 R -36 0 arc   3.118033989 1.538841769 moveto  3.618033989 1.175570505 R 144 180 arc
+-0.190983006 1.763355757 moveto  0 2.351141009 R -108 -72 arc   0.190983006 0.587785252 moveto  0 0 R 72 108 arc
+-2.427050983 1.31432778 moveto  -2.618033989 1.902113033 R -72 -36 arc   -1.427050983 0.587785252 moveto  -1.236067977 0 R 108 144 arc
+0.5 0.363271264 moveto  0 0 R 36 72 arc   0.881966011 1.538841769 moveto  1.381966011 1.902113033 R 216 252 arc
+-4.663118961 -0.587785252 moveto  -4.854101966 -1.175570505 R 72 108 arc   -5.045084972 0.587785252 moveto  -4.854101966 1.175570505 R 252 288 arc
+3.427050983 0.587785252 moveto  3.618033989 1.175570505 R -108 -72 arc   3.809016994 -0.587785252 moveto  3.618033989 -1.175570505 R 72 108 arc
+-1.736067977 -0.363271264 moveto  -1.236067977 0 R -144 -108 arc   -2.118033989 -1.538841769 moveto  -2.618033989 -1.902113033 R 36 72 arc
+1.190983006 -1.31432778 moveto  1.381966011 -1.902113033 R 108 144 arc   0.190983006 -0.587785252 moveto  0 0 R -72 -36 arc
+-0.190983006 -0.587785252 moveto  0 0 R -108 -72 arc   0.190983006 -1.763355757 moveto  0 -2.351141009 R 72 108 arc
+-3.118033989 -1.538841769 moveto  -2.618033989 -1.902113033 R 144 180 arc   -4.354101966 -1.538841769 moveto  -4.854101966 -1.175570505 R -36 0 arc
+3 -1.175570505 moveto  3.618033989 -1.175570505 R -180 -144 arc   2 -1.902113033 moveto  1.381966011 -1.902113033 R 0 36 arc
+-0.618033989 -2.351141009 moveto  0 -2.351141009 R -180 -144 arc   -1.618033989 -3.077683537 moveto  -2.236067977 -3.077683537 R 0 36 arc
+-1.736067977 -3.440954801 moveto  -2.236067977 -3.077683537 R -36 0 arc   -0.5 -3.440954801 moveto  0 -3.804226065 R 144 180 arc
+-0.190983006 -4.392011317 moveto  0 -3.804226065 R -108 -72 arc   0.190983006 -5.567581822 moveto  0 -6.155367074 R 72 108 arc
+PaperMatrix setmatrix  StrokeMulti
+
+showpage
+
+(\n\n) =
+count              (      = count: this really should be 0\n)   dup 0  4 -1 roll  6 string cvs  putinterval
+countdictstack     (      = countdictstack: this should be 3\n) dup 0  4 -1 roll  6 string cvs  putinterval  Concatenate =
+count 0 gt {(+pstack) = pstack (-pstack) =} if
+
+{countdictstack 3 gt {8 {() =} repeat currentdict {exch == =} forall end} {exit} ifelse} bind loop  % Final debugging

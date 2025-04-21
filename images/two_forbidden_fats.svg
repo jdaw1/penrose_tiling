@@ -1,0 +1,14 @@
+<svg width='384' height='144.29' viewBox='-1.02 -0.38327 2.04 0.76654' id='Two_naughty_fats' xmlns='http://www.w3.org/2000/svg'>
+
+<path stroke-width='0.04' stroke='#000' fill='#FFF' stroke-linejoin='round' d='M-0.5 -0.36327 -1 0 -0.5 0.36327 0.5 -0.36327 1 0 0.5 0.36327ZZ'/>
+
+<g font-family='sans-serif' font-size='0.01em' fill='#F00' text-anchor='middle'>
+
+<g transform='translate(-0.5, 0   )'><text alignment-baseline='middle'>Error!</text></g>
+<g transform='translate( 0.5, 0   )'><text alignment-baseline='middle'>Wrong!</text></g>
+<g transform='translate( 0  , 0.27)'><text alignment-baseline='middle'>No!</text></g>
+<g transform='translate( 0  ,-0.27)'><text alignment-baseline='middle'>Don&#8217;t!</text></g>
+
+</g>
+
+</svg>

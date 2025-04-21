@@ -1,0 +1,245 @@
+%!PS
+
+/DataAsOf (D:20250421143557) def
+/Licence (GNU General Public License, Version 3, 29 June 2007) def
+/URL (https://githubcom/jdaw1/penrose_tiling/) def
+/Author (Julian D A Wiseman of wwwjdawisemancom) def
+/TilingId 0 def
+/NumFats 2 def
+/NumThins 1 def
+/EdgeLength 3.2360679774997898E+00 def
+
+/XMin -3.23606797749979 def
+/XMax 2 def
+/YMin -3.077683537175254 def
+/YMax 3.077683537175254 def
+
+/ToPaint_XMin -4 def  % User changeable
+/ToPaint_XMax +2 def
+/ToPaint_YMin -4 def
+/ToPaint_YMax +4 def
+
+
+/PageWidth  297 360 mul 127 div def  % A3, long side.  User alterable: for US Tabloid use "11 72 mul".
+/PageHeight 420 360 mul 127 div def  % A3, short side.  User alterable: for US Tabloid use "17 72 mul".
+/Margin 18 def  % 18pt = 0.25" = 6.35mm. Enlarge if the printer can't work so close to the edge. Used only for default value of scale.
+
+/Actual_XMin  XMin ToPaint_XMin  2 copy lt {exch} if pop  def
+/Actual_YMin  YMin ToPaint_YMin  2 copy lt {exch} if pop  def
+/Actual_XMax  XMax ToPaint_XMax  2 copy gt {exch} if pop  def
+/Actual_YMax  YMax ToPaint_YMax  2 copy gt {exch} if pop  def
+/ScaleFactor
+	PageWidth  Margin 2 mul sub  Actual_XMax Actual_XMin sub  div  % Tight-fiting x.
+	PageHeight Margin 2 mul sub  Actual_YMax Actual_YMin sub  div  % Tight-fiting y.
+	2 copy gt {exch} if pop  % Lesser of them.
+def  % /ScaleFactor. User alterable. Could be of form "6 EdgeLength div", making an edge be 6pt on the paper.
+/FontName /Helvetica def  % /TrebuchetMS /GothamNarrow
+/FontSize EdgeLength ScaleFactor mul 0.3 mul def
+
+<< /PageSize [PageWidth PageHeight] >> setpagedevice
+/PaperMatrix matrix currentmatrix def
+PageWidth 0.5 mul PageHeight 0.5 mul translate  % User alterable. This has tiling positioned wrt centre of paper page.
+ScaleFactor dup scale
+Actual_XMax Actual_XMin add -2 div  Actual_YMax Actual_YMin add -2 div  translate  % User alterable. Optional specification of which point in tiling is to be in the specifed point of page.
+% 0 rotate  % User alterable. Optional rotation, angle in degrees, positive rotating image anti-clockise. By default commented out.
+/TileMatrix matrix currentmatrix def
+
+mark
+	/CreationDate (D:20250421143557)
+	/Title (Penrose tiling)
+	/Author (Julian D. A. Wiseman)
+	/Subject (http://github.com/jdaw1/penrose_tiling/)
+	/Keywords (Penrose tiling rhombi)
+	/Creator (C and PostScript coded by Julian D. A. Wiseman of www.jdawiseman.com/author.html)
+/DOCINFO pdfmark
+
+% Functions taken from https://github.com/jdaw1/placemat/blob/main/PostScript/placemat.ps
+/ToString
+{
+	1 dict begin  dup type cvlit /Type exch def
+	1 {
+		Type /integertype  eq {11 string cvs exit ( ) Concatenate} if
+		Type /realtype     eq {16 string cvs exit ( ) Concatenate} if
+		Type /nametype     eq {dup length string cvs exit} if
+		Type /stringtype   eq {exit} if
+		Type /booleantype  eq {5 string cvs exit} if
+		Type /operatortype eq {127 string cvs exit} if
+		Type /marktype     eq {pop (mark) exit} if
+		Type /nulltype     eq {pop (null) exit} if
+		pop (-- not handled --)  % fall-back
+	} repeat  end
+} bind def  % /ToString
+
+/Concatenate {2 copy length exch length dup 3 1 roll add string dup dup 5 3 roll exch putinterval 3 -1 roll 0 exch putinterval} bind def
+
+% mark string|number|other ... string|number|other  ConcatenateToMark  string
+/ConcatenateToMark
+{
+	4 dict begin
+	counttomark /ctm exch def  /n 0 def
+	ctm {ToString  dup length n add /n exch def  ctm 1 roll} repeat
+	/p 0 def  /s n 65535 2 copy gt {exch} if pop string def
+	ctm  -1  0
+	{
+		dup 0 gt
+		{
+			-1 roll   dup length p add  65532 le
+				{s exch p exch dup length p add /p exch def putinterval}
+				{s exch p exch 0 65532 p sub getinterval putinterval  s 65532 (...) putinterval  cleartomark  s  exit}
+			ifelse  % too long
+		} {pop pop s} ifelse
+	} for
+	end
+} bind def  % /ConcatenateToMark
+
+() =
+/NumRhombii NumFats NumThins add def[/TilingId /DataAsOf /NumFats /NumThins /NumRhombii /EdgeLength  /XMin /XMax /YMin /YMax  /ToPaint_XMin /ToPaint_XMax /ToPaint_YMin /ToPaint_YMax]
+{
+	dup 12 string cvs ( = ) Concatenate  exch load
+	dup type /stringtype eq {(") exch (") Concatenate Concatenate} {16 string cvs} ifelse
+	Concatenate =
+} forall
+mark (\nPageWidth = ) PageWidth  (pt = ) PageWidth 72 div  (" = ) PageWidth  127 mul 360 div (mm) ConcatenateToMark =
+mark   (PageHeight = ) PageHeight (pt = ) PageHeight 72 div (" = ) PageHeight 127 mul 360 div (mm) ConcatenateToMark =
+mark (T, B, L, and R margins each = ) Margin (pt = ) Margin 72 div (" = ) Margin 127 mul 360 div (mm) ConcatenateToMark =
+mark (ScaleFactor = ) ScaleFactor ConcatenateToMark =
+mark (On paper, length of an edge is ) EdgeLength ScaleFactor mul (pt = ) 1 index 72 div (" = 1"/) 1 2 index div ( = ) 5 index 127 mul 360 div (mm = 1mm/) 1 2 index div ConcatenateToMark =
+mark (FontName = ) FontName (; FontSize = ) FontSize ConcatenateToMark =
+
+
+(\n\nPathStats:\n\nPathClosed\tPathLength\tNumPaths\tMaxNumThisFats\tMaxNumDeepFats\tMaxNumThisThins\tMaxNumDeepThins\tMaxNumThisFats_Num\tMaxNumDeepFats_Num\tMaxNumThisThins_Num\tMaxNumDeepThins_Num\tRadiusMinMin_EdgeLengths\tRadiusMaxMax_EdgeLengths\tWidthMax_EdgeLengths\tHeightMax_EdgeLengths) =
+(Open\t2\t1) =
+
+flush
+
+FontName FontSize selectfont  % Useful default if PaintByRhombus is to show, for example, the RhId.
+0 setgray  2 setlinejoin  [] 0 setdash
+PaperMatrix setmatrix  EdgeLength 60 div ScaleFactor mul  setlinewidth
+
+% PaintByRhombus collects the items on the stack, and then paints as appropriate.
+% Most of its inner may be rewritten, e.g. for different decoration, or to aid debugging such as by show'ing RhId.
+/PaintByRhombus
+{
+	15 dict begin  % Populating this dictionary with values on stack.
+	/IsFat exch def  /RhId exch def
+	IsFat {[/PathId /PathStatId /WithinPathNum /Pointy /PathLength /PathClosed] {exch def} forall} if  % Fats only
+	[/FilledType /NumNeighbours /AngDeg /NorthY /NorthX /EastY /EastX /SouthY /SouthX /WestY /WestX] {exch def} forall  % All rhombii
+	//true  % Test whether this rhombus is inside the Wanted box.
+	1 {
+		NorthX //Actual_XMin le  EastX //Actual_XMin le  SouthX //Actual_XMin le  WestX //Actual_XMin le  and and and {pop //false exit} if
+		NorthY //Actual_YMin le  EastY //Actual_YMin le  SouthY //Actual_YMin le  WestY //Actual_YMin le  and and and {pop //false exit} if
+		NorthX //Actual_XMax ge  EastX //Actual_XMax ge  SouthX //Actual_XMax ge  WestX //Actual_XMax ge  and and and {pop //false exit} if
+		NorthY //Actual_YMax ge  EastY //Actual_YMax ge  SouthY //Actual_YMax ge  WestY //Actual_YMax ge  and and and {pop //false exit} if
+	} repeat  % 1
+	{
+		% Code inside here is intended to be user alterable.
+		//TileMatrix setmatrix
+		//true  % paint rhombii?
+		{
+			NorthX NorthY moveto  EastX EastY lineto  SouthX SouthY lineto  WestX WestY lineto  closepath
+			IsFat
+			{
+				% Fat
+				gsave
+				//false
+				1 {  % repeat
+					% These colours use changeable. If not specified then not fill'd.
+					% Closed ==> 5 5 15 25 55 105 215 425 855 1705 3415 6825 13655 27305 54615 109225 218455 436905 873815 ... ([n-1] + 2*[n-2])
+					PathLength    5 eq PathClosed and Pointy and {0.6 1   0.6 setrgbcolor pop //true exit} if  % Very light green
+					PathLength   15 eq PathClosed and  {0   0.3 0   setrgbcolor pop //true exit} if  % very dark green
+					PathLength   25 eq PathClosed and  {0   0   0.6 setrgbcolor pop //true exit} if  % Dark blue
+					PathLength   55 eq PathClosed and  {0   0   1   setrgbcolor pop //true exit} if  % Blue
+					PathLength  105 eq PathClosed and  {1   0.4 1   setrgbcolor pop //true exit} if  % Pink
+					PathLength  215 eq PathClosed and  {0.5 0   0   setrgbcolor pop //true exit} if  % Maroon
+					PathLength  425 eq PathClosed and  {0   0.6 0   setrgbcolor pop //true exit} if  % Dark green
+					PathLength  855 eq PathClosed and  {0   0.6 1   setrgbcolor pop //true exit} if  % Light blue
+					PathLength 1705 eq PathClosed and  {1   0.4 0   setrgbcolor pop //true exit} if  % Orange
+					PathLength 3415 ge PathClosed and  {0.1         setgray     pop //true exit} if  % Very dark grey; ge ==> very long closed paths.
+					PathLength  172 gt {PathLength 1.2 div ln 2 ln div floor cvi 4 mod 0.1 mul 0.7 add 0 0 setrgbcolor pop //true exit} if  % Bright red  % 172 = 215 *4/5
+				} repeat  % 1
+				{fill} if
+				% Code that highlights the north corners of fat rhombii. Used in debugging. By default commented out.
+%				PathClosed not  pop true  % Choose: all, or only fats in open paths?
+%				{
+%					newpath  NorthX NorthY 2 copy  moveto
+%					EdgeLength 3 div  AngDeg 180 IsFat {36} {72} ifelse sub add  dup IsFat {72} {144} ifelse add  arc  closepath
+%					0.5 setgray  fill
+%				} if  % PathClosed not
+				grestore
+				//PaperMatrix setmatrix  0 setgray  stroke
+				PathClosed 5 PathLength eq and {Pointy not WithinPathNum 0 eq and} {//false} ifelse
+				{
+					% Show small circles in non-Pointy 5 Closed paths.
+					//TileMatrix setmatrix
+					SouthX  SouthY  //EdgeLength 4 div  0  360  arc  closepath
+					gsave 1 setgray fill grestore
+					//PaperMatrix setmatrix  0 setgray  stroke
+				} if  % Last rhombus in Closed, Length=5, non-Pointy
+				% Code that shows text about each fat rhombus. Used in debugging. By default commented out.
+%				PathClosed not  pop true  % Choose: all, or only fats in open paths?
+%				{
+%					//TileMatrix setmatrix  NorthX SouthX add 2 div  NorthY SouthY add 2 div  moveto  0 setgray
+%					//PaperMatrix setmatrix mark RhId FilledType dup 0 gt {(,) exch} {pop} ifelse ConcatenateToMark dup stringwidth pop -2 div //FontSize -0.3 mul rmoveto show
+%				} if  % PathClosed not
+			}{
+				% Thin
+				gsave 0.8 setgray fill grestore
+				//PaperMatrix setmatrix  0 setgray  stroke
+				% Code that highlights the north corners of thin rhombii. Used in debugging. By default commented out.
+%				gsave newpath //TileMatrix setmatrix  NorthX NorthY 2 copy  moveto
+%				EdgeLength 4 div  AngDeg 180 IsFat {36} {72} ifelse sub add  dup IsFat {72} {144} ifelse add  arc  closepath
+%				0.5 setgray  fill  grestore
+				% Code that shows text about each thin rhombus. Used in debugging. By default commented out.
+%				//PaperMatrix setmatrix  0 setgray  stroke
+%				//TileMatrix setmatrix  NorthX SouthX add 2 div  NorthY SouthY add 2 div  moveto  0 setgray
+%				//PaperMatrix setmatrix mark RhId FilledType dup 0 gt {(,) exch} {pop} ifelse ConcatenateToMark dup stringwidth pop -2 div //FontSize -0.3 mul rmoveto show
+			} ifelse  % IsFat
+			newpath
+		} if  % painting rhombii
+		//false  % paint triangles?
+		{
+			EastX 0.25 mul WestX 0.75 mul add
+			EastY 0.25 mul WestY 0.75 mul add
+			WestX 0.25 mul EastX 0.75 mul add
+			WestY 0.25 mul EastY 0.75 mul add
+			NorthX NorthY moveto lineto lineto closepath
+			0.8 setgray fill
+		} if  % painting triangles
+		//false  % stroke arcs?
+		{
+			//PaperMatrix setmatrix  0.06 setlinewidth  0 setgray  1 setlinecap  1 setlinejoin  [] 0 setdash
+			WestX WestY  EdgeLength 2 div   EastX EastY  2 index    AngDeg dup dup dup
+			IsFat
+				{144 sub exch 36 sub   7 2 roll   36 add exch 144 add}
+				{108 sub exch 72 sub   7 2 roll   72 add exch 108 add}
+			ifelse  % IsFat
+			2 {//TileMatrix setmatrix arc  //PaperMatrix setmatrix  stroke} repeat
+		} if  % stroking arcs
+		//false  % stroke diagonal?
+		{
+			TileMatrix setmatrix
+			NorthX NorthY moveto  SouthX SouthY lineto
+			PaperMatrix setmatrix  0 setgray  stroke
+		} if  % stroking diagonal
+	} if  % Inside Wanted box
+	end  % 15 dict
+} bind def  % /PaintByRhombus
+
+
+
+% Formats for Thin and Fat rhombii:
+	% WestX WestY SouthX SouthY EastX EastY NorthX NorthY Angle /RhId false  PaintByRhombus  % ==> Thin
+	% WestX WestY SouthX SouthY EastX EastY NorthX NorthY Angle PathClosed PathLength Pointy WithinPathNum /PathStatId /PathId /RhId true  PaintByRhombus  % ==> Fat
+
+1 -3.077683537 2 0 1 3.077683537 0 0 180 2 0 2 false PaintByRhombus
+0 0 -3.236067977 0 -2.236067977 -3.077683537 1 -3.077683537 -36 2 7 false 2 false 1 0 0 1 true PaintByRhombus
+-2.236067977 3.077683537 -3.236067977 0 0 0 1 3.077683537 36 2 7 false 2 false 0 0 0 0 true PaintByRhombus
+
+showpage
+
+(\n\n) =
+count              (      = count: this really should be 0\n)   dup 0  4 -1 roll  6 string cvs  putinterval
+countdictstack     (      = countdictstack: this should be 3\n) dup 0  4 -1 roll  6 string cvs  putinterval  Concatenate =
+count 0 gt {(+pstack) = pstack (-pstack) =} if
+
+{countdictstack 3 gt {8 {() =} repeat currentdict {exch == =} forall end} {exit} ifelse} bind loop  % Final debugging

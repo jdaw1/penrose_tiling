@@ -1,0 +1,181 @@
+<svg width='960' height='1359.078591779' viewBox='-5.496008831 -6.905782478 9.755949684 13.811564956' preserveAspectRatio='xMidYMid meet' id='Penrose_Rhombii_03' xmlns='http://www.w3.org/2000/svg'>
+<!-- TilingId = 3;  NumFats = 98;  NumThins = 55;  ==> #tiles= 153;  NumPathsClosed = 7;  NumPathsOpen = 11 -->
+<!-- Licence = "GNU General Public License, Version 3, 29 June 2007"; URL = "https://github.com/jdaw1/penrose_tiling/"; Author = "Julian D. A. Wiseman of www.jdawiseman.com". -->
+<!-- EdgeLength = 0.76393202250021; stroke-width defined to be EdgeLength / 16. If changing stroke-width, need to alter viewBox, for which it might help to know that, without line, and assuming inclusion of all the C-generated rhombii, values would be -5.472135955 -6.881909602 9.708203932 13.763819205. -->
+<!-- Browser fail for large SVG? Bug report at https://issues.chromium.org/issues/390969197 -->
+<g transform='scale(1,-1)'> <!-- PostScript and Excel positive y goes up the page, SVG it goes down. This reflection makes SVG behave as the others. -->
+
+<defs>
+	<path id='t' d='M 0 0   L -0.23606797749979 0.72654252800536   -0.47213595499958 0   -0.23606797749979 -0.72654252800536  Z'/> <!-- thin -->
+	<path id='f' d='M 0 0   L -0.6180339887499 0.44902797657959   -1.23606797749979 0   -0.6180339887499 -0.44902797657959  Z'/> <!-- fat (closed paths) -->
+	<path id='o' d='M 0 0   L -0.6180339887499 0.44902797657959   -1.23606797749979 0   -0.6180339887499 -0.44902797657959  Z'/> <!-- fat (open paths, separate for editability) -->
+	<!-- To locate holes, and some other debugging, replace previous line with:  <g id='o'><path d='M 0 0   L -0.6180339887499 0.44902797657959   -1.23606797749979 0   -0.6180339887499 -0.44902797657959  Z'/><circle stroke='#000' fill='#6F6' opacity='1' cx='-0.6180339887499' r='0.12732200375004'/></g>  -->
+	<g id='c5r'>
+		<g fill='#CCC' opacity='1'>  <!-- Thins: light grey -->
+			<use href='#t'  transform='translate(0.763932023) rotate(180)'/>
+			<use href='#t'  transform='translate(0.236067977,-0.726542528) rotate(108)'/>
+			<use href='#t'  transform='translate(-0.618033989,-0.449027977) rotate(36)'/>
+			<use href='#t'  transform='translate(-0.618033989,0.449027977) rotate(324)'/>
+			<use href='#t'  transform='translate(0.236067977,0.726542528) rotate(252)'/>
+		</g>  <!-- thins, fill='#CCC' -->
+		<g fill='#FFF' opacity='1'>  <!-- Fats, closed PathLength=5 round: white -->
+			<use href='#f'  transform='translate(1,0.726542528) rotate(36)'/>
+			<use href='#f'  transform='translate(1,-0.726542528) rotate(324)'/>
+			<use href='#f'  transform='translate(-0.381966011,-1.175570505) rotate(252)'/>
+			<use href='#f'  transform='translate(-1.236067977) rotate(180)'/>
+			<use href='#f'  transform='translate(-0.381966011,1.175570505) rotate(108)'/>
+		</g>  <!-- fill='#FFF' -->
+		<circle r='0.190983006' fill='#FFF' opacity='1'/>  <!-- circle inside non-pointy closed 5 paths If not wanted, delete this one line -->
+	</g>  <!-- id='c5r' -->
+	<g id='c5p'>
+		<g fill='#9F9' opacity='1'>  <!-- Fats, closed PathLength=5 pointy: light green -->
+			<use href='#f'  transform='rotate(216)'/>
+			<use href='#f'  transform='rotate(144)'/>
+			<use href='#f'  transform='rotate(72)'/>
+			<use href='#f' />
+			<use href='#f'  transform='rotate(288)'/>
+		</g>  <!-- fill='#9F9' -->
+	</g>  <!-- id='c5p' -->
+</defs>
+
+<g stroke-width='0.047745751' stroke='#000' paint-order='fill stroke' stroke-linejoin='round' stroke-opacity='1'>  <!-- all rhombii -->
+
+<g fill='#CCC' opacity='1'>  <!-- thins not otherwise inside a path. -->
+	<use href='#t'  transform='translate(-0.763932023,6.155367074)'/>
+	<use href='#t'  transform='translate(-0.236067977,5.428824546) rotate(72)'/>
+	<use href='#t'  transform='translate(-0.236067977,4.530768593) rotate(288)'/>
+	<use href='#t'  transform='translate(-0.763932023,3.804226065)'/>
+	<use href='#t'  transform='translate(-0.763932023,2.351141009)'/>
+	<use href='#t'  transform='translate(-0.236067977,1.624598481) rotate(72)'/>
+	<use href='#t'  transform='translate(2,1.453085056) rotate(144)'/>
+	<use href='#t'  transform='translate(-3.236067977,1.453085056) rotate(36)'/>
+	<use href='#t'  transform='translate(2.854101966,1.175570505)'/>
+	<use href='#t'  transform='translate(-4.090169944,1.175570505) rotate(180)'/>
+	<use href='#t'  transform='translate(1.145898034,1.175570505) rotate(72)'/>
+	<use href='#t'  transform='translate(-2.381966011,1.175570505) rotate(108)'/>
+	<use href='#t'  transform='translate(-1.854101966,0.449027977) rotate(324)'/>
+	<use href='#t'  transform='translate(3.381966011,0.449027977) rotate(72)'/>
+	<use href='#t'  transform='translate(-4.618033989,0.449027977) rotate(108)'/>
+	<use href='#t'  transform='translate(3.381966011,-0.449027977) rotate(288)'/>
+	<use href='#t'  transform='translate(-4.618033989,-0.449027977) rotate(252)'/>
+	<use href='#t'  transform='translate(-1.854101966,-0.449027977) rotate(36)'/>
+	<use href='#t'  transform='translate(1.145898034,-1.175570505) rotate(288)'/>
+	<use href='#t'  transform='translate(-2.381966011,-1.175570505) rotate(252)'/>
+	<use href='#t'  transform='translate(2.854101966,-1.175570505)'/>
+	<use href='#t'  transform='translate(-4.090169944,-1.175570505) rotate(180)'/>
+	<use href='#t'  transform='translate(2,-1.453085056) rotate(216)'/>
+	<use href='#t'  transform='translate(-3.236067977,-1.453085056) rotate(324)'/>
+	<use href='#t'  transform='translate(-0.236067977,-1.624598481) rotate(288)'/>
+	<use href='#t'  transform='translate(-0.763932023,-2.351141009)'/>
+	<use href='#t'  transform='translate(-0.763932023,-3.804226065)'/>
+	<use href='#t'  transform='translate(-0.236067977,-4.530768593) rotate(72)'/>
+	<use href='#t'  transform='translate(-0.236067977,-5.428824546) rotate(288)'/>
+	<use href='#t'  transform='translate(-0.763932023,-6.155367074)'/>
+</g>  <!-- thins not otherwise inside a path -->
+
+
+<!-- Paint open paths -->
+
+<g fill='#333' opacity='1' stroke='#000'>  <!-- Fats, open, PathLength=3: dark grey, to give whole tiling appearance of a serrated edge -->
+<!-- <animate attributeName='fill' attributeType='XML' values='#333;#FFF' keyTimes='0;0.8' dur='10s' begin='0s' calcMode='discrete' repeatCount='indefinite'/> -->
+	<use href='#o'  transform='translate(0.381966011,-4.97979657) rotate(72)'/> <!-- 12 -->
+	<use href='#o'  transform='translate(-1,-5.428824546) rotate(144)'/>
+	<use href='#o'  transform='translate(-1,-6.881909602) rotate(216)'/>
+	<use href='#o'  transform='translate(-5.236067977) rotate(108)'/> <!-- 13 -->
+	<use href='#o'  transform='translate(-3.854101966,-0.449027977) rotate(36)'/>
+	<use href='#o'  transform='translate(-3.854101966,-1.902113033) rotate(324)'/>
+	<use href='#o'  transform='translate(4) rotate(72)'/> <!-- 14 -->
+	<use href='#o'  transform='translate(2.618033989,-0.449027977) rotate(144)'/>
+	<use href='#o'  transform='translate(2.618033989,-1.902113033) rotate(216)'/>
+	<use href='#o'  transform='translate(-3.854101966,1.902113033) rotate(36)'/> <!-- 15 -->
+	<use href='#o'  transform='translate(-3.854101966,0.449027977) rotate(324)'/>
+	<use href='#o'  transform='translate(-5.236067977) rotate(252)'/>
+	<use href='#o'  transform='translate(2.618033989,1.902113033) rotate(144)'/> <!-- 16 -->
+	<use href='#o'  transform='translate(2.618033989,0.449027977) rotate(216)'/>
+	<use href='#o'  transform='translate(4) rotate(288)'/>
+	<use href='#o'  transform='translate(-1,6.881909602) rotate(144)'/> <!-- 17 -->
+	<use href='#o'  transform='translate(-1,5.428824546) rotate(216)'/>
+	<use href='#o'  transform='translate(0.381966011,4.97979657) rotate(288)'/>
+</g>  <!-- Fats, open, PathLength=3 -->
+
+<g fill='#333' opacity='1' stroke='#000'>  <!-- Fats, open, PathLength=4: dark grey, to give whole tiling appearance of a serrated edge -->
+<!-- <animate attributeName='fill' attributeType='XML' values='#333;#FFF' keyTimes='0;0.8' dur='10s' begin='0s' calcMode='discrete' repeatCount='indefinite'/> -->
+	<use href='#o'  transform='translate(-1.618033989,-4.97979657) rotate(324)'/> <!-- 10 -->
+	<use href='#o'  transform='translate(-1.618033989,-4.97979657) rotate(252)'/>
+	<use href='#o'  transform='translate(-1.618033989,-4.97979657) rotate(180)'/>
+	<use href='#o'  transform='translate(-1.618033989,-4.97979657) rotate(108)'/>
+	<use href='#o'  transform='translate(-1.618033989,4.97979657) rotate(36)'/> <!-- 11 -->
+	<use href='#o'  transform='translate(-1.618033989,4.97979657) rotate(108)'/>
+	<use href='#o'  transform='translate(-1.618033989,4.97979657) rotate(180)'/>
+	<use href='#o'  transform='translate(-1.618033989,4.97979657) rotate(252)'/>
+</g>  <!-- Fats, open, PathLength=4 -->
+
+<g fill='#FFF' opacity='1'>  <!-- Fats, open PathLength=11: white -->
+	<use href='#o'  transform='translate(2.618033989,-1.902113033) rotate(72)'/> <!-- 8 -->
+	<use href='#o'  transform='translate(2.618033989,-1.902113033)'/>
+	<use href='#o'  transform='translate(1.763932023,-0.726542528) rotate(72)'/>
+	<use href='#o'  transform='translate(0.381966011,-1.175570505) rotate(144)'/>
+	<use href='#o'  transform='translate(0.381966011,-1.175570505) rotate(72)'/>
+	<use href='#o'  transform='translate(-1,-1.624598481) rotate(144)'/>
+	<use href='#o'  transform='translate(-1,-3.077683537) rotate(216)'/>
+	<use href='#o'  transform='translate(-1,-3.077683537) rotate(144)'/>
+	<use href='#o'  transform='translate(-1,-4.530768593) rotate(216)'/>
+	<use href='#o'  transform='translate(0.381966011,-4.97979657) rotate(288)'/>
+	<use href='#o'  transform='translate(0.381966011,-4.97979657) rotate(216)'/>
+	<use href='#o'  transform='translate(0.381966011,4.97979657) rotate(144)'/> <!-- 9 -->
+	<use href='#o'  transform='translate(0.381966011,4.97979657) rotate(72)'/>
+	<use href='#o'  transform='translate(-1,4.530768593) rotate(144)'/>
+	<use href='#o'  transform='translate(-1,3.077683537) rotate(216)'/>
+	<use href='#o'  transform='translate(-1,3.077683537) rotate(144)'/>
+	<use href='#o'  transform='translate(-1,1.624598481) rotate(216)'/>
+	<use href='#o'  transform='translate(0.381966011,1.175570505) rotate(288)'/>
+	<use href='#o'  transform='translate(0.381966011,1.175570505) rotate(216)'/>
+	<use href='#o'  transform='translate(1.763932023,0.726542528) rotate(288)'/>
+	<use href='#o'  transform='translate(2.618033989,1.902113033)'/>
+	<use href='#o'  transform='translate(2.618033989,1.902113033) rotate(288)'/>
+</g>  <!-- Fats, open, PathLength=11 -->
+
+<g fill='#FFF' opacity='1'>  <!-- Fats, open PathLength=15: white -->
+	<use href='#o'  transform='translate(-3.854101966,1.902113033) rotate(252)'/> <!-- 7 -->
+	<use href='#o'  transform='translate(-3.854101966,1.902113033) rotate(180)'/>
+	<use href='#o'  transform='translate(-3,0.726542528) rotate(252)'/>
+	<use href='#o'  transform='translate(-1.618033989,1.175570505) rotate(324)'/>
+	<use href='#o'  transform='translate(-1.618033989,1.175570505) rotate(252)'/>
+	<use href='#o'  transform='translate(-1.618033989,1.175570505) rotate(180)'/>
+	<use href='#o'  transform='translate(-1.618033989,1.175570505) rotate(108)'/>
+	<use href='#o'  transform='translate(-2.472135955) rotate(180)'/>
+	<use href='#o'  transform='translate(-1.618033989,-1.175570505) rotate(252)'/>
+	<use href='#o'  transform='translate(-1.618033989,-1.175570505) rotate(180)'/>
+	<use href='#o'  transform='translate(-1.618033989,-1.175570505) rotate(108)'/>
+	<use href='#o'  transform='translate(-1.618033989,-1.175570505) rotate(36)'/>
+	<use href='#o'  transform='translate(-3,-0.726542528) rotate(108)'/>
+	<use href='#o'  transform='translate(-3.854101966,-1.902113033) rotate(180)'/>
+	<use href='#o'  transform='translate(-3.854101966,-1.902113033) rotate(108)'/>
+</g>  <!-- Fats, open, PathLength=15 -->
+
+
+<!-- Paint closed paths not otherwise inside a larger path. Comment is pathId. -->
+
+	<use href='#c5p' transform='translate(2) rotate(36)'/> <!-- 0 -->
+	<use href='#c5p' transform='translate(-3.236067977)'/> <!-- 1 -->
+	<use href='#c5r' transform='translate(1,-3.077683537)'/> <!-- 2 -->
+	<use href='#c5r' transform='translate(-2.236067977,-3.077683537) rotate(36)'/> <!-- 3 -->
+	<use href='#c5r' transform='rotate(36)'/> <!-- 4 -->
+	<use href='#c5r' transform='translate(-2.236067977,3.077683537) rotate(36)'/> <!-- 5 -->
+	<use href='#c5r' transform='translate(1,3.077683537)'/> <!-- 6 -->
+</g>  <!-- all rhombii, stroke -->
+
+<!-- If gridlines wanted, uncomment these. -->
+<!-- Gridlines, start, commented out 
+<path vector-effect='non-scaling-stroke' stroke-width='3px' stroke='#000' opacity='0.2' d='
+	M -6 -7  h 11   M -6 -6  h 11   M -6 -5  h 11   M -6 -4  h 11   M -6 -3  h 11   M -6 -2  h 11   M -6 -1  h 11   M -6 0  h 11   M -6 1  h 11   M -6 2  h 11   M -6 3  h 11   M -6 4  h 11   M -6 5  h 11   M -6 6  h 11
+	M -6 -7  v 14   M -5 -7  v 14   M -4 -7  v 14   M -3 -7  v 14   M -2 -7  v 14   M -1 -7  v 14   M 0 -7  v 14   M 1 -7  v 14   M 2 -7  v 14   M 3 -7  v 14   M 4 -7  v 14
+'/>
+<g font-size='0.2' paint-order='stroke fill' stroke-width='0.04' stroke='#FFF' stroke-linejoin='round' fill='#000' opacity='1' text-anchor='middle'>
+	<g transform='translate(-5,-6)'><text text-anchor='start' alignment-baseline='baseline' transform='scale(1,-1)'>(&#8722;5,&#8722;6)</text></g>
+	<g transform='translate(4,6)'><text text-anchor='end' alignment-baseline='hanging' transform='scale(1,-1)'>(+4,+6)</text></g>
+</g>
+Gridlines, end, commented out -->
+
+</g>  <!-- End of the global reflection -->
+</svg>
