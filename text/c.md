@@ -28,7 +28,7 @@ So, even though this is not &ldquo;critical infrastructure&rdquo;, be careful.
 Run this code only in your compiler&rsquo;s debug mode, as that will block pointer mischief. 
 Yes it will execute slower, but execution is a once-off to generate data: pay the slower to gain the full paranoia.
 
-Also, this code needs to output files and files of output. 
+Also, this code needs to output many files. 
 Give it write access only to one chosen output directory, and block all read access.
 
 Yes, I know that this code is not naughty. 
