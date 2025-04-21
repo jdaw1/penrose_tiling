@@ -194,19 +194,19 @@ And there are other positions for which holes or gaps have a unique completion, 
     For all these output images, `tilingId`&nbsp;is&nbsp;8. 
     For each, `holesFill()` was called only for some values of `tilingId`. 
     To see this, in order, command-click each to open in a new tab, and then command-page-down or -up to move between them (or control instead of command):&nbsp; 
-    [none](../images/Penrose_Rh_08_holesFill_none.svg),&nbsp;&nbsp;&nbsp; 
-    [only&nbsp;0](../images/Penrose_Rh_08_holesFill_only_00.svg),&nbsp;&nbsp;&nbsp; 
-    [&le;&nbsp;1](../images/Penrose_Rh_08_holesFill_to_01.svg),&nbsp;&nbsp;&nbsp; 
-    [&le;&nbsp;2](../images/Penrose_Rh_08_holesFill_to_02.svg),&nbsp;&nbsp;&nbsp; 
-    [&le;&nbsp;3](../images/Penrose_Rh_08_holesFill_to_03.svg),&nbsp;&nbsp;&nbsp; 
-    [&le;&nbsp;4](../images/Penrose_Rh_08_holesFill_to_04.svg),&nbsp;&nbsp;&nbsp; 
-    [&le;&nbsp;5](../images/Penrose_Rh_08_holesFill_to_05.svg),&nbsp;&nbsp;&nbsp; 
-    [&le;&nbsp;6](../images/Penrose_Rh_08_holesFill_to_06.svg),&nbsp;&nbsp;&nbsp; 
-    [&le;&nbsp;7](../images/Penrose_Rh_08_holesFill_to_07.svg),&nbsp;&nbsp;&nbsp; 
-    [all](../images/Penrose_Rh_08_holesFill_all.svg),&nbsp;&nbsp;&nbsp; 
-    [&ge;&nbsp;1](../images/Penrose_Rh_08_holesFill_from_01.svg),&nbsp;&nbsp;&nbsp; 
-    [even](../images/Penrose_Rh_08_holesFill_even.svg),&nbsp;&nbsp;&nbsp; 
-    [odd](../images/Penrose_Rh_08_holesFill_odd.svg).
+    [none](../images/Penrose_Rh_08_holesFill_none.svg?raw=1),&nbsp;&nbsp;&nbsp; 
+    [only&nbsp;0](../images/Penrose_Rh_08_holesFill_only_00.svg?raw=1),&nbsp;&nbsp;&nbsp; 
+    [&le;&nbsp;1](../images/Penrose_Rh_08_holesFill_to_01.svg?raw=1),&nbsp;&nbsp;&nbsp; 
+    [&le;&nbsp;2](../images/Penrose_Rh_08_holesFill_to_02.svg?raw=1),&nbsp;&nbsp;&nbsp; 
+    [&le;&nbsp;3](../images/Penrose_Rh_08_holesFill_to_03.svg?raw=1),&nbsp;&nbsp;&nbsp; 
+    [&le;&nbsp;4](../images/Penrose_Rh_08_holesFill_to_04.svg?raw=1),&nbsp;&nbsp;&nbsp; 
+    [&le;&nbsp;5](../images/Penrose_Rh_08_holesFill_to_05.svg?raw=1),&nbsp;&nbsp;&nbsp; 
+    [&le;&nbsp;6](../images/Penrose_Rh_08_holesFill_to_06.svg?raw=1),&nbsp;&nbsp;&nbsp; 
+    [&le;&nbsp;7](../images/Penrose_Rh_08_holesFill_to_07.svg?raw=1),&nbsp;&nbsp;&nbsp; 
+    [all](../images/Penrose_Rh_08_holesFill_all.svg?raw=1),&nbsp;&nbsp;&nbsp; 
+    [&ge;&nbsp;1](../images/Penrose_Rh_08_holesFill_from_01.svg?raw=1),&nbsp;&nbsp;&nbsp; 
+    [even](../images/Penrose_Rh_08_holesFill_even.svg?raw=1),&nbsp;&nbsp;&nbsp; 
+    [odd](../images/Penrose_Rh_08_holesFill_odd.svg?raw=1).
 
 
     These extra rhombii require neighbourification, and for some of the `holesFill()` patterns, re-de-duplication. 
