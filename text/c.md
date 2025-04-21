@@ -106,10 +106,10 @@ Areas in the following table assume tiles of the same size, with &asymp;&nbsp;1m
 
 To compare to the areas in the table (which assume an edge length of 151mm &asymp;&nbsp;5.9&Prime;), the following are areas of familiar or famous spaces.
 
-* A large domestic room could be 23&#8239;feet&#8239;&times;&#8239;23&#8239;feet =&nbsp;529&#8239;ft&sup2; &asymp; (7m)&sup2; &asymp;&nbsp;49m&sup2;.
-* A [tennis court](https://www.tiauk.org/app/uploads/2021/03/key-dimensions-court-guidance-lta.pdf) is 78&#8239;feet&#8239;&times;&#8239;36&nbsp;feet =&nbsp;2,808ft&sup2; &asymp;&nbsp;261m&sup2;;
-* An NBA [basketball court](https://en.wikipedia.org/wiki/Basketball_court) is 94&#8239;feet&#8239;&times;&#8239;50&nbsp;feet =&nbsp;4,700ft&sup2; &asymp;&nbsp;437m&sup2;;
-* A category-4 [UEFA stadium field](https://en.wikipedia.org/wiki/UEFA_stadium_categories#Differences_between_categories) is 105m&#8239;&times;&#8239;68m =&nbsp;7,140&#8239;m&sup2; =&nbsp;0.714&#8239;ha &asymp;&nbsp;76,854&#8239;ft&sup2; &asymp;&nbsp;1.76&#8239;ac;
+* A large domestic room could be 23&#8239;feet&#8239;&times;&#8239;23&#8239;feet =&nbsp;529&#8239;ft&sup2; &asymp; (7&#8239;m)&sup2; &asymp;&nbsp;49&#8239;m&sup2;.
+* A [tennis court](https://www.tiauk.org/app/uploads/2021/03/key-dimensions-court-guidance-lta.pdf) is 78&#8239;feet&#8239;&times;&#8239;36&nbsp;feet =&nbsp;2,808&#8239;ft&sup2; &asymp;&nbsp;261&#8239;m&sup2;;
+* An NBA [basketball court](https://en.wikipedia.org/wiki/Basketball_court) is 94&#8239;feet&#8239;&times;&#8239;50&nbsp;feet =&nbsp;4,700&#8239;ft&sup2; &asymp;&nbsp;437&#8239;m&sup2;;
+* A category-4 [UEFA stadium field](https://en.wikipedia.org/wiki/UEFA_stadium_categories#Differences_between_categories) is 105&#8239;m&#8239;&times;&#8239;68&#8239;m =&nbsp;7,140&#8239;m&sup2; =&nbsp;0.714&#8239;ha &asymp;&nbsp;76,854&#8239;ft&sup2; &asymp;&nbsp;1.76&#8239;ac;
 * [Trafalgar Square](https://en.wikipedia.org/wiki/Trafalgar_Square) is approximately 1.2&#8239;ha &asymp;&nbsp;3&#8239;ac; 
 * The [Forbidden City](https://en.wikipedia.org/wiki/Forbidden_City) (&#32043;&#31105;&#22478;) &asymp;&nbsp;72&#8239;ha &asymp;&nbsp;178&#8239;ac.
 * In New York, [Central Park](https://en.wikipedia.org/wiki/Central_Park) &asymp;&nbsp;341&#8239;ha &asymp;&nbsp;843&#8239;ac.
