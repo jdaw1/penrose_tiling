@@ -41,7 +41,7 @@ This code should not compile pedanticly as original ANSI&nbsp;C =&nbsp;C89.
 
 ## Changes to the C, mandatory and optional ##
 
-The C code cannot quite be executed directly out of the box: a few trivial customisations are needed, which are in the <kbd>controls.c</kbd> file.
+The C code cannot quite be executed directly out of the box: a few trivial customisations are needed, which are in the [<kbd>controls.c</kbd>](../C/controls.c) file.
 
 * **Most important**: to what directory should output go, as used by <code>fopen(&hellip;, "w")</code>? 
 This is in `filePath_staticConst[]`, which has default value `"/Users/JDAW/Documents/outputPenrose/"`. 
@@ -53,7 +53,7 @@ By default, these call Chrome and Adobe Distiller, in my computer&rsquo;s locati
 These calls are made by the <code>system(&hellip;)</code> command, which could in theory do anything, so check that your (and indeed, my) invocations are safe. 
 Or, to have them do nothing, replace both of these <code>execute_&hellip;</code> routines with a do&#8209;nothing `{return;}`.
 
-The optional customisations are also within the <kbd>controls.c</kbd> file.
+The optional customisations are also within the [<kbd>controls.c</kbd>](../C/controls.c) file.
 
 * There are many file types of possible output, which could be output for all the `tilingId`s. 
 Which is to be output is controlled by `exportQ()`. 
@@ -153,7 +153,7 @@ The following is an overrview, but only an overview, of the workings of the code
 
 ### The header ###
 
-There is a single header file, <kbd>penrose.h</kbd>, which:
+There is a single header file, [<kbd>penrose.h</kbd>](../C/penrose.h), which:
 * `#include`s multiple library headers;
 * declares and defines various `static double const`, 
 * declares types, both simple aliases, `enum`s, and `struct`s;
@@ -162,23 +162,23 @@ There is a single header file, <kbd>penrose.h</kbd>, which:
 
 ### Functions ###
 
-As explained above, in <kbd>controls.c</kbd> are multiple definitions needing, or perhaps needing, user attention. 
+As explained above, in [<kbd>controls.c</kbd>](../C/controls.c) are multiple definitions needing, or perhaps needing, user attention. 
 
-<kbd>main.c</kbd> asks <samp>"What is to be the recursion depth = numTilings?"</samp>, with an `fscanf()` into `numTilings`. 
+[<kbd>main.c</kbd>](../C/main.c) asks <samp>"What is to be the recursion depth = numTilings?"</samp>, with an `fscanf()` into `numTilings`. 
 There is a `malloc()` of this length, and trivial initialisation. 
 The showtime loop: <code>if(&nbsp;tilingId&nbsp;==&nbsp;0&nbsp;)</code> it calls `tiling_initial()`; otherwise passing the previous tiling into `tiling_descendant()`.
 
-These two, `tiling_initial()` and `tiling_descendant()`, are in <kbd>tilings.c</kbd>. 
+These two, `tiling_initial()` and `tiling_descendant()`, are in [<kbd>tilings.c</kbd>](../C/tilings.c). 
 The latter is more complicated; the former creates an initial rhombus and does much as the former. 
 These invoke much work.
 
 * Computes `rhombii_NumMax`, and `malloc()` enough space for that many rhombii. 
 
-* For each rhombus in the ancestor tiling, appends its descendants to the descendant tiling by repeated calls of `rhombus_append_descendants` (which is in <kbd>rhombii.c</kbd>). 
-When almost `rhombii_NumMax` rhombii have been created, space is freed by `rhombii_purgeDuplicates()` (which is in <kbd>purgeDuplicates.c</kbd>), which is called again after the loop. 
+* For each rhombus in the ancestor tiling, appends its descendants to the descendant tiling by repeated calls of `rhombus_append_descendants` (which is in [<kbd>rhombii.c</kbd>](../C/rhombii.c)). 
+When almost `rhombii_NumMax` rhombii have been created, space is freed by `rhombii_purgeDuplicates()` (which is in [<kbd>purgeDuplicates.c</kbd>](../C/purgeDuplicates.c)), which is called again after the loop. 
 
-* Then `neighbours_populate()` (which is in <kbd>neighbours.c</kbd>), and self-evidently populates the neighbours of each rhombus. 
-Both this and the earlier duplicate-purging work with rhombii sorted by the *y* position, as done by `rhombii_sort()` in <kbd>sortRhombii.c</kbd>.
+* Then `neighbours_populate()` (which is in [<kbd>neighbours.c</kbd>](../C/neighbours.c)), and self-evidently populates the neighbours of each rhombus. 
+Both this and the earlier duplicate-purging work with rhombii sorted by the *y* position, as done by `rhombii_sort()` in [<kbd>sortRhombii.c</kbd>](../C/sortRhombii.c).
 
 * The next work is the most interesting. There is a call of `holesFill()`. 
 Let&rsquo;s start with two examples, both using [the example tiling](../images/Penrose_Rh_10_clipped_norths.svg) at the top of the [Paths page](paths.md). 
@@ -211,25 +211,25 @@ And there are other positions for which holes or gaps have a unique completion, 
 
     These extra rhombii require neighbourification, and for some of the `holesFill()` patterns, re-de-duplication. 
 
-* <kbd>paths.c</kbd> finds paths. Naturally enough, start at an as-yet-unpathed fat rhombus, and trace using neighbours. If it is an open path, then on coming to an end it restarts from there. For closed paths, there a rhombus must be chosen to have zero `.withinPathNum`, so to be the first rhombus of the path. This is chosen by `rhWithinPathMoreSpecial()` to be one of the rhombii that is as close as possible to the centre of the path, and in the first quadrant.
+* [<kbd>paths.c</kbd>](../C/paths.c) finds paths. Naturally enough, start at an as-yet-unpathed fat rhombus, and trace using neighbours. If it is an open path, then on coming to an end it restarts from there. For closed paths, there a rhombus must be chosen to have zero `.withinPathNum`, so to be the first rhombus of the path. This is chosen by `rhWithinPathMoreSpecial()` to be one of the rhombii that is as close as possible to the centre of the path, and in the first quadrant.
 
 * Which is the smallest enclosing path?  But the level of the question varies.  
     - Open paths cannot have an enclosing path.
     - Closed paths can, though not all do. So for fat rhombii, enclosing-path is at the level of the path.
     - But for thin rhombii, it is at the level of the rhombus. For thin rhombii, find a touching fat, and either the thin is immediately inside that fat&rsquo;s path, or the answer is the same as for that fat&rsquo;s path.
 
-    Insideness is computed in <kbd>insideness.c</kbd>, which makes much use of <kbd>windingNumber.c</kbd>. 
+    Insideness is computed in [<kbd>insideness.c</kbd>](../C/insideness.c), which makes much use of [<kbd>windingNumber.c</kbd>](../C/windingNumber.c). 
     Because there are many candidate enclosing paths to be tested, this is potentially slow.
 
 * For each length of path, how many paths are there? 
     How many fats and thins are enclosed? 
     What are the minimum and maximum radii? 
-    This data is gathered by <kbd>pathStats.c</kbd>.
+    This data is gathered by [<kbd>pathStats.c</kbd>](../C/pathStats.c).
 
-* When making `holesFill()`, some properties were observed, and were checked over some good-size tilings by a routine `verifyHypothesisedProperties()` in <kbd>propertyVerifying.c</kbd>. 
+* When making `holesFill()`, some properties were observed, and were checked over some good-size tilings by a routine `verifyHypothesisedProperties()` in [<kbd>propertyVerifying.c</kbd>](../C/propertyVerifying.c). 
     The routine remains, in case similar is needed, but currently does nothing. 
 
-* Arrays needs sorting, requiring renumbering of pointers into into them. Already mentioned are `rhombii_sort()` in <kbd>sortRhombii.c</kbd>; also `paths_sort()` in <kbd>sortPaths.c</kbd>; and `pathStats_sort()` in <kbd>sortPathStats.c</kbd>.
+* Arrays needs sorting, requiring renumbering of pointers into into them. Already mentioned are `rhombii_sort()` in [<kbd>sortRhombii.c</kbd>](../C/sortRhombii.c); also `paths_sort()` in [<kbd>sortPaths.c</kbd>](../C/sortPaths.c); and `pathStats_sort()` in [<kbd>sortPathStats.c</kbd>](../C/sortPathStats.c).
 
 * PostScript ([wikipedia](http://en.wikipedia.org/wiki/PostScript), [Adobe&rsquo;s&nbsp;PostScript Language Reference 3<small><sup>rd</sup></small>&nbsp;edition](https://www.adobe.com/jp/print/postscript/pdfs/PLRM.pdf)) is an an early-1980s printer-control language. 
     It is a delightful simple clean text-based user-alterable [Turing-complete](https://en.wikipedia.org/wiki/Turing_completeness) means of making [PDF](https://en.wikipedia.org/wiki/PDF)s. 
@@ -238,25 +238,25 @@ And there are other positions for which holes or gaps have a unique completion, 
     For example, arrays and data structures have a maximum length of 2<small><sup>16</sup></small>&nbsp;&minus;&nbsp;1 =&nbsp;65,535 ([PLRM3, Appendix&nbsp;B, p739](https://www.adobe.com/jp/print/postscript/pdfs/PLRM.pdf#page=753), table&nbsp;B.1, row&nbsp;3). 
     That is, for all `tilingId`&#8239;&ge;&#8239;10, it is not possible to output all the data in a PostScript object. 
     Instead a &lsquo;wanted&rsquo; subset is chosen. 
-    In <kbd>controls.c</kbd> there are functions `wantedPostScriptCentre()` which returns the centre of the desired region, and `wantedPostScriptAspect()` which returns the desired _y_/_x_ aspect ratio. 
+    In [<kbd>controls.c</kbd>](../C/controls.c) there are functions `wantedPostScriptCentre()` which returns the centre of the desired region, and `wantedPostScriptAspect()` which returns the desired _y_/_x_ aspect ratio. 
     The largest possible area is then chosen, such that there are &le;&#8239;65535 rhombii (sometimes _x_ or _y_ equalities compel the number of rhombii to be slightly less than 65535). 
     (The other two PostScript output formats merely paint one thing after another, so never need a large PostScript array, and hence can cope with lots of stuff.)
 
-* Some minor and small administration functions are in <kbd>smalls.c</kbd>. Numbers comparisons (which perhaps should have been overloaded, but which weren&rsquo;t): `max_2()`, `min_2()`, `max_4()`, `min_4()`, `avg_2()`, `median_3()`, `median_4()`. Point comparisons (ditto): `points_different_2()`, `points_same_2()`, `points_different_3()`, `points_same_3()`, `points_different_4()`, `points_same_4()`, `collinear()`. Small exporting helpers: `newlinesInString()`, `fileExtension_from_ExportFormat()`. 
+* Some minor and small administration functions are in [<kbd>smalls.c</kbd>](../C/smalls.c). Numbers comparisons (which perhaps should have been overloaded, but which weren&rsquo;t): `max_2()`, `min_2()`, `max_4()`, `min_4()`, `avg_2()`, `median_3()`, `median_4()`. Point comparisons (ditto): `points_different_2()`, `points_same_2()`, `points_different_3()`, `points_same_3()`, `points_different_4()`, `points_same_4()`, `collinear()`. Small exporting helpers: `newlinesInString()`, `fileExtension_from_ExportFormat()`. 
 
 
 ### Exporting code ###
 
-* There is occasional need to `sprintf()` to a string, for subsequent use. So <kbd>exportTilings.c</kbd> creates `scratchString[]` of length 32767, which many export routines access with `extern char scratchString[];`.
+* There is occasional need to `sprintf()` to a string, for subsequent use. So [<kbd>exportTilings.c</kbd>](../C/exportTilings.c) creates `scratchString[]` of length 32767, which many export routines access with `extern char scratchString[];`.
 
-* Some of the output files are large. There should be some effort to not enlarge them needlessly. In particular, the likes of &ldquo;<samp>1.000000000</samp>&rdquo; should be trimmed to &ldquo;<samp>1</samp>&rdquo;. This should not be done with scientific notation: if an _x_ or _y_ value is almost zero, then it should be &ldquo;<samp>0</samp>&rdquo; rather than &ldquo;<samp>-1.234567E-89</samp>&rdquo;. So there is a routine `stringClean()`, in <kbd>stringClean.c</kbd>, which cleans a string in this style. Almost always, the string passed to this is `scratchString`. 
+* Some of the output files are large. There should be some effort to not enlarge them needlessly. In particular, the likes of &ldquo;<samp>1.000000000</samp>&rdquo; should be trimmed to &ldquo;<samp>1</samp>&rdquo;. This should not be done with scientific notation: if an _x_ or _y_ value is almost zero, then it should be &ldquo;<samp>0</samp>&rdquo; rather than &ldquo;<samp>-1.234567E-89</samp>&rdquo;. So there is a routine `stringClean()`, in [<kbd>stringClean.c</kbd>](../C/stringClean.c), which cleans a string in this style. Almost always, the string passed to this is `scratchString`. 
 
 
 There are two very different types of export format. 
 
-* Those with `enum` `ExportFormat` values {`JSON`, `TSV`, `PS_data`} hold data from multiple tilings, for subsequent processing. In <kbd>exportTilings.c</kbd> it loops over tilings, calling code in <kbd>exportTiling.c</kbd>. Each of these loops over arrays, so repeatedly calling code in <kbd>exportPathStats.c</kbd>, in <kbd>exportPath.c</kbd>, and in <kbd>exportRh.c</kbd>. For `TSV`the passed item can be a `NULL` pointer, instructing thar that the header row be output.
+* Those with `enum` `ExportFormat` values {`JSON`, `TSV`, `PS_data`} hold data from multiple tilings, for subsequent processing. In [<kbd>exportTilings.c</kbd>](../C/exportTilings.c) it loops over tilings, calling code in [<kbd>exportTiling.c</kbd>](../C/exportTiling.c). Each of these loops over arrays, so repeatedly calling code in <kbd>exportPathStats.c</kbd>, in [<kbd>exportPath.c</kbd>](../C/exportPath.c), and in [<kbd>exportRh.c</kbd>](../C/exportRh.c). For `TSV`the passed item can be a `NULL` pointer, instructing that the header row be output.
 
-* Those with `enum` `ExportFormat` values {`PS_rhomb`, `PS_arcs`, `SVG_rhomb`, `SVG_arcs`} output something useful as-is. That is, an SVG can be viewed; a PostScript file can be distilled (using [Adobe Distiller](https://en.wikipedia.org/wiki/Adobe_Distiller) or [Ghostscript](https://en.wikipedia.org/wiki/Ghostscript)) into a PDF. For these, code in <kbd>export_SoloTiling.c</kbd> calls the appropriate one of <kbd>export_PaintArcsPS.c</kbd>, <kbd>export_PaintArcsSVG.c</kbd>, <kbd>export_PaintRhPS.c</kbd>, <kbd>export_PaintRhSVG.c</kbd>. Some SVG processing is in <kbd>Smalls_SVG.c</kbd>.
+* Those with `enum` `ExportFormat` values {`PS_rhomb`, `PS_arcs`, `SVG_rhomb`, `SVG_arcs`} output something useful as-is. That is, an SVG can be viewed; a PostScript file can be distilled (using [Adobe Distiller](https://en.wikipedia.org/wiki/Adobe_Distiller) or [Ghostscript](https://en.wikipedia.org/wiki/Ghostscript)) into a PDF. For these, code in [<kbd>export_SoloTiling.c</kbd>](../C/export_SoloTiling.c) calls the appropriate one of [<kbd>export_PaintArcsPS.c</kbd>](../C/export_PaintArcsPS.c), [<kbd>export_PaintArcsSVG.c</kbd>](../C/export_PaintArcsSVG.c), [<kbd>export_PaintRhPS.c</kbd>](../C/export_PaintRhPS.c), [<kbd>export_PaintRhSVG.c</kbd>](../C/export_PaintRhSVG.c). Some SVG processing is in [<kbd>Smalls_SVG.c</kbd>](../C/Smalls_SVG.c).
 
 
 ---
