@@ -81,7 +81,7 @@ In it:
 
 Observe that the length of a long path varies as the square root of its area (which is a linear measure) to the power of ln(2)&#8239;/&#8239;ln(&phi;)&nbsp;&asymp;&nbsp;1.44042. 
 That is, long paths are approximately 1.44 dimensional. 
-(Trivially ln(2)&#8239;/&#8239;ln(&phi;)&nbsp;&NotElement;&nbsp;&Qopf;, but I don&rsquo;t know whether [algabraic](http://en.wikipedia.org/wiki/Algebraic_number).) 
+(Trivially ln(2)&#8239;/&#8239;ln(&phi;)&nbsp;&NotElement;&nbsp;&Qopf;, but I don&rsquo;t know whether [algebraic](http://en.wikipedia.org/wiki/Algebraic_number).) 
 
 The observed data is consistent with, in a suffiently large tiling, the number of closed paths of each length being [geometrically distributed](http://en.wikipedia.org/wiki/Geometric_distribution), with decay 
 &frac12;(3&nbsp;&minus;&nbsp;&radic;5) &asymp;&nbsp;0.381966. 

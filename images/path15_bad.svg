@@ -12,8 +12,8 @@
 </g>
 
 <g font-family='sans-serif' fill='#E00' text-anchor='left'>
-	<g font-size='0.15em' opacity='0.8' transform='translate(-1.8,1.62)'><text alignment-baseline='middle'>&#10008;</text></g>
-	<g font-size='0.03em' opacity='0.8' transform='translate(-1.7,-1.15)' font-weight='bold'><text alignment-baseline='middle'>Wrong!</text></g>
+	<g font-size='0.03em' opacity='0.75' transform='translate(-1.7,-1.63803)' font-weight='bold'><text dominant-baseline='hanging'>Wrong!</text></g>
+	<g font-size='0.16em' opacity='0.75' transform='translate(-1.8,2)'><text vertical-align='text-bottom'>&#10008;</text></g>
 </g>
 
 </svg>

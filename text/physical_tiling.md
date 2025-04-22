@@ -87,14 +87,20 @@ But it would be wrong.
 In a correct Penrose tiling, never do two parallel fats touch. 
 That is, the following is forbidden. 
 
-<center><img align="center" width="384" height="144.29" src="../images/two_forbidden_fats.svg"></center>
+
+<div align="center">
+
+<img align="center" width="384" height="144.29" src="../images/two_forbidden_fats.svg"></center>
+
+</div>
 
 In the following the left diagram has five visible errors, so is a particularly obvious instance of the problem.
 
-<center>
-	<img align="center" width="192" height="201.7726" src="../images/path15_bad.svg"> &nbsp; &nbsp; 
-	<img align="center" width="192" height="201.7726" src="../images/path15_good.svg">
-</center>
+<div align="center">
+
+<img align="center" width="192" height="201.7726" src="../images/path15_bad.svg"> &nbsp; &nbsp; <img align="center" width="192" height="201.7726" src="../images/path15_good.svg">
+
+</div>
 
 If two fats are parallel and touching, whether touching at an edge or a vertex, then this is an error, perhaps caused by mis&#8209;rotation of a round&nbsp;5 path.
 

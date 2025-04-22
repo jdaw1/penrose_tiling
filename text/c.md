@@ -247,14 +247,14 @@ And there are other positions for which holes or gaps have a unique completion, 
 
 ### Exporting code ###
 
-* There is occasional need to `sprintf()` to a string, for subsequent use. So [<kbd>exportTilings.c</kbd>](../C/exportTilings.c) creates `scratchString[]` of length 32767, which many export routines access with `extern char scratchString[];`.
+* There is occasional need to `sprintf()` to a string, for subsequent use. So [<kbd>main.c</kbd>](../C/main.c) creates `scratchString[]` of length 32767, which many export routines access with <code>extern&nbsp;char&nbsp;scratchString[];</code>.
 
 * Some of the output files are large. There should be some effort to not enlarge them needlessly. In particular, the likes of &ldquo;<samp>1.000000000</samp>&rdquo; should be trimmed to &ldquo;<samp>1</samp>&rdquo;. This should not be done with scientific notation: if an _x_ or _y_ value is almost zero, then it should be &ldquo;<samp>0</samp>&rdquo; rather than &ldquo;<samp>-1.234567E-89</samp>&rdquo;. So there is a routine `stringClean()`, in [<kbd>stringClean.c</kbd>](../C/stringClean.c), which cleans a string in this style. Almost always, the string passed to this is `scratchString`. 
 
 
 There are two very different types of export format. 
 
-* Those with `enum` `ExportFormat` values {`JSON`, `TSV`, `PS_data`} hold data from multiple tilings, for subsequent processing. In [<kbd>exportTilings.c</kbd>](../C/exportTilings.c) it loops over tilings, calling code in [<kbd>exportTiling.c</kbd>](../C/exportTiling.c). Each of these loops over arrays, so repeatedly calling code in [<kbd>exportPathStats.c</kbd>](../C/exportPathStats.c), in [<kbd>exportPath.c</kbd>](../C/exportPath.c), and in [<kbd>exportRh.c</kbd>](../C/exportRh.c). For `TSV`the passed item can be a `NULL` pointer, instructing that the header row be output.
+* Those with `enum` `ExportFormat` values {`JSON`, `TSV`, `PS_data`} hold data from multiple tilings, for subsequent processing. In [<kbd>exportTilings.c</kbd>](../C/exportTilings.c) it loops over tilings, calling code in [<kbd>exportTiling.c</kbd>](../C/exportTiling.c). Each of these loops over arrays, so repeatedly calling code in [<kbd>exportPathStats.c</kbd>](../C/exportPathStats.c), in [<kbd>exportPath.c</kbd>](../C/exportPath.c), and in [<kbd>exportRh.c</kbd>](../C/exportRh.c). For `TSV` the passed item can be a `NULL` pointer, instructing that the header row be output.
 
 * Those with `enum` `ExportFormat` values {`PS_rhomb`, `PS_arcs`, `SVG_rhomb`, `SVG_arcs`} output something useful as-is. That is, an SVG can be viewed; a PostScript file can be distilled (using [Adobe Distiller](https://en.wikipedia.org/wiki/Adobe_Distiller) or [Ghostscript](https://en.wikipedia.org/wiki/Ghostscript)) into a PDF. For these, code in [<kbd>export_SoloTiling.c</kbd>](../C/export_SoloTiling.c) calls the appropriate one of [<kbd>export_PaintArcsPS.c</kbd>](../C/export_PaintArcsPS.c), [<kbd>export_PaintArcsSVG.c</kbd>](../C/export_PaintArcsSVG.c), [<kbd>export_PaintRhPS.c</kbd>](../C/export_PaintRhPS.c), [<kbd>export_PaintRhSVG.c</kbd>](../C/export_PaintRhSVG.c). Some SVG processing is in [<kbd>Smalls_SVG.c</kbd>](../C/Smalls_SVG.c).
 
