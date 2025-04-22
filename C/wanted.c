@@ -7,17 +7,17 @@
 #define PostScriptArrayLengthMax 65535
 /*
 	PostScript has a maximum array length of 65535, (per PLRM3, Appendix B, p739, table B.1, row 3), so
-	each tiling's PostScript data can have at most that many rhombii. So for the ExportFormat PS_data
-	there is a need to restrict output to those rhombii most wanted.
+	each tiling's PostScript data can have at most that many rhombi. So for the ExportFormat PS_data
+	there is a need to restrict output to those rhombi most wanted.
 */
 
 double const rhAreaAvg = 0.8968; // = (sqrt(5) + sqrt(10 - sqrt(5)*2) - 1) / 4  ~=  0.8968022466674
 
-long int rhombii_count_wanted(Tiling * const tlngP,  double const halfWidth,  bool const assignWantedness)
+long int rhombi_count_wanted(Tiling * const tlngP,  double const halfWidth,  bool const assignWantedness)
 {
 	RhombId rhId;
 	Rhombus *rhP;
-	long int numRhombii = 0;
+	long int numRhombi = 0;
 
 	double const xMin = tlngP->wantedPostScriptCentre.x  -  halfWidth;
 	double const xMax = tlngP->wantedPostScriptCentre.x  +  halfWidth;
@@ -26,7 +26,7 @@ long int rhombii_count_wanted(Tiling * const tlngP,  double const halfWidth,  bo
 
 	for( rhId = 0  ;  rhId < tlngP->numFats + tlngP->numThins  ;  rhId++ )
 	{
-		rhP = &(tlngP->rhombii[rhId]);
+		rhP = &(tlngP->rhombi[rhId]);
 		if(
 			rhP->xMax > xMin  &&
 			rhP->yMax > yMin  &&
@@ -34,7 +34,7 @@ long int rhombii_count_wanted(Tiling * const tlngP,  double const halfWidth,  bo
 			rhP->yMin < yMax
 		)
 		{
-			numRhombii++;
+			numRhombi++;
 			if( assignWantedness )
 			{
 				rhP->wantedPostScript = true;
@@ -43,8 +43,8 @@ long int rhombii_count_wanted(Tiling * const tlngP,  double const halfWidth,  bo
 			} // if( assignWantedness )
 		}  // in bounds
 	}  // for( rhId ... )
-	return numRhombii;
-}  // rhombii_count_wanted()
+	return numRhombi;
+}  // rhombi_count_wanted()
 
 
 double wanted_halfWidth(Tiling * const tlngP)
@@ -67,22 +67,22 @@ double wanted_halfWidth(Tiling * const tlngP)
 		int8_t loopCount;
 
 		halfWidthSmall_Min = halfWidthSmall = tlngP->edgeLength * sqrt(PostScriptArrayLengthMax * rhAreaAvg /tlngP->wantedPostScriptAspect);
-		countSmall = rhombii_count_wanted(tlngP,  halfWidthSmall,  false);
+		countSmall = rhombi_count_wanted(tlngP,  halfWidthSmall,  false);
 		if( countSmall == PostScriptArrayLengthMax )
 			return halfWidthSmall;
 		while(countSmall > PostScriptArrayLengthMax )
 		{
 			halfWidthSmall_Min = halfWidthSmall = 0.9 * halfWidthSmall;
-			countSmall = rhombii_count_wanted(tlngP,  halfWidthSmall,  false);
+			countSmall = rhombi_count_wanted(tlngP,  halfWidthSmall,  false);
 		}
 
-		countLarge = rhombii_count_wanted(tlngP,  halfWidthLarge,  false);
+		countLarge = rhombi_count_wanted(tlngP,  halfWidthLarge,  false);
 		if( countLarge == PostScriptArrayLengthMax )
 			return halfWidthLarge;
 		while(countLarge < PostScriptArrayLengthMax )
 		{
 			halfWidthLarge = 1.1 * halfWidthLarge;
-			countLarge = rhombii_count_wanted(tlngP,  halfWidthLarge,  false);
+			countLarge = rhombi_count_wanted(tlngP,  halfWidthLarge,  false);
 		}
 
 		for( loopCount = 0  ;  loopCount < 32  ;  loopCount++ )
@@ -100,7 +100,7 @@ double wanted_halfWidth(Tiling * const tlngP)
 				fractionBetween = 0.9375;
 
 			halfWidthGuess = halfWidthLarge * fractionBetween  +  (1 - fractionBetween) * halfWidthSmall;
-			countGuess = rhombii_count_wanted(tlngP,  halfWidthGuess,  false);
+			countGuess = rhombi_count_wanted(tlngP,  halfWidthGuess,  false);
 			if( countGuess < PostScriptArrayLengthMax )
 			{
 				halfWidthSmall = halfWidthGuess;
@@ -139,11 +139,11 @@ void wanted_populate(Tiling * const tlngP)
 	tlngP->wantedPostScriptHalfWidth = wanted_halfWidth(tlngP);
 
 	for( rhId = 0  ;  rhId < tlngP->numFats + tlngP->numThins  ;  rhId++ )
-		tlngP->rhombii[rhId].wantedPostScript = false;
+		tlngP->rhombi[rhId].wantedPostScript = false;
 	for( pathId = 0  ;  pathId < tlngP->numPathsClosed + tlngP->numPathsOpen  ;  pathId ++ )
 		tlngP->path[pathId].wantedPostScript = false;
 
-	tlngP->wantedPostScriptNumberRhombii = rhombii_count_wanted(tlngP,  tlngP->wantedPostScriptHalfWidth,  true);
+	tlngP->wantedPostScriptNumberRhombi = rhombi_count_wanted(tlngP,  tlngP->wantedPostScriptHalfWidth,  true);
 
 	tlngP->wantedPostScriptNumberPaths = 0;
 	for( pathId = 0  ;  pathId < tlngP->numPathsClosed + tlngP->numPathsOpen  ;  pathId ++ )

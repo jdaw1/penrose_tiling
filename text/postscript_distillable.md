@@ -18,7 +18,7 @@ Documentation pages:&nbsp;
 
 <table>
 <tr>
-	<th align="right">.ps, Rhombii:</th>
+	<th align="right">.ps, Rhombi:</th>
 	<td><a href="../postscript_pdf/Penrose_Rh_00.ps">00</a></td>
 	<td><a href="../postscript_pdf/Penrose_Rh_01.ps">01</a></td>
 	<td><a href="../postscript_pdf/Penrose_Rh_02.ps">02</a></td>
@@ -31,7 +31,7 @@ Documentation pages:&nbsp;
 	<td><a href="../postscript_pdf/Penrose_Rh_09.ps">09</a></td>
 	<td><a href="../postscript_pdf/Penrose_Rh_10.ps">10</a></td>
 </tr><tr>
-	<th align="right">.pdf, Rhombii:</th>
+	<th align="right">.pdf, Rhombi:</th>
 	<td><a href="../postscript_pdf/Penrose_Rh_00.pdf">00</a></td>
 	<td><a href="../postscript_pdf/Penrose_Rh_01.pdf">01</a></td>
 	<td><a href="../postscript_pdf/Penrose_Rh_02.pdf">02</a></td>
@@ -97,7 +97,7 @@ For these purposes, any would be satisfactory (but Adobe is expensive).
 
 ## PostScript Files ##
 
-The C code exports distillable files for both rhombii and arcs. 
+The C code exports distillable files for both rhombi and arcs. 
 (For an explanation of arcs see the [SVG&nbsp;documentation](svg.md).)
 
 Much of the control of these codes are quite similar.

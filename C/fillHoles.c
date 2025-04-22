@@ -65,12 +65,12 @@ static inline int8_t fillTypeA(Tiling * const tlngP, RhombId const rhId_A)
 	int8_t    nghbrNum;
 	Neighbour *nghbrP;
 
-	if( Thin != tlngP->rhombii[rhId_A].physique  ||  tlngP->rhombii[rhId_A].numNeighbours < 2 )  // Required qualities
+	if( Thin != tlngP->rhombi[rhId_A].physique  ||  tlngP->rhombi[rhId_A].numNeighbours < 2 )  // Required qualities
 		return 0;
 
-	for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombii[rhId_A].numNeighbours  ;  nghbrNum ++ )
+	for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombi[rhId_A].numNeighbours  ;  nghbrNum ++ )
 	{
-		nghbrP = &(tlngP->rhombii[rhId_A].neighbours[nghbrNum]);
+		nghbrP = &(tlngP->rhombi[rhId_A].neighbours[nghbrNum]);
 		if( ! nghbrP->touchesN )
 		{
 			// South
@@ -87,18 +87,18 @@ static inline int8_t fillTypeA(Tiling * const tlngP, RhombId const rhId_A)
 		return 0;
 
 	// B's neighbours
-	for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombii[rhId_B].numNeighbours  ;  nghbrNum ++ )
+	for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombi[rhId_B].numNeighbours  ;  nghbrNum ++ )
 	{
-		nghbrP = &(tlngP->rhombii[rhId_B].neighbours[nghbrNum]);
+		nghbrP = &(tlngP->rhombi[rhId_B].neighbours[nghbrNum]);
 		if( nghbrP->touchesN )
 		{
 			if( nghbrP->touchesE )  // North-east
 			{
 				rhId_D = nghbrP->rhId;
-				if( tlngP->rhombii[rhId_D].physique != Thin
-				||  tlngP->rhombii[rhId_D].neighbours[ nghbrP->nghbrsNghbrNum ].rhId     != rhId_B
-				||  tlngP->rhombii[rhId_D].neighbours[ nghbrP->nghbrsNghbrNum ].touchesN != true
-				||  tlngP->rhombii[rhId_D].neighbours[ nghbrP->nghbrsNghbrNum ].touchesE != true )
+				if( tlngP->rhombi[rhId_D].physique != Thin
+				||  tlngP->rhombi[rhId_D].neighbours[ nghbrP->nghbrsNghbrNum ].rhId     != rhId_B
+				||  tlngP->rhombi[rhId_D].neighbours[ nghbrP->nghbrsNghbrNum ].touchesN != true
+				||  tlngP->rhombi[rhId_D].neighbours[ nghbrP->nghbrsNghbrNum ].touchesE != true )
 					return 0;
 			}  // North-east
 			else
@@ -122,9 +122,9 @@ static inline int8_t fillTypeA(Tiling * const tlngP, RhombId const rhId_A)
 	}  // for( nghbrNum ... )
 
 	// C's neighbours
-	for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombii[rhId_C].numNeighbours  ;  nghbrNum ++ )
+	for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombi[rhId_C].numNeighbours  ;  nghbrNum ++ )
 	{
-		nghbrP = &(tlngP->rhombii[rhId_C].neighbours[nghbrNum]);
+		nghbrP = &(tlngP->rhombi[rhId_C].neighbours[nghbrNum]);
 		if( nghbrP->touchesN )
 		{
 			if( nghbrP->touchesE )  // North-east
@@ -136,10 +136,10 @@ static inline int8_t fillTypeA(Tiling * const tlngP, RhombId const rhId_A)
 			{
 				// North-west
 				rhId_E = nghbrP->rhId;
-				if( tlngP->rhombii[rhId_E].physique != Thin
-				||  tlngP->rhombii[rhId_E].neighbours[ nghbrP->nghbrsNghbrNum ].rhId     != rhId_C
-				||  tlngP->rhombii[rhId_E].neighbours[ nghbrP->nghbrsNghbrNum ].touchesN != true
-				||  tlngP->rhombii[rhId_E].neighbours[ nghbrP->nghbrsNghbrNum ].touchesE != false )
+				if( tlngP->rhombi[rhId_E].physique != Thin
+				||  tlngP->rhombi[rhId_E].neighbours[ nghbrP->nghbrsNghbrNum ].rhId     != rhId_C
+				||  tlngP->rhombi[rhId_E].neighbours[ nghbrP->nghbrsNghbrNum ].touchesN != true
+				||  tlngP->rhombi[rhId_E].neighbours[ nghbrP->nghbrsNghbrNum ].touchesE != false )
 					return 0;
 			}  // North-west
 		}  // North
@@ -157,30 +157,30 @@ static inline int8_t fillTypeA(Tiling * const tlngP, RhombId const rhId_A)
 		}  // South
 	}  // for( nghbrNum ... )
 
-	if( points_different_3(tlngP,  tlngP->rhombii[rhId_A].south,  tlngP->rhombii[rhId_B].south,  tlngP->rhombii[rhId_C].south) )
+	if( points_different_3(tlngP,  tlngP->rhombi[rhId_A].south,  tlngP->rhombi[rhId_B].south,  tlngP->rhombi[rhId_C].south) )
 		return 0;  // This test should be redundant
 
-	double const new_S_x = median_3( tlngP->rhombii[rhId_A].south.x,  tlngP->rhombii[rhId_B].south.x,  tlngP->rhombii[rhId_C].south.x);  // Precision fussiness
-	double const new_S_y = median_3( tlngP->rhombii[rhId_A].south.y,  tlngP->rhombii[rhId_B].south.y,  tlngP->rhombii[rhId_C].south.y);
+	double const new_S_x = median_3( tlngP->rhombi[rhId_A].south.x,  tlngP->rhombi[rhId_B].south.x,  tlngP->rhombi[rhId_C].south.x);  // Precision fussiness
+	double const new_S_y = median_3( tlngP->rhombi[rhId_A].south.y,  tlngP->rhombi[rhId_B].south.y,  tlngP->rhombi[rhId_C].south.y);
 
 	RhombId const rhId_new = rhombus_append(
 		tlngP,
 		Fat,
 		'A' + 1 - 'A',  // filledType
-		tlngP->rhombii[rhId_B].east.x  +  tlngP->rhombii[rhId_C].west.x  -  new_S_x,
-		tlngP->rhombii[rhId_B].east.y  +  tlngP->rhombii[rhId_C].west.y  -  new_S_y,
+		tlngP->rhombi[rhId_B].east.x  +  tlngP->rhombi[rhId_C].west.x  -  new_S_x,
+		tlngP->rhombi[rhId_B].east.y  +  tlngP->rhombi[rhId_C].west.y  -  new_S_y,
 		new_S_x,
 		new_S_y
 	);
 	if( rhId_new < 0 )
 		return 0;
 
-	twoRhombii_Neighbourify(tlngP, rhId_new, rhId_B);
-	twoRhombii_Neighbourify(tlngP, rhId_new, rhId_C);
+	twoRhombi_Neighbourify(tlngP, rhId_new, rhId_B);
+	twoRhombi_Neighbourify(tlngP, rhId_new, rhId_C);
 	if( rhId_D >= 0 )
-		twoRhombii_Neighbourify(tlngP, rhId_new, rhId_D);
+		twoRhombi_Neighbourify(tlngP, rhId_new, rhId_D);
 	if( rhId_E >= 0 )
-		twoRhombii_Neighbourify(tlngP, rhId_new, rhId_E);
+		twoRhombi_Neighbourify(tlngP, rhId_new, rhId_E);
 
 	return 1;
 }  // fillTypeA()
@@ -201,15 +201,15 @@ static inline int8_t fillTypeB(Tiling * const tlngP, RhombId const rhId_Start)
 	rhIds[0] = rhId_Start;  rhIds[1] = -1;  rhIds[2] = -1;  rhIds[3] = -1;
 	for( fatNum = 0  ;  fatNum < 4  ;  fatNum ++ )
 	{
-		if( Fat != tlngP->rhombii[rhIds[fatNum]].physique )
+		if( Fat != tlngP->rhombi[rhIds[fatNum]].physique )
 			return 0;
-		if( tlngP->rhombii[rhIds[fatNum]].numNeighbours != (fatNum == 1 || fatNum == 2  ?  4  :  3) )
+		if( tlngP->rhombi[rhIds[fatNum]].numNeighbours != (fatNum == 1 || fatNum == 2  ?  4  :  3) )
 			return 0;
 
 		thin_NE = thin_NW = false;
-		for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombii[rhIds[fatNum]].numNeighbours  ;  nghbrNum ++ )
+		for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombi[rhIds[fatNum]].numNeighbours  ;  nghbrNum ++ )
 		{
-			nghbrP = &(tlngP->rhombii[rhIds[fatNum]].neighbours[nghbrNum]);
+			nghbrP = &(tlngP->rhombi[rhIds[fatNum]].neighbours[nghbrNum]);
 			if( nghbrP->touchesN )
 			{
 				// North
@@ -225,7 +225,7 @@ static inline int8_t fillTypeB(Tiling * const tlngP, RhombId const rhId_Start)
 					if( fatNum == 3 )
 					{
 						thin_3 = nghbrP->rhId;
-						if( tlngP->rhombii[thin_3].numNeighbours >= 4 )
+						if( tlngP->rhombi[thin_3].numNeighbours >= 4 )
 							return 0;
 					}  // if( fatNum == 3 )
 				}  // East
@@ -236,7 +236,7 @@ static inline int8_t fillTypeB(Tiling * const tlngP, RhombId const rhId_Start)
 					if( fatNum == 0 )
 					{
 						thin_0 = nghbrP->rhId;
-						if( tlngP->rhombii[thin_0].numNeighbours >= 4 )
+						if( tlngP->rhombi[thin_0].numNeighbours >= 4 )
 							return 0;
 					}  // if( fatNum == 0 )
 				}  // West
@@ -272,10 +272,10 @@ static inline int8_t fillTypeB(Tiling * const tlngP, RhombId const rhId_Start)
 		return 0;
 
 	if( points_different_4(tlngP,
-		tlngP->rhombii[rhIds[0]].south,
-		tlngP->rhombii[rhIds[1]].south,
-		tlngP->rhombii[rhIds[2]].south,
-		tlngP->rhombii[rhIds[3]].south
+		tlngP->rhombi[rhIds[0]].south,
+		tlngP->rhombi[rhIds[1]].south,
+		tlngP->rhombi[rhIds[2]].south,
+		tlngP->rhombi[rhIds[3]].south
 	) )
 		return 0;
 
@@ -283,28 +283,28 @@ static inline int8_t fillTypeB(Tiling * const tlngP, RhombId const rhId_Start)
 		tlngP,
 		Fat,
 		'B' + 1 - 'A',  // filledType
-		avg_2( tlngP->rhombii[thin_0].east.x,  tlngP->rhombii[thin_3].west.x ),
-		avg_2( tlngP->rhombii[thin_0].east.y,  tlngP->rhombii[thin_3].west.y ),
+		avg_2( tlngP->rhombi[thin_0].east.x,  tlngP->rhombi[thin_3].west.x ),
+		avg_2( tlngP->rhombi[thin_0].east.y,  tlngP->rhombi[thin_3].west.y ),
 		median_4(
-			tlngP->rhombii[rhIds[0]].south.x,
-			tlngP->rhombii[rhIds[1]].south.x,
-			tlngP->rhombii[rhIds[2]].south.x,
-			tlngP->rhombii[rhIds[3]].south.x
+			tlngP->rhombi[rhIds[0]].south.x,
+			tlngP->rhombi[rhIds[1]].south.x,
+			tlngP->rhombi[rhIds[2]].south.x,
+			tlngP->rhombi[rhIds[3]].south.x
 		),
 		median_4(
-			tlngP->rhombii[rhIds[0]].south.y,
-			tlngP->rhombii[rhIds[1]].south.y,
-			tlngP->rhombii[rhIds[2]].south.y,
-			tlngP->rhombii[rhIds[3]].south.y
+			tlngP->rhombi[rhIds[0]].south.y,
+			tlngP->rhombi[rhIds[1]].south.y,
+			tlngP->rhombi[rhIds[2]].south.y,
+			tlngP->rhombi[rhIds[3]].south.y
 		)
 	);
 	if( rhId_new < 0 )
 		return 0;
 
-	twoRhombii_Neighbourify(tlngP, rhId_new, rhIds[0]);
-	twoRhombii_Neighbourify(tlngP, rhId_new, rhIds[3]);
-	twoRhombii_Neighbourify(tlngP, rhId_new, thin_0);
-	twoRhombii_Neighbourify(tlngP, rhId_new, thin_3);
+	twoRhombi_Neighbourify(tlngP, rhId_new, rhIds[0]);
+	twoRhombi_Neighbourify(tlngP, rhId_new, rhIds[3]);
+	twoRhombi_Neighbourify(tlngP, rhId_new, thin_0);
+	twoRhombi_Neighbourify(tlngP, rhId_new, thin_3);
 
 	return 1;
 }  // fillTypeB()
@@ -318,7 +318,7 @@ static inline int8_t fillTypeC(Tiling * const tlngP, RhombId const rhId_Orig)
 	// But what is its other neighbour. Must walk anti-clockwise around original's north vertex, traversing either all fats, or two fats and two thins, to each end.
 	// End is neighbour of new.
 
-	if( Fat != tlngP->rhombii[rhId_Orig].physique  ||  tlngP->rhombii[rhId_Orig].numNeighbours != 3 )  // Required qualities
+	if( Fat != tlngP->rhombi[rhId_Orig].physique  ||  tlngP->rhombi[rhId_Orig].numNeighbours != 3 )  // Required qualities
 		return 0;
 
 	int8_t nghbrNum, numThins = 0;
@@ -326,9 +326,9 @@ static inline int8_t fillTypeC(Tiling * const tlngP, RhombId const rhId_Orig)
 	RhombId rhId_Next = -1;
 	bool OrigsNghbrTouchesE = true;  // Assignment to prevent incorrect compiler compiler warning sayig that it might be unassigned.
 
-	for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombii[rhId_Orig].numNeighbours  ;  nghbrNum ++ )
+	for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombi[rhId_Orig].numNeighbours  ;  nghbrNum ++ )
 	{
-		nghbrP = &(tlngP->rhombii[rhId_Orig].neighbours[nghbrNum]);
+		nghbrP = &(tlngP->rhombi[rhId_Orig].neighbours[nghbrNum]);
 		if( nghbrP->touchesN )
 		{
 			// North
@@ -357,23 +357,23 @@ static inline int8_t fillTypeC(Tiling * const tlngP, RhombId const rhId_Orig)
 	short int totalAngle;
 	RhombId rhId_Prev, rhId_This = rhId_Orig;
 	bool foundNext;
-	XY const xyOrigNorth = tlngP->rhombii[rhId_Orig].north;
+	XY const xyOrigNorth = tlngP->rhombi[rhId_Orig].north;
 
-	for( totalAngle = 0  ;  totalAngle < 144  ;  totalAngle += tlngP->rhombii[rhId_This].physique )
+	for( totalAngle = 0  ;  totalAngle < 144  ;  totalAngle += tlngP->rhombi[rhId_This].physique )
 	{
 		rhId_Prev = rhId_This;
 		rhId_This = rhId_Next;
 
 		foundNext = false;
-		for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombii[rhId_This].numNeighbours  ;  nghbrNum ++ )
+		for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombi[rhId_This].numNeighbours  ;  nghbrNum ++ )
 		{
-			nghbrP = &(tlngP->rhombii[rhId_This].neighbours[nghbrNum]);
+			nghbrP = &(tlngP->rhombi[rhId_This].neighbours[nghbrNum]);
 			rhId_Next = nghbrP->rhId;
 			if( rhId_Next == rhId_Prev )
 				continue;  // next nghbrNum
 			if( nghbrP->physique == Fat )
 			{
-				if( points_same_2(tlngP,  xyOrigNorth,  tlngP->rhombii[rhId_Next].north) )
+				if( points_same_2(tlngP,  xyOrigNorth,  tlngP->rhombi[rhId_Next].north) )
 				{
 					foundNext = true;
 					break;
@@ -382,8 +382,8 @@ static inline int8_t fillTypeC(Tiling * const tlngP, RhombId const rhId_Orig)
 			else
 			{
 				// Thin
-				if( points_same_2(tlngP,  xyOrigNorth,  tlngP->rhombii[rhId_Next].east)
-				||  points_same_2(tlngP,  xyOrigNorth,  tlngP->rhombii[rhId_Next].west) )
+				if( points_same_2(tlngP,  xyOrigNorth,  tlngP->rhombi[rhId_Next].east)
+				||  points_same_2(tlngP,  xyOrigNorth,  tlngP->rhombi[rhId_Next].west) )
 				{
 					foundNext = true;
 					break;
@@ -394,11 +394,11 @@ static inline int8_t fillTypeC(Tiling * const tlngP, RhombId const rhId_Orig)
 			return 0;
 	}  // for( totalAngle ... )
 
-	if( Fat != tlngP->rhombii[rhId_Next].physique  ||  totalAngle != 144 )  // Required qualities
+	if( Fat != tlngP->rhombi[rhId_Next].physique  ||  totalAngle != 144 )  // Required qualities
 		return 0;
 
-	double const new_N_x = avg_2( tlngP->rhombii[rhId_Orig].north.x,  tlngP->rhombii[rhId_Next].north.x);  // Better precision might use all five points.
-	double const new_N_y = avg_2( tlngP->rhombii[rhId_Orig].north.y,  tlngP->rhombii[rhId_Next].north.y);
+	double const new_N_x = avg_2( tlngP->rhombi[rhId_Orig].north.x,  tlngP->rhombi[rhId_Next].north.x);  // Better precision might use all five points.
+	double const new_N_y = avg_2( tlngP->rhombi[rhId_Orig].north.y,  tlngP->rhombi[rhId_Next].north.y);
 
 	RhombId const rhId_new = rhombus_append(
 		tlngP,
@@ -407,19 +407,19 @@ static inline int8_t fillTypeC(Tiling * const tlngP, RhombId const rhId_Orig)
 		new_N_x,
 		new_N_y,
 		(OrigsNghbrTouchesE
-			? tlngP->rhombii[rhId_Orig].west.x + tlngP->rhombii[rhId_Next].east.x
-			: tlngP->rhombii[rhId_Orig].east.x + tlngP->rhombii[rhId_Next].west.x) - new_N_x,
+			? tlngP->rhombi[rhId_Orig].west.x + tlngP->rhombi[rhId_Next].east.x
+			: tlngP->rhombi[rhId_Orig].east.x + tlngP->rhombi[rhId_Next].west.x) - new_N_x,
 		(OrigsNghbrTouchesE
-			? tlngP->rhombii[rhId_Orig].west.y + tlngP->rhombii[rhId_Next].east.y
-			: tlngP->rhombii[rhId_Orig].east.y + tlngP->rhombii[rhId_Next].west.y) - new_N_y
+			? tlngP->rhombi[rhId_Orig].west.y + tlngP->rhombi[rhId_Next].east.y
+			: tlngP->rhombi[rhId_Orig].east.y + tlngP->rhombi[rhId_Next].west.y) - new_N_y
 	);
 	if( rhId_new < 0 )
 		return 0;
 
-	twoRhombii_Neighbourify(tlngP,  rhId_new,  rhId_Orig);
-	twoRhombii_Neighbourify(tlngP,  rhId_new,  rhId_Next);
-	oneRhombii_Neighbourify(tlngP,  rhId_new,  0,                    rhId_lastSorted,                       true );
-	oneRhombii_Neighbourify(tlngP,  rhId_new,  rhId_lastSorted + 1,  tlngP->numFats + tlngP->numThins - 1,  false);
+	twoRhombi_Neighbourify(tlngP,  rhId_new,  rhId_Orig);
+	twoRhombi_Neighbourify(tlngP,  rhId_new,  rhId_Next);
+	oneRhombi_Neighbourify(tlngP,  rhId_new,  0,                    rhId_lastSorted,                       true );
+	oneRhombi_Neighbourify(tlngP,  rhId_new,  rhId_lastSorted + 1,  tlngP->numFats + tlngP->numThins - 1,  false);
 
 	return 1;
 }  // fillTypeC()
@@ -432,7 +432,7 @@ static inline int8_t fillTypeD(Tiling * const tlngP, RhombId const rhId_Thin1)
 	// If missing, insert.
 	// But subsequent neighbourification is difficult, so instead whole tiling reneighbourified.
 
-	if( Thin != tlngP->rhombii[rhId_Thin1].physique  ||  tlngP->rhombii[rhId_Thin1].numNeighbours == 4 )
+	if( Thin != tlngP->rhombi[rhId_Thin1].physique  ||  tlngP->rhombi[rhId_Thin1].numNeighbours == 4 )
 		return 0;
 
 	int8_t nghbrNum;
@@ -440,9 +440,9 @@ static inline int8_t fillTypeD(Tiling * const tlngP, RhombId const rhId_Thin1)
 	RhombId rhId_Thin2 = -1;
 	bool touch1East = true;  // Redundant initialisation, but prevents compiler warning about possibly uninitialised.
 
-	for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombii[rhId_Thin1].numNeighbours  ;  nghbrNum ++ )
+	for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombi[rhId_Thin1].numNeighbours  ;  nghbrNum ++ )
 	{
-		nghbrP = &(tlngP->rhombii[rhId_Thin1].neighbours[nghbrNum]);
+		nghbrP = &(tlngP->rhombi[rhId_Thin1].neighbours[nghbrNum]);
 		if( ! nghbrP->touchesN )
 		{
 			// South
@@ -459,17 +459,17 @@ static inline int8_t fillTypeD(Tiling * const tlngP, RhombId const rhId_Thin1)
 	if( rhId_Thin2 < 0 )
 		return 0;
 
-	double const new_south_x = avg_2(tlngP->rhombii[rhId_Thin1].south.x, tlngP->rhombii[rhId_Thin2].south.x);
-	double const new_south_y = avg_2(tlngP->rhombii[rhId_Thin1].south.y, tlngP->rhombii[rhId_Thin2].south.y);
+	double const new_south_x = avg_2(tlngP->rhombi[rhId_Thin1].south.x, tlngP->rhombi[rhId_Thin2].south.x);
+	double const new_south_y = avg_2(tlngP->rhombi[rhId_Thin1].south.y, tlngP->rhombi[rhId_Thin2].south.y);
 
 	double const new_north_x = (touch1East
-		? tlngP->rhombii[rhId_Thin1].west.x + tlngP->rhombii[rhId_Thin2].east.x
-		: tlngP->rhombii[rhId_Thin1].east.x + tlngP->rhombii[rhId_Thin2].west.x
+		? tlngP->rhombi[rhId_Thin1].west.x + tlngP->rhombi[rhId_Thin2].east.x
+		: tlngP->rhombi[rhId_Thin1].east.x + tlngP->rhombi[rhId_Thin2].west.x
 	) - new_south_x;
 
 	double const new_north_y = (touch1East
-		? tlngP->rhombii[rhId_Thin1].west.y + tlngP->rhombii[rhId_Thin2].east.y
-		: tlngP->rhombii[rhId_Thin1].east.y + tlngP->rhombii[rhId_Thin2].west.y
+		? tlngP->rhombi[rhId_Thin1].west.y + tlngP->rhombi[rhId_Thin2].east.y
+		: tlngP->rhombi[rhId_Thin1].east.y + tlngP->rhombi[rhId_Thin2].west.y
 	) - new_south_y;
 
 	RhombId const rhId_new = rhombus_append(
@@ -483,10 +483,10 @@ static inline int8_t fillTypeD(Tiling * const tlngP, RhombId const rhId_Thin1)
 	);
 	if( rhId_new < 0 )
 		return 0;
-	twoRhombii_Neighbourify(tlngP,  rhId_new,  rhId_Thin1);
-	twoRhombii_Neighbourify(tlngP,  rhId_new,  rhId_Thin2);
-	oneRhombii_Neighbourify(tlngP,  rhId_new,  0,                    rhId_lastSorted,                       true );
-	oneRhombii_Neighbourify(tlngP,  rhId_new,  rhId_lastSorted + 1,  tlngP->numFats + tlngP->numThins - 1,  false);
+	twoRhombi_Neighbourify(tlngP,  rhId_new,  rhId_Thin1);
+	twoRhombi_Neighbourify(tlngP,  rhId_new,  rhId_Thin2);
+	oneRhombi_Neighbourify(tlngP,  rhId_new,  0,                    rhId_lastSorted,                       true );
+	oneRhombi_Neighbourify(tlngP,  rhId_new,  rhId_lastSorted + 1,  tlngP->numFats + tlngP->numThins - 1,  false);
 
 	return 1;
 }  // fillTypeD()
@@ -498,10 +498,10 @@ static inline int8_t fillTypeE(Tiling * const tlngP, RhombId const rhId_Start)
 	// Should be surrounded by 5 thins, fat NE touching thin NE, and fat NW touching thin NW.
 	// But subsequent neighbourification is difficult, so instead whole tiling reneighbourified.
 
-	if( Fat != tlngP->rhombii[rhId_Start].physique
-	||  tlngP->rhombii[rhId_Start].numNeighbours <= 1
-	||  tlngP->rhombii[rhId_Start].north.x <= tlngP->rhombii[rhId_Start].south.x
-	||  tlngP->rhombii[rhId_Start].north.y <= tlngP->rhombii[rhId_Start].south.y )  // Orientation constraint prevents repeating same loop multiple times
+	if( Fat != tlngP->rhombi[rhId_Start].physique
+	||  tlngP->rhombi[rhId_Start].numNeighbours <= 1
+	||  tlngP->rhombi[rhId_Start].north.x <= tlngP->rhombi[rhId_Start].south.x
+	||  tlngP->rhombi[rhId_Start].north.y <= tlngP->rhombi[rhId_Start].south.y )  // Orientation constraint prevents repeating same loop multiple times
 		return 0;
 
 	int8_t nghbrNum, fatNum, fatNumNext;
@@ -514,17 +514,17 @@ static inline int8_t fillTypeE(Tiling * const tlngP, RhombId const rhId_Start)
 	for( fatNum = 0  ;  fatNum < 5  ;  fatNum ++ )
 	{
 		if( rhIds[fatNum] < 0
-		||  Fat != tlngP->rhombii[rhIds[fatNum]].physique
-		||  tlngP->rhombii[rhIds[fatNum]].numNeighbours <= 1
-		||  ( fatNum > 0  &&  points_different_2(tlngP, tlngP->rhombii[rhId_Start].south, tlngP->rhombii[rhIds[fatNum]].south) )  )
+		||  Fat != tlngP->rhombi[rhIds[fatNum]].physique
+		||  tlngP->rhombi[rhIds[fatNum]].numNeighbours <= 1
+		||  ( fatNum > 0  &&  points_different_2(tlngP, tlngP->rhombi[rhId_Start].south, tlngP->rhombi[rhIds[fatNum]].south) )  )
 			return 0;
 
 		thin_NE[fatNum] = false;
 		thin_NW[fatNum] = false;
 
-		for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombii[rhIds[fatNum]].numNeighbours  ;  nghbrNum ++ )
+		for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombi[rhIds[fatNum]].numNeighbours  ;  nghbrNum ++ )
 		{
-			nghbrP = &(tlngP->rhombii[rhIds[fatNum]].neighbours[nghbrNum]);
+			nghbrP = &(tlngP->rhombi[rhIds[fatNum]].neighbours[nghbrNum]);
 
 			if( nghbrP->touchesN )
 			{
@@ -582,27 +582,27 @@ static inline int8_t fillTypeE(Tiling * const tlngP, RhombId const rhId_Start)
 		fatNumNext = (fatNum + 1) % 5;
 		if( !thin_NE[fatNum]  &&  !thin_NW[fatNumNext] )
 		{
-			new_x = avg_2( tlngP->rhombii[rhIds[fatNum]].east.x,  tlngP->rhombii[rhIds[fatNumNext]].west.x );
-			new_y = avg_2( tlngP->rhombii[rhIds[fatNum]].east.y,  tlngP->rhombii[rhIds[fatNumNext]].west.y );
+			new_x = avg_2( tlngP->rhombi[rhIds[fatNum]].east.x,  tlngP->rhombi[rhIds[fatNumNext]].west.x );
+			new_y = avg_2( tlngP->rhombi[rhIds[fatNum]].east.y,  tlngP->rhombi[rhIds[fatNumNext]].west.y );
 			RhombId const rhId_new = rhombus_append(
 				tlngP,
 				Thin,
 				'E' + 1 - 'A',  // filledType
 				new_x,
 				new_y,
-				tlngP->rhombii[rhIds[fatNum]].north.x + tlngP->rhombii[rhIds[fatNumNext]].north.x - new_x,
-				tlngP->rhombii[rhIds[fatNum]].north.y + tlngP->rhombii[rhIds[fatNumNext]].north.y - new_y
+				tlngP->rhombi[rhIds[fatNum]].north.x + tlngP->rhombi[rhIds[fatNumNext]].north.x - new_x,
+				tlngP->rhombi[rhIds[fatNum]].north.y + tlngP->rhombi[rhIds[fatNumNext]].north.y - new_y
 			);
 			if( rhId_new >= 0 )
 			{
 				numInserted ++;
-				twoRhombii_Neighbourify(tlngP, rhId_new, rhIds[fatNum    ]);
-				twoRhombii_Neighbourify(tlngP, rhId_new, rhIds[fatNumNext]);
+				twoRhombi_Neighbourify(tlngP, rhId_new, rhIds[fatNum    ]);
+				twoRhombi_Neighbourify(tlngP, rhId_new, rhIds[fatNumNext]);
 
-				oneRhombii_Neighbourify(tlngP,  fatNum    ,  0,  rhId_lastSorted,  true);
-				oneRhombii_Neighbourify(tlngP,  fatNumNext,  0,  rhId_lastSorted,  true);
-				oneRhombii_Neighbourify(tlngP,  fatNum    ,  rhId_lastSorted + 1,  tlngP->numFats + tlngP->numThins - 1,  false);
-				oneRhombii_Neighbourify(tlngP,  fatNumNext,  rhId_lastSorted + 1,  tlngP->numFats + tlngP->numThins - 1,  false);
+				oneRhombi_Neighbourify(tlngP,  fatNum    ,  0,  rhId_lastSorted,  true);
+				oneRhombi_Neighbourify(tlngP,  fatNumNext,  0,  rhId_lastSorted,  true);
+				oneRhombi_Neighbourify(tlngP,  fatNum    ,  rhId_lastSorted + 1,  tlngP->numFats + tlngP->numThins - 1,  false);
+				oneRhombi_Neighbourify(tlngP,  fatNumNext,  rhId_lastSorted + 1,  tlngP->numFats + tlngP->numThins - 1,  false);
 			} // if( rhId_new >= 0 )
 		}  // !thin...
 	}  // for( fatNum ... )
@@ -622,10 +622,10 @@ static inline int8_t fillTypeF(Tiling * const tlngP, RhombId const rhId_Start)
 	// New thin has the east or west matching original north according to which is one fewer.
 	// But subsequent neighbourification is difficult, so instead whole tiling reneighbourified.
 
-	if( Fat != tlngP->rhombii[rhId_Start].physique  ||  tlngP->rhombii[rhId_Start].numNeighbours == 4 )
+	if( Fat != tlngP->rhombi[rhId_Start].physique  ||  tlngP->rhombi[rhId_Start].numNeighbours == 4 )
 		return 0;
 
-	XY const origNorth = tlngP->rhombii[rhId_Start].north;
+	XY const origNorth = tlngP->rhombi[rhId_Start].north;
 	short int physiqueTotal = 0;
 	int8_t nghbrNum, numThinsMatchingEast = 0, numThinsMatchingWest = 0;
 	RhombId rhId_Prev,  rhId_This = - 1,  rhId_Next = rhId_Start;
@@ -637,21 +637,21 @@ static inline int8_t fillTypeF(Tiling * const tlngP, RhombId const rhId_Start)
 		rhId_Prev = rhId_This;
 		rhId_This = rhId_Next;
 
-		physiqueTotal += tlngP->rhombii[rhId_This].physique;
+		physiqueTotal += tlngP->rhombi[rhId_This].physique;
 		if( physiqueTotal > 324 )
 			return 0;
 
 		thereIsGoodNghbr = false;
-		for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombii[rhId_This].numNeighbours  ;  nghbrNum ++ )
+		for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombi[rhId_This].numNeighbours  ;  nghbrNum ++ )
 		{
-			nghbrP = &(tlngP->rhombii[rhId_This].neighbours[nghbrNum]);
+			nghbrP = &(tlngP->rhombi[rhId_This].neighbours[nghbrNum]);
 			rhId_Next = nghbrP->rhId;
 			if( rhId_Next != rhId_Prev)
 			{
-				if( Fat == tlngP->rhombii[rhId_Next].physique )
+				if( Fat == tlngP->rhombi[rhId_Next].physique )
 				{
 					// Fat
-					if( points_same_2(tlngP, origNorth, tlngP->rhombii[rhId_Next].north) )
+					if( points_same_2(tlngP, origNorth, tlngP->rhombi[rhId_Next].north) )
 					{
 						thereIsGoodNghbr = true;
 						break;  // for( nghbrNum ... )
@@ -660,13 +660,13 @@ static inline int8_t fillTypeF(Tiling * const tlngP, RhombId const rhId_Start)
 				else
 				{
 					// Thin
-					if( points_same_2(tlngP, origNorth, tlngP->rhombii[rhId_Next].east) )
+					if( points_same_2(tlngP, origNorth, tlngP->rhombi[rhId_Next].east) )
 					{
 						numThinsMatchingEast ++;
 						thereIsGoodNghbr = true;
 						break;  // for( nghbrNum ... )
 					}  // orig north == this east
-					if( points_same_2(tlngP, origNorth, tlngP->rhombii[rhId_Next].west) )
+					if( points_same_2(tlngP, origNorth, tlngP->rhombi[rhId_Next].west) )
 					{
 						numThinsMatchingWest ++;
 						thereIsGoodNghbr = true;
@@ -686,7 +686,7 @@ static inline int8_t fillTypeF(Tiling * const tlngP, RhombId const rhId_Start)
 
 	}  // while( true )
 
-	if( 1 != abs(numThinsMatchingEast - numThinsMatchingWest)  ||  Thin != tlngP->rhombii[rhId_This].physique )
+	if( 1 != abs(numThinsMatchingEast - numThinsMatchingWest)  ||  Thin != tlngP->rhombi[rhId_This].physique )
 	{
 		fprintf(stderr,
 			"fillTypeF(): !!! impossibility !!!  rhId_Start = %li;  rhId_Prev = %li;  rhId_This = %li;  rhId_Next = %li;  numThinsMatchingEast = %" PRIi8 ";  numThinsMatchingWest = %" PRIi8 ";  physiqueTotal = %hi  #####\n",
@@ -700,18 +700,18 @@ static inline int8_t fillTypeF(Tiling * const tlngP, RhombId const rhId_Start)
 		tlngP,
 		Thin,
 		'F' + 1 - 'A',  // filledType
-		numThinsMatchingEast > numThinsMatchingWest  ?  tlngP->rhombii[rhId_Start].west.x  :  tlngP->rhombii[rhId_Start].east.x,
-		numThinsMatchingEast > numThinsMatchingWest  ?  tlngP->rhombii[rhId_Start].west.y  :  tlngP->rhombii[rhId_Start].east.y,
-		tlngP->rhombii[rhId_This].south.x,
-		tlngP->rhombii[rhId_This].south.y
+		numThinsMatchingEast > numThinsMatchingWest  ?  tlngP->rhombi[rhId_Start].west.x  :  tlngP->rhombi[rhId_Start].east.x,
+		numThinsMatchingEast > numThinsMatchingWest  ?  tlngP->rhombi[rhId_Start].west.y  :  tlngP->rhombi[rhId_Start].east.y,
+		tlngP->rhombi[rhId_This].south.x,
+		tlngP->rhombi[rhId_This].south.y
 	);
 	if( rhId_new < 0 )
 		return 0;
 
-	twoRhombii_Neighbourify(tlngP,  rhId_new,  rhId_Start);
-	twoRhombii_Neighbourify(tlngP,  rhId_new,  rhId_This );
-	oneRhombii_Neighbourify(tlngP,  rhId_new,  0,                    rhId_lastSorted,                       true );
-	oneRhombii_Neighbourify(tlngP,  rhId_new,  rhId_lastSorted + 1,  tlngP->numFats + tlngP->numThins - 1,  false);
+	twoRhombi_Neighbourify(tlngP,  rhId_new,  rhId_Start);
+	twoRhombi_Neighbourify(tlngP,  rhId_new,  rhId_This );
+	oneRhombi_Neighbourify(tlngP,  rhId_new,  0,                    rhId_lastSorted,                       true );
+	oneRhombi_Neighbourify(tlngP,  rhId_new,  rhId_lastSorted + 1,  tlngP->numFats + tlngP->numThins - 1,  false);
 
 	return 1;
 }  // fillTypeF()
@@ -723,7 +723,7 @@ static inline int8_t fillTypeG(Tiling * const tlngP, RhombId const rhId_Orig)
 	// For every thin, both north edges touch fats that touch each other. Fats' norths touch thin; fats' souths share a vertex.
 	// But subsequent neighbourification is difficult, so instead whole tiling reneighbourified.
 
-	if( Thin != tlngP->rhombii[rhId_Orig].physique  ||  tlngP->rhombii[rhId_Orig].numNeighbours == 4 )  // Required qualities
+	if( Thin != tlngP->rhombi[rhId_Orig].physique  ||  tlngP->rhombi[rhId_Orig].numNeighbours == 4 )  // Required qualities
 		return 0;
 
 	int8_t nghbrNum;
@@ -731,9 +731,9 @@ static inline int8_t fillTypeG(Tiling * const tlngP, RhombId const rhId_Orig)
 	int8_t numInserted = 0;
 	Neighbour *nghbrP;
 
-	for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombii[rhId_Orig].numNeighbours  ;  nghbrNum ++ )
+	for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombi[rhId_Orig].numNeighbours  ;  nghbrNum ++ )
 	{
-		nghbrP = &(tlngP->rhombii[rhId_Orig].neighbours[nghbrNum]);
+		nghbrP = &(tlngP->rhombi[rhId_Orig].neighbours[nghbrNum]);
 		if( nghbrP->touchesN )
 		{
 			if( Fat == nghbrP->physique )
@@ -760,13 +760,13 @@ static inline int8_t fillTypeG(Tiling * const tlngP, RhombId const rhId_Orig)
 /*
 	printf("fillTypeG(), tilingId=%02" PRIi8 ",  CentreX=%0.4lf,  CentreY=%0.4lf,  rhId_Orig=%li,  rhId_E=%li,  rhId_W=%li\n",
 		tlngP->tilingId,
-		(tlngP->rhombii[rhId_Orig].north.x + tlngP->rhombii[rhId_Orig].south.x) / 2,
-		(tlngP->rhombii[rhId_Orig].north.y + tlngP->rhombii[rhId_Orig].south.y) / 2,
+		(tlngP->rhombi[rhId_Orig].north.x + tlngP->rhombi[rhId_Orig].south.x) / 2,
+		(tlngP->rhombi[rhId_Orig].north.y + tlngP->rhombi[rhId_Orig].south.y) / 2,
 		rhId_Orig, rhId_E, rhId_W
 	);
 */
-	double const new_x = tlngP->rhombii[rhId_Orig].north.x * GoldenRatioSquare  -  GoldenRatio * tlngP->rhombii[rhId_Orig].south.x;
-	double const new_y = tlngP->rhombii[rhId_Orig].north.y * GoldenRatioSquare  -  GoldenRatio * tlngP->rhombii[rhId_Orig].south.y;
+	double const new_x = tlngP->rhombi[rhId_Orig].north.x * GoldenRatioSquare  -  GoldenRatio * tlngP->rhombi[rhId_Orig].south.x;
+	double const new_y = tlngP->rhombi[rhId_Orig].north.y * GoldenRatioSquare  -  GoldenRatio * tlngP->rhombi[rhId_Orig].south.y;
 
 	if( rhId_E < 0 )
 	{
@@ -774,17 +774,17 @@ static inline int8_t fillTypeG(Tiling * const tlngP, RhombId const rhId_Orig)
 			tlngP,
 			Fat,
 			'G' + 1 - 'A',  // filledType
-			tlngP->rhombii[rhId_Orig].east.x,
-			tlngP->rhombii[rhId_Orig].east.y,
+			tlngP->rhombi[rhId_Orig].east.x,
+			tlngP->rhombi[rhId_Orig].east.y,
 			new_x,
 			new_y
 		);
 		if( rhId_E >= 0 )
 		{
 			numInserted ++;
-			twoRhombii_Neighbourify(tlngP,  rhId_E,  rhId_Orig);
-			oneRhombii_Neighbourify(tlngP,  rhId_E,  0,  rhId_lastSorted,  true);
-			oneRhombii_Neighbourify(tlngP,  rhId_E,  rhId_lastSorted + 1,  tlngP->numFats + tlngP->numThins - 1,  false);
+			twoRhombi_Neighbourify(tlngP,  rhId_E,  rhId_Orig);
+			oneRhombi_Neighbourify(tlngP,  rhId_E,  0,  rhId_lastSorted,  true);
+			oneRhombi_Neighbourify(tlngP,  rhId_E,  rhId_lastSorted + 1,  tlngP->numFats + tlngP->numThins - 1,  false);
 		}  // if( rhId_E >= 0 )
 	}  // if( rhId_E < 0 )
 
@@ -794,19 +794,19 @@ static inline int8_t fillTypeG(Tiling * const tlngP, RhombId const rhId_Orig)
 			tlngP,
 			Fat,
 			'G' + 1 - 'A',  // filledType
-			tlngP->rhombii[rhId_Orig].west.x,
-			tlngP->rhombii[rhId_Orig].west.y,
+			tlngP->rhombi[rhId_Orig].west.x,
+			tlngP->rhombi[rhId_Orig].west.y,
 			new_x,
 			new_y
 		);
 		if( rhId_W >= 0 )
 		{
 			numInserted ++;
-			twoRhombii_Neighbourify(tlngP, rhId_W, rhId_Orig);
+			twoRhombi_Neighbourify(tlngP, rhId_W, rhId_Orig);
 			if( rhId_E >= 0 )
-				twoRhombii_Neighbourify(tlngP,  rhId_W,  rhId_E);
-			oneRhombii_Neighbourify(tlngP,  rhId_W,  0,  rhId_lastSorted,  true);
-			oneRhombii_Neighbourify(tlngP,  rhId_W,  rhId_lastSorted + 1,  tlngP->numFats + tlngP->numThins - 1,  false);
+				twoRhombi_Neighbourify(tlngP,  rhId_W,  rhId_E);
+			oneRhombi_Neighbourify(tlngP,  rhId_W,  0,  rhId_lastSorted,  true);
+			oneRhombi_Neighbourify(tlngP,  rhId_W,  rhId_lastSorted + 1,  tlngP->numFats + tlngP->numThins - 1,  false);
 		}  // if( rhId_W >= 0 )
 	}  // if( rhId_W < 0 )
 
@@ -928,7 +928,7 @@ void holesFill(Tiling * const tlngP)
 		if( anyChangesThisType )
 		{
 			printf("holesFill(), G: tilingId=%" PRIi8 ", numFilledTypeG = %li\n", tlngP->tilingId, numFilledTypeG);
-			rhombii_purgeDuplicates(tlngP);  // Two thins, touching at a vertex, can create overlapping fats.
+			rhombi_purgeDuplicates(tlngP);  // Two thins, touching at a vertex, can create overlapping fats.
 			neighbours_populate(tlngP);
 		}  // if( anyChangesThisType )
 		if( debug_holesFill )   printf("holesFill(): tilingId=%02" PRIi8 ",  -G\n", tlngP->tilingId);

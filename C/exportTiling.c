@@ -55,7 +55,7 @@ void tiling_export(
 		{
 			long int rhombCounter = 0,  pathCounter = 0;
 			for( rhId = 0  ;  rhId < tlngP->numFats + tlngP->numThins  ;  rhId++ )
-				if( tlngP->rhombii[rhId].wantedPostScript )
+				if( tlngP->rhombi[rhId].wantedPostScript )
 					tlngP->wantedPostScriptRhombNum[rhId] = (rhombCounter ++);
 				else
 					tlngP->wantedPostScriptRhombNum[rhId] = -1;
@@ -68,9 +68,9 @@ void tiling_export(
 
 		(*numCharsThisFileP) += fIndent(fp, indentDepth);
 		(*numCharsThisFileP) += fprintf(fp,
-			"<<  %% + tilingId=%" PRIi8 ", in which numFats=%li, numThins=%li, numPathsClosed=%li, numPathsOpen=%li, numWantedRhombii=%li, NumWantedPaths=%li\n",
+			"<<  %% + tilingId=%" PRIi8 ", in which numFats=%li, numThins=%li, numPathsClosed=%li, numPathsOpen=%li, numWantedRhombi=%li, NumWantedPaths=%li\n",
 			tilingId,  tlngP->numFats,  tlngP->numThins, tlngP->numPathsClosed, tlngP->numPathsOpen,
-			tlngP->wantedPostScriptNumberRhombii, tlngP->wantedPostScriptNumberPaths
+			tlngP->wantedPostScriptNumberRhombi, tlngP->wantedPostScriptNumberPaths
 		);
 		(*numLinesThisFileP) ++;
 
@@ -108,8 +108,8 @@ void tiling_export(
 
 		(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
 		(*numCharsThisFileP) += fprintf(fp,
-			"/wantedPostScriptNumberRhombii %li   /wantedPostScriptNumberPaths %li  %% [ WhollyOutside RhombOutPathIn RhombPartlyIn RhombWhollyIn ]\n",
-			tlngP->wantedPostScriptNumberRhombii,  tlngP->wantedPostScriptNumberPaths
+			"/wantedPostScriptNumberRhombi %li   /wantedPostScriptNumberPaths %li  %% [ WhollyOutside RhombOutPathIn RhombPartlyIn RhombWhollyIn ]\n",
+			tlngP->wantedPostScriptNumberRhombi,  tlngP->wantedPostScriptNumberPaths
 		);
 		(*numLinesThisFileP) ++;
 
@@ -174,32 +174,32 @@ void tiling_export(
 		}  // if exportPaths
 
 
-		if( exportQ(Rhombii, exportFormat, tlngP, *numLinesThisFileP) )
+		if( exportQ(Rhombi, exportFormat, tlngP, *numLinesThisFileP) )
 		{
 			(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
 			(*numCharsThisFileP) += fprintf(fp,
-				"/Rhombii %li array  %% + /Rhombii: tilingId=%" PRIi8 ", numFats=%li, numThins=%li, wantedPostScriptNumberRhombii=%li, wantedPostScriptNumberPaths=%li\n",
-				tlngP->wantedPostScriptNumberRhombii,
+				"/Rhombi %li array  %% + /Rhombi: tilingId=%" PRIi8 ", numFats=%li, numThins=%li, wantedPostScriptNumberRhombi=%li, wantedPostScriptNumberPaths=%li\n",
+				tlngP->wantedPostScriptNumberRhombi,
 				tlngP->tilingId, tlngP->numFats, tlngP->numThins,
-				tlngP->wantedPostScriptNumberRhombii,  tlngP->wantedPostScriptNumberPaths
+				tlngP->wantedPostScriptNumberRhombi,  tlngP->wantedPostScriptNumberPaths
 			);
 			(*numLinesThisFileP) ++;
 			// PostScript arrays limited to 2^16 elements, so outputting only those wanted.
 			for(rhNumOutput = rhId = 0  ;  rhId < tlngP->numFats + tlngP->numThins  ;  rhId++)
-				if( tlngP->rhombii[rhId].wantedPostScript )
+				if( tlngP->rhombi[rhId].wantedPostScript )
 				{
 					(*numCharsThisFileP) += fIndent(fp, 2 + indentDepth);
 					(*numCharsThisFileP) += fprintf(fp, "dup  %li  ", rhNumOutput++);
-					rhombus_export(fp, exportFormat, tlngP, tlngP->rhombii + rhId, (rhId < tlngP->numFats + tlngP->numThins - 1), numCharsThisFileP );
+					rhombus_export(fp, exportFormat, tlngP, tlngP->rhombi + rhId, (rhId < tlngP->numFats + tlngP->numThins - 1), numCharsThisFileP );
 					(*numCharsThisFileP) += fprintf(fp, "  put\n");
 					(*numLinesThisFileP) ++;
 				}
 			(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
 			(*numCharsThisFileP) += fprintf(fp,
-				"%% - /Rhombii: tilingId=%" PRIi8 ", numFats=%li, numThins=%li, numPathsClosed=%li, "
-				"numPathsOpen=%li, wantedPostScriptNumberRhombii=%li, wantedPostScriptNumberPaths=%li\n",
+				"%% - /Rhombi: tilingId=%" PRIi8 ", numFats=%li, numThins=%li, numPathsClosed=%li, "
+				"numPathsOpen=%li, wantedPostScriptNumberRhombi=%li, wantedPostScriptNumberPaths=%li\n",
 				tilingId,  tlngP->numFats,  tlngP->numThins, tlngP->numPathsClosed, tlngP->numPathsOpen,
-				tlngP->wantedPostScriptNumberRhombii, tlngP->wantedPostScriptNumberPaths
+				tlngP->wantedPostScriptNumberRhombi, tlngP->wantedPostScriptNumberPaths
 			);
 			(*numLinesThisFileP) ++;
 			(*numCharsThisFileP) += fprintf(fp,
@@ -209,15 +209,15 @@ void tiling_export(
 				TextLicence, TextURL, TextAuthor
 			);
 			(*numLinesThisFileP) += 3;
-		}  // if exportRhombii
+		}  // if exportRhombi
 
 		(*numCharsThisFileP) += fIndent(fp, indentDepth);
 		(*numCharsThisFileP) += fprintf(fp, ">>  %% - tilingId=%" PRIi8 "\n", tilingId);
 		(*numLinesThisFileP) ++;
 		(*numCharsThisFileP) += fIndent(fp, indentDepth);
 		(*numCharsThisFileP) += fprintf(fp,
-			"(After ) usertime usertimeStart sub 1000 div 12 string cvs Concatenate ( seconds execution, interpreted tilingId=%" PRIi8 ", containing %li rhombii) Concatenate = flush\n",
-			tilingId, tlngP->wantedPostScriptNumberRhombii
+			"(After ) usertime usertimeStart sub 1000 div 12 string cvs Concatenate ( seconds execution, interpreted tilingId=%" PRIi8 ", containing %li rhombi) Concatenate = flush\n",
+			tilingId, tlngP->wantedPostScriptNumberRhombi
 		);
 		(*numLinesThisFileP) ++;
 
@@ -290,9 +290,9 @@ void tiling_export(
 
 		(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
 		(*numCharsThisFileP) += fprintf(fp,
-			"\"WantedPostScriptNumberRhombii\":%li,   \"WantedPostScriptNumberPaths\":%li,"  
+			"\"WantedPostScriptNumberRhombi\":%li,   \"WantedPostScriptNumberPaths\":%li,"  
 			"\"Licence\":\"%s\",   \"URL\":\"%s\",  \"Author\":\"%s\","  "\n",
-			tlngP->wantedPostScriptNumberRhombii,  tlngP->wantedPostScriptNumberPaths,
+			tlngP->wantedPostScriptNumberRhombi,  tlngP->wantedPostScriptNumberPaths,
 			TextLicence, TextURL, TextAuthor
 		);
 		(*numLinesThisFileP) ++;
@@ -330,15 +330,15 @@ void tiling_export(
 			(*numLinesThisFileP) ++;
 		}  // if exportPaths
 
-		if( exportQ(Rhombii, exportFormat, tlngP, *numLinesThisFileP) )
+		if( exportQ(Rhombi, exportFormat, tlngP, *numLinesThisFileP) )
 		{
 			(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
-			(*numCharsThisFileP) += fprintf(fp, "\"Rhombii\":[\n");
+			(*numCharsThisFileP) += fprintf(fp, "\"Rhombi\":[\n");
 			(*numLinesThisFileP) ++;
 			for(rhId=0;  rhId < tlngP->numFats + tlngP->numThins;  rhId++)
 			{
 				(*numCharsThisFileP) += fIndent(fp, 2 + indentDepth);
-				rhombus_export( fp, exportFormat, tlngP,  &(tlngP->rhombii[rhId]),  (rhId < tlngP->numFats + tlngP->numThins - 1), numCharsThisFileP);
+				rhombus_export( fp, exportFormat, tlngP,  &(tlngP->rhombi[rhId]),  (rhId < tlngP->numFats + tlngP->numThins - 1), numCharsThisFileP);
 				(*numCharsThisFileP) += fprintf(fp, "\n");
 				(*numLinesThisFileP) ++;
 			}  // rhId
@@ -346,7 +346,7 @@ void tiling_export(
 			(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
 			(*numCharsThisFileP) += fprintf(fp, "]\n");
 			(*numLinesThisFileP) ++;
-		}  // if exportRhombii
+		}  // if exportRhombi
 
 		(*numCharsThisFileP) += fIndent(fp, indentDepth);
 		(*numCharsThisFileP) += fprintf(fp, notLast ? "},\n" :  "}\n");
@@ -362,7 +362,7 @@ void tiling_export(
 			"\tT_%02" PRIi8 ".NumFats"                 "\tT_%02" PRIi8 ".NumThins"                "\tT_%02" PRIi8 ".NumPathsClosed"         "\tT_%02" PRIi8 ".NumPathsOpen"         "\tT_%02" PRIi8 ".NumPathStats"
 			"\tT_%02" PRIi8 ".MinX"                    "\tT_%02" PRIi8 ".MaxX"                    "\tT_%02" PRIi8 ".MinY"                   "\tT_%02" PRIi8 ".MaxY"
 			"\tT_%02" PRIi8 ".WantedPostScriptCentreX" "\tT_%02" PRIi8 ".WantedPostScriptCentreY" "\tT_%02" PRIi8 ".WantedPostScriptAspect" "\tT_%02" PRIi8 ".WantedPostScriptHalfWidth" "\tT_%02" PRIi8 ".WantedPostScriptHalfHeight"
-			"\tT_%02" PRIi8 ".WantedPostScriptNumberRhombii"   "\tT_%02" PRIi8 ".WantedPostScriptNumberPaths"
+			"\tT_%02" PRIi8 ".WantedPostScriptNumberRhombi"   "\tT_%02" PRIi8 ".WantedPostScriptNumberPaths"
 			"\tT_%02" PRIi8 ".Licence" "\tT_%02" PRIi8 ".URL" "\tT_%02" PRIi8 ".Author" "\n",
 			tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,
 			tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,
@@ -386,7 +386,7 @@ void tiling_export(
 		(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
 		(*numCharsThisFileP) += fprintf(fp,
 			"\t%li"    "\t%li   \t%s"    "\t%s"    "\t%s"   "\n\n",
-			tlngP->wantedPostScriptNumberRhombii, tlngP->wantedPostScriptNumberPaths,
+			tlngP->wantedPostScriptNumberRhombi, tlngP->wantedPostScriptNumberPaths,
 			TextLicence, TextURL, TextAuthor  // Do not stringClean() these, as that would mess with dots.
 		);
 		(*numLinesThisFileP) += 2;
@@ -429,7 +429,7 @@ void tiling_export(
 			}  // pathId
 		}  // if ... exportQ(Paths, ...)
 
-		if( (tlngP->numThins > 0 || tlngP->numFats > 0)  &&  exportQ(Rhombii, exportFormat, tlngP, *numLinesThisFileP) )
+		if( (tlngP->numThins > 0 || tlngP->numFats > 0)  &&  exportQ(Rhombi, exportFormat, tlngP, *numLinesThisFileP) )
 		{
 			(*numCharsThisFileP) += fprintf(fp, "\n");
 			(*numLinesThisFileP) ++;
@@ -438,11 +438,11 @@ void tiling_export(
 			(*numLinesThisFileP) ++;
 			for(rhId=0;  rhId < tlngP->numFats + tlngP->numThins;  rhId++)
 			{
-				rhombus_export(fp, exportFormat, tlngP, &(tlngP->rhombii[rhId]), (rhId < tlngP->numFats + tlngP->numThins - 1), numCharsThisFileP);
+				rhombus_export(fp, exportFormat, tlngP, &(tlngP->rhombi[rhId]), (rhId < tlngP->numFats + tlngP->numThins - 1), numCharsThisFileP);
 				(*numCharsThisFileP) += fprintf(fp, "\n");
 				(*numLinesThisFileP) ++;
 			}  // rhId
-		}  // if ... exportQ(Rhombii, ...)
+		}  // if ... exportQ(Rhombi, ...)
 
 		(*numCharsThisFileP) += fprintf(fp, "\n\n\n");
 		(*numLinesThisFileP) += 3;

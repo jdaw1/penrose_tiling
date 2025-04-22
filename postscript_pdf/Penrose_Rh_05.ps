@@ -93,7 +93,7 @@ mark
 } bind def  % /ConcatenateToMark
 
 () =
-/NumRhombii NumFats NumThins add def[/TilingId /DataAsOf /NumFats /NumThins /NumRhombii /EdgeLength  /XMin /XMax /YMin /YMax  /ToPaint_XMin /ToPaint_XMax /ToPaint_YMin /ToPaint_YMax]
+/NumRhombi NumFats NumThins add def[/TilingId /DataAsOf /NumFats /NumThins /NumRhombi /EdgeLength  /XMin /XMax /YMin /YMax  /ToPaint_XMin /ToPaint_XMax /ToPaint_YMin /ToPaint_YMax]
 {
 	dup 12 string cvs ( = ) Concatenate  exch load
 	dup type /stringtype eq {(") exch (") Concatenate Concatenate} {16 string cvs} ifelse
@@ -132,7 +132,7 @@ PaperMatrix setmatrix  EdgeLength 60 div ScaleFactor mul  setlinewidth
 	15 dict begin  % Populating this dictionary with values on stack.
 	/IsFat exch def  /RhId exch def
 	IsFat {[/PathId /PathStatId /WithinPathNum /Pointy /PathLength /PathClosed] {exch def} forall} if  % Fats only
-	[/FilledType /NumNeighbours /AngDeg /NorthY /NorthX /EastY /EastX /SouthY /SouthX /WestY /WestX] {exch def} forall  % All rhombii
+	[/FilledType /NumNeighbours /AngDeg /NorthY /NorthX /EastY /EastX /SouthY /SouthX /WestY /WestX] {exch def} forall  % All rhombi
 	//true  % Test whether this rhombus is inside the Wanted box.
 	1 {
 		NorthX //Actual_XMin le  EastX //Actual_XMin le  SouthX //Actual_XMin le  WestX //Actual_XMin le  and and and {pop //false exit} if
@@ -143,7 +143,7 @@ PaperMatrix setmatrix  EdgeLength 60 div ScaleFactor mul  setlinewidth
 	{
 		% Code inside here is intended to be user alterable.
 		//TileMatrix setmatrix
-		//true  % paint rhombii?
+		//true  % paint rhombi?
 		{
 			NorthX NorthY moveto  EastX EastY lineto  SouthX SouthY lineto  WestX WestY lineto  closepath
 			IsFat
@@ -167,7 +167,7 @@ PaperMatrix setmatrix  EdgeLength 60 div ScaleFactor mul  setlinewidth
 					PathLength  172 gt {PathLength 1.2 div ln 2 ln div floor cvi 4 mod 0.1 mul 0.7 add 0 0 setrgbcolor pop //true exit} if  % Bright red  % 172 = 215 *4/5
 				} repeat  % 1
 				{fill} if
-				% Code that highlights the north corners of fat rhombii. Used in debugging. By default commented out.
+				% Code that highlights the north corners of fat rhombi. Used in debugging. By default commented out.
 %				PathClosed not  pop true  % Choose: all, or only fats in open paths?
 %				{
 %					newpath  NorthX NorthY 2 copy  moveto
@@ -194,7 +194,7 @@ PaperMatrix setmatrix  EdgeLength 60 div ScaleFactor mul  setlinewidth
 				% Thin
 				gsave 0.8 setgray fill grestore
 				//PaperMatrix setmatrix  0 setgray  stroke
-				% Code that highlights the north corners of thin rhombii. Used in debugging. By default commented out.
+				% Code that highlights the north corners of thin rhombi. Used in debugging. By default commented out.
 %				gsave newpath //TileMatrix setmatrix  NorthX NorthY 2 copy  moveto
 %				EdgeLength 4 div  AngDeg 180 IsFat {36} {72} ifelse sub add  dup IsFat {72} {144} ifelse add  arc  closepath
 %				0.5 setgray  fill  grestore
@@ -204,7 +204,7 @@ PaperMatrix setmatrix  EdgeLength 60 div ScaleFactor mul  setlinewidth
 %				//PaperMatrix setmatrix mark RhId FilledType dup 0 gt {(,) exch} {pop} ifelse ConcatenateToMark dup stringwidth pop -2 div //FontSize -0.3 mul rmoveto show
 			} ifelse  % IsFat
 			newpath
-		} if  % painting rhombii
+		} if  % painting rhombi
 		//false  % paint triangles?
 		{
 			EastX 0.25 mul WestX 0.75 mul add
@@ -236,7 +236,7 @@ PaperMatrix setmatrix  EdgeLength 60 div ScaleFactor mul  setlinewidth
 
 
 
-% Formats for Thin and Fat rhombii:
+% Formats for Thin and Fat rhombi:
 	% WestX WestY SouthX SouthY EastX EastY NorthX NorthY Angle /RhId false  PaintByRhombus  % ==> Thin
 	% WestX WestY SouthX SouthY EastX EastY NorthX NorthY Angle PathClosed PathLength Pointy WithinPathNum /PathStatId /PathId /RhId true  PaintByRhombus  % ==> Fat
 

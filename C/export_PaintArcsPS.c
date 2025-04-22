@@ -10,9 +10,9 @@
 	The ExportFormats export as data: arrays of stuff.
 	But PostScript's maximum array length is 65535.
 	So this code just outputs raw PostScript instructions, one after the other.
-	All painting is determined one rhombus at a time: rhombii are not stored in a way that allows reasoning at a less-local level than one-at-a-time.
+	All painting is determined one rhombus at a time: rhombi are not stored in a way that allows reasoning at a less-local level than one-at-a-time.
 	There is some room for post-C hand editing of the PostScript, but much less flexibly the the other PostScript data format.
-	There limit on the number of rhombii is printer memory and resolution, so much much larger than 2^16.
+	There limit on the number of rhombi is printer memory and resolution, so much much larger than 2^16.
 
 	Because this is just raw PostScript commands, this exporting C code does not have the structure of the other formats' C code.
 	It is different and stand-alone.
@@ -191,8 +191,8 @@ void tiling_export_PaintArcsPS(
 		"} bind def  %% /ConcatenateToMark\n"
 		"\n"
 		"() =\n"
-		"/NumRhombii NumFats NumThins add def\n"
-		"[/TilingId /DataAsOf /NumFats /NumThins /NumRhombii /EdgeLength  /XMin /XMax /YMin /YMax  /ToPaint_XMin /ToPaint_XMax /ToPaint_YMin /ToPaint_YMax]\n"
+		"/NumRhombi NumFats NumThins add def\n"
+		"[/TilingId /DataAsOf /NumFats /NumThins /NumRhombi /EdgeLength  /XMin /XMax /YMin /YMax  /ToPaint_XMin /ToPaint_XMax /ToPaint_YMin /ToPaint_YMax]\n"
 		"{\n"
 			"\tdup 12 string cvs ( = ) Concatenate  exch load\n"
 			"\tdup type /stringtype eq {(\") exch (\") Concatenate Concatenate} {16 string cvs} ifelse\n"
@@ -271,7 +271,7 @@ void tiling_export_PaintArcsPS(
 		if( 1 == pathP->pathClosedTypeNum % 2 )
 		{
 			rhIdStart = rhId = pathP->rhId_PathCentreClosest;
-			rhP = &(tlngP->rhombii[rhIdStart]);
+			rhP = &(tlngP->rhombi[rhIdStart]);
 			edgeStartE = edgeE = (
 				pow(rhP->east.x - pathP->centre.x, 2) + pow(rhP->east.y - pathP->centre.y, 2) <=
 				pow(rhP->west.x - pathP->centre.x, 2) + pow(rhP->west.y - pathP->centre.y, 2)
@@ -280,7 +280,7 @@ void tiling_export_PaintArcsPS(
 		else
 		{
 			rhIdStart = rhId = pathP->rhId_PathCentreFurthest;
-			rhP = &(tlngP->rhombii[rhIdStart]);
+			rhP = &(tlngP->rhombi[rhIdStart]);
 			edgeStartE = edgeE = (
 				pow(rhP->east.x - pathP->centre.x, 2) + pow(rhP->east.y - pathP->centre.y, 2) >=
 				pow(rhP->west.x - pathP->centre.x, 2) + pow(rhP->west.y - pathP->centre.y, 2)
@@ -361,7 +361,7 @@ void tiling_export_PaintArcsPS(
 					foundNeighbour = true;
 					nnn = rhP->neighbours[nghbrNum].nghbrsNghbrNum;
 					rhId = rhP->neighbours[nghbrNum].rhId;
-					rhP = &(tlngP->rhombii[rhId]);
+					rhP = &(tlngP->rhombi[rhId]);
 					edgeN = rhP->neighbours[ nnn ].touchesN;
 					edgeE = rhP->neighbours[ nnn ].touchesE;
 					break;  // nghbrNum loop
@@ -406,7 +406,7 @@ void tiling_export_PaintArcsPS(
 	(*numLinesThisFileP) += 3 ;
 	for( rhId = 0  ;  rhId < tlngP->numFats + tlngP->numThins  ;  rhId ++ )
 	{
-		rhP = &(tlngP->rhombii[rhId]);
+		rhP = &(tlngP->rhombi[rhId]);
 		either = false;
 		angThisStart = rhP->angleDegrees  +  (Fat == rhP->physique  ?   36  :  72 );
 		if(angThisStart >= 180) angThisStart -= 360;

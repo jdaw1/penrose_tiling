@@ -18,7 +18,7 @@ Documentation pages:&nbsp;
 
 <table>
 <tr>
-	<th align="right">Rhombii:</th>
+	<th align="right">Rhombi:</th>
 	<td><a href="../images/Penrose_Rh_00.svg">00</a></td>
 	<td><a href="../images/Penrose_Rh_01.svg">01</a></td>
 	<td><a href="../images/Penrose_Rh_02.svg">02</a></td>
@@ -53,7 +53,7 @@ Also [kitchen unzoomed](../images/Penrose_Rh_08_kitchen.svg); [kitchen zoomed](.
 ## Arcs ##
 
 
-Start with a &lsquo;standard&rsquo; Penrose tiling, of rhombii, 72&deg; and 36&deg;. 
+Start with a &lsquo;standard&rsquo; Penrose tiling, of rhombi, 72&deg; and 36&deg;. 
 Inside each rhombus, centred on the east and west corners (108&deg; and 36&deg;), draw an arc. 
 
 <div align="center">
@@ -63,7 +63,7 @@ Inside each rhombus, centred on the east and west corners (108&deg; and 36&deg;)
 </div>
 
 This has been done in the preceding diagram, for clarity the arcs in the fats being blue, in the thins being red. 
-And, if done at scale, with rhombii being hidden, this makes elegant swirly patterns.
+And, if done at scale, with rhombi being hidden, this makes elegant swirly patterns.
 Behold the next image.
 
 <div align="center">
@@ -80,10 +80,10 @@ And so on.
 
 So there is a odd-even nature to the filling. 
 
-In rhombii space open paths could be coloured, because, in effect, the rhombii colouration is a stroke-like painting. 
+In rhombi space open paths could be coloured, because, in effect, the rhombi colouration is a stroke-like painting. 
 But in these arc paths the colouration is a fill-like painting&nbsp;&DoubleLongRightArrow; open arc paths cannot be coloured. 
 
-Compare to the same pattern in rhombii space. 
+Compare to the same pattern in rhombi space. 
 
 <div align="center">
 
@@ -105,7 +105,7 @@ Overlapped for easier comparison:
 
 The code for SVG output has some controls in <kbd>controls.c</kbd>. 
 
-For both rhombii and arcs, `svg_toPaint_xMin()`, `svg_toPaint_yMin()`, `svg_toPaint_xMax()`, `svg_toPaint_yMax()` return the wanted bounding box, elements wholly outside not being output. By default these are &plusmn;999999, but for the above images pictures and others in the documentation, were `-0.09830056`, `+0.46449333`, `+1.27553483`, `+1.62459848` respectively.
+For both rhombi and arcs, `svg_toPaint_xMin()`, `svg_toPaint_yMin()`, `svg_toPaint_xMax()`, `svg_toPaint_yMax()` return the wanted bounding box, elements wholly outside not being output. By default these are &plusmn;999999, but for the above images pictures and others in the documentation, were `-0.09830056`, `+0.46449333`, `+1.27553483`, `+1.62459848` respectively.
 
 
 ## SVG code ##
@@ -116,31 +116,31 @@ If there are an **e**ven number of steps to this &lsquo;outside&rsquo;, colour w
 
 * All these `<style>`&hellip;`</style>` are specified in the SVG, so amenable to alteration by a user without needing to re-run the C. 
 
-* For the rhombii, the SVG specifies paths with names 
+* For the rhombi, the SVG specifies paths with names 
 `#t`&nbsp;=&nbsp;thin rhombus, 
 `#f`&nbsp;=&nbsp;fat rhombus in a closed path, and 
 `#o`&nbsp;=&nbsp;fat rhombus in an open path. 
 These are all changeable, and comments include one suggested change.
 
-* For the rhombii, the object with `id='c5r'`, being round-5 paths, includes the white circle at its centre. If not wanted, delete or comment away (<code>\<!-- &hellip; --\></code>).
+* For the rhombi, the object with `id='c5r'`, being round-5 paths, includes the white circle at its centre. If not wanted, delete or comment away (<code>\<!-- &hellip; --\></code>).
 
 * At the end of each SVG file there is code, commented out, that makes gridlines. 
 If wanted, uncomment.
 
-* For both arcs and rhombii, users might want to change the opening instruction. In the original of an SVG it is a single line, but here spread out for clarity.
+* For both arcs and rhombi, users might want to change the opening instruction. In the original of an SVG it is a single line, but here spread out for clarity.
 
 ```SVG
 <svg
 	width='960'   height='1321.998631951'
 	viewBox='-6.451357882 -8.032964799 11.666647787 16.065929598'
 	preserveAspectRatio='xMidYMid meet'
-	id='Penrose_Rhombii_11'
+	id='Penrose_Rhombi_11'
 	xmlns='http://www.w3.org/2000/svg'
 >
 ```
 
 The width and height are measured in screen pixels. 
-The `viewBox`, *left* *bottom* *width* *height*, is measured in the units in which rhombii etc are specified. 
+The `viewBox`, *left* *bottom* *width* *height*, is measured in the units in which rhombi etc are specified. 
 Because `preserveAspectRatio` is neither `'none'` nor `'slice'`, the two aspect ratios don&rsquo;t need to be the same. 
 Nonetheless, they have been set equal (to within &plusmn;10&#8315;&#8313;): both 1321.998631951&nbsp;&divide;&nbsp;960 and 16.065929598&nbsp;&divide;&nbsp;11.666647787 are &asymp;&nbsp;1.377081908. 
 

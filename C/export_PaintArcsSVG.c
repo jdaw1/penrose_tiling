@@ -32,7 +32,7 @@ void tiling_export_PaintArcsSVG(
 
 	for( rhId = 0  ;  rhId < tlngP->numFats + tlngP->numThins  ;  rhId ++ )
 	{
-		rhP = &(tlngP->rhombii[rhId]);
+		rhP = &(tlngP->rhombi[rhId]);
 		x = (rhP->north.x + rhP->east.x) / 2;
 		y = (rhP->north.y + rhP->east.y) / 2;
 		if( allMaxX < x ) allMaxX = x;
@@ -168,7 +168,7 @@ void tiling_export_PaintArcsSVG(
 		if( 1 == pathP->pathClosedTypeNum % 2 )
 		{
 			rhIdStart = rhId = pathP->rhId_PathCentreClosest;
-			rhP = &(tlngP->rhombii[rhIdStart]);
+			rhP = &(tlngP->rhombi[rhIdStart]);
 			edgeStartE = edgeE = (
 				pow(rhP->east.x - pathP->centre.x, 2) + pow(rhP->east.y - pathP->centre.y, 2) <=
 				pow(rhP->west.x - pathP->centre.x, 2) + pow(rhP->west.y - pathP->centre.y, 2)
@@ -177,7 +177,7 @@ void tiling_export_PaintArcsSVG(
 		else
 		{
 			rhIdStart = rhId = pathP->rhId_PathCentreFurthest;
-			rhP = &(tlngP->rhombii[rhIdStart]);
+			rhP = &(tlngP->rhombi[rhIdStart]);
 			edgeStartE = edgeE = (
 				pow(rhP->east.x - pathP->centre.x, 2) + pow(rhP->east.y - pathP->centre.y, 2) >=
 				pow(rhP->west.x - pathP->centre.x, 2) + pow(rhP->west.y - pathP->centre.y, 2)
@@ -273,7 +273,7 @@ void tiling_export_PaintArcsSVG(
 					foundNeighbour = true;
 					nnn = rhP->neighbours[nghbrNum].nghbrsNghbrNum;
 					rhId = rhP->neighbours[nghbrNum].rhId;
-					rhP = &(tlngP->rhombii[rhId]);
+					rhP = &(tlngP->rhombi[rhId]);
 					edgeN = rhP->neighbours[ nnn ].touchesN;
 					edgeE = rhP->neighbours[ nnn ].touchesE;
 					break;  // nghbrNum loop
@@ -313,7 +313,7 @@ void tiling_export_PaintArcsSVG(
 		(*numLinesThisFileP) += 3 ;
 		for( rhId = 0  ;  rhId < tlngP->numFats + tlngP->numThins  ;  rhId ++ )
 		{
-			rhP = &(tlngP->rhombii[rhId]);
+			rhP = &(tlngP->rhombi[rhId]);
 
 			if(  ( (Thin == rhP->physique) != (0 == physiqueCounter) )
 			||  rhP->xMax < actual_xMin

@@ -16528,7 +16528,7 @@ Z'/> <!-- pathId=3273 -->
 	</g>  <!-- id='c855' -->
 </defs>
 
-<g stroke-width='0.0008' stroke='#000' paint-order='fill stroke' stroke-linejoin='round' stroke-opacity='1'>  <!-- all rhombii -->
+<g stroke-width='0.0008' stroke='#000' paint-order='fill stroke' stroke-linejoin='round' stroke-opacity='1'>  <!-- all rhombi -->
 
 <g fill='none'>  <!-- thins not otherwise inside a path -->
 	<use href='#t'  transform='translate(0.22291236,1.615040366) rotate(324)'/>
@@ -17005,7 +17005,7 @@ Z'/> <!-- pathId=3273 -->
 	<use href='#c5r' transform='translate(0.819660113,1.624598481)'/>
 	<use href='#c5r' transform='translate(0.416407865,1.624598481)'/>
 	<use href='#c5r' transform='translate(1.11145618,1.624598481) rotate(36)'/>
-</g>  <!-- all rhombii, stroke -->
+</g>  <!-- all rhombi, stroke -->
 
 <!-- If gridlines wanted, uncomment these. -->
 <!-- Gridlines, start, commented out 

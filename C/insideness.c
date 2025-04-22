@@ -93,7 +93,7 @@ void insideness_populate(Tiling * const tlngP)
 	}  // for( pathThisId ... )
 
 	for( rhId = 0;  rhId < tlngP->numFats + tlngP->numThins;  rhId++ )
-		tlngP->rhombii[rhId].pathId_ShortestOuter = -1;
+		tlngP->rhombi[rhId].pathId_ShortestOuter = -1;
 
 	pathIdRangeNum_Num = 0;
 	for( pathThisId = 0  ;  pathThisId < tlngP->numPathsClosed + tlngP->numPathsOpen  ;  pathThisId++ )
@@ -199,19 +199,19 @@ this_path_done: ;
 	// Best fat neighbour to check is one with shortest path, because rhombus_winding_number() will be fastest.
 	for( rhId = 0;  rhId < tlngP->numFats + tlngP->numThins;  rhId++ )
 	{
-		if( Thin == tlngP->rhombii[rhId].physique )
+		if( Thin == tlngP->rhombi[rhId].physique )
 		{
-			tlngP->rhombii[rhId].pathId_ShortestOuter = -1;
+			tlngP->rhombi[rhId].pathId_ShortestOuter = -1;
 
 			nghbrNum_best = -1;
 			pathLength_Shortest = LONG_MAX;
 
-			for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombii[rhId].numNeighbours  ;  nghbrNum ++ )
+			for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombi[rhId].numNeighbours  ;  nghbrNum ++ )
 			{
-				nghbrP = &(tlngP->rhombii[rhId].neighbours[nghbrNum]);
+				nghbrP = &(tlngP->rhombi[rhId].neighbours[nghbrNum]);
 				if( Fat == nghbrP->physique )
 				{
-					pathThisId = tlngP->rhombii[ nghbrP->rhId ].pathId ;
+					pathThisId = tlngP->rhombi[ nghbrP->rhId ].pathId ;
 					if( ! tlngP->path[pathThisId].pathClosed )
 						break;  // for( nghbrNum ... )
 					if( pathThisId >= 0 )  // Should be redundant
@@ -227,19 +227,19 @@ this_path_done: ;
 
 			if( nghbrNum_best >= 0 )
 			{
-				pathThisId = tlngP->rhombii[ tlngP->rhombii[rhId].neighbours[nghbrNum_best].rhId ].pathId ;
+				pathThisId = tlngP->rhombi[ tlngP->rhombi[rhId].neighbours[nghbrNum_best].rhId ].pathId ;
 				if( pathThisId >= 0  &&  tlngP->path[pathThisId].pathClosed )
 				{
 					if( 
 						5 == pathLength_Shortest  ||  // Must be outside a 5.
-						0 == rhombus_winding_number(&(tlngP->rhombii[rhId]),  &(tlngP->path[pathThisId]),  tlngP)  // Outside
+						0 == rhombus_winding_number(&(tlngP->rhombi[rhId]),  &(tlngP->path[pathThisId]),  tlngP)  // Outside
 					)
 						pathThisId = tlngP->path[pathThisId].pathId_ShortestOuter;  // Not inside pathThisId; instead inside whatever contains pathThisId.
 
 					if( pathThisId >= 0 )  // Could be adjacent to a path that is outside everything. Redundant if previous test, outsideness, was false.
 					{
 						pathThisP = &(tlngP->path[pathThisId]);
-						tlngP->rhombii[rhId].pathId_ShortestOuter = pathThisId;
+						tlngP->rhombi[rhId].pathId_ShortestOuter = pathThisId;
 						pathThisP->insideThis_NumThins ++;
 						pathThisP->insideDeep_NumThins ++;
 

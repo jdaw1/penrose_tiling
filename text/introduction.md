@@ -16,7 +16,7 @@ Documentation pages:&nbsp;
 ## Introduction ##
 
 A Penrose tiling is a beautiful thing, of which [the&nbsp;author](https://jdawiseman.com/author.html) is very fond. 
-It is an aperiodic tiling, made from two rhombii with tight corners of 72&deg; and 36&deg;. 
+It is an aperiodic tiling, made from two rhombi with tight corners of 72&deg; and 36&deg;. 
 Behold!
 
 <div align="center">
@@ -25,8 +25,8 @@ Behold!
 
 </div>
 
-Observe the &lsquo;fat&rsquo; white rhombii, with corners of 72&deg; and 108&deg;; 
-observe the &lsquo;thin&rsquo; grey rhombii, with corners of 36&deg; and 144&deg;. 
+Observe the &lsquo;fat&rsquo; white rhombi, with corners of 72&deg; and 108&deg;; 
+observe the &lsquo;thin&rsquo; grey rhombi, with corners of 36&deg; and 144&deg;. 
 
 This works really well on the scale of a kitchen ([e.g.](../images/20230923_kitchen_tiles.png)). 
 But there is a property that might be unwanted on the scale of hectares. 
@@ -87,13 +87,13 @@ The C:
     * filling holes, and neatening edges where it is known what a tile must be;
 * Identifies tiles&rsquo; neighbours;
 * Finds the paths, and various statistics of them;
-* Identifies, for both closed paths and for thin rhombii, the smallest enclosing path and related information;
+* Identifies, for both closed paths and for thin rhombi, the smallest enclosing path and related information;
 * Exports much data in multiple formats:
     * [JSON](https://en.wikipedia.org/wiki/JSON), for subsequent machine manipulation,
     * [TSV](https://en.wikipedia.org/wiki/Tab-separated_values),
-    * [SVG](https://en.wikipedia.org/wiki/SVG) of rhombii, for display in a browser and in this documentation, 
-    * SVG of arcs within the rhombii, for display in a browser, 
-    * [PostScript](https://en.wikipedia.org/wiki/PostScript), painting rhombii, for conversion to [PDF](https://en.wikipedia.org/wiki/PDF),
+    * [SVG](https://en.wikipedia.org/wiki/SVG) of rhombi, for display in a browser and in this documentation, 
+    * SVG of arcs within the rhombi, for display in a browser, 
+    * [PostScript](https://en.wikipedia.org/wiki/PostScript), painting rhombi, for conversion to [PDF](https://en.wikipedia.org/wiki/PDF),
     * PostScript, painting arcs, for conversion to PDF,
     * PostScript as data, for use by a PostScript program.
 * The TSV is for importation into a spreadsheet. There is an example spreadsheet, with VBA for chart control and for creation of range names; the plottable series being dynamic arrays.

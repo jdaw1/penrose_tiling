@@ -21,7 +21,7 @@ void export_soloTiling(
 	// than the others. And because of the possibility that the last few tilings are very very
 	// slow to make, worth exporting these as they become ready.
 
-	rhombii_sort(tlngP,  &rhombiiGt_ByY,  true);
+	rhombi_sort(tlngP,  &rhombiGt_ByY,  true);
 
 	ef = SVG_rhomb;
 	if( exportQ(Anything, ef, tlngP, numLinesThisFile) )
@@ -33,7 +33,7 @@ void export_soloTiling(
 		numLinesThisFile = 0;
 		numCharsThisFile = 0;
 		fp=fopen(fileName, "w");
-		tiling_export_PaintRhombiiSVG(fp, tlngP, &numLinesThisFile, &numCharsThisFile);
+		tiling_export_PaintRhombiSVG(fp, tlngP, &numLinesThisFile, &numCharsThisFile);
 		fflush(fp); fclose(fp);
 		printf(
 			"export_soloTiling(): tilingId=%" PRIi8 ", exported %lli chars %li lines, so %0.1lf c/l, to %s\n",
@@ -68,7 +68,7 @@ void export_soloTiling(
 	ef = PS_rhomb;
 	if( exportQ(Anything, ef, tlngP, numLinesThisFile) )
 	{
-		rhombii_sort(tlngP,  &rhombiiGt_ByPath,  true);
+		rhombi_sort(tlngP,  &rhombiGt_ByPath,  true);
 		numCharsThisFile = 0;
 		numLinesThisFile = 0;
 
@@ -79,7 +79,7 @@ void export_soloTiling(
 		numLinesThisFile = 0;
 		numCharsThisFile = 0;
 		fp=fopen(fileName, "w");
-		tiling_export_PaintRhombiiPS(fp, tlngP, &numLinesThisFile, &numCharsThisFile, false);
+		tiling_export_PaintRhombiPS(fp, tlngP, &numLinesThisFile, &numCharsThisFile, false);
 		fflush(fp); fclose(fp);
 		printf(
 			"export_soloTiling(): tilingId=%" PRIi8 ", exported %lli chars %li lines, so %0.1lf c/l, to %s\n",
@@ -93,7 +93,7 @@ void export_soloTiling(
 	ef = PS_arcs;
 	if( exportQ(Anything, ef, tlngP, numLinesThisFile) )
 	{
-		rhombii_sort(tlngP,  &rhombiiGt_ByPath,  true);
+		rhombi_sort(tlngP,  &rhombiGt_ByPath,  true);
 		sprintf(
 			fileName,  "%sPenrose_%s_Arcs_%02" PRIi8 ".%s",
 			tlngP->filePath,  tlngP->timeString,  tlngP->tilingId,  fileExtension_from_ExportFormat(fileExtension, ef)

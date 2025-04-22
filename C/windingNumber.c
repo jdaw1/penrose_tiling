@@ -40,23 +40,23 @@ int point_winding_number(register double const x,  register double const y,  con
 	rhId_This = pathP_Outer->rhId_PathCentreClosest ;
 	for( rhXXX_WithinPath = 0  ;  rhXXX_WithinPath < pathP_Outer->pathLength ;  rhXXX_WithinPath++ )  // This technique will include the final edge, from length-1 to 0.
 	{
-		rhThisP  =  &(tlngP->rhombii[ rhId_This ]) ;
-		rhId_Next = NextInPath_RhId(tlngP->rhombii, rhThisP, pathP_Outer->pathLength, true) ;
+		rhThisP  =  &(tlngP->rhombi[ rhId_This ]) ;
+		rhId_Next = NextInPath_RhId(tlngP->rhombi, rhThisP, pathP_Outer->pathLength, true) ;
 		if( rhId_Next < 0 )
 			break;
 
-		if( tlngP->rhombii[rhId_This].centre.y <= y )
+		if( tlngP->rhombi[rhId_This].centre.y <= y )
 		{
 			// start below or on
-			if( tlngP->rhombii[rhId_Next].centre.y >  y )  // end above, so upward crossing
-				if( isLeft(x, y, tlngP->rhombii[rhId_This].centre, tlngP->rhombii[rhId_Next].centre) > 0 )  // point left of edge
+			if( tlngP->rhombi[rhId_Next].centre.y >  y )  // end above, so upward crossing
+				if( isLeft(x, y, tlngP->rhombi[rhId_This].centre, tlngP->rhombi[rhId_Next].centre) > 0 )  // point left of edge
 					--wn ;
 		}
 		else
 		{
 			// start above
-			if( tlngP->rhombii[rhId_Next].centre.y <= y )  // end below or on, so downward crossing
-				if( isLeft(x, y, tlngP->rhombii[rhId_This].centre, tlngP->rhombii[rhId_Next].centre) < 0 )  // point right of edge
+			if( tlngP->rhombi[rhId_Next].centre.y <= y )  // end below or on, so downward crossing
+				if( isLeft(x, y, tlngP->rhombi[rhId_This].centre, tlngP->rhombi[rhId_Next].centre) < 0 )  // point right of edge
 					++wn;
 		}
 

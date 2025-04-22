@@ -26,12 +26,12 @@ void verifyHypothesisedProperties(Tiling const * const tlngP)
 	numTests = 0;
 	for( rhId_outer = 0  ;  rhId_outer < tlngP->numFats + tlngP->numThins  ;  rhId_outer ++ )
 	{
-		rhOuterP = tlngP->rhombii + rhId_outer;
+		rhOuterP = tlngP->rhombi + rhId_outer;
 		if( Thin == rhOuterP->physique )
 		{
 			for( rhId_inner = 0  ;  rhId_inner < tlngP->numFats + tlngP->numThins  ;  rhId_inner ++ )
 			{
-				rhInnerP = tlngP->rhombii + rhId_inner;
+				rhInnerP = tlngP->rhombi + rhId_inner;
 				numTests ++;
 				if(
 					(fabs(rhOuterP->south.x - rhInnerP->north.x) < threshold  &&  fabs(rhOuterP->south.y - rhInnerP->north.y) < threshold) ||
@@ -65,12 +65,12 @@ hypothesis = true;
 	numTests = 0;
 	for( rhId_outer = 0  ;  rhId_outer < tlngP->numFats + tlngP->numThins  ;  rhId_outer ++ )
 	{
-		rhOuterP = tlngP->rhombii + rhId_outer;
+		rhOuterP = tlngP->rhombi + rhId_outer;
 		if( Fat == rhOuterP->physique )
 		{
 			for( rhId_inner = 0  ;  rhId_inner < rhId_outer  ;  rhId_inner ++ )
 			{
-				rhInnerP = tlngP->rhombii + rhId_inner;
+				rhInnerP = tlngP->rhombi + rhId_inner;
 				if( Fat == rhInnerP->physique )
 				{
 					numTests ++;

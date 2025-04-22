@@ -138,13 +138,13 @@ The quoted execution times are from a 2.7&#8239;GHz quad-core iMac with 32&#8239
 Execution was in [Xcode](https://developer.apple.com/xcode/)&rsquo;s debug mode to catch possible stray pointer misbehaviours (of which there were none).
 
 A deeper recursion would need more memory. 
-It might be that one more recursion, so &asymp;&#8239;0.14&nbsp;billion rhombii, would require 64&#8239;GiB of memory; and two more, &asymp;&#8239;0.37&nbsp;billion rhombii, would require &asymp;&#8239;160&#8239;GiB, and execution would likely take a few weeks. 
-Also consider: the disk space to hold the JSON; the disk space to hold the database used for post-processing such as selection of relevant rhombii; the storage space and software on the computer in the tile-laying machines. 
+It might be that one more recursion, so &asymp;&#8239;0.14&nbsp;billion rhombi, would require 64&#8239;GiB of memory; and two more, &asymp;&#8239;0.37&nbsp;billion rhombi, would require &asymp;&#8239;160&#8239;GiB, and execution would likely take a few weeks. 
+Also consider: the disk space to hold the JSON; the disk space to hold the database used for post-processing such as selection of relevant rhombi; the storage space and software on the computer in the tile-laying machines. 
 Indeed, I doubt that your physical area really needs many more tens of millions of tiles.
 
 Somewhere not far beyond `numTilings = 19`, there might be a need to enlarge some types from `long int` (&le;&nbsp;2<small><sup>31</sup></small>&#8239;&minus;&#8239;1 &asymp;&nbsp;2&nbsp;billion, and which should not be `unsigned` as it needs to be able to hold `-1`) to `long long int` (&le;&nbsp;2<small><sup>63</sup></small>&#8239;&minus;&#8239;1 &asymp;&nbsp;9&nbsp;quintillion =&nbsp;9&#8239;&times;&#8239;10<small><sup>18</sup></small>).
 
-Anyway, by me, not tested beyond `numTilings = 17`&nbsp; &DoubleLongRightArrow;&nbsp;&nbsp;0&#8239;&le;&#8239;`tilingId`&#8239;&le;&#8239;16, the largest of which has almost fifty&#8209;four million rhombii.
+Anyway, by me, not tested beyond `numTilings = 17`&nbsp; &DoubleLongRightArrow;&nbsp;&nbsp;0&#8239;&le;&#8239;`tilingId`&#8239;&le;&#8239;16, the largest of which has almost fifty&#8209;four million rhombi.
 
 
 ## Code workings ##
@@ -172,13 +172,13 @@ These two, `tiling_initial()` and `tiling_descendant()`, are in [<kbd>tilings.c<
 The latter is more complicated; the former creates an initial rhombus and does much as the former. 
 These invoke much work.
 
-* Computes `rhombii_NumMax`, and `malloc()` enough space for that many rhombii. 
+* Computes `rhombi_NumMax`, and `malloc()` enough space for that many rhombi. 
 
-* For each rhombus in the ancestor tiling, appends its descendants to the descendant tiling by repeated calls of `rhombus_append_descendants` (which is in [<kbd>rhombii.c</kbd>](../C/rhombii.c)). 
-When almost `rhombii_NumMax` rhombii have been created, space is freed by `rhombii_purgeDuplicates()` (which is in [<kbd>purgeDuplicates.c</kbd>](../C/purgeDuplicates.c)), which is called again after the loop. 
+* For each rhombus in the ancestor tiling, appends its descendants to the descendant tiling by repeated calls of `rhombus_append_descendants` (which is in [<kbd>rhombi.c</kbd>](../C/rhombi.c)). 
+When almost `rhombi_NumMax` rhombi have been created, space is freed by `rhombi_purgeDuplicates()` (which is in [<kbd>purgeDuplicates.c</kbd>](../C/purgeDuplicates.c)), which is called again after the loop. 
 
 * Then `neighbours_populate()` (which is in [<kbd>neighbours.c</kbd>](../C/neighbours.c)), and self-evidently populates the neighbours of each rhombus. 
-Both this and the earlier duplicate-purging work with rhombii sorted by the *y* position, as done by `rhombii_sort()` in [<kbd>sortRhombii.c</kbd>](../C/sortRhombii.c).
+Both this and the earlier duplicate-purging work with rhombi sorted by the *y* position, as done by `rhombi_sort()` in [<kbd>sortRhombi.c</kbd>](../C/sortRhombi.c).
 
 * The next work is the most interesting. There is a call of `holesFill()`. 
 Let&rsquo;s start with two examples, both using [the example tiling](../images/Penrose_Rh_10_clipped_norths.svg) at the top of the [Paths page](paths.md). 
@@ -209,14 +209,14 @@ And there are other positions for which holes or gaps have a unique completion, 
     [odd](../images/Penrose_Rh_08_holesFill_odd.svg?raw=1).
 
 
-    These extra rhombii require neighbourification, and for some of the `holesFill()` patterns, re-de-duplication. 
+    These extra rhombi require neighbourification, and for some of the `holesFill()` patterns, re-de-duplication. 
 
-* [<kbd>paths.c</kbd>](../C/paths.c) finds paths. Naturally enough, start at an as-yet-unpathed fat rhombus, and trace using neighbours. If it is an open path, then on coming to an end it restarts from there. For closed paths, there a rhombus must be chosen to have zero `.withinPathNum`, so to be the first rhombus of the path. This is chosen by `rhWithinPathMoreSpecial()` to be one of the rhombii that is as close as possible to the centre of the path, and in the first quadrant.
+* [<kbd>paths.c</kbd>](../C/paths.c) finds paths. Naturally enough, start at an as-yet-unpathed fat rhombus, and trace using neighbours. If it is an open path, then on coming to an end it restarts from there. For closed paths, there a rhombus must be chosen to have zero `.withinPathNum`, so to be the first rhombus of the path. This is chosen by `rhWithinPathMoreSpecial()` to be one of the rhombi that is as close as possible to the centre of the path, and in the first quadrant.
 
 * Which is the smallest enclosing path?  But the level of the question varies.  
     - Open paths cannot have an enclosing path.
-    - Closed paths can, though not all do. So for fat rhombii, enclosing-path is at the level of the path.
-    - But for thin rhombii, it is at the level of the rhombus. For thin rhombii, find a touching fat, and either the thin is immediately inside that fat&rsquo;s path, or the answer is the same as for that fat&rsquo;s path.
+    - Closed paths can, though not all do. So for fat rhombi, enclosing-path is at the level of the path.
+    - But for thin rhombi, it is at the level of the rhombus. For thin rhombi, find a touching fat, and either the thin is immediately inside that fat&rsquo;s path, or the answer is the same as for that fat&rsquo;s path.
 
     Insideness is computed in [<kbd>insideness.c</kbd>](../C/insideness.c), which makes much use of [<kbd>windingNumber.c</kbd>](../C/windingNumber.c). 
     Because there are many candidate enclosing paths to be tested, this is potentially slow.
@@ -229,7 +229,7 @@ And there are other positions for which holes or gaps have a unique completion, 
 * When making `holesFill()`, some properties were observed, and were checked over some good-size tilings by a routine `verifyHypothesisedProperties()` in [<kbd>propertyVerifying.c</kbd>](../C/propertyVerifying.c). 
     The routine remains, in case similar is needed, but currently does nothing. 
 
-* Arrays needs sorting, requiring renumbering of pointers into into them. Already mentioned are `rhombii_sort()` in [<kbd>sortRhombii.c</kbd>](../C/sortRhombii.c); also `paths_sort()` in [<kbd>sortPaths.c</kbd>](../C/sortPaths.c); and `pathStats_sort()` in [<kbd>sortPathStats.c</kbd>](../C/sortPathStats.c).
+* Arrays needs sorting, requiring renumbering of pointers into into them. Already mentioned are `rhombi_sort()` in [<kbd>sortRhombi.c</kbd>](../C/sortRhombi.c); also `paths_sort()` in [<kbd>sortPaths.c</kbd>](../C/sortPaths.c); and `pathStats_sort()` in [<kbd>sortPathStats.c</kbd>](../C/sortPathStats.c).
 
 * PostScript ([wikipedia](http://en.wikipedia.org/wiki/PostScript), [Adobe&rsquo;s&nbsp;PostScript Language Reference 3<small><sup>rd</sup></small>&nbsp;edition](https://www.adobe.com/jp/print/postscript/pdfs/PLRM.pdf)) is an an early-1980s printer-control language. 
     It is a delightful simple clean text-based user-alterable [Turing-complete](https://en.wikipedia.org/wiki/Turing_completeness) means of making [PDF](https://en.wikipedia.org/wiki/PDF)s. 
@@ -239,7 +239,7 @@ And there are other positions for which holes or gaps have a unique completion, 
     That is, for all `tilingId`&#8239;&ge;&#8239;10, it is not possible to output all the data in a PostScript object. 
     Instead a &lsquo;wanted&rsquo; subset is chosen. 
     In [<kbd>controls.c</kbd>](../C/controls.c) there are functions `wantedPostScriptCentre()` which returns the centre of the desired region, and `wantedPostScriptAspect()` which returns the desired _y_/_x_ aspect ratio. 
-    The largest possible area is then chosen, such that there are &le;&#8239;65535 rhombii (sometimes _x_ or _y_ equalities compel the number of rhombii to be slightly less than 65535). 
+    The largest possible area is then chosen, such that there are &le;&#8239;65535 rhombi (sometimes _x_ or _y_ equalities compel the number of rhombi to be slightly less than 65535). 
     (The other two PostScript output formats merely paint one thing after another, so never need a large PostScript array, and hence can cope with lots of stuff.)
 
 * Some minor and small administration functions are in [<kbd>smalls.c</kbd>](../C/smalls.c). Numbers comparisons (which perhaps should have been overloaded, but which weren&rsquo;t): `max_2()`, `min_2()`, `max_4()`, `min_4()`, `avg_2()`, `median_3()`, `median_4()`. Point comparisons (ditto): `points_different_2()`, `points_same_2()`, `points_different_3()`, `points_same_3()`, `points_different_4()`, `points_same_4()`, `collinear()`. Small exporting helpers: `newlinesInString()`, `fileExtension_from_ExportFormat()`. 

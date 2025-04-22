@@ -6,7 +6,7 @@
 
 static int8_t const numTilings_Max = 17;  // Hard-wired contraint to catch CPU-expensive mistyping. Sensible limit for 32GiB machine. YMMV.
 
-char scratchString[scratchStringLength] ;  // Mostly used for post-processing of doubles: removal of trailing 0s and trailing decimal points. Size harmlessly generous: 6k would have been sufficient, the boundary need being the preamble in tiling_export_PaintRhombiiPS.
+char scratchString[scratchStringLength] ;  // Mostly used for post-processing of doubles: removal of trailing 0s and trailing decimal points. Size harmlessly generous: 6k would have been sufficient, the boundary need being the preamble in tiling_export_PaintRhombiPS.
 
 int main(void)
 {
@@ -69,7 +69,7 @@ int main(void)
 		tlngs[tilingId].tilingId                 = tilingId;
 		tlngs[tilingId].numTilings               = numTilings;
 		tlngs[tilingId].edgeLength               = 0;
-		tlngs[tilingId].rhombii_NumMax           = 0;
+		tlngs[tilingId].rhombi_NumMax           = 0;
 		tlngs[tilingId].path_NumMax              = 0;
 		tlngs[tilingId].pathStats_NumMax         = 0;
 		tlngs[tilingId].numFats                  = 0;
@@ -81,7 +81,7 @@ int main(void)
 		tlngs[tilingId].yMin                     = DBL_MAX;
 		tlngs[tilingId].xMax                     = - DBL_MAX;
 		tlngs[tilingId].yMax                     = - DBL_MAX;
-		tlngs[tilingId].rhombii                  = NULL;
+		tlngs[tilingId].rhombi                  = NULL;
 		tlngs[tilingId].path                     = NULL;
 		tlngs[tilingId].pathStat                 = NULL;
 		tlngs[tilingId].wantedPostScriptRhombNum = NULL;
@@ -156,7 +156,7 @@ int main(void)
 			if( anythingToExport )
 			{
 				sprintf(fileName,
-					"%sPenrose_%s_Rhombii_%02" PRIi8 ".%s",
+					"%sPenrose_%s_Rhombi_%02" PRIi8 ".%s",
 					tlngs[tilingId].filePath,  timeString,  tilingId,
 					fileExtension_from_ExportFormat(fileExtension, ef)
 				);

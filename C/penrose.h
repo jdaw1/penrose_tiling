@@ -39,10 +39,10 @@ static char   const TextLicence[] = ("GNU General Public License, Version 3, 29 
 typedef enum  // ExportFormat
 {
 	// PostScript, by Adobe, first released 1984, https://en.wikipedia.org/wiki/PostScript , PLRM3 = http://www.adobe.com/jp/print/postscript/pdfs/PLRM.pdf
-	PS_data   = 1982,  // Deeply nested arrays and dictionaries, echoing other data formats, for processing by PostScript-as-a-programming-language. But array-size limit is 65535, so typically only subset of rhombii can be output.
-	PS_rhomb  = 1983,  // Directly distillable PostScript, painting rhombii. Some post-C editing and changes possible, but to a much lesser extent than as data. Not as arrays, so not bothered by array-size limit of 65535.
+	PS_data   = 1982,  // Deeply nested arrays and dictionaries, echoing other data formats, for processing by PostScript-as-a-programming-language. But array-size limit is 65535, so typically only subset of rhombi can be output.
+	PS_rhomb  = 1983,  // Directly distillable PostScript, painting rhombi. Some post-C editing and changes possible, but to a much lesser extent than as data. Not as arrays, so not bothered by array-size limit of 65535.
 	PS_arcs   = 1984,  // Directly distillable PostScript, painting arcs. Some post-C editing and changes possible, but to a much lesser extent than as data. Not as arrays, so not bothered by array-size limit of 65535.
-	SVG_rhomb = 1999,  // Rhombii, browser-viewable Scalable Vector Graphics, so some but only some some post-C editing is feasible. https://en.wikipedia.org/wiki/SVG
+	SVG_rhomb = 1999,  // Rhombi, browser-viewable Scalable Vector Graphics, so some but only some some post-C editing is feasible. https://en.wikipedia.org/wiki/SVG
 	SVG_arcs  = 2000,  // Arcs, in SVG. https://en.wikipedia.org/wiki/SVG
 	JSON      = 2001,  // JavaScript Object Notation = JSON, April 2001. All the data, for subsequent machine processing. https://en.wikipedia.org/wiki/JSON
 	TSV       =    9   // Tab-Separated Values, for Excel, opening by or copy-pasting subsets into; column titles being good range names. Limited to 2^20 rows. https://en.wikipedia.org/wiki/Tab-separated_values
@@ -51,7 +51,7 @@ typedef enum  // ExportFormat
 } ExportFormat;
 
 
-typedef enum {Anything,  pathStats,  Paths,  Rhombii} ExportWhat;
+typedef enum {Anything,  pathStats,  Paths,  Rhombi} ExportWhat;
 
 
 typedef enum  // Physique
@@ -136,8 +136,8 @@ typedef struct  // Path
 	double      yMin;
 	double      yMax;
 
-	double      radiusMin;  // To innermost corner of any of the rhombii.
-	double      radiusMax;  // To outermost corner of any of the rhombii.
+	double      radiusMin;  // To innermost corner of any of the rhombi.
+	double      radiusMax;  // To outermost corner of any of the rhombi.
 
 	long int    insideThis_NumFats ;
 	long int    insideDeep_NumFats ;
@@ -183,12 +183,12 @@ typedef struct  // Tiling
 	XY         wantedPostScriptCentre;
 	double     wantedPostScriptAspect;  // Height over Width
 	double     wantedPostScriptHalfWidth;   // 'wantedPostScriptHalfHeight' = wantedPostScriptHalfWidth * wantedPostScriptAspect
-	long int   wantedPostScriptNumberRhombii;
+	long int   wantedPostScriptNumberRhombi;
 	long int   wantedPostScriptNumberPaths;
 	long int   numFats;
 	long int   numThins;
-	long int   rhombii_NumMax;
-	Rhombus    * rhombii;
+	long int   rhombi_NumMax;
+	Rhombus    * rhombi;
 	double     xMax;
 	double     xMin;
 	double     yMax;
@@ -259,18 +259,18 @@ void tiling_descendant(
 	Tiling const * const tlngAncestorP
 );  // tiling_descendant()
 
-void   rhombii_sort(
+void   rhombi_sort(
 	Tiling * const tlngP,
 	int orderedFn(const Rhombus * const, const Rhombus * const),
 	bool const alsoRenumber
-);  // rhombii_sort()
+);  // rhombi_sort()
 void     paths_sort(Tiling * const tlngP,  int orderedFn(const Path    * const, const Path    * const) );  // Always renumber
 void pathStats_sort(Tiling * const tlngP);  // Only one sort function, always renumber
-int rhombiiGt_ByY(Rhombus const * const rhP0, Rhombus const * const rhP1);
-void rhombii_purgeDuplicates(Tiling * const tlngP);
+int rhombiGt_ByY(Rhombus const * const rhP0, Rhombus const * const rhP1);
+void rhombi_purgeDuplicates(Tiling * const tlngP);
 
-void twoRhombii_Neighbourify(Tiling * const tlngP,  RhombId const rhId_A,  RhombId const rhId_B);
-void oneRhombii_Neighbourify(
+void twoRhombi_Neighbourify(Tiling * const tlngP,  RhombId const rhId_A,  RhombId const rhId_B);
+void oneRhombi_Neighbourify(
 	Tiling * const tlngP,
 	RhombId const rhId_This,
 	RhombId rhId_Start,
@@ -286,14 +286,14 @@ void verifyHypothesisedProperties(Tiling const * const tlngP);
 
 
 RhombId NextInPath_RhId(
-	const Rhombus * const rhombii,
+	const Rhombus * const rhombi,
 	const Rhombus * const rhThisP,
 	long int        const pathLength,
 	bool            const direction
 );  // NextInPath_RhId(). Negative return means non-existent. Re direction: true ==> next; false ==> prev.
 
 int  neighbourGt(       Neighbour const * const nP0,     Neighbour const * const nP1   );
-int  rhombiiGt_ByPath(  Rhombus   const * const rhP0,    Rhombus   const * const rhP1  );
+int  rhombiGt_ByPath(  Rhombus   const * const rhP0,    Rhombus   const * const rhP1  );
 int  pathGt_ByClosedEtc(Path      const * const pathP0,  Path      const * const pathP1);
 
 int  path_winding_number(const Path * const pathP_Inner,  const Path * const pathP_Outer,  const Tiling * const tlngP);
@@ -389,13 +389,13 @@ void tilings_export(
 	unsigned long long int * const numCharsThisFileP
 );  // tilings_export()
 
-void tiling_export_PaintRhombiiPS(
+void tiling_export_PaintRhombiPS(
 	FILE* const fp,
 	Tiling const      * const tlngP,
 	unsigned long int * const numLinesThisFileP,
 	unsigned long long int * const numCharsThisFileP,
 	bool const deBugMode
-);  // tiling_export_PaintRhombiiPS()
+);  // tiling_export_PaintRhombiPS()
 
 void tiling_export_PaintArcsPS(
 	FILE* const fp,
@@ -405,7 +405,7 @@ void tiling_export_PaintArcsPS(
 );  // tiling_export_PaintArcsPS()
 
 void exportColourSVG(char * const strA,  char * const strB,  bool * const isWhiteP,  const Physique ph,  const bool pathClosed,  const long int pathLength,  const bool pointy);
-void tiling_export_PaintRhombiiSVG(
+void tiling_export_PaintRhombiSVG(
 	FILE* const fp,
 	Tiling const      * const tlngP,
 	unsigned long int * const numLinesThisFileP,

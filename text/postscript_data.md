@@ -27,9 +27,9 @@ But the development of `ExportFormat`s `PS_rhomb` and `PS_arcs` means that `PS_d
 (New software, at point of release, has a feature described as &ldquo;heading for deprecation&rdquo;: cool, or dim-witted?)
 For `PS_data` the data is exported as arrays (in PostScript, <code>[&nbsp;&hellip;&nbsp;]</code>) of dictionaries (<code><<&nbsp;&hellip;&nbsp;>></code>), each of which is limited to at most 65,535 items. 
 
-So a &lsquo;wanted&rsquo; subset of rhombii is chosen. 
+So a &lsquo;wanted&rsquo; subset of rhombi is chosen. 
 In <kbd>controls.c</kbd> there are functions `wantedPostScriptCentre()` which returns the centre of the desired region, and `wantedPostScriptAspect()` which returns the desired _y_/_x_ aspect ratio. 
-The largest possible area is then chosen, such that there are &le;&#8239;65535 rhombii (sometimes _x_ or _y_ equalities compel the number of rhombii to be slightly less than 65535).
+The largest possible area is then chosen, such that there are &le;&#8239;65535 rhombi (sometimes _x_ or _y_ equalities compel the number of rhombi to be slightly less than 65535).
 
 The `RhId` and `PathId` are renumbered, such that numbers point within the shorter PostScript arrays, rather than within the longer C arrays used in all other export formats.
 
@@ -50,7 +50,7 @@ If there is new C output, this array would need to be replaced.
 After this there are obvious definitions of variables such as `PageWidth`, `PageHeight`, `Margin`. 
 
 Much of the useful work is done by the routine `Tiles_Paint`, which takes an array of &lsquo;representations&rsquo;, which are then painted in the array order. 
-Some of these resemble directly usable output from the C (`/Rhombii_fill`, `/Rhombii_stroke`, `/Rhombii_circles5`, `Arcs_fill`, `/Arcs_stroke`); others are different representations (`/Diagonals_stroke`, `/Triangles_fill`); and others are labellings for debugging.
+Some of these resemble directly usable output from the C (`/Rhombi_fill`, `/Rhombi_stroke`, `/Rhombi_circles5`, `Arcs_fill`, `/Arcs_stroke`); others are different representations (`/Diagonals_stroke`, `/Triangles_fill`); and others are labellings for debugging.
 
 This is called below. 
 There is a loop over `Tilings`, looping over several possible such arrays of representations.

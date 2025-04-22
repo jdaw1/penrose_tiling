@@ -4,7 +4,7 @@
 
 #include "penrose.h"
 
-void oneRhombii_Neighbourify(
+void oneRhombi_Neighbourify(
 	Tiling * const tlngP,
 	RhombId const rhId_This,
 	RhombId rhId_Start,
@@ -12,7 +12,7 @@ void oneRhombii_Neighbourify(
 	bool const isSortedWithin
 )
 {
-	register Rhombus * const rhP_This = &(tlngP->rhombii[rhId_This]);
+	register Rhombus * const rhP_This = &(tlngP->rhombi[rhId_This]);
 
 	if( rhP_This->numNeighbours >= 4 )
 		return;
@@ -26,7 +26,7 @@ void oneRhombii_Neighbourify(
 		for(  ;  rhId_Start_Max > 1 + rhId_Start  ;  )
 		{
 			rhId_Start_Guess = (rhId_Start_Max / 2)  +  (rhId_Start / 2)  +  (rhId_Start % 2);  // Mid, slightly robust to overflow
-			if( tlngP->rhombii[rhId_Start_Guess].centre.y < rhP_This->centre.y - threshold )
+			if( tlngP->rhombi[rhId_Start_Guess].centre.y < rhP_This->centre.y - threshold )
 				rhId_Start = rhId_Start_Guess;
 			else
 				rhId_Start_Max = rhId_Start_Guess;
@@ -37,7 +37,7 @@ void oneRhombii_Neighbourify(
 	register Rhombus * rhP;
 	for( rhId = rhId_Start  ;  rhId <= rhId_End  ;  rhId ++ )
 	{
-		rhP = &(tlngP->rhombii[rhId]);
+		rhP = &(tlngP->rhombi[rhId]);
 		if( isSortedWithin  &&  rhP->centre.y > rhP_This->centre.y + threshold )
 			break;
 		if( rhP->numNeighbours < 4  // Quick test, failed by most, so speed-optimal to be first.
@@ -50,24 +50,24 @@ void oneRhombii_Neighbourify(
 			||  rhP->neighbours[2].rhId == rhId_This )  // Can't be 4 neighbours.
 				continue;
 
-			twoRhombii_Neighbourify(tlngP, rhId_This, rhId);
+			twoRhombi_Neighbourify(tlngP, rhId_This, rhId);
 		}  // if()
 	}  // for( rhId ... )
-}  // oneRhombii_Neighbourify()
+}  // oneRhombi_Neighbourify()
 
 
 
-void twoRhombii_Neighbourify(Tiling * const tlngP,  RhombId const rhId_A,  RhombId const rhId_B)
+void twoRhombi_Neighbourify(Tiling * const tlngP,  RhombId const rhId_A,  RhombId const rhId_B)
 {
 	if( rhId_A < 0 )
-		{printf("twoRhombii_Neighbourify(): !!! Error, sub-zero rhId_A,"    " in twoRhombii_Neighbourify(tilingId=%" PRIi8 ",  rhId_A=%li,  rhId_B=%li) !!!\n", tlngP->tilingId, rhId_A, rhId_B);  fflush(stdout);   return;}
+		{printf("twoRhombi_Neighbourify(): !!! Error, sub-zero rhId_A,"    " in twoRhombi_Neighbourify(tilingId=%" PRIi8 ",  rhId_A=%li,  rhId_B=%li) !!!\n", tlngP->tilingId, rhId_A, rhId_B);  fflush(stdout);   return;}
 	if( rhId_B < 0 )
-		{printf("twoRhombii_Neighbourify(): !!! Error, sub-zero rhId_B,"    " in twoRhombii_Neighbourify(tilingId=%" PRIi8 ",  rhId_A=%li,  rhId_B=%li) !!!\n", tlngP->tilingId, rhId_A, rhId_B);  fflush(stdout);   return;}
+		{printf("twoRhombi_Neighbourify(): !!! Error, sub-zero rhId_B,"    " in twoRhombi_Neighbourify(tilingId=%" PRIi8 ",  rhId_A=%li,  rhId_B=%li) !!!\n", tlngP->tilingId, rhId_A, rhId_B);  fflush(stdout);   return;}
 	if( rhId_A == rhId_B)
-		{printf("twoRhombii_Neighbourify(): !!! Error, duplicated rhombus," " in twoRhombii_Neighbourify(tilingId=%" PRIi8 ",  rhId_A=%li,  rhId_B=%li) !!!\n", tlngP->tilingId, rhId_A, rhId_B);  fflush(stdout);   return;}
+		{printf("twoRhombi_Neighbourify(): !!! Error, duplicated rhombus," " in twoRhombi_Neighbourify(tilingId=%" PRIi8 ",  rhId_A=%li,  rhId_B=%li) !!!\n", tlngP->tilingId, rhId_A, rhId_B);  fflush(stdout);   return;}
 
-	Rhombus * const rhP_A = &(tlngP->rhombii[rhId_A]);
-	Rhombus * const rhP_B = &(tlngP->rhombii[rhId_B]);
+	Rhombus * const rhP_A = &(tlngP->rhombi[rhId_A]);
+	Rhombus * const rhP_B = &(tlngP->rhombi[rhId_B]);
 	bool edge_A_N = true, edge_A_E = true, edge_B_N = true, edge_B_E = true;  // Initialisation to suppress erroneous compiler warning about possibly not set.
 	int8_t pointsSame = 0;
 
@@ -110,7 +110,7 @@ void twoRhombii_Neighbourify(Tiling * const tlngP,  RhombId const rhId_A,  Rhomb
 	} while(false);  // Minimal break'able loop construct
 
 	if( pointsSame != 2 )
-		{fprintf(stderr, "!!! Error, pointsSame=%" PRIi8 ", in twoRhombii_Neighbourify(tlngId=%" PRIi8 ",  %li,  %li) !!!\n", pointsSame, tlngP->tilingId, rhId_A, rhId_B);  fflush(stderr);   exit(EXIT_FAILURE);}
+		{fprintf(stderr, "!!! Error, pointsSame=%" PRIi8 ", in twoRhombi_Neighbourify(tlngId=%" PRIi8 ",  %li,  %li) !!!\n", pointsSame, tlngP->tilingId, rhId_A, rhId_B);  fflush(stderr);   exit(EXIT_FAILURE);}
 
 	Neighbour *nghbrP;
 
@@ -134,7 +134,7 @@ void twoRhombii_Neighbourify(Tiling * const tlngP,  RhombId const rhId_A,  Rhomb
 
 	(rhP_A->numNeighbours) ++;
 	(rhP_B->numNeighbours) ++;
-}  // twoRhombii_Neighbourify()
+}  // twoRhombi_Neighbourify()
 
 
 bool neighbours_error_true(ExportWhat const exprtWhat, ExportFormat const exportFormat, const Tiling * const tlngP, const unsigned long int numLinesThisFileP) {return true;}
@@ -150,34 +150,34 @@ void neighbours_populate(Tiling * const tlngP)
 
 	for( rhId1 = 0  ;  rhId1 < tlngP->numFats + tlngP->numThins  ;  rhId1++ )
 	{
-		tlngP->rhombii[rhId1].numNeighbours = 0;  // Reset previous neighbouring, if any
-		tlngP->rhombii[rhId1].neighbours[0].rhId = -1;
-		tlngP->rhombii[rhId1].neighbours[1].rhId = -1;
-		tlngP->rhombii[rhId1].neighbours[2].rhId = -1;
-		tlngP->rhombii[rhId1].neighbours[3].rhId = -1;
+		tlngP->rhombi[rhId1].numNeighbours = 0;  // Reset previous neighbouring, if any
+		tlngP->rhombi[rhId1].neighbours[0].rhId = -1;
+		tlngP->rhombi[rhId1].neighbours[1].rhId = -1;
+		tlngP->rhombi[rhId1].neighbours[2].rhId = -1;
+		tlngP->rhombi[rhId1].neighbours[3].rhId = -1;
 	}
 
-	rhombii_sort(tlngP,  &rhombiiGt_ByY,  false);
+	rhombi_sort(tlngP,  &rhombiGt_ByY,  false);
 
 	for( rhId1 = 1  ;  rhId1 < tlngP->numFats + tlngP->numThins  ;  rhId1++ )
 	{
 		for( rhId2 = rhId1 - 1  ;  rhId2 >= 0  ;  rhId2-- )
 		{
 			yDiff =
-				tlngP->rhombii[rhId1].centre.y -
-				tlngP->rhombii[rhId2].centre.y ;
+				tlngP->rhombi[rhId1].centre.y -
+				tlngP->rhombi[rhId2].centre.y ;
 
 			if( yDiff > thresholdNeighbour )
 				break;
 
 			xDiff =
-				tlngP->rhombii[rhId1].centre.x -
-				tlngP->rhombii[rhId2].centre.x ;
+				tlngP->rhombi[rhId1].centre.x -
+				tlngP->rhombi[rhId2].centre.x ;
 
 			if( xDiff * xDiff  +  yDiff * yDiff  <=  thresholdNeighbourSqrd )
 			{
-				if( tlngP->rhombii[rhId1].numNeighbours >= 4
-				||  tlngP->rhombii[rhId2].numNeighbours >= 4 )
+				if( tlngP->rhombi[rhId1].numNeighbours >= 4
+				||  tlngP->rhombi[rhId2].numNeighbours >= 4 )
 				{
 					extern char scratchString[];
 					FILE * fp;
@@ -188,14 +188,14 @@ void neighbours_populate(Tiling * const tlngP)
 						"\n\nneighbours_populate(): error, need to connect two rhombi, but >=1 already has >=4 neighbours: tilingId=%" PRIi8 ";\n"
 						"\trhId1=%li, numNeighbours=%hi = [%li,%li,%li,%li], centre = (%0.9lf, %0.9lf);\n"
 						"\trhId2=%li, numNeighbours=%hi = [%li,%li,%li,%li], centre = (%0.9lf, %0.9lf).\n"
-						"Too many neighbours likely to be caused by duplicate rhombii. "
+						"Too many neighbours likely to be caused by duplicate rhombi. "
 						"This likely because holesFill() has made the same rhombus twice. "
-						"If a type of filling is known to do that, as one is, then, after, it should call rhombii_purgeDuplicates(). "
+						"If a type of filling is known to do that, as one is, then, after, it should call rhombi_purgeDuplicates(). "
 						"Believed that this is done sufficiently, but the appearance of this error suggests some optimism of belief. "
 						"Ouch!\n\n",
 						tlngP->tilingId,
-						rhId1,  tlngP->rhombii[rhId1].numNeighbours,  tlngP->rhombii[rhId1].neighbours[0].rhId,  tlngP->rhombii[rhId1].neighbours[1].rhId,  tlngP->rhombii[rhId1].neighbours[2].rhId,  tlngP->rhombii[rhId1].neighbours[3].rhId,  tlngP->rhombii[rhId1].centre.x,  tlngP->rhombii[rhId1].centre.y,
-						rhId2,  tlngP->rhombii[rhId2].numNeighbours,  tlngP->rhombii[rhId2].neighbours[0].rhId,  tlngP->rhombii[rhId2].neighbours[1].rhId,  tlngP->rhombii[rhId2].neighbours[2].rhId,  tlngP->rhombii[rhId2].neighbours[3].rhId,  tlngP->rhombii[rhId2].centre.x,  tlngP->rhombii[rhId2].centre.y
+						rhId1,  tlngP->rhombi[rhId1].numNeighbours,  tlngP->rhombi[rhId1].neighbours[0].rhId,  tlngP->rhombi[rhId1].neighbours[1].rhId,  tlngP->rhombi[rhId1].neighbours[2].rhId,  tlngP->rhombi[rhId1].neighbours[3].rhId,  tlngP->rhombi[rhId1].centre.x,  tlngP->rhombi[rhId1].centre.y,
+						rhId2,  tlngP->rhombi[rhId2].numNeighbours,  tlngP->rhombi[rhId2].neighbours[0].rhId,  tlngP->rhombi[rhId2].neighbours[1].rhId,  tlngP->rhombi[rhId2].neighbours[2].rhId,  tlngP->rhombi[rhId2].neighbours[3].rhId,  tlngP->rhombi[rhId2].centre.x,  tlngP->rhombi[rhId2].centre.y
 					);
 					fflush(stderr);
 					sprintf(scratchString, "%serror_neighbours_populate.tsv", tlngP->filePath);
@@ -217,7 +217,7 @@ void neighbours_populate(Tiling * const tlngP)
 					exit(EXIT_FAILURE);
 				}
 
-				twoRhombii_Neighbourify(tlngP,  rhId1,  rhId2);
+				twoRhombi_Neighbourify(tlngP,  rhId1,  rhId2);
 			}  // So close that must be neighbours
 
 		}  // for( rhId2 ... )

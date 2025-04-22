@@ -1,7 +1,7 @@
-<svg width='960' height='1122.279301646' viewBox='-3.337195102 -3.178810661 5.438322226 6.357621323' preserveAspectRatio='xMidYMid meet' id='Penrose_Rhombii_00' xmlns='http://www.w3.org/2000/svg'>
+<svg width='960' height='1122.279301646' viewBox='-3.337195102 -3.178810661 5.438322226 6.357621323' preserveAspectRatio='xMidYMid meet' id='Penrose_Rhombi_00' xmlns='http://www.w3.org/2000/svg'>
 <!-- TilingId = 0;  NumFats = 2;  NumThins = 1;  ==> #tiles= 3;  NumPathsClosed = 0;  NumPathsOpen = 1 -->
 <!-- Licence = "GNU General Public License, Version 3, 29 June 2007"; URL = "https://github.com/jdaw1/penrose_tiling/"; Author = "Julian D. A. Wiseman of www.jdawiseman.com". -->
-<!-- EdgeLength = 3.23606797749979; stroke-width defined to be EdgeLength / 16. If changing stroke-width, need to alter viewBox, for which it might help to know that, without line, and assuming inclusion of all the C-generated rhombii, values would be -3.236067977 -3.077683537 5.236067977 6.155367074. -->
+<!-- EdgeLength = 3.23606797749979; stroke-width defined to be EdgeLength / 16. If changing stroke-width, need to alter viewBox, for which it might help to know that, without line, and assuming inclusion of all the C-generated rhombi, values would be -3.236067977 -3.077683537 5.236067977 6.155367074. -->
 <!-- Browser fail for large SVG? Bug report at https://issues.chromium.org/issues/390969197 -->
 <g transform='scale(1,-1)'> <!-- PostScript and Excel positive y goes up the page, SVG it goes down. This reflection makes SVG behave as the others. -->
 
@@ -12,7 +12,7 @@
 	<!-- To locate holes, and some other debugging, replace previous line with:  <g id='o'><path d='M 0 0   L -2.61803398874989 1.90211303259031   -5.23606797749979 0   -2.61803398874989 -1.90211303259031  Z'/><circle stroke='#000' fill='#6F6' opacity='1' cx='-2.61803398874989' r='0.53934466291663'/></g>  -->
 </defs>
 
-<g stroke-width='0.202254249' stroke='#000' paint-order='fill stroke' stroke-linejoin='round' stroke-opacity='1'>  <!-- all rhombii -->
+<g stroke-width='0.202254249' stroke='#000' paint-order='fill stroke' stroke-linejoin='round' stroke-opacity='1'>  <!-- all rhombi -->
 
 <g fill='#CCC' opacity='1'>  <!-- thins not otherwise inside a path. -->
 	<use href='#t'  transform='rotate(180)'/>
@@ -29,7 +29,7 @@
 
 <!-- Paint closed paths not otherwise inside a larger path. Comment is pathId. -->
 
-</g>  <!-- all rhombii, stroke -->
+</g>  <!-- all rhombi, stroke -->
 
 <!-- If gridlines wanted, uncomment these. -->
 <!-- Gridlines, start, commented out 

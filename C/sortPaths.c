@@ -50,16 +50,16 @@ void paths_sort(Tiling * const tlngP,  int orderedFn(const Path * const, const P
 
 	for( rhId_This = 0  ;  rhId_This < tlngP->numFats + tlngP->numThins  ;  rhId_This++ )
 	{
-		if( Fat == tlngP->rhombii[rhId_This].physique )
-			tlngP->rhombii[rhId_This].pathId = pathIdsNew[ tlngP->rhombii[rhId_This].pathId ] ;
+		if( Fat == tlngP->rhombi[rhId_This].physique )
+			tlngP->rhombi[rhId_This].pathId = pathIdsNew[ tlngP->rhombi[rhId_This].pathId ] ;
 		else
 		{
-			if( tlngP->rhombii[rhId_This].pathId_ShortestOuter >= 0 )
-				tlngP->rhombii[rhId_This].pathId_ShortestOuter = pathIdsNew[ tlngP->rhombii[rhId_This].pathId_ShortestOuter ];
+			if( tlngP->rhombi[rhId_This].pathId_ShortestOuter >= 0 )
+				tlngP->rhombi[rhId_This].pathId_ShortestOuter = pathIdsNew[ tlngP->rhombi[rhId_This].pathId_ShortestOuter ];
 		}  // Thin
-		for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombii[rhId_This].numNeighbours  ;  nghbrNum++ )
-			if( tlngP->rhombii[rhId_This].neighbours[nghbrNum].pathId >= 0 )
-				tlngP->rhombii[rhId_This].neighbours[nghbrNum].pathId = pathIdsNew[ tlngP->rhombii[rhId_This].neighbours[nghbrNum].pathId ];
+		for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombi[rhId_This].numNeighbours  ;  nghbrNum++ )
+			if( tlngP->rhombi[rhId_This].neighbours[nghbrNum].pathId >= 0 )
+				tlngP->rhombi[rhId_This].neighbours[nghbrNum].pathId = pathIdsNew[ tlngP->rhombi[rhId_This].neighbours[nghbrNum].pathId ];
 	}  // for( rhId_This ... )
 
 	for( pathId = 0  ;  pathId < tlngP->numPathsClosed + tlngP->numPathsOpen  ;  pathId++ )

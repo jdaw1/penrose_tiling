@@ -1,7 +1,7 @@
-<svg width='960' height='1316.015803861' viewBox='-6.297431689 -7.785601177 11.3587954 15.571202354' preserveAspectRatio='xMidYMid meet' id='Penrose_Rhombii_06' xmlns='http://www.w3.org/2000/svg'>
+<svg width='960' height='1316.015803861' viewBox='-6.297431689 -7.785601177 11.3587954 15.571202354' preserveAspectRatio='xMidYMid meet' id='Penrose_Rhombi_06' xmlns='http://www.w3.org/2000/svg'>
 <!-- TilingId = 6;  NumFats = 2098;  NumThins = 1273;  ==> #tiles= 3371;  NumPathsClosed = 208;  NumPathsOpen = 49 -->
 <!-- Licence = "GNU General Public License, Version 3, 29 June 2007"; URL = "https://github.com/jdaw1/penrose_tiling/"; Author = "Julian D. A. Wiseman of www.jdawiseman.com". -->
-<!-- EdgeLength = 0.18033988749895; stroke-width defined to be EdgeLength / 16. If changing stroke-width, need to alter viewBox, for which it might help to know that, without line, and assuming inclusion of all the C-generated rhombii, values would be -6.291796068 -7.779965556 11.347524158 15.559931111. -->
+<!-- EdgeLength = 0.18033988749895; stroke-width defined to be EdgeLength / 16. If changing stroke-width, need to alter viewBox, for which it might help to know that, without line, and assuming inclusion of all the C-generated rhombi, values would be -6.291796068 -7.779965556 11.347524158 15.559931111. -->
 <!-- Browser fail for large SVG? Bug report at https://issues.chromium.org/issues/390969197 -->
 <g transform='scale(1,-1)'> <!-- PostScript and Excel positive y goes up the page, SVG it goes down. This reflection makes SVG behave as the others. -->
 
@@ -177,7 +177,7 @@
 	</g>  <!-- id='c55' -->
 </defs>
 
-<g stroke-width='0.011271243' stroke='#000' paint-order='fill stroke' stroke-linejoin='round' stroke-opacity='1'>  <!-- all rhombii -->
+<g stroke-width='0.011271243' stroke='#000' paint-order='fill stroke' stroke-linejoin='round' stroke-opacity='1'>  <!-- all rhombi -->
 
 <g fill='#CCC' opacity='1'>  <!-- thins not otherwise inside a path. -->
 	<use href='#t'  transform='translate(-0.583592135,7.60845213) rotate(180)'/>
@@ -1592,7 +1592,7 @@
 	<use href='#c5r' transform='translate(-0.763932023,6.155367074)'/> <!-- 205 -->
 	<use href='#c5r' transform='translate(-1,6.881909602) rotate(36)'/> <!-- 206 -->
 	<use href='#c5r' transform='translate(-0.236067977,6.881909602)'/> <!-- 207 -->
-</g>  <!-- all rhombii, stroke -->
+</g>  <!-- all rhombi, stroke -->
 
 <!-- If gridlines wanted, uncomment these. -->
 <!-- Gridlines, start, commented out 

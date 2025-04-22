@@ -1,7 +1,7 @@
 # Penrose Tilings #
 
 A Penrose tiling is a beautiful thing, of which [the&nbsp;author](https://jdawiseman.com/author.html) is very fond. 
-It is an aperiodic tiling, made from two rhombii with tight corners of 72&deg; and 36&deg;. 
+It is an aperiodic tiling, made from two rhombi with tight corners of 72&deg; and 36&deg;. 
 Behold!
 
 <div align="center">

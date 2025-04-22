@@ -1,10 +1,10 @@
 // By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2025
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
-// sortRhombii.c, in PenroseC
+// sortRhombi.c, in PenroseC
 
 #include "penrose.h"
 
-int rhombiiGt_ByPath(
+int rhombiGt_ByPath(
 	Rhombus const * const rhP0,
 	Rhombus const * const rhP1
 )
@@ -30,7 +30,7 @@ int rhombiiGt_ByPath(
 		return 0;  // rhP0 == rhP1
 		break;  // Entirely redundant.
 	}  // switch(rhP0->physique)
-}  // rhombiiGt_ByPath()
+}  // rhombiGt_ByPath()
 
 
 int neighbourGt(Neighbour const * const nP0,  Neighbour const * const nP1)
@@ -63,7 +63,7 @@ int neighbourGt(Neighbour const * const nP0,  Neighbour const * const nP1)
 }  // neighbourGt()
 
 
-void rhombii_sort(
+void rhombi_sort(
 	Tiling * const tlngP,
 	int orderedFn(const Rhombus * const, const Rhombus * const),
 	bool const alsoRenumber
@@ -75,40 +75,40 @@ void rhombii_sort(
 	int8_t         nghbrNum;
 	Rhombus        *rhP;
 	Path           *pathP;
-	long int const numRhombii = tlngP->numFats + tlngP->numThins;
+	long int const numRhombi = tlngP->numFats + tlngP->numThins;
 
 	if( alsoRenumber )
-		for( rhId = 0  ;  rhId < numRhombii  ;  rhId++ )
-			tlngP->rhombii[rhId].rhId = rhId;
+		for( rhId = 0  ;  rhId < numRhombi  ;  rhId++ )
+			tlngP->rhombi[rhId].rhId = rhId;
 
 	qsort(
-		tlngP->rhombii,
-		numRhombii,
+		tlngP->rhombi,
+		numRhombi,
 		sizeof(Rhombus),
 		( int(*)(const void * const,const void * const) ) orderedFn
 	);  // qsort()
 
 	if( alsoRenumber )
 	{
-		rhombIdsNew = malloc( numRhombii  *  sizeof(RhombId) );
+		rhombIdsNew = malloc( numRhombi  *  sizeof(RhombId) );
 		if( rhombIdsNew == NULL )
 		{
-			fprintf(stderr, "Error in rhombii_sort: malloc(...) == NULL;  numRhombii = %li;  sizeof(RhombId) = %li.", numRhombii, sizeof(RhombId) );
+			fprintf(stderr, "Error in rhombi_sort: malloc(...) == NULL;  numRhombi = %li;  sizeof(RhombId) = %li.", numRhombi, sizeof(RhombId) );
 			fflush(stderr);
 			exit(EXIT_FAILURE) ;
 		}  // rhombIdsNew == NULL
 
-		for( rhId = 0  ;  rhId < numRhombii  ;  rhId++ )
+		for( rhId = 0  ;  rhId < numRhombi  ;  rhId++ )
 			rhombIdsNew[rhId] = -1;
 
-		for( rhId = 0  ;  rhId < numRhombii  ;  rhId++ )
-			if( tlngP->rhombii[rhId].rhId >= 0 )
-				rhombIdsNew[ tlngP->rhombii[rhId].rhId ] = rhId;
+		for( rhId = 0  ;  rhId < numRhombi  ;  rhId++ )
+			if( tlngP->rhombi[rhId].rhId >= 0 )
+				rhombIdsNew[ tlngP->rhombi[rhId].rhId ] = rhId;
 
 		for( pathId = 0  ;  pathId < tlngP->numPathsClosed + tlngP->numPathsOpen  ;  pathId++ )
 		{
 			pathP = &(tlngP->path[pathId]);
-			pathP->rhId_ThinWithin_First = numRhombii - 1;
+			pathP->rhId_ThinWithin_First = numRhombi - 1;
 			pathP->rhId_ThinWithin_Last  = 0;
 			if( tlngP->path[pathId].pathClosed )
 			{
@@ -120,9 +120,9 @@ void rhombii_sort(
 				pathP->rhId_openPathEnd = rhombIdsNew[ pathP->rhId_openPathEnd ];
 		}  // for( pathId ... )
 
-		for( rhId = 0  ;  rhId < numRhombii  ;  rhId++ )
+		for( rhId = 0  ;  rhId < numRhombi  ;  rhId++ )
 		{
-			rhP = &(tlngP->rhombii[rhId]);
+			rhP = &(tlngP->rhombi[rhId]);
 			rhP->rhId = rhId ;
 			for( nghbrNum = 0  ;  nghbrNum < rhP->numNeighbours  ;  nghbrNum++ )
 				rhP->neighbours[nghbrNum].rhId = rhombIdsNew[ rhP->neighbours[nghbrNum].rhId ] ;
@@ -141,8 +141,8 @@ void rhombii_sort(
 	else
 	{
 		// alsoRenumber == false
-		for( rhId = 0  ;  rhId < numRhombii  ;  rhId++ )
-			tlngP->rhombii[rhId].rhId = rhId;
+		for( rhId = 0  ;  rhId < numRhombi  ;  rhId++ )
+			tlngP->rhombi[rhId].rhId = rhId;
 	}
 
-}  // rhombii_sort()
+}  // rhombi_sort()

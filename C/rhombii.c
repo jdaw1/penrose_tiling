@@ -1,6 +1,6 @@
 // By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2025
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
-// rhombii.c, in PenroseC
+// rhombi.c, in PenroseC
 
 #include "penrose.h"
 
@@ -15,17 +15,17 @@ RhombId rhombus_append(
 	RhombId const rhId = tlngP->numFats + tlngP->numThins ;
 	int8_t nghbrNum;
 
-	if( rhId >= tlngP->rhombii_NumMax )
+	if( rhId >= tlngP->rhombi_NumMax )
 	{
 		fprintf(stderr,
-			"!!! Error in rhombus_append() with tilingId=%" PRIi8 ", numFats=%li, numThins=%li: rhombii_NumMax = %li is too small.\n",
-			tlngP->tilingId,  tlngP->numFats,  tlngP->numThins,  tlngP->rhombii_NumMax
+			"!!! Error in rhombus_append() with tilingId=%" PRIi8 ", numFats=%li, numThins=%li: rhombi_NumMax = %li is too small.\n",
+			tlngP->tilingId,  tlngP->numFats,  tlngP->numThins,  tlngP->rhombi_NumMax
 		);
 		fflush(stderr);
 		exit(EXIT_FAILURE);
 	}
 
-	Rhombus * const rhP = &(tlngP->rhombii[rhId]) ;
+	Rhombus * const rhP = &(tlngP->rhombi[rhId]) ;
 	rhP->rhId       = rhId;
 	rhP->physique   = physique;
 	rhP->filledType = filledType;

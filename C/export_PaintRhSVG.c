@@ -4,7 +4,7 @@
 
 #include "penrose.h"
 
-void tiling_export_PaintRhombiiSVG(
+void tiling_export_PaintRhombiSVG(
 	FILE* const fp,
 	Tiling const      * const tlngP,
 	unsigned long int * const numLinesThisFileP,
@@ -39,7 +39,7 @@ void tiling_export_PaintRhombiiSVG(
 	// Output preamble
 
 	sprintf(scratchString,
-		"<svg width='%0.9lf' height='%0.9lf' viewBox='%0.9lf %0.9lf %0.9lf %0.9lf' preserveAspectRatio='xMidYMid meet' id='Penrose_Rhombii_%02" PRIi8 "' ",
+		"<svg width='%0.9lf' height='%0.9lf' viewBox='%0.9lf %0.9lf %0.9lf %0.9lf' preserveAspectRatio='xMidYMid meet' id='Penrose_Rhombi_%02" PRIi8 "' ",
 		displayWidth,
 		displayWidth * (actual_yMax - actual_yMin) / (actual_xMax - actual_xMin),
 		actual_xMin,
@@ -62,7 +62,7 @@ void tiling_export_PaintRhombiiSVG(
 	(*numLinesThisFileP) += 2 ;
 	sprintf(scratchString,
 		"<!-- EdgeLength = %0.14lf; stroke-width defined to be EdgeLength / %0.9lf. If changing stroke-width, need to alter viewBox"
-		", for which it might help to know that, without line, and assuming inclusion of all the C-generated rhombii"
+		", for which it might help to know that, without line, and assuming inclusion of all the C-generated rhombi"
 		", values would be %0.9lf %0.9lf %0.9lf %0.9lf"  "."  " -->\n",
 		tlngP->edgeLength, tlngP->edgeLength / strokeWidth,
 		tlngP->xMin,  tlngP->yMin,  tlngP->xMax - tlngP->xMin,  tlngP->yMax - tlngP->yMin
@@ -106,7 +106,7 @@ void tiling_export_PaintRhombiiSVG(
 	(*numCharsThisFileP) += fprintf(fp, "\n<defs>\n");
 	(*numLinesThisFileP) += 2 ;
 
-	// Output defs: rhombii
+	// Output defs: rhombi
 
 	sprintf(scratchString,
 		"d='M 0 0   L %0.14lf %0.14lf   %0.14lf 0   %0.14lf %0.14lf  Z'",
@@ -173,7 +173,7 @@ void tiling_export_PaintRhombiiSVG(
 
 					for( fatCount = 0  ;  fatCount < 5  ;  fatCount ++ )
 					{
-						rhThisP  =  &(tlngP->rhombii[ rhId_This ]) ;
+						rhThisP  =  &(tlngP->rhombi[ rhId_This ]) ;
 						for( nghbrNum = 0  ;  nghbrNum < rhThisP->numNeighbours  ;  nghbrNum ++ )
 						{
 							nghbrP = &(rhThisP->neighbours[nghbrNum]);
@@ -181,7 +181,7 @@ void tiling_export_PaintRhombiiSVG(
 							{
 								// Seeking fats rather than thins is robust to being at edge and thins missing.
 								rhId_This = rhId_Next = nghbrP->rhId ;
-								rhNextP  =  &(tlngP->rhombii[ rhId_Next ]) ;
+								rhNextP  =  &(tlngP->rhombi[ rhId_Next ]) ;
 								(*numCharsThisFileP) += fprintf(fp,
 									"\t\t\t<use href='#t' %s/>\n",
 									svgTransform(scratchString,
@@ -202,7 +202,7 @@ void tiling_export_PaintRhombiiSVG(
 				{
 					for( rhId = pathOuterP->rhId_ThinWithin_First  ;  rhId <= pathOuterP->rhId_ThinWithin_Last  ;  rhId ++ )
 					{
-						rhP = &(tlngP->rhombii[rhId]);
+						rhP = &(tlngP->rhombi[rhId]);
 						if( Thin == rhP->physique  &&   pathStatP->examplePathId == rhP->pathId_ShortestOuter )
 						{
 							thinGood = true;
@@ -211,7 +211,7 @@ void tiling_export_PaintRhombiiSVG(
 								nghbrP = &(rhP->neighbours[nghbrNum]);
 								if( Fat == nghbrP->physique  &&  nghbrP->touchesN )
 								{
-									pathP = &(tlngP->path[ tlngP->rhombii[ nghbrP->rhId ].pathId ]);
+									pathP = &(tlngP->path[ tlngP->rhombi[ nghbrP->rhId ].pathId ]);
 									if( 5 == pathP->pathLength  &&  pathP->pathClosed  &&  ! pathP->pointy )
 									{
 										thinGood = false;
@@ -273,8 +273,8 @@ void tiling_export_PaintRhombiiSVG(
 			rhId_This = pathOuterP->rhId_PathCentreClosest;
 			while(true)
 			{
-				rhThisP  =  &(tlngP->rhombii[ rhId_This ]) ;
-				rhId_Next = NextInPath_RhId(tlngP->rhombii, rhThisP, pathOuterP->pathLength, true);
+				rhThisP  =  &(tlngP->rhombi[ rhId_This ]) ;
+				rhId_Next = NextInPath_RhId(tlngP->rhombi, rhThisP, pathOuterP->pathLength, true);
 
 				(*numCharsThisFileP) += fprintf(fp,
 					"\t\t\t<use href='#f' %s/>\n",
@@ -289,7 +289,7 @@ void tiling_export_PaintRhombiiSVG(
 
 				if( rhId_Next < 0 )
 					break;  // Open path, impossible here
-				if( tlngP->rhombii[rhId_Next].withinPathNum == 0 )
+				if( tlngP->rhombi[rhId_Next].withinPathNum == 0 )
 					break;  // Closed path, back to start
 
 				rhId_This = rhId_Next ;
@@ -322,10 +322,10 @@ void tiling_export_PaintRhombiiSVG(
 	(*numLinesThisFileP) += 2 ;
 
 
-	// Formatting applicable to all rhombii (except those explicitly reformatted)
+	// Formatting applicable to all rhombi (except those explicitly reformatted)
 
 	sprintf(scratchString,
-		"<g stroke-width='%0.9lf' stroke='#000' paint-order='fill stroke' stroke-linejoin='round' stroke-opacity='1'>  <!-- all rhombii -->\n",
+		"<g stroke-width='%0.9lf' stroke='#000' paint-order='fill stroke' stroke-linejoin='round' stroke-opacity='1'>  <!-- all rhombi -->\n",
 		strokeWidth
 	);
 	stringClean(scratchString);
@@ -339,7 +339,7 @@ void tiling_export_PaintRhombiiSVG(
 	(*numLinesThisFileP) +=2 ;
 	for( rhId = tlngP->numFats + tlngP->numThins - 1  ;  rhId >= 0  ;  rhId -- )
 	{
-		rhP = &(tlngP->rhombii[rhId]);
+		rhP = &(tlngP->rhombi[rhId]);
 		if( Thin == rhP->physique
 		&&  rhP->pathId_ShortestOuter < 0
 		&&  rhP->xMax >= actual_xMin
@@ -353,7 +353,7 @@ void tiling_export_PaintRhombiiSVG(
 				nghbrP = &(rhP->neighbours[nghbrNum]);
 				if( nghbrP->touchesN  &&  Fat == nghbrP->physique )
 				{
-					pathP = &(tlngP->path[ tlngP->rhombii[ nghbrP->rhId ].pathId ]);
+					pathP = &(tlngP->path[ tlngP->rhombi[ nghbrP->rhId ].pathId ]);
 					if( 5 == pathP->pathLength  &&  pathP->pathClosed  &&  ! pathP->pointy )
 					{
 						thinGood = false;
@@ -414,8 +414,8 @@ void tiling_export_PaintRhombiiSVG(
 					rhId_This = pathP->rhId_PathCentreClosest;
 					while(true)
 					{
-						rhThisP  =  &(tlngP->rhombii[ rhId_This ]) ;
-						rhId_Next = NextInPath_RhId(tlngP->rhombii, rhThisP, pathP->pathLength, true);
+						rhThisP  =  &(tlngP->rhombi[ rhId_This ]) ;
+						rhId_Next = NextInPath_RhId(tlngP->rhombi, rhThisP, pathP->pathLength, true);
 
 						if( rhThisP->xMax >= actual_xMin
 						&&  rhThisP->yMax >= actual_yMin
@@ -440,7 +440,7 @@ void tiling_export_PaintRhombiiSVG(
 
 						if( rhId_Next < 0 )
 							break;  // Open path, impossible here
-						if( tlngP->rhombii[rhId_Next].withinPathNum == 0 )
+						if( tlngP->rhombi[rhId_Next].withinPathNum == 0 )
 							break;  // Closed path, back to start
 
 						rhId_This = rhId_Next ;
@@ -486,7 +486,7 @@ void tiling_export_PaintRhombiiSVG(
 	}  // for( pathId ... )
 
 
-	(*numCharsThisFileP) += fprintf(fp, "</g>  <!-- all rhombii, stroke -->\n\n");
+	(*numCharsThisFileP) += fprintf(fp, "</g>  <!-- all rhombi, stroke -->\n\n");
 	(*numLinesThisFileP) += 2 ;
 
 	(*numCharsThisFileP) += fprintf(fp, "<!-- If gridlines wanted, uncomment these. -->\n");
@@ -550,4 +550,4 @@ void tiling_export_PaintRhombiiSVG(
 	(*numLinesThisFileP) += 2 ;
 
 	fflush(fp);
-}  // tiling_export_PaintRhombiiSVG
+}  // tiling_export_PaintRhombiSVG

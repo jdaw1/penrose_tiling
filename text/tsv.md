@@ -48,13 +48,13 @@ But the overall structure of the data, and the meaning of its fields, resembles 
     - `T_`, being single values applicable to the whole tiling,
     - `PthStat_` being arrays of PathStats,
     - `Pth_`, being arrays of paths,
-    - `Rh_`, being arrays of rhombii.
+    - `Rh_`, being arrays of rhombi.
 
 * There is then a two-digit tiling number. I.e., range names begin with&mdash;the table names are&mdash;strings of the form<br>`T_00.`, `PthStat_00.`, `Pth_00.`, `Rh_00.`,<br>`T_01.`, `PthStat_01.`, `Pth_01.`, `Rh_01.`,<br>`T_02.`, `PthStat_02.`, `Pth_02.`, `Rh_02.`, etc.
 
 * After the dot is a field name. 
 
-    - At the tiling level, fields are: `TilingId`, `AxisAligned`, `EdgeLength`, `NumFats`, `NumThins`, `NumPathsClosed`, `NumPathsOpen`, `NumPathStats`, `MinX`, `MaxX`, `MinY`, `MaxY`, `WantedPostScriptCentreX`, `WantedPostScriptCentreY`, `WantedPostScriptAspect`, `WantedPostScriptHalfWidth`, `WantedPostScriptHalfHeight`, `WantedPostScriptNumberRhombii`, `WantedPostScriptNumberPaths`, `Licence`, `URL`, `Author`.
+    - At the tiling level, fields are: `TilingId`, `AxisAligned`, `EdgeLength`, `NumFats`, `NumThins`, `NumPathsClosed`, `NumPathsOpen`, `NumPathStats`, `MinX`, `MaxX`, `MinY`, `MaxY`, `WantedPostScriptCentreX`, `WantedPostScriptCentreY`, `WantedPostScriptAspect`, `WantedPostScriptHalfWidth`, `WantedPostScriptHalfHeight`, `WantedPostScriptNumberRhombi`, `WantedPostScriptNumberPaths`, `Licence`, `URL`, `Author`.
 
     - For the PathStats, fields are: `TilingId`, `PathStatId`, `PathClosed`, `PathLength`, `Pointy`, `NumPaths`, `RadiusMinMin_EdgeLengths`, `RadiusMaxMax_EdgeLengths`, `WidthMax_EdgeLengths`, `HeightMax_EdgeLengths`, `MaxNumThisFats`, `MaxNumThisThins`, `MaxNumDeepFats`, `MaxNumDeepThins`, `MaxNumThisFats_Num`, `MaxNumThisThins_Num`, `MaxNumDeepFats_Num`, `MaxNumDeepThins_Num`, `InteriorsConsistent`.
 
@@ -62,7 +62,7 @@ But the overall structure of the data, and the meaning of its fields, resembles 
 
     - For the paths, fields are: `TilingId`, `PathId`, `Closed`, `Length`, `Pointy`, `PathStatId`, `RadiusMin`, `RadiusMax`, `VeryClosed`, `PathId_ShortestOuter`, `InsideThis_NumFats`, `InsideThis_NumThins`, `InsideDeep_NumFats`, `InsideDeep_NumThins`, `CentreX`, `CentreY`, `MinX`, `MaxX`, `MinY`, `MaxY`, `Orient`, `WantedPS`, `RhOpenPathEnd`, `RhPathStart`, `RhPathCentreFurthest`, `RhThinWithin_First`, `RhThinWithin_Last`.
 
-    - For the rhombii, fields are: `TilingId`, `RhId`, `Wantedness_PostScript`, `Physique`, `FilledHole`, `Xn`, `Yn`, `Xs`, `Ys`, `Xe`, `Ye`, `Xw`, `Yw`, `AngleDeg`, `NumNeighbours`, `NeighbourEdge_0`, `NeighbourEdge_1`, `NeighbourEdge_2`, `NeighbourEdge_3`, `NeighbourNum_0`, `NeighbourNum_1`, `NeighbourNum_2`, `NeighbourNum_3`, `NNN_0`, `NNN_1`, `NNN_2`, `NNN_3`, `PathId`, `WithinPathNum`, `EdgeClosestToPathCentre`, `PathId_ShortestOuter`. The neighbours information, which in the [JSON&nbsp;output](json.md) are shaped as an array of at most 4 dictionaries, in the TSV have been unrolled into fields ending `_0`, `_1`, `_2`, and `_3`.
+    - For the rhombi, fields are: `TilingId`, `RhId`, `Wantedness_PostScript`, `Physique`, `FilledHole`, `Xn`, `Yn`, `Xs`, `Ys`, `Xe`, `Ye`, `Xw`, `Yw`, `AngleDeg`, `NumNeighbours`, `NeighbourEdge_0`, `NeighbourEdge_1`, `NeighbourEdge_2`, `NeighbourEdge_3`, `NeighbourNum_0`, `NeighbourNum_1`, `NeighbourNum_2`, `NeighbourNum_3`, `NNN_0`, `NNN_1`, `NNN_2`, `NNN_3`, `PathId`, `WithinPathNum`, `EdgeClosestToPathCentre`, `PathId_ShortestOuter`. The neighbours information, which in the [JSON&nbsp;output](json.md) are shaped as an array of at most 4 dictionaries, in the TSV have been unrolled into fields ending `_0`, `_1`, `_2`, and `_3`.
 
 * All fields have broadly the same meaning as in the [JSON&nbsp;output](json.md), except that values absent in the [JSON&nbsp;output](json.md) have in the TSV become the Excel-idiomatic `#N/A`.
 
@@ -100,7 +100,7 @@ The chart has nine series.
 
 1. The shading of the thins, as lines no markers. (In Excel shading in an abomination; this shading is therefore an abomination; the spill formula by which the plottable series are made therefore must be an abomination, and indeed is an abomination. Microsoft:&nbsp;[tut&nbsp;tut](https://feedbackportal.microsoft.com/feedback/idea/2cc833e2-d1fe-ef11-a4dd-7c1e52ead3c1).)
 
-2. Edges of all the rhombii, as lines no markers.
+2. Edges of all the rhombi, as lines no markers.
 
 3. The round centres of the closed non-pointy 5-paths, shown as markers no lines.
 
@@ -112,6 +112,6 @@ The chart has nine series.
 
 7. The chosen path itself.
 
-8. Small dot markers in the north corner of all rhombii.
+8. Small dot markers in the north corner of all rhombi.
 
 9. Path labels, showing length (except for 5s) and Id, as no markers no lines only labels.

@@ -5,7 +5,7 @@
 #include "penrose.h"
 
 // Negative return means non-existent. Re direction: true ==> next; false ==> prev.
-RhombId NextInPath_RhId(const Rhombus * const rhombii,  const Rhombus * const rhThisP, long int const pathLength,  bool const direction)
+RhombId NextInPath_RhId(const Rhombus * const rhombi,  const Rhombus * const rhThisP, long int const pathLength,  bool const direction)
 {
 	int8_t  nghbrNum;
 	RhombId rhId_Next;
@@ -17,7 +17,7 @@ RhombId NextInPath_RhId(const Rhombus * const rhombii,  const Rhombus * const rh
 	for( nghbrNum = 0  ;  nghbrNum < rhThisP->numNeighbours  ;  nghbrNum++ )
 	{
 		rhId_Next = rhThisP->neighbours[nghbrNum].rhId;
-		rhNextP = &(rhombii[rhId_Next]);
+		rhNextP = &(rhombi[rhId_Next]);
 		if( rhNextP->physique != Fat )
 			continue;
 
@@ -39,7 +39,7 @@ RhombId NextInPath_RhId(const Rhombus * const rhombii,  const Rhombus * const rh
 
 
 // For Closed path, start rhombus effectively arbitrary. For neatness should choose consistently. Allow for machine-precision wobbbles.
-// Start at one of the five or ten rhombii closest to centre. Of those, prefer in first quadrant. Of those, prefer greatest y.
+// Start at one of the five or ten rhombi closest to centre. Of those, prefer in first quadrant. Of those, prefer greatest y.
 // Negative means don't want; positive is new wanted distance.
 // This caused feedback to Apple: https://feedbackassistant.apple.com/feedback/15322282
 inline static double rhWithinPathMoreSpecial(
@@ -130,12 +130,12 @@ void paths_populate(Tiling * const tlngP)
 	}  // if( NULL == tlngP->path )
 
 	for( rhId_PathStart = 0;  rhId_PathStart < tlngP->numFats + tlngP->numThins ; rhId_PathStart++ )
-		tlngP->rhombii[rhId_PathStart].pathId = -1 ;
+		tlngP->rhombi[rhId_PathStart].pathId = -1 ;
 
 	for( rhId_PathStart = 0;  rhId_PathStart < tlngP->numFats + tlngP->numThins ; rhId_PathStart++ )
 	{
-		if( Fat != tlngP->rhombii[rhId_PathStart].physique
-		||  tlngP->rhombii[rhId_PathStart].pathId >= 0 )  // rhId_PathStart already has path assigned
+		if( Fat != tlngP->rhombi[rhId_PathStart].physique
+		||  tlngP->rhombi[rhId_PathStart].pathId >= 0 )  // rhId_PathStart already has path assigned
 			continue;
 
 		if( tlngP->numPathsClosed + tlngP->numPathsOpen >= tlngP->path_NumMax )
@@ -158,20 +158,20 @@ void paths_populate(Tiling * const tlngP)
 
 		// Path either open or closed. Let's follow path until re-reach start, or reach dead end, revealing whether closed and if not, a sensible beginning place.
 
-		tlngP->rhombii[rhId_PathStart].pathId = pathThisP->pathId;
+		tlngP->rhombi[rhId_PathStart].pathId = pathThisP->pathId;
 
 		rhId_Prev = -1;
 		rhId_This = rhId_PathStart;
 		rhId_Next = rhId_PathStart;
 		while(true)
 		{
-			rhThisP  =  &(tlngP->rhombii[ rhId_This ]) ;
+			rhThisP  =  &(tlngP->rhombi[ rhId_This ]) ;
 
 			noNewNeighbours = true ;
 			for( nghbrNum = 0  ;  nghbrNum < rhThisP->numNeighbours  ;  nghbrNum++ )
 			{
 				rhId_Next = rhThisP->neighbours[nghbrNum].rhId ;
-				if( rhId_Next >= 0  &&  rhId_Next != rhId_Prev  &&  Fat == tlngP->rhombii[rhId_Next].physique )
+				if( rhId_Next >= 0  &&  rhId_Next != rhId_Prev  &&  Fat == tlngP->rhombi[rhId_Next].physique )
 				{
 					if(rhId_Next == rhId_PathStart)
 						{pathThisP->pathClosed = true;  rhId_PathStart_Better = rhId_PathStart;  goto know_rhIdPathStart_pathClosed;}  // goto used as a multi-loop break.
@@ -197,7 +197,7 @@ know_rhIdPathStart_pathClosed:
 
 		rhId_Prev = -1;
 		rhId_This = pathThisP->rhId_PathCentreClosest;
-		rhThisP = &(tlngP->rhombii[ rhId_This ]) ;
+		rhThisP = &(tlngP->rhombi[ rhId_This ]) ;
 		thisPathSumX = 0;
 		thisPathSumY = 0;
 		pathThisP->xMax = rhThisP->xMax;  // This start value because -DBL_MAX is ugly.
@@ -208,7 +208,7 @@ know_rhIdPathStart_pathClosed:
 		pathThisP->rhId_openPathEnd = -1;
 		while(true)
 		{
-			rhThisP = &(tlngP->rhombii[ rhId_This ]) ;
+			rhThisP = &(tlngP->rhombi[ rhId_This ]) ;
 			rhThisP->pathId = pathThisP->pathId ;
 			rhThisP->withinPathNum = pathThisP->pathLength - 1;  // Because this done here, can't in this loop use NextInPath_RhId()
 
@@ -226,7 +226,7 @@ know_rhIdPathStart_pathClosed:
 				else
 				{
 					for( nghbrNum = 0  ;  nghbrNum < 4  ;  nghbrNum++ )  // rhThisP->numNeighbours must be 4
-						if( tlngP->rhombii[ rhThisP->neighbours[nghbrNum].rhId ].numNeighbours < 4 )
+						if( tlngP->rhombi[ rhThisP->neighbours[nghbrNum].rhId ].numNeighbours < 4 )
 							{pathThisP->pathVeryClosed = false;  break;}
 				}  // rhThisP->numNeighbours == 4
 			}  // pathVeryClosed
@@ -267,36 +267,36 @@ know_pathLength:
 		{
 			// Starting at rhId_PathStart_Better, re-follow path, and calculating which closest to centre
 			rhId_This = rhId_PathStart_Better;
-			pathRhPathRhombNumClosest = tlngP->rhombii[ rhId_This ].withinPathNum;
+			pathRhPathRhombNumClosest = tlngP->rhombi[ rhId_This ].withinPathNum;
 			pathThisP->rhId_PathCentreClosest  = rhId_This;
 			pathThisP->rhId_PathCentreFurthest = rhId_This;
 			dist2Closest = rhWithinPathMoreSpecial(
 				true,  // Want closest corner
 				pathThisP,
-				&(tlngP->rhombii[ rhId_This ]),
-				&(tlngP->rhombii[ rhId_This ]),
+				&(tlngP->rhombi[ rhId_This ]),
+				&(tlngP->rhombi[ rhId_This ]),
 				0,  // Irrelevant
 				distance2Epsilon, distanceEpsilon  // Irrelevant
 			);
 			dist2Furthest = rhWithinPathMoreSpecial(
 				false,  // Want furthest corner
 				pathThisP,
-				&(tlngP->rhombii[ rhId_This ]),
-				&(tlngP->rhombii[ rhId_This ]),
+				&(tlngP->rhombi[ rhId_This ]),
+				&(tlngP->rhombi[ rhId_This ]),
 				0,  // Irrelevant
 				distance2Epsilon, distanceEpsilon  // Irrelevant
 			);
 
 			while(true)
 			{
-				rhThisP  =  &(tlngP->rhombii[ rhId_This ]) ;
-				rhId_Next = NextInPath_RhId(tlngP->rhombii, rhThisP, pathThisP->pathLength, true);
+				rhThisP  =  &(tlngP->rhombi[ rhId_This ]) ;
+				rhId_Next = NextInPath_RhId(tlngP->rhombi, rhThisP, pathThisP->pathLength, true);
 
 				dist2Temp = rhWithinPathMoreSpecial(
 					true,  // Want closest
 					pathThisP,
-					&(tlngP->rhombii[ rhId_This ]),
-					&(tlngP->rhombii[ pathThisP->rhId_PathCentreClosest ]),
+					&(tlngP->rhombi[ rhId_This ]),
+					&(tlngP->rhombi[ pathThisP->rhId_PathCentreClosest ]),
 					dist2Closest,
 					distance2Epsilon, distanceEpsilon
 				);
@@ -310,8 +310,8 @@ know_pathLength:
 				dist2Temp = rhWithinPathMoreSpecial(
 					false,  // Want furthest
 					pathThisP,
-					&(tlngP->rhombii[ rhId_This ]),
-					&(tlngP->rhombii[ pathThisP->rhId_PathCentreFurthest ]),
+					&(tlngP->rhombi[ rhId_This ]),
+					&(tlngP->rhombi[ pathThisP->rhId_PathCentreFurthest ]),
 					dist2Furthest,
 					distance2Epsilon, distanceEpsilon
 				);
@@ -323,7 +323,7 @@ know_pathLength:
 
 				if( rhId_Next < 0 )
 					break;  // Open path, impossible here
-				if( tlngP->rhombii[rhId_Next].withinPathNum == 0 )
+				if( tlngP->rhombi[rhId_Next].withinPathNum == 0 )
 					break;  // Closed path, back to start
 
 				rhId_This = rhId_Next ;
@@ -349,12 +349,12 @@ know_pathLength:
 			{
 				pathListed[0] = pathThisP->rhId_PathCentreClosest;
 				for( rhPathNum = 1  ;  rhPathNum < pathThisP->pathLength ;  rhPathNum++ )
-					pathListed[rhPathNum] = NextInPath_RhId(tlngP->rhombii, tlngP->rhombii + pathListed[rhPathNum - 1], pathThisP->pathLength, true);
+					pathListed[rhPathNum] = NextInPath_RhId(tlngP->rhombi, tlngP->rhombi + pathListed[rhPathNum - 1], pathThisP->pathLength, true);
 
 				for( rhPathNum = 0  ;  rhPathNum < pathThisP->pathLength ;  rhPathNum++ )
 				{
-					tlngP->rhombii[pathListed[rhPathNum]].withinPathNum = ( pathThisP->pathLength
-						+ (tlngP->rhombii[pathListed[rhPathNum]].withinPathNum - pathRhPathRhombNumClosest) * (isClockwise ? +1 : -1)
+					tlngP->rhombi[pathListed[rhPathNum]].withinPathNum = ( pathThisP->pathLength
+						+ (tlngP->rhombi[pathListed[rhPathNum]].withinPathNum - pathRhPathRhombNumClosest) * (isClockwise ? +1 : -1)
 					) % pathThisP->pathLength;
 				}  // for( rhPathNum ... )
 				free(pathListed);
@@ -363,8 +363,8 @@ know_pathLength:
 			rhId_This = pathThisP->rhId_PathCentreClosest;
 			while(true)
 			{
-				rhThisP  =  &(tlngP->rhombii[ rhId_This ]) ;
-				rhId_Next = NextInPath_RhId(tlngP->rhombii, rhThisP, pathThisP->pathLength, true);
+				rhThisP  =  &(tlngP->rhombi[ rhId_This ]) ;
+				rhId_Next = NextInPath_RhId(tlngP->rhombi, rhThisP, pathThisP->pathLength, true);
 
 				rhThisP->closerPathCentreN = (
 					( pow(pathThisP->centre.x  -  rhThisP->north.x, 2)  +  pow(pathThisP->centre.y  -  rhThisP->north.y, 2) ) <
@@ -377,7 +377,7 @@ know_pathLength:
 
 				if( rhId_Next < 0 )
 					break;  // Open path, impossible here
-				if( tlngP->rhombii[rhId_Next].withinPathNum == 0 )
+				if( tlngP->rhombi[rhId_Next].withinPathNum == 0 )
 					break;  // Closed path, back to start
 
 				rhId_This = rhId_Next ;
@@ -386,7 +386,7 @@ know_pathLength:
 			// set orientationDegrees
 			do  // break'able construct
 			{
-				rhThisP = &(tlngP->rhombii[ pathThisP->rhId_PathCentreClosest ]);
+				rhThisP = &(tlngP->rhombi[ pathThisP->rhId_PathCentreClosest ]);
 				orientationFound = false;
 
 				if( collinear(rhThisP->north,  rhThisP->south,  pathThisP->centre,  tlngP) )
@@ -461,7 +461,7 @@ know_pathLength:
 	for( pathId = 0  ;  pathId < tlngP->numPathsClosed + tlngP->numPathsOpen  ;  pathId ++ )
 	{
 		pathThisP = &(tlngP->path[ pathId ]);
-		rhThisP = &(tlngP->rhombii[ pathThisP->rhId_PathCentreClosest ]);
+		rhThisP = &(tlngP->rhombi[ pathThisP->rhId_PathCentreClosest ]);
 		pathThisP->pointy = ( 5 == pathThisP->pathLength  &&  pathThisP->pathClosed  &&  points_same_2(tlngP, rhThisP->north, pathThisP->centre) ) ;
 
 		pathThisP->pathClosedTypeNum = pathClosedTypeNum(pathThisP->pathClosed,  pathThisP->pathLength,  pathThisP->pointy);

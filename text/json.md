@@ -36,14 +36,14 @@ Hence it is the best format for being absorbed by another system.
     - number `EdgeLength`, unusually in scientific notation as accuracy is important relative to its own size, rather than relative to the size of the canvas;
     - Boolean `AxisAligned`, being true if all orientations are integer multiples of 18&deg;;
     - numbers `MinX`, `MaxX`, `MinY`, `MaxY` (which for some purposes could need to be adjusted by half of a line width);
-    - array `Rhombii` (described below);
+    - array `Rhombi` (described below);
     - array `Paths` (described below);
     - array `PathStats` (described below).
 
-* Each element of `Rhombii`, each rhombus, is a dictionary. All rhombii dictionaries contain:
+* Each element of `Rhombi`, each rhombus, is a dictionary. All rhombi dictionaries contain:
     - integer `RhId`, zero-based Id;
     - integer `Physique`, value either `36` (thin&nbsp;&Longleftrightarrow;&nbsp;36&deg;) or `72` (fat&nbsp;&Longleftrightarrow;&nbsp;72&deg;);
-    - Boolean `WantedPS`,  whether this is one of the &le;&#8239;65535 rhombii to be exported in the `PS_data` format;
+    - Boolean `WantedPS`,  whether this is one of the &le;&#8239;65535 rhombi to be exported in the `PS_data` format;
     - numbers `Xn`, `Yn`, `Xs`, `Ys`, `Xe`, `Ye`, `Xw`, `Yw`, being the *x* and *y* coordinates of the north, south, east and west vertices;
     - number `AngleDeg`, being the orientation of the rhombus.
     - array `Neighbours`, each being a dictionary containing:
@@ -60,7 +60,7 @@ Hence it is the best format for being absorbed by another system.
     - integer `PathId_ShortestOuter`, being the shortest, i.e. most immediate, path enclosed this thin. Absent if there is no enclosing path.
 
 * Some rhombus&rsquo;s dictionaries also contain:
-    - integer `FilledType`, being, for those rhombii inserted with `holesFill()`, the type of fill used.
+    - integer `FilledType`, being, for those rhombi inserted with `holesFill()`, the type of fill used.
 
 * Each element of `Paths`, each path, is a dictionary. All path dictionaries contain:
     - integer `PathId`, zero-based Id;
@@ -69,7 +69,7 @@ Hence it is the best format for being absorbed by another system.
     - integer `Length`, if the path is `Closed` the `Length` being one of 5, 15, 25, 55, 105, 215, 425, 855, 1705, 3415, 6825, 13655, 27305, 54615, 109225, 218455, 436905, 873815, 1747625, 3495255, 6990505, 13981015, 27962025, 55924055, 111848105, 223696215, 447392425, 894784855, &hellip;,&nbsp; =&nbsp;(2<small><sup>*n*</sup></small>&nbsp;&minus;&nbsp;(&minus;1)<small><sup>*n*</sup></small>)&times;5&frasl;3;
     - numbers `CentreX`, `CentreY`, `MinX`, `MaxX`, `MinY`, `MaxY` (using British spelling);
     - integer `RhPathStart`, being the rhombus in this path for which `WithinPathNum` is `0`;
-    - integer `rhId_PathCentreFurthest`, being one of the rhombii that is furthest from the centre (for closed paths, `RhPathStart` being one of those that is closest).
+    - integer `rhId_PathCentreFurthest`, being one of the rhombi that is furthest from the centre (for closed paths, `RhPathStart` being one of those that is closest).
     - integer `PathStatId`, being the zero-based pointer into the array `PathStats` (described below). 
 
 * Each element of `Paths`, that is a `Closed` path of `Length` &Equal; `5`, also contains:
@@ -133,12 +133,12 @@ The following is a manually edited version of an automatically-generated schema.
 			"WantedwantedPostScriptAspect":  {"type": "number" },
 			"WantedPostScriptHalfWidth":     {"type": "number" },
 			"wantedPostScriptHalfHeight":    {"type": "number" },
-			"WantedPostScriptNumberRhombii": {"type": "integer"},
+			"WantedPostScriptNumberRhombi": {"type": "integer"},
 			"WantedPostScriptNumberPaths":   {"type": "integer"},
 			"Licence":                       {"type": "string" },
 			"URL":                           {"type": "string" },
 			"Author":                        {"type": "string" },
-			"Rhombii": {
+			"Rhombi": {
 				"type": "array",
 				"items": {
 					"type": "object",
@@ -251,9 +251,9 @@ The following is a manually edited version of an automatically-generated schema.
 			"AxisAligned", "MinX", "MaxX", "MinY", "MaxY",
 			"WantedPostScriptCentreX", "WantedPostScriptCentreY",
 			"WantedwantedPostScriptAspect", "WantedPostScriptHalfWidth",
-			"wantedPostScriptHalfHeight", "WantedPostScriptNumberRhombii",
+			"wantedPostScriptHalfHeight", "WantedPostScriptNumberRhombi",
 			"WantedPostScriptNumberPaths", "Licence", "URL", "Author",
-			"Rhombii", "Paths", "PathStats"
+			"Rhombi", "Paths", "PathStats"
 		]
 	}
 }

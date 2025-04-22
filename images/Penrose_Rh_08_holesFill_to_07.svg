@@ -1,7 +1,7 @@
-<svg width='960' height='1319.335929578' viewBox='-6.405404863 -7.953631597 11.574741749 15.907263193' id='Penrose_Rhombii_08' xmlns='http://www.w3.org/2000/svg'>
+<svg width='960' height='1319.335929578' viewBox='-6.405404863 -7.953631597 11.574741749 15.907263193' id='Penrose_Rhombi_08' xmlns='http://www.w3.org/2000/svg'>
 <!-- TilingId = 8;  NumFats = 14754;  NumThins = 9104;  ==> #tiles= 23858;  NumPathsClosed = 1448;  NumPathsOpen = 215 -->
 <!-- Licence = "GNU General Public License, Version 3, 29 June 2007"; URL = "https://github.com/jdaw1/penrose_tiling/"; Author = "Julian D. A. Wiseman of www.jdawiseman.com". -->
-<!-- EdgeLength = 0.06888370749727; stroke-width defined to be EdgeLength / 16. If changing stroke-width, need to alter viewBox, for which it might help to know that, without line, and assuming inclusion of all the C-generated rhombii, values would be -6.381966011 -7.951478981 11.527864045 15.902957961. -->
+<!-- EdgeLength = 0.06888370749727; stroke-width defined to be EdgeLength / 16. If changing stroke-width, need to alter viewBox, for which it might help to know that, without line, and assuming inclusion of all the C-generated rhombi, values would be -6.381966011 -7.951478981 11.527864045 15.902957961. -->
 <!-- Browser fail for large SVG? Bug report at https://issues.chromium.org/issues/390969197 -->
 <g transform='scale(1,-1)'> <!-- PostScript and Excel positive y goes up the page, SVG it goes down. This reflection makes SVG behave as the others. -->
 
@@ -686,7 +686,7 @@
 	</g>  <!-- id='c215' -->
 </defs>
 
-<g stroke-width='0.004305232' stroke='#000' paint-order='fill stroke' stroke-linejoin='round' stroke-opacity='1'>  <!-- all rhombii -->
+<g stroke-width='0.004305232' stroke='#000' paint-order='fill stroke' stroke-linejoin='round' stroke-opacity='1'>  <!-- all rhombi -->
 
 <g fill='#CCC'>  <!-- thins not otherwise inside a path -->
 	<use href='#t'  transform='translate(-0.604878371,7.885966682) rotate(180)'/>
@@ -8781,7 +8781,7 @@
 	<use href='#c5r' transform='translate(-0.763932023,7.053423028) rotate(36)'/>
 	<use href='#c5r' transform='translate(-0.472135955,7.053423028)'/>
 	<use href='#c5r' transform='translate(-0.673762079,7.330937579)'/>
-</g>  <!-- all rhombii, stroke -->
+</g>  <!-- all rhombi, stroke -->
 
 <!-- If gridlines wanted, uncomment these. -->
 <!-- Gridlines, start, commented out 

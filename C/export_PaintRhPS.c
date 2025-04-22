@@ -10,15 +10,15 @@
 	The ExportFormats export as data: arrays of stuff.
 	But PostScript's maximum array length is 65535.
 	So this code just outputs raw PostScript instructions, one after the other.
-	All painting is determined one rhombus at a time: rhombii are not stored in a way that allows reasoning at a less-local level than one-at-a-time.
+	All painting is determined one rhombus at a time: rhombi are not stored in a way that allows reasoning at a less-local level than one-at-a-time.
 	There is some room for post-C hand editing of the PostScript, but much less flexibly the the other PostScript data format.
-	There limit on the number of rhombii is printer memory and resolution, so much much larger than 2^16.
+	There limit on the number of rhombi is printer memory and resolution, so much much larger than 2^16.
 
 	Because this is just raw PostScript commands, this exporting C code does not have the structure of the other formats' C code.
 	It is different and stand-alone.
 */
 
-void tiling_export_PaintRhombiiPS(
+void tiling_export_PaintRhombiPS(
 	FILE* const fp,
 	Tiling const      * const tlngP,
 	unsigned long int * const numLinesThisFileP,
@@ -156,8 +156,8 @@ void tiling_export_PaintRhombiiPS(
 		"} bind def  %% /ConcatenateToMark\n"
 		"\n"
 		"() =\n"
-		"/NumRhombii NumFats NumThins add def"
-		"[/TilingId /DataAsOf /NumFats /NumThins /NumRhombii /EdgeLength  /XMin /XMax /YMin /YMax  /ToPaint_XMin /ToPaint_XMax /ToPaint_YMin /ToPaint_YMax]\n"
+		"/NumRhombi NumFats NumThins add def"
+		"[/TilingId /DataAsOf /NumFats /NumThins /NumRhombi /EdgeLength  /XMin /XMax /YMin /YMax  /ToPaint_XMin /ToPaint_XMax /ToPaint_YMin /ToPaint_YMax]\n"
 		"{\n"
 			"\tdup 12 string cvs ( = ) Concatenate  exch load\n"
 			"\tdup type /stringtype eq {(\") exch (\") Concatenate Concatenate} {16 string cvs} ifelse\n"
@@ -223,7 +223,7 @@ void tiling_export_PaintRhombiiPS(
 			"\t15 dict begin  %% Populating this dictionary with values on stack.\n"
 			"\t/IsFat exch def  /RhId exch def\n"
 			"\tIsFat {[/PathId /PathStatId /WithinPathNum /Pointy /PathLength /PathClosed] {exch def} forall} if  %% Fats only\n"
-			"\t[/FilledType /NumNeighbours /AngDeg /NorthY /NorthX /EastY /EastX /SouthY /SouthX /WestY /WestX] {exch def} forall  %% All rhombii\n"
+			"\t[/FilledType /NumNeighbours /AngDeg /NorthY /NorthX /EastY /EastX /SouthY /SouthX /WestY /WestX] {exch def} forall  %% All rhombi\n"
 			"\t//true  %% Test whether this rhombus is inside the Wanted box.\n"
 			"\t1 {\n"
 			"\t\tNorthX //Actual_XMin le  EastX //Actual_XMin le  SouthX //Actual_XMin le  WestX //Actual_XMin le  and and and {pop //false exit} if\n"
@@ -234,7 +234,7 @@ void tiling_export_PaintRhombiiPS(
 			"\t{\n"
 				"\t\t%% Code inside here is intended to be user alterable.\n"
 				"\t\t//TileMatrix setmatrix\n"
-				"\t\t//true  %% paint rhombii?\n"
+				"\t\t//true  %% paint rhombi?\n"
 				"\t\t{\n"
 					"\t\t\tNorthX NorthY moveto  EastX EastY lineto  SouthX SouthY lineto  WestX WestY lineto  closepath\n"
 					"\t\t\tIsFat\n"
@@ -258,7 +258,7 @@ void tiling_export_PaintRhombiiPS(
 						"\t\t\t\t\tPathLength  172 gt {PathLength 1.2 div ln 2 ln div floor cvi 4 mod 0.1 mul 0.7 add 0 0 setrgbcolor pop //true exit} if  %% Bright red  %% 172 = 215 *4/5\n"
 						"\t\t\t\t} repeat  %% 1\n"
 						"\t\t\t\t{fill} if\n"
-						"\t\t\t\t%% Code that highlights the north corners of fat rhombii. Used in debugging. By default commented out.\n"
+						"\t\t\t\t%% Code that highlights the north corners of fat rhombi. Used in debugging. By default commented out.\n"
 						maybeTesting "\t\t\t\tPathClosed not  pop true  %% Choose: all, or only fats in open paths?\n"
 						maybeTesting "\t\t\t\t{\n"
 							maybeTesting "\t\t\t\t\tnewpath  NorthX NorthY 2 copy  moveto\n"
@@ -285,7 +285,7 @@ void tiling_export_PaintRhombiiPS(
 						"\t\t\t\t%% Thin\n"
 						"\t\t\t\tgsave 0.8 setgray fill grestore\n"
 						"\t\t\t\t//PaperMatrix setmatrix  0 setgray  stroke\n"
-						"\t\t\t\t%% Code that highlights the north corners of thin rhombii. Used in debugging. By default commented out.\n"
+						"\t\t\t\t%% Code that highlights the north corners of thin rhombi. Used in debugging. By default commented out.\n"
 						maybeTesting "\t\t\t\tgsave newpath //TileMatrix setmatrix  NorthX NorthY 2 copy  moveto\n"
 						maybeTesting "\t\t\t\tEdgeLength 4 div  AngDeg 180 IsFat {36} {72} ifelse sub add  dup IsFat {72} {144} ifelse add  arc  closepath\n"
 						maybeTesting "\t\t\t\t0.5 setgray  fill  grestore\n"
@@ -295,7 +295,7 @@ void tiling_export_PaintRhombiiPS(
 						maybeTesting "\t\t\t\t//PaperMatrix setmatrix mark RhId FilledType dup 0 gt {(,) exch} {pop} ifelse ConcatenateToMark dup stringwidth pop -2 div //FontSize -0.3 mul rmoveto show\n"
 					"\t\t\t} ifelse  %% IsFat\n"
 					"\t\t\tnewpath\n"
-				"\t\t} if  %% painting rhombii\n"
+				"\t\t} if  %% painting rhombi\n"
 				"\t\t//false  %% paint triangles?\n"
 				"\t\t{\n"
 					"\t\t\tEastX 0.25 mul WestX 0.75 mul add\n"
@@ -327,7 +327,7 @@ void tiling_export_PaintRhombiiPS(
 		"\n"
 		"\n"
 		"\n"
-		"%% Formats for Thin and Fat rhombii:\n"
+		"%% Formats for Thin and Fat rhombi:\n"
 		"\t%% WestX WestY SouthX SouthY EastX EastY NorthX NorthY Angle /RhId false  PaintByRhombus  %% ==> Thin\n"
 		"\t%% WestX WestY SouthX SouthY EastX EastY NorthX NorthY Angle PathClosed PathLength Pointy WithinPathNum /PathStatId /PathId /RhId true  PaintByRhombus  %% ==> Fat\n"
 		"\n"
@@ -338,7 +338,7 @@ void tiling_export_PaintRhombiiPS(
 	// Thins
 	for( rhId_This = tlngP->numFats + tlngP->numThins - 1  ;  rhId_This >= 0  ;  rhId_This -- )
 	{
-		rhThisP = &(tlngP->rhombii[rhId_This]);
+		rhThisP = &(tlngP->rhombi[rhId_This]);
 		if( Thin == rhThisP->physique )
 		{
 			sprintf(scratchString,
@@ -357,7 +357,7 @@ void tiling_export_PaintRhombiiPS(
 	}  // for( rhId ... )
 
 	// Fats ordered reverse by PathStat (so open paths first, within which shorter paths first).
-	// So that rhombii which might be most important are painted last.
+	// So that rhombi which might be most important are painted last.
 	pathP = NULL;
 	pathStatP = NULL;
 	for( pathStatId = (deBugMode ? 0 : tlngP->numPathStats - 1)  ;  pathStatId >= 0  ;  pathStatId -- )
@@ -366,9 +366,9 @@ void tiling_export_PaintRhombiiPS(
 			pathStatP = &(tlngP->pathStat[pathStatId]) ;
 
 		for( rhId_This = tlngP->numFats + tlngP->numThins - 1 ;  rhId_This >= 0  ;  rhId_This -- )
-			if( Fat == tlngP->rhombii[rhId_This].physique )
+			if( Fat == tlngP->rhombi[rhId_This].physique )
 			{
-				rhThisP = &(tlngP->rhombii[rhId_This]);
+				rhThisP = &(tlngP->rhombi[rhId_This]);
 				pathP   = &(tlngP->path[ rhThisP->pathId ]);
 				if(
 					pathStatP->pathClosed == pathP->pathClosed  &&
@@ -413,4 +413,4 @@ void tiling_export_PaintRhombiiPS(
 	(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
 	(*numLinesThisFileP) += newlinesInString(scratchString);
 
-}  // tiling_export_PaintRhombiiPS
+}  // tiling_export_PaintRhombiPS
