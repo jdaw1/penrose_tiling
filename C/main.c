@@ -69,7 +69,7 @@ int main(void)
 		tlngs[tilingId].tilingId                 = tilingId;
 		tlngs[tilingId].numTilings               = numTilings;
 		tlngs[tilingId].edgeLength               = 0;
-		tlngs[tilingId].rhombi_NumMax           = 0;
+		tlngs[tilingId].rhombi_NumMax            = 0;
 		tlngs[tilingId].path_NumMax              = 0;
 		tlngs[tilingId].pathStats_NumMax         = 0;
 		tlngs[tilingId].numFats                  = 0;
@@ -81,7 +81,7 @@ int main(void)
 		tlngs[tilingId].yMin                     = DBL_MAX;
 		tlngs[tilingId].xMax                     = - DBL_MAX;
 		tlngs[tilingId].yMax                     = - DBL_MAX;
-		tlngs[tilingId].rhombi                  = NULL;
+		tlngs[tilingId].rhombi                   = NULL;
 		tlngs[tilingId].path                     = NULL;
 		tlngs[tilingId].pathStat                 = NULL;
 		tlngs[tilingId].wantedPostScriptRhombNum = NULL;
