@@ -86,4 +86,4 @@ That is, long paths are approximately 1.44 dimensional.
 The observed data is consistent with, in a suffiently large tiling, the number of closed paths of each length being [geometrically distributed](http://en.wikipedia.org/wiki/Geometric_distribution), with decay 
 &frac12;(3&nbsp;&minus;&nbsp;&radic;5) &asymp;&nbsp;0.381966. 
 If this is precisely true, then the average of the lengths of paths tends to 5&nbsp;+&nbsp;2&radic;5 &asymp;&nbsp;9.472. 
-If it is not very false then, for a random fat tile, the average of the length of the path containing it is unbounded.
+If it is not very false, then for a random fat tile, the average of the length of the path containing it is unbounded.
