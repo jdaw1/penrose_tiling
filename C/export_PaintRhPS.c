@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // export_PaintRhPS.c, in PenroseC
 
@@ -214,7 +214,7 @@ void tiling_export_PaintRhombiPS(
 		"\n"
 		"FontName FontSize selectfont  %% Useful default if PaintByRhombus is to show, for example, the RhId.\n"
 		"0 setgray  2 setlinejoin  [] 0 setdash\n"
-		"PaperMatrix setmatrix  EdgeLength 60 div ScaleFactor mul  setlinewidth\n"
+		"PaperMatrix setmatrix  EdgeLength 16 div ScaleFactor mul  setlinewidth\n"
 		"\n"
 		"%% PaintByRhombus collects the items on the stack, and then paints as appropriate.\n"
 		"%% Most of its inner may be rewritten, e.g. for different decoration, or to aid debugging such as by show'ing RhId.\n"
@@ -307,7 +307,7 @@ void tiling_export_PaintRhombiPS(
 				"\t\t} if  %% painting triangles\n"
 				"\t\t//false  %% stroke arcs?\n"
 				"\t\t{\n"
-					"\t\t\t//PaperMatrix setmatrix  0.06 setlinewidth  0 setgray  1 setlinecap  1 setlinejoin  [] 0 setdash\n"
+					"\t\t\t//PaperMatrix setmatrix  0 setgray  1 setlinecap  1 setlinejoin  [] 0 setdash\n"
 					"\t\t\tWestX WestY  EdgeLength 2 div   EastX EastY  2 index    AngDeg dup dup dup\n"
 					"\t\t\tIsFat\n"
 						"\t\t\t\t{144 sub exch 36 sub   7 2 roll   36 add exch 144 add}\n"
@@ -319,12 +319,28 @@ void tiling_export_PaintRhombiPS(
 				"\t\t{\n"
 					"\t\t\tTileMatrix setmatrix\n"
 					"\t\t\tNorthX NorthY moveto  SouthX SouthY lineto\n"
-					"\t\t\tPaperMatrix setmatrix  0 setgray  stroke\n"
+					"\t\t\t0 setgray  PaperMatrix setmatrix  stroke\n"
 				"\t\t} if  %% stroking diagonal\n"
 			"\t} if  %% Inside Wanted box\n"
 			"\tend  %% 15 dict\n"
 		"} bind def  %% /PaintByRhombus\n"
 		"\n"
+	);
+	(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
+	(*numLinesThisFileP) += newlinesInString(scratchString);
+
+	if( exportQ(boundingPath, PS_rhomb, tlngP, *numLinesThisFileP) )
+	{
+		(*numCharsThisFileP) += fprintf(fp, "\n\nTileMatrix setmatrix\n");
+		(*numCharsThisFileP) += fprintf(fp, "%% Bounding path\n");
+		(*numLinesThisFileP) += 4;
+		tiling_export_PaintBoundary(fp,  PS_rhomb,  tlngP,  0,  numLinesThisFileP,  numCharsThisFileP);
+		(*numCharsThisFileP) += fprintf(fp, "gsave 1 setgray fill grestore gsave 0.8 setgray 1 setlinejoin PaperMatrix setmatrix 3.84 setlinewidth stroke grestore newpath  %% or, perhaps, zap with \"newpath\"\n");
+		(*numLinesThisFileP) ++;
+	}  // if boundingPath
+
+
+	sprintf(scratchString,
 		"\n"
 		"\n"
 		"%% Formats for Thin and Fat rhombi:\n"
@@ -342,7 +358,7 @@ void tiling_export_PaintRhombiPS(
 		if( Thin == rhThisP->physique )
 		{
 			sprintf(scratchString,
-				"%0.9lf %0.9lf %0.9lf %0.9lf %0.9lf %0.9lf %0.9lf %0.9lf %0.9lf",
+				"%.9lf %.9lf %.9lf %.9lf %.9lf %.9lf %.9lf %.9lf %.9lf",
 				rhThisP->west.x, rhThisP->west.y, rhThisP->south.x, rhThisP->south.y,
 				rhThisP->east.x, rhThisP->east.y, rhThisP->north.x, rhThisP->north.y,
 				rhThisP->angleDegrees
@@ -355,6 +371,7 @@ void tiling_export_PaintRhombiPS(
 			(*numLinesThisFileP) ++;
 		}  // Thin
 	}  // for( rhId ... )
+
 
 	// Fats ordered reverse by PathStat (so open paths first, within which shorter paths first).
 	// So that rhombi which might be most important are painted last.
@@ -377,7 +394,7 @@ void tiling_export_PaintRhombiPS(
 				)
 				{
 					sprintf(scratchString,
-						"%0.9lf %0.9lf %0.9lf %0.9lf %0.9lf %0.9lf %0.9lf %0.9lf %0.9lf",
+						"%.9lf %.9lf %.9lf %.9lf %.9lf %.9lf %.9lf %.9lf %.9lf",
 						rhThisP->west.x, rhThisP->west.y, rhThisP->south.x, rhThisP->south.y,
 						rhThisP->east.x, rhThisP->east.y, rhThisP->north.x, rhThisP->north.y,
 						rhThisP->angleDegrees

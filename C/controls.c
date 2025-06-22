@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // main.c, in PenroseC
 
@@ -7,7 +7,7 @@
 // Change to match your directory structure, and location of applications.
 static char const filePath_staticConst[] = "/Users/JDAW/Documents/outputPenrose/";
 
-#define AnyPostProcessing false
+#define AnyPostProcessing true
 
 // Location and name of application should match your machine's arrangement. Or can become empty do-nothing.
 void execute_SVG_PostProcessing(
@@ -23,9 +23,9 @@ void execute_SVG_PostProcessing(
 	{
 		if( ef == SVG_arcs  ||  numCharsThisFile < 10737418240 )  // 10 MiB. Limit very different for arcs and rhombi. https://issues.chromium.org/issues/390969197
 		{
-			// Change next line to invoke your preferred browser.
+			// Change next line to invoke your preferred browser or SVG viewer.
 			sprintf(scratchString, "open -a '/Applications/Google Chrome.app' 'file://%s'", fileName);
-			system(scratchString);  // In general, system() can be a serious security risk. If concerned, delete.
+			system(scratchString);  // In general, system() can be a serious security risk. If unable to be sure of safety, delete.
 		}  // Not too big
 	}  // AnyPostProcessing
 }  // execute_SVG_PostProcessing()
@@ -44,7 +44,7 @@ void execute_PostScript_PostProcessing(
 	{
 		// Change next line to invoke your preferred PS-to-PDF application, likely either Distiller or GhostScript.
 		sprintf(scratchString, "open -a '/Applications/Adobe_Acrobat_2020_20240514/Acrobat Distiller.app' '%s'", fileName);
-		system(scratchString);  // In general, system() can be a serious security risk. If concerned, delete.
+		system(scratchString);  // In general, system() can be a serious security risk. If unable to be sure of safety, delete.
 	}  // AnyPostProcessing
 }  // execute_PostScript_PostProcessing()
 
@@ -61,27 +61,61 @@ bool exportQ(ExportWhat const exprtWhat,  ExportFormat const exportFormat,  cons
 		return( true );
 
 	case PS_data:
-		return( tlngP->tilingId == tlngP->numTilings - 1 );
+		return(
+			tlngP->tilingId == tlngP->numTilings - 1  // Last lap only
+			&& ( tlngP->tilingId <= 15  ||  exprtWhat != boundingPath )  // At 15, bounding path has 20k points, so array of length about 60k.
+		);
+
+	case PS_rhomb:
+	case PS_arcs:
+		return( tlngP->tilingId >= -1 );  // Null condition, always true, easily changed.
 
 	case SVG_rhomb:
-	case SVG_arcs:
-		return( tlngP->tilingId >= -1 );  // Null condition, always true
+		if( tlngP->tilingId >= -1  )  // Null condition, always true, easily changed.
+		{
+			switch(exprtWhat)
+			{
+			case anything:
+			case rhombi:
+				return true;
+			case boundingPath:
+				return false;  // different to SVG_arcs
 
-	case PS_arcs:
-	case PS_rhomb:
-		return( tlngP->tilingId >= -1 );  // Null condition, always true
+			case pathStats:
+			case paths:
+				return false;  // This never reached; included to quieten compiler grumbling.
+			}  // switch(exprtWhat)
+		}
+
+	case SVG_arcs:
+		if( tlngP->tilingId >= -1  )  // Null condition, always true
+		{
+			switch(exprtWhat)
+			{
+			case anything:
+			case rhombi:
+			case boundingPath:
+				return true;
+
+			case pathStats:
+			case paths:
+				return false;  // This never reached; included to supress compiler grumbling.
+			}  // switch(exprtWhat)
+		}
 
 	case TSV:
 		switch(exprtWhat)
 		{
-		case Anything:
+		case anything:
 			return( 18 + numLinesThisFile < ExcelMaxNumRows );
 		case pathStats:
 			return( 10 + numLinesThisFile + tlngP->numPathStats                         < ExcelMaxNumRows );
-		case Paths:
+		case paths:
 			return( 10 + numLinesThisFile + tlngP->numPathsClosed + tlngP->numPathsOpen < ExcelMaxNumRows - 10240 );  // Leaving space for subsequent pathStats
-		case Rhombi:
+		case rhombi:
 			return( 10 + numLinesThisFile + tlngP->numFats + tlngP->numThins            < ExcelMaxNumRows - 10240 );  // Leaving space for subsequent pathStats
+		case boundingPath:
+			return( 10 + numLinesThisFile + 5 * sqrt(tlngP->numFats + tlngP->numThins)  < ExcelMaxNumRows - 10240 );  // Leaving space for subsequent pathStats
 		}  // switch(exprtWhat)
 		break;  // Redundant
 
@@ -135,9 +169,15 @@ bool rhombus_keep(
 )
 {
 	return true;
-	// Example alternative:
-	// return xNorth > (-1 * tlngP->edgeLength);
+	// Example alternative:  return xNorth > (-1 * tlngP->edgeLength);
 }  // rhombus_keep
+
+
+
+bool file_names_include_timeString(void)
+{
+	return false;
+}  // file_names_include_timeString()
 
 
 

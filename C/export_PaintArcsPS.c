@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // export_PaintArcsPS.c, in PenroseC
 
@@ -124,9 +124,9 @@ void tiling_export_PaintArcsPS(
 		"{\n"
 			"\t//TileMatrix setmatrix   1 setlinejoin  [] 0 setdash\n"
 			"\t[\n"
-				"\t\t%% {gsave  0 setgray  0 setlinecap  EdgeLength 20 div setlinewidth  stroke  grestore}  %% #gsave ... grestore for each stroke, except the last. At finish path should be empty.\n"
-				"\t\t%% {       1 setgray  1 setlinecap  EdgeLength 60 div setlinewidth  stroke          }  %% This pair paints thick black, then thin inner white. If uncommented, delete next line.\n"
-				"\t\t{0 setgray  1 setlinecap  EdgeLength 30 div setlinewidth  stroke}  %% Thin black only.\n"
+				"\t\t%% {gsave  0 setgray  0 setlinecap  PaperMatrix setmatrix  EdgeLength 16 div ScaleFactor mul setlinewidth  stroke  grestore}  %% #gsave ... grestore for each stroke, except the last. At finish path should be empty.\n"
+				"\t\t%% {       1 setgray  1 setlinecap  PaperMatrix setmatrix  EdgeLength 48 div ScaleFactor mul setlinewidth  stroke          }  %% This pair paints thick black, then thin inner white. If uncommented, delete next line.\n"
+				"\t\t{0 setgray  1 setlinecap  PaperMatrix setmatrix  EdgeLength 24 div ScaleFactor mul setlinewidth  stroke}  %% Thin black only.\n"
 			"\t] {exec} forall\n"
 		"} bind def  %% StrokeMulti\n"
 		"\n"
@@ -256,6 +256,14 @@ void tiling_export_PaintArcsPS(
 	(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
 	(*numLinesThisFileP) += newlinesInString(scratchString);
 
+	if( exportQ(boundingPath, PS_arcs, tlngP, *numLinesThisFileP) )
+	{
+		(*numCharsThisFileP) += fprintf(fp, "\n\n%% Bounding path\n");
+		(*numLinesThisFileP) += 3;
+		tiling_export_PaintBoundary(fp,  PS_arcs,  tlngP,  0,  numLinesThisFileP,  numCharsThisFileP);
+		(*numCharsThisFileP) += fprintf(fp, "newpath  %% gsave 0.8 setgray fill grestore 0.4 setgray 1 setlinejoin PaperMatrix setmatrix 1.92 setlinewidth stroke \n");
+		(*numLinesThisFileP) ++;
+	}  // if boundingPath
 
 	for( pathId = 0  ;  pathId < tlngP->numPathsClosed + tlngP->numPathsOpen  ;  pathId++ )
 	{
@@ -291,7 +299,7 @@ void tiling_export_PaintArcsPS(
 		yMin = yMax = (edgeE ? rhP->east.y : rhP->west.y);
 
 		sprintf(scratchString,
-			"\nTileMatrix setmatrix  %0.9lf %0.9lf moveto  %% pathId=%li, length=%li%s",
+			"\nTileMatrix setmatrix  %.9lf %.9lf moveto  %% pathId=%li, length=%li%s",
 			( (edgeN ? rhP->north.x : rhP->south.x)  +  (edgeE ? rhP->east.x : rhP->west.x) ) / 2,
 			( (edgeN ? rhP->north.y : rhP->south.y)  +  (edgeE ? rhP->east.y : rhP->west.y) ) / 2,
 			pathId,  pathP->pathLength,
@@ -343,7 +351,7 @@ void tiling_export_PaintArcsPS(
 				angThisEnd = angThisStart + (edgeN == edgeE ? +36 : -36);
 			}  // Thin
 			sprintf(scratchString,
-				"%0.9lf %0.9lf R %0.9lf %0.9lf arc%s\n",
+				"%.9lf %.9lf R %.9lf %.9lf arc%s\n",
 				arcCentreThis.x, arcCentreThis.y,
 				angThisStart, angThisEnd,
 				edgeN == edgeE ? "" : "n"
@@ -383,7 +391,7 @@ void tiling_export_PaintArcsPS(
 		while( rhIdStart != rhId  ||  edgeStartE != edgeE);
 
 		sprintf(scratchString,
-			"closepath  %0.9lf %0.9lf %0.9lf %0.9lf  %li  [ ",
+			"closepath  %.9lf %.9lf %.9lf %.9lf  %li  [ ",
 			xMin  -  tlngP->edgeLength / 2,
 			yMin  -  tlngP->edgeLength / 2,
 			xMax  +  tlngP->edgeLength / 2,
@@ -413,7 +421,7 @@ void tiling_export_PaintArcsPS(
 		if( NULL == arcdEast  ||  (! arcdEast[rhId]) )
 		{
 			sprintf(scratchString,
-				"%0.9lf %0.9lf moveto  %0.9lf %0.9lf R %0.9lf %0.9lf arc",
+				"%.9lf %.9lf moveto  %.9lf %.9lf R %.9lf %.9lf arc",
 				(rhP->east.x + rhP->north.x) / 2,  (rhP->east.y + rhP->north.y) / 2,
 				rhP->east.x, rhP->east.y,
 				angThisStart,  angThisStart + (Fat == rhP->physique  ?  108  :  36 )
@@ -426,7 +434,7 @@ void tiling_export_PaintArcsPS(
 		{
 			angThisStart += (angThisStart > 90 ? -180 : 180);
 			sprintf(scratchString,
-				"%s%0.9lf %0.9lf moveto  %0.9lf %0.9lf R %0.9lf %0.9lf arc",
+				"%s%.9lf %.9lf moveto  %.9lf %.9lf R %.9lf %.9lf arc",
 				either ? "   " : "",
 				(rhP->west.x + rhP->south.x) / 2,  (rhP->west.y + rhP->south.y) / 2,
 				rhP->west.x, rhP->west.y,

@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // export_PaintRhSVG.c, in PenroseC
 
@@ -39,7 +39,7 @@ void tiling_export_PaintRhombiSVG(
 	// Output preamble
 
 	sprintf(scratchString,
-		"<svg width='%0.9lf' height='%0.9lf' viewBox='%0.9lf %0.9lf %0.9lf %0.9lf' preserveAspectRatio='xMidYMid meet' id='Penrose_Rhombi_%02" PRIi8 "' ",
+		"<svg width='%.9lf' height='%.9lf' viewBox='%.9lf %.9lf %.9lf %.9lf' preserveAspectRatio='xMidYMid meet' id='Penrose_Rhombi_%02" PRIi8 "' ",
 		displayWidth,
 		displayWidth * (actual_yMax - actual_yMin) / (actual_xMax - actual_xMin),
 		actual_xMin,
@@ -54,16 +54,16 @@ void tiling_export_PaintRhombiSVG(
 	(*numLinesThisFileP) ++ ;
 
 	(*numCharsThisFileP) += fprintf(fp,
-		"<!-- TilingId = %" PRIi8 ";  NumFats = %li;  NumThins = %li;  ==> #tiles= %li;  NumPathsClosed = %li;  NumPathsOpen = %li -->\n"
+		"<!-- TilingId = %" PRIi8 ";  NumFats = %li;  NumThins = %li;  ==> #tiles= %li;  NumPathsClosed = %li;  NumPathsOpen = %li;  BoundingPathNumVertices = %li -->\n"
 		"<!-- Licence = \"%s\"; URL = \"%s\"; Author = \"%s\""  "."  " -->\n",
-		tlngP->tilingId,  tlngP->numFats,  tlngP->numThins,  tlngP->numFats + tlngP->numThins,  tlngP->numPathsClosed,  tlngP->numPathsOpen,
+		tlngP->tilingId,  tlngP->numFats,  tlngP->numThins,  tlngP->numFats + tlngP->numThins,  tlngP->numPathsClosed,  tlngP->numPathsOpen,  tlngP->boundingPathNumVertices,
 		TextLicence, TextURL, TextAuthor  // Do not stringClean() these.
 	);
 	(*numLinesThisFileP) += 2 ;
 	sprintf(scratchString,
-		"<!-- EdgeLength = %0.14lf; stroke-width defined to be EdgeLength / %0.9lf. If changing stroke-width, need to alter viewBox"
+		"<!-- EdgeLength = %.14lf; stroke-width defined to be EdgeLength / %.9lf. If changing stroke-width, need to alter viewBox"
 		", for which it might help to know that, without line, and assuming inclusion of all the C-generated rhombi"
-		", values would be %0.9lf %0.9lf %0.9lf %0.9lf"  "."  " -->\n",
+		", values would be %.9lf %.9lf %.9lf %.9lf"  "."  " -->\n",
 		tlngP->edgeLength, tlngP->edgeLength / strokeWidth,
 		tlngP->xMin,  tlngP->yMin,  tlngP->xMax - tlngP->xMin,  tlngP->yMax - tlngP->yMin
 	);
@@ -78,11 +78,26 @@ void tiling_export_PaintRhombiSVG(
 	);
 	(*numLinesThisFileP) ++ ;
 
+	if( exportQ(boundingPath, SVG_rhomb, tlngP, *numLinesThisFileP) )
+	{
+		sprintf(scratchString,
+			"<!-- This path traces the outside of the rhombi, intended to be fill'able as a background colour. -->\n"
+			"<!-- As all rhombi are filled, usually redundant. Indeed, usually omitted from SVG file. -->\n"
+			"<!-- If stroke'd wide, then slightly enlarge the viewBox. -->\n"
+			"<!-- Enlargement amount depends on whether vector-effect='non-scaling-stroke', on stroke-width, and slightly on stroke-linejoin. -->\n"
+			"<path fill='#FFF'  stroke='none' vector-effect='non-scaling-stroke' stroke-width='2px' stroke-linejoin='round'  d='\n"
+		);
+		(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
+		(*numLinesThisFileP) += newlinesInString(scratchString);
+		tiling_export_PaintBoundary(fp,  SVG_rhomb,  tlngP,  0,  numLinesThisFileP,  numCharsThisFileP);
+		(*numCharsThisFileP) += fprintf(fp, "'/> <!-- Outside of tiling of rhombi. -->\n\n");
+		(*numLinesThisFileP) += 2;
+	}  // exportQ(boundingPath ...)
 
 	/*
 	// Debugging assist: text some data.
 	(*numCharsThisFileP) += fprintf(fp,
-		"<text transform='scale(1,-1)' x='%0.4lf' y='%0.4lf' font-size='%0.4lf' text-anchor='start' alignment-baseline='middle'>%0.2hi</text>\n",
+		"<text transform='scale(1,-1)' x='%.4lf' y='%.4lf' font-size='%.4lf' text-anchor='start' alignment-baseline='middle'>%.2hi</text>\n",
 		actual_xMin,
 		-0.875*actual_yMax -0.125*actual_yMin,
 		1.75,
@@ -91,7 +106,7 @@ void tiling_export_PaintRhombiSVG(
 	(*numLinesThisFileP) ++ ;
 	sprintf(scratchString, "%02d%02d%02d", timeData->tm_hour,  timeData->tm_min,  (int)(timeData->tm_sec) );
 	(*numCharsThisFileP) += fprintf(fp,
-		"<text transform='scale(1,-1)' x='%0.4lf' y='%0.4lf' font-size='%0.4lf' text-anchor='end' alignment-baseline='middle'>%s</text>\n",
+		"<text transform='scale(1,-1)' x='%.4lf' y='%.4lf' font-size='%.4lf' text-anchor='end' alignment-baseline='middle'>%s</text>\n",
 		actual_xMax,
 		-0.875*actual_yMax -0.125*actual_yMin,
 		0.6666666,
@@ -109,7 +124,7 @@ void tiling_export_PaintRhombiSVG(
 	// Output defs: rhombi
 
 	sprintf(scratchString,
-		"d='M 0 0   L %0.14lf %0.14lf   %0.14lf 0   %0.14lf %0.14lf  Z'",
+		"d='M 0 0   L %.14lf %.14lf   %.14lf 0   %.14lf %.14lf  Z'",
 		- tlngP->edgeLength * Cos72,  tlngP->edgeLength * Cos18,
 		-2 * tlngP->edgeLength * Cos72,
 		- tlngP->edgeLength * Cos72,  - tlngP->edgeLength * Cos18
@@ -119,7 +134,7 @@ void tiling_export_PaintRhombiSVG(
 	(*numLinesThisFileP) ++;
 
 	sprintf(scratchString,
-		"d='M 0 0   L %0.14lf %0.14lf   %0.14lf 0   %0.14lf %0.14lf  Z'",
+		"d='M 0 0   L %.14lf %.14lf   %.14lf 0   %.14lf %.14lf  Z'",
 		- tlngP->edgeLength * Cos36,  tlngP->edgeLength * Sin36,
 		-2 * tlngP->edgeLength * Cos36,
 		- tlngP->edgeLength * Cos36,  - tlngP->edgeLength * Sin36
@@ -134,7 +149,7 @@ void tiling_export_PaintRhombiSVG(
 		"  <g id='o'><path %s/><circle stroke='#000' fill='#6F6' opacity='1' ",
 		scratchString
 	);
-	sprintf(scratchString, "cx='%0.14lf' r='%0.14lf'",  - tlngP->edgeLength * Cos36,  tlngP->edgeLength / 6);
+	sprintf(scratchString, "cx='%.14lf' r='%.14lf'",  - tlngP->edgeLength * Cos36,  tlngP->edgeLength / 6);
 	stringClean(scratchString);
 	(*numCharsThisFileP) += fprintf(fp, "%s/></g>  -->\n", scratchString);
 	(*numLinesThisFileP) ++;
@@ -302,7 +317,7 @@ void tiling_export_PaintRhombiSVG(
 			if( 5 == pathOuterP->pathLength  &&  pathOuterP->pathClosed  &&  ! pathOuterP->pointy )
 			{
 				sprintf(scratchString,
-					"\t\t<circle r='%0.9lf' fill='#FFF' opacity='1'/>  <!-- circle inside non-pointy closed 5 paths. If not wanted, delete this one line. -->\n",
+					"\t\t<circle r='%.9lf' fill='#FFF' opacity='1'/>  <!-- circle inside non-pointy closed 5 paths. If not wanted, delete this one line. -->\n",
 					tlngP->edgeLength / 4
 				);
 				stringClean(scratchString);
@@ -325,7 +340,7 @@ void tiling_export_PaintRhombiSVG(
 	// Formatting applicable to all rhombi (except those explicitly reformatted)
 
 	sprintf(scratchString,
-		"<g stroke-width='%0.9lf' stroke='#000' paint-order='fill stroke' stroke-linejoin='round' stroke-opacity='1'>  <!-- all rhombi -->\n",
+		"<g stroke-width='%.9lf' stroke='#000' paint-order='fill stroke' stroke-linejoin='round' stroke-opacity='1'>  <!-- all rhombi -->\n",
 		strokeWidth
 	);
 	stringClean(scratchString);

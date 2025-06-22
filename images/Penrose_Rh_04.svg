@@ -1,9 +1,110 @@
 <svg width='960' height='1306.694402321' viewBox='-6.014754249 -7.345691828 10.79344052 14.691383655' preserveAspectRatio='xMidYMid meet' id='Penrose_Rhombi_04' xmlns='http://www.w3.org/2000/svg'>
-<!-- TilingId = 4;  NumFats = 281;  NumThins = 166;  ==> #tiles= 447;  NumPathsClosed = 25;  NumPathsOpen = 17 -->
+<!-- TilingId = 4;  NumFats = 281;  NumThins = 166;  ==> #tiles= 447;  NumPathsClosed = 25;  NumPathsOpen = 17;  BoundingPathNumVertices = 94 -->
 <!-- Licence = "GNU General Public License, Version 3, 29 June 2007"; URL = "https://github.com/jdaw1/penrose_tiling/"; Author = "Julian D. A. Wiseman of www.jdawiseman.com". -->
 <!-- EdgeLength = 0.47213595499958; stroke-width defined to be EdgeLength / 16. If changing stroke-width, need to alter viewBox, for which it might help to know that, without line, and assuming inclusion of all the C-generated rhombi, values would be -6 -7.330937579 10.763932023 14.661875158. -->
 <!-- Browser fail for large SVG? Bug report at https://issues.chromium.org/issues/390969197 -->
 <g transform='scale(1,-1)'> <!-- PostScript and Excel positive y goes up the page, SVG it goes down. This reflection makes SVG behave as the others. -->
+<!-- This path traces the outside of the rhombi, intended to be fill'able as a background colour. -->
+<!-- As all rhombi are filled, usually redundant. Indeed, usually omitted from SVG file. -->
+<!-- If stroke'd wide, then slightly enlarge the viewBox. -->
+<!-- Enlargement amount depends on whether vector-effect='non-scaling-stroke', on stroke-width, and slightly on stroke-linejoin. -->
+<path fill='#FFF'  stroke='none' vector-effect='non-scaling-stroke' stroke-width='2px' stroke-linejoin='round'  d='
+	M 4.618033989 -0.449027977
+	L 4.763932023 0
+	4.618033989 0.449027977
+	4.236067977 0.726542528
+	4.090169944 1.175570505
+	3.618033989 1.175570505
+	3.763932023 1.624598481
+	3.381966011 1.902113033
+	3.236067977 2.351141009
+	2.854101966 2.628655561
+	2.708203932 3.077683537
+	2.236067977 3.077683537
+	2.381966011 3.526711514
+	2 3.804226065
+	1.854101966 4.253254042
+	1.381966011 4.253254042
+	1.527864045 4.702282018
+	1.145898034 4.97979657
+	1 5.428824546
+	0.618033989 5.706339098
+	0.472135955 6.155367074
+	0 6.155367074
+	0.145898034 6.604395051
+	-0.236067977 6.881909602
+	-0.381966011 7.330937579
+	-0.854101966 7.330937579
+	-1 6.881909602
+	-1.381966011 6.604395051
+	-1.236067977 6.155367074
+	-1.708203932 6.155367074
+	-1.854101966 5.706339098
+	-2.236067977 5.428824546
+	-2.381966011 4.97979657
+	-2.763932023 4.702282018
+	-2.618033989 4.253254042
+	-3.090169944 4.253254042
+	-3.236067977 3.804226065
+	-3.618033989 3.526711514
+	-3.472135955 3.077683537
+	-3.94427191 3.077683537
+	-4.090169944 2.628655561
+	-4.472135955 2.351141009
+	-4.618033989 1.902113033
+	-5 1.624598481
+	-4.854101966 1.175570505
+	-5.326237921 1.175570505
+	-5.472135955 0.726542528
+	-5.854101966 0.449027977
+	-6 0
+	-5.854101966 -0.449027977
+	-5.472135955 -0.726542528
+	-5.326237921 -1.175570505
+	-4.854101966 -1.175570505
+	-5 -1.624598481
+	-4.618033989 -1.902113033
+	-4.472135955 -2.351141009
+	-4.090169944 -2.628655561
+	-3.94427191 -3.077683537
+	-3.472135955 -3.077683537
+	-3.618033989 -3.526711514
+	-3.236067977 -3.804226065
+	-3.090169944 -4.253254042
+	-2.618033989 -4.253254042
+	-2.763932023 -4.702282018
+	-2.381966011 -4.97979657
+	-2.236067977 -5.428824546
+	-1.854101966 -5.706339098
+	-1.708203932 -6.155367074
+	-1.236067977 -6.155367074
+	-1.381966011 -6.604395051
+	-1 -6.881909602
+	-0.854101966 -7.330937579
+	-0.381966011 -7.330937579
+	-0.236067977 -6.881909602
+	0.145898034 -6.604395051
+	0 -6.155367074
+	0.472135955 -6.155367074
+	0.618033989 -5.706339098
+	1 -5.428824546
+	1.145898034 -4.97979657
+	1.527864045 -4.702282018
+	1.381966011 -4.253254042
+	1.854101966 -4.253254042
+	2 -3.804226065
+	2.381966011 -3.526711514
+	2.236067977 -3.077683537
+	2.708203932 -3.077683537
+	2.854101966 -2.628655561
+	3.236067977 -2.351141009
+	3.381966011 -1.902113033
+	3.763932023 -1.624598481
+	3.618033989 -1.175570505
+	4.090169944 -1.175570505
+	4.236067977 -0.726542528
+Z'/> <!-- Outside of tiling of rhombi. -->
+
 
 <defs>
 	<path id='t' d='M 0 0   L -0.14589803375032 0.44902797657959   -0.29179606750063 0   -0.14589803375032 -0.44902797657959  Z'/> <!-- thin -->
@@ -96,8 +197,8 @@
 	<use href='#t'  transform='translate(-0.527864045,0.726542528) rotate(180)'/>
 	<use href='#t'  transform='translate(3.090169944,0.449027977) rotate(180)'/>
 	<use href='#t'  transform='translate(-4.326237921,0.449027977)'/>
-	<use href='#t'  transform='translate(-2.090169944,0.277514551) rotate(216)'/>
 	<use href='#t'  transform='translate(0.854101966,0.277514551) rotate(324)'/>
+	<use href='#t'  transform='translate(-2.090169944,0.277514551) rotate(216)'/>
 	<use href='#t'  transform='translate(-0.854101966,0.277514551) rotate(108)'/>
 	<use href='#t'  transform='translate(-0.854101966,-0.277514551) rotate(252)'/>
 	<use href='#t'  transform='translate(-2.090169944,-0.277514551) rotate(144)'/>

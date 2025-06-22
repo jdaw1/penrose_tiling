@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // penrose.h, in PenroseC
 
@@ -11,6 +11,12 @@
 #include <limits.h>
 #include <float.h>
 #include <string.h>
+
+// What is your binding constraint: memory or speed?
+// Value of true saves almost 10% of memory usage: sizeof(Rhombus) being 270 instead of 296.
+// But value of false seems to be faster execution by a factor of ~= 1.4.
+// Breaking alignment conventions might, depending on machine and compiler, cause crashes: if so, set to false.
+#define MEMORY_FRUGALITY_OUTRANKS_SPEED false
 
 #define scratchStringLength 32767
 
@@ -34,6 +40,7 @@ static char   const TextURL[]     = "https://github.com/jdaw1/penrose_tiling/"; 
 static char   const TextAuthor[]  = "Julian D. A. Wiseman of www.jdawiseman.com";  // escaping insufficient to survive output as PostScript etc.
 static char   const TextLicence[] = ("GNU General Public License, Version 3, 29 June 2007");
 
+
 // Types
 
 typedef enum  // ExportFormat
@@ -51,17 +58,24 @@ typedef enum  // ExportFormat
 } ExportFormat;
 
 
-typedef enum {Anything,  pathStats,  Paths,  Rhombi} ExportWhat;
+typedef enum {anything,  pathStats,  paths,  rhombi,  boundingPath} ExportWhat;
 
 
 typedef enum  // Physique
-{
+#if MEMORY_FRUGALITY_OUTRANKS_SPEED
+__attribute__ ((__packed__))
+#endif  // MEMORY_FRUGALITY_OUTRANKS_SPEED
+{  // Physique
 	Thin = 36,  // Rhombus with angles, in degrees, 36 144 36 144, area = Sin[36 deg] * edge^2 ~= 0.587785252292 * edge^2
 	Fat  = 72   // Rhombus with angles, in degrees, 72 108 72 108, area = Sin[72 deg] * edge^2 ~= 0.951056516295 * edge^2, so GoldenRatio * Thin
 } Physique;
 
 
-typedef struct {double x;  double y;} XY;
+typedef struct  // XY
+#if MEMORY_FRUGALITY_OUTRANKS_SPEED
+__attribute__ ((__packed__))
+#endif  // MEMORY_FRUGALITY_OUTRANKS_SPEED
+{double x;  double y;} XY;
 
 typedef  long  int  RhombId   ;
 typedef  long  int  PathId    ;
@@ -69,23 +83,26 @@ typedef  long  int  PathStatId;
 typedef  int8_t     TilingId  ;
 
 typedef struct  // Neighbour
-{
+#if MEMORY_FRUGALITY_OUTRANKS_SPEED
+__attribute__ ((__packed__))
+#endif  // MEMORY_FRUGALITY_OUTRANKS_SPEED
+{  // Neighbour
 	RhombId   rhId;
-	Physique  physique;
-	bool      touchesN;
-	bool      touchesE;
-	int8_t    nghbrsNghbrNum;  // Neighbour's Neighbour Num, Abbreviated to NNN in output: I am the neighbour[NNN] of my neighbour. Fussy to use int8_t, but saves 4 bytes per rhombus, > 1%.
 	PathId    pathId;
 	long int  withinPathNum ;  // Counting within a path: 0, 1, ..., pathLength - 1.
+	Physique  physique;
+	int8_t    nghbrsNghbrNum;  // Neighbour's Neighbour Num, Abbreviated to NNN in output: I am the neighbour[NNN] of my neighbour. Fussy to use int8_t, but saves 4 bytes per rhombus, > 1%.
+	bool      touchesN;
+	bool      touchesE;
 } Neighbour;
 
+// These large structs, of which large arays malloc'd, have elements ordered to reduce used memory.
 
 typedef struct  // Rhombus
-{
-	RhombId    rhId;
-
-	Physique   physique;
-	int8_t     filledType;
+#if MEMORY_FRUGALITY_OUTRANKS_SPEED
+__attribute__ ((__packed__))
+#endif  // MEMORY_FRUGALITY_OUTRANKS_SPEED
+{  // Rhombus
 	XY         north;  // Orientation local to rhombus.  because meaningful points, these are XY struct.
 	XY         south;
 	XY         east;
@@ -99,12 +116,17 @@ typedef struct  // Rhombus
 
 	double     angleDegrees;
 
-	int8_t     numNeighbours;
-	Neighbour  neighbours[4];
+	RhombId    rhId;
 
 	PathId     pathId;
 	long int   withinPathNum;
 	PathId     pathId_ShortestOuter;  // Thins only, as Fats done at level of Path.
+
+	Neighbour  neighbours[4];
+	int8_t     numNeighbours;
+
+	Physique   physique;
+	int8_t     filledType;
 
 	bool       closerPathCentreN;
 	bool       closerPathCentreE;
@@ -114,13 +136,12 @@ typedef struct  // Rhombus
 
 
 typedef struct  // Path
-{
+#if MEMORY_FRUGALITY_OUTRANKS_SPEED
+__attribute__ ((__packed__))
+#endif  // MEMORY_FRUGALITY_OUTRANKS_SPEED
+{  // Path
 	PathId      pathId;
-	bool        pathClosed;
-	bool        pathVeryClosed;  // All neighbouring tiles have four neightbours. I.e., far from outside of whole tiling.
 	long int    pathLength;
-	bool        pointy;  // If pathClosed && 5==pathLength then: true ==> ten neighbouring thins in a pointy star; false ==> five neighbouring thins lying flat to it.
-	int8_t      pathClosedTypeNum;  // -1=open; 1=5r, 2=5p, 3=15, 4=25, 5=55, ...
 	double      orientationDegrees;  // Allows SVG to <def> one closed path of each length, and then to <use ... transform='... rotate(orientationDegrees - orientationDegreesTemplate)'/>
 	PathStatId  pathStatId;
 
@@ -146,17 +167,22 @@ typedef struct  // Path
 
 	PathId      pathId_ShortestOuter;  // Closed paths only. The smallest enclosing path.
 	PathId      pathId_LongestInner ;  // Closed paths only. The unique largest enclosed path. This has same centre, and Inner.Length = (Outer.Length +- 5) / 4.
+
+	bool        pathClosed;
+	bool        pathVeryClosed;  // All neighbouring tiles have four neightbours. I.e., far from outside of whole tiling.
+	bool        pointy;  // If pathClosed && 5==pathLength then: true ==> ten neighbouring thins in a pointy star; false ==> five neighbouring thins lying flat to it.
+	int8_t      pathClosedTypeNum;  // -1=open; 1=5r, 2=5p, 3=15, 4=25, 5=55, ...
 	bool        wantedPostScript;  // <==> any of its are fats
 } Path;
 
 
 typedef struct  // PathStats
-{
+#if MEMORY_FRUGALITY_OUTRANKS_SPEED
+__attribute__ ((__packed__))
+#endif  // MEMORY_FRUGALITY_OUTRANKS_SPEED
+{  // PathStats
 	PathStatId pathStatId;
-	bool       pathClosed;
 	long int   pathLength;
-	bool       pointy;  // If pathClosed && 5==pathLength then: true ==> ten neighbouring thins in a pointy star; false ==> five neighbouring thins lying flat to it.
-	int8_t     pathClosedTypeNum;
 	long int   numPaths;
 	PathId     examplePathId ;
 	long int   insideThis_MaxNumFats ;
@@ -171,10 +197,13 @@ typedef struct  // PathStats
 	double     radiusMaxMax;  // To outermost corner of rhombus.
 	double     widthMax;
 	double     heightMax;
+	bool       pathClosed;
+	bool       pointy;  // If pathClosed && 5==pathLength then: true ==> ten neighbouring thins in a pointy star; false ==> five neighbouring thins lying flat to it.
+	int8_t     pathClosedTypeNum;
 } PathStats;
 
 
-typedef struct  // Tiling
+typedef struct  // Tiling, never packed because <=20 of them, yet frequent access to members, especially edgeLength, numFats, numThins, numPathsClosed, numPathsOpen.
 {
 	TilingId   tilingId;
 	int8_t     numTilings;
@@ -188,6 +217,7 @@ typedef struct  // Tiling
 	long int   numFats;
 	long int   numThins;
 	long int   rhombi_NumMax;
+	long int   boundingPathNumVertices;
 	Rhombus    * rhombi;
 	double     xMax;
 	double     xMin;
@@ -210,25 +240,27 @@ typedef struct  // Tiling
 
 	RhombId    * wantedPostScriptRhombNum;
 	PathId     * wantedPostScriptPathNum;
+
+	bool       populated;
 } Tiling;
 
 
 
 // Functions and sub-routines
 
-extern inline double    min_2(double const d0, double const d1);
-extern inline double    max_2(double const d0, double const d1);
-extern        double    min_4(double const d0, double const d1, double const d2, double const d3);
-extern        double    max_4(double const d0, double const d1, double const d2, double const d3);
-extern        double    avg_2(double const d0, double const d1);
-extern        double median_3(double const d0, double const d1, double const d2);
-extern        double median_4(double const d0, double const d1, double const d2, double const d3);
-extern bool points_different_2(Tiling const * const tlngP, XY const xy0, XY const xy1);
-extern bool points_different_3(Tiling const * const tlngP, XY const xy0, XY const xy1, XY const xy2);
-extern bool points_different_4(Tiling const * const tlngP, XY const xy0, XY const xy1, XY const xy2, XY const xy3);
-extern bool points_same_2(Tiling const * const tlngP, XY const xy0, XY const xy1);
-extern bool points_same_3(Tiling const * const tlngP, XY const xy0, XY const xy1, XY const xy2);
-extern bool points_same_4(Tiling const * const tlngP, XY const xy0, XY const xy1, XY const xy2, XY const xy3);
+extern double    max_2(double const d0, double const d1);
+extern double    min_2(double const d0, double const d1);
+extern double    min_4(double const d0, double const d1, double const d2, double const d3);
+extern double    max_4(double const d0, double const d1, double const d2, double const d3);
+extern double    avg_2(double const d0, double const d1);
+extern double median_3(double const d0, double const d1, double const d2);
+extern double median_4(double const d0, double const d1, double const d2, double const d3);
+extern bool points_diff_2(double const edgeLength, XY const xy0, XY const xy1);
+extern bool points_diff_3(double const edgeLength, XY const xy0, XY const xy1, XY const xy2);
+extern bool points_diff_4(double const edgeLength, XY const xy0, XY const xy1, XY const xy2, XY const xy3);
+extern bool points_same_2(double const edgeLength, XY const xy0, XY const xy1);
+extern bool points_same_3(double const edgeLength, XY const xy0, XY const xy1, XY const xy2);
+extern bool points_same_4(double const edgeLength, XY const xy0, XY const xy1, XY const xy2, XY const xy3);
 
 RhombId rhombus_append(
 	Tiling  * const tlngP,  // Parent tiling
@@ -312,6 +344,7 @@ void wanted_populate(Tiling * const tlngP);
 extern long int newlinesInString(char const * const str);
 
 const char * filePath(void);
+bool file_names_include_timeString(void);
 const double svg_toPaint_xMin(const Tiling * const tlngP);
 const double svg_toPaint_yMin(const Tiling * const tlngP);
 const double svg_toPaint_xMax(const Tiling * const tlngP);
@@ -330,7 +363,7 @@ bool exportQ(
 );  // exportQ()
 
 void stringClean(char *str);
-int  fIndent(FILE* const fp, int const indentDepth);
+int  fIndent(FILE* const fp, int8_t const indentDepth);
 void rhombus_export(
 	FILE * const fp,
 	ExportFormat const exportFormat,
@@ -340,24 +373,34 @@ void rhombus_export(
 	unsigned long long int * const numCharsThisFileP
 );  // rhombus_export()
 
+long int tiling_export_PaintBoundary(
+	FILE * const fp,
+	ExportFormat        const exportFormat,
+	const Tiling      * const tlngP,
+	int8_t              const indentDepth,
+	unsigned long int * const numLinesThisFileP,
+	unsigned long long int * const numCharsThisFileP
+);
+
 void path_export(
 	FILE * const fp,
-	ExportFormat const exportFormat,
-	Tiling const * const tlngP,
-	Path const * const pathP,
-	int const indentDepth,
-	bool const notLast,
-	unsigned long int * const numLinesThisFileP,
+	ExportFormat             const exportFormat,
+	Tiling           const * const tlngP,
+	Path             const * const pathP,
+	int8_t                   const indentDepth,
+	bool                     const notLast,
+	unsigned long int      * const numLinesThisFileP,
 	unsigned long long int * const numCharsThisFileP
 );  // path_export()
 
-void pathStat_export(FILE * const fp,
-	ExportFormat          const exportFormat,
-	const Tiling        * const tlngP,
-	PathStats const * const pathStatP,
-	int                   const indentDepth,
-	bool                  const notLast,
-	unsigned long int   * const numLinesThisFileP,
+void pathStat_export(
+	FILE * const fp,
+	ExportFormat             const exportFormat,
+	const Tiling           * const tlngP,
+	PathStats const        * const pathStatP,
+	int8_t                   const indentDepth,
+	bool                     const notLast,
+	unsigned long int      * const numLinesThisFileP,
 	unsigned long long int * const numCharsThisFileP
 );  // pathStat_export()
 
@@ -371,7 +414,7 @@ void tiling_export(
 	ExportFormat        const exportFormat,
 	bool exportQ(ExportWhat const exprtWhat, ExportFormat const exportFormat, const Tiling * const tlngP, const unsigned long int numLinesThisFileP),
 	Tiling            * const tlngP,
-	int                 const indentDepth,
+	int8_t              const indentDepth,
 	bool                const notLast,
 	TilingId            const tilingId,
 	unsigned long int * const numLinesThisFileP,
@@ -383,7 +426,7 @@ void tilings_export(
 	ExportFormat        const exportFormat,
 	bool exportQ(ExportWhat const exprtWhat, ExportFormat const exportFormat, const Tiling * const tlngP, const unsigned long int numLinesThisFile),
 	Tiling            * const tlngs,
-	int                 const indentDepth,
+	int8_t              const indentDepth,
 	long int            const numTilings,
 	unsigned long int * const numLinesThisFileP,
 	unsigned long long int * const numCharsThisFileP
@@ -391,31 +434,39 @@ void tilings_export(
 
 void tiling_export_PaintRhombiPS(
 	FILE* const fp,
-	Tiling const      * const tlngP,
-	unsigned long int * const numLinesThisFileP,
+	Tiling           const * const tlngP,
+	unsigned long int      * const numLinesThisFileP,
 	unsigned long long int * const numCharsThisFileP,
-	bool const deBugMode
+	bool                     const deBugMode
 );  // tiling_export_PaintRhombiPS()
 
 void tiling_export_PaintArcsPS(
 	FILE* const fp,
-	Tiling const      * const tlngP,
-	unsigned long int * const numLinesThisFileP,
+	Tiling          const  * const tlngP,
+	unsigned long int      * const numLinesThisFileP,
 	unsigned long long int * const numCharsThisFileP
 );  // tiling_export_PaintArcsPS()
 
-void exportColourSVG(char * const strA,  char * const strB,  bool * const isWhiteP,  const Physique ph,  const bool pathClosed,  const long int pathLength,  const bool pointy);
+void exportColourSVG(
+	char   * const strA,
+	char   * const strB,
+	bool   * const isWhiteP,
+	Physique const ph,
+	bool     const pathClosed,
+	long int const pathLength,
+	bool     const pointy
+);
 void tiling_export_PaintRhombiSVG(
 	FILE* const fp,
-	Tiling const      * const tlngP,
-	unsigned long int * const numLinesThisFileP,
+	Tiling           const * const tlngP,
+	unsigned long int      * const numLinesThisFileP,
 	unsigned long long int * const numCharsThisFileP
 );
 
 void tiling_export_PaintArcsSVG(
 	FILE* const fp,
-	Tiling const      * const tlngP,
-	unsigned long int * const numLinesThisFileP,
+	Tiling           const * const tlngP,
+	unsigned long int      * const numLinesThisFileP,
 	unsigned long long int * const numCharsThisFileP
 );  // tiling_export_PaintArcsSVG()
 
@@ -424,7 +475,7 @@ char * svgTransform(
 	double const x,
 	double const y,
 	double const angDeg,
-	short int angMod
+	short int    angMod
 );  // svgTransform()
 
 char * fileExtension_from_ExportFormat(char * const str, ExportFormat const ef);

@@ -1,6 +1,6 @@
 %!PS
 
-/DataAsOf (D:20250421143557) def
+/DataAsOf (D:20250622155907) def
 /Licence (GNU General Public License, Version 3, 29 June 2007) def
 /URL (https://githubcom/jdaw1/penrose_tiling/) def
 /Author (Julian D A Wiseman of wwwjdawisemancom) def
@@ -45,7 +45,7 @@ Actual_XMax Actual_XMin add -2 div  Actual_YMax Actual_YMin add -2 div  translat
 /TileMatrix matrix currentmatrix def
 
 mark
-	/CreationDate (D:20250421143557)
+	/CreationDate (D:20250622155907)
 	/Title (Penrose tiling)
 	/Author (Julian D. A. Wiseman)
 	/Subject (http://github.com/jdaw1/penrose_tiling/)
@@ -114,7 +114,7 @@ flush
 
 FontName FontSize selectfont  % Useful default if PaintByRhombus is to show, for example, the RhId.
 0 setgray  2 setlinejoin  [] 0 setdash
-PaperMatrix setmatrix  EdgeLength 60 div ScaleFactor mul  setlinewidth
+PaperMatrix setmatrix  EdgeLength 16 div ScaleFactor mul  setlinewidth
 
 % PaintByRhombus collects the items on the stack, and then paints as appropriate.
 % Most of its inner may be rewritten, e.g. for different decoration, or to aid debugging such as by show'ing RhId.
@@ -207,7 +207,7 @@ PaperMatrix setmatrix  EdgeLength 60 div ScaleFactor mul  setlinewidth
 		} if  % painting triangles
 		//false  % stroke arcs?
 		{
-			//PaperMatrix setmatrix  0.06 setlinewidth  0 setgray  1 setlinecap  1 setlinejoin  [] 0 setdash
+			//PaperMatrix setmatrix  0 setgray  1 setlinecap  1 setlinejoin  [] 0 setdash
 			WestX WestY  EdgeLength 2 div   EastX EastY  2 index    AngDeg dup dup dup
 			IsFat
 				{144 sub exch 36 sub   7 2 roll   36 add exch 144 add}
@@ -219,12 +219,23 @@ PaperMatrix setmatrix  EdgeLength 60 div ScaleFactor mul  setlinewidth
 		{
 			TileMatrix setmatrix
 			NorthX NorthY moveto  SouthX SouthY lineto
-			PaperMatrix setmatrix  0 setgray  stroke
+			0 setgray  PaperMatrix setmatrix  stroke
 		} if  % stroking diagonal
 	} if  % Inside Wanted box
 	end  % 15 dict
 } bind def  % /PaintByRhombus
 
+
+
+TileMatrix setmatrix
+% Bounding path
+1 -3.077683537 moveto
+2 0 lineto
+1 3.077683537 lineto
+-2.236067977 3.077683537 lineto
+-3.236067977 0 lineto
+-2.236067977 -3.077683537 lineto closepath
+gsave 1 setgray fill grestore gsave 0.8 setgray 1 setlinejoin PaperMatrix setmatrix 3.84 setlinewidth stroke grestore newpath  % or, perhaps, zap with "newpath"
 
 
 % Formats for Thin and Fat rhombi:

@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // tilings.c, in PenroseC
 
@@ -42,6 +42,7 @@ void tiling_descendant(
 	tlngDescendantP->wantedPostScriptHalfWidth     = 0;
 	tlngDescendantP->wantedPostScriptNumberRhombi = 0;
 	tlngDescendantP->wantedPostScriptNumberPaths   = 0;
+	tlngDescendantP->populated = false;
 
 	tlngDescendantP->edgeLength = tlngAncestorP->edgeLength * GoldenRatioReciprocal;
 
@@ -86,7 +87,7 @@ void tiling_descendant(
 		}  // if( 'purge needed' )
 		rhombus_append_descendants( tlngDescendantP,  tlngAncestorP->rhombi + rhId_Ancestor );
 	}  // for( rhId_Ancestor ... )
-	printf("tiling_descendant(): tilingId=%" PRIi8 ", %0.3lfs for %li calls of rhombus_append_descendants(), and %li call%s of rhombi_purgeDuplicates(), resulting in #Fats+#Thins=%li\n",
+	printf("tiling_descendant(): tilingId=%" PRIi8 ", %.3lfs for %li calls of rhombus_append_descendants(), and %li call%s of rhombi_purgeDuplicates(), resulting in #Fats+#Thins=%li\n",
 		tlngDescendantP->tilingId,
 		((double)clock() - timeBeginPart) / CLOCKS_PER_SEC,
 		tlngAncestorP->numFats + tlngAncestorP->numThins,
@@ -96,7 +97,7 @@ void tiling_descendant(
 
 	timeBeginPart = clock();
 	rhombi_purgeDuplicates(tlngDescendantP);
-	printf("tiling_descendant(): tilingId=%" PRIi8 ", %0.3lfs for rhombi_sorted_purgeDuplicates(), with #Fats=%li #Thins=%li, #Fats+#Thins=%li, /prev~=%0.4lg\n",
+	printf("tiling_descendant(): tilingId=%" PRIi8 ", %.3lfs for rhombi_purgeDuplicates(), with #Fats=%li #Thins=%li, #Fats+#Thins=%li, /prev~=%.4lg\n",
 		tlngDescendantP->tilingId,
 		((double)clock() - timeBeginPart) / CLOCKS_PER_SEC,
 		tlngDescendantP->numFats,  tlngDescendantP->numThins,  tlngDescendantP->numFats + tlngDescendantP->numThins,
@@ -105,7 +106,7 @@ void tiling_descendant(
 
 	timeBeginPart = clock();
 	neighbours_populate(tlngDescendantP);
-	printf("tiling_descendant(): tilingId=%" PRIi8 ", %0.3lfs for neighbours_populate()\n",
+	printf("tiling_descendant(): tilingId=%" PRIi8 ", %.3lfs for neighbours_populate()\n",
 		tlngDescendantP->tilingId,
 		((double)clock() - timeBeginPart) / CLOCKS_PER_SEC
 	);  fflush(stdout);
@@ -114,7 +115,7 @@ void tiling_descendant(
 	{
 		timeBeginPart = clock();
 		holesFill(tlngDescendantP);
-		printf("tiling_descendant(): tilingId=%" PRIi8 ", %0.3lfs for holesFill()\n",
+		printf("tiling_descendant(): tilingId=%" PRIi8 ", %.3lfs for holesFill()\n",
 			tlngDescendantP->tilingId,
 			((double)clock() - timeBeginPart) / CLOCKS_PER_SEC
 		);  fflush(stdout);
@@ -124,7 +125,7 @@ void tiling_descendant(
 
 	timeBeginPart = clock();
 	paths_populate(tlngDescendantP);
-	printf("tiling_descendant(): tilingId=%" PRIi8 ", %0.3lfs for paths_populate(), with #PathsClosed=%li,  #PathsOpen=%li,  (C+O)/prev~=%0.4lg\n",
+	printf("tiling_descendant(): tilingId=%" PRIi8 ", %.3lfs for paths_populate(), with #PathsClosed=%li,  #PathsOpen=%li,  (C+O)/prev~=%.4lg\n",
 		tlngDescendantP->tilingId,
 		((double)clock() - timeBeginPart) / CLOCKS_PER_SEC,
 		tlngDescendantP->numPathsClosed, tlngDescendantP->numPathsOpen,
@@ -134,9 +135,9 @@ void tiling_descendant(
 	timeBeginPart = clock();
 	wanted_populate(tlngDescendantP);
 	printf(
-		"tiling_descendant(): tilingId=%" PRIi8 ", %0.3lfs for wanted_populate(), "
+		"tiling_descendant(): tilingId=%" PRIi8 ", %.3lfs for wanted_populate(), "
 		"with wantedPostScriptCentreX=%.15G, CentreY=%.15G, Aspect=%.15G "
-		"==> HalfWidth=%0.15G, NumRh=%li, NumPaths=%li\n",
+		"==> HalfWidth=%.15G, NumRh=%li, NumPaths=%li\n",
 		tlngDescendantP->tilingId,
 		((double)clock() - timeBeginPart) / CLOCKS_PER_SEC,
 		tlngDescendantP->wantedPostScriptCentre.x,
@@ -149,14 +150,15 @@ void tiling_descendant(
 
 	timeBeginPart = clock();
 	insideness_populate(tlngDescendantP);
-	printf("tiling_descendant(): tilingId=%" PRIi8 ", %0.3lfs for insideness_populate()\n",
+	printf("tiling_descendant(): tilingId=%" PRIi8 ", %.3lfs for insideness_populate()\n",
 		tlngDescendantP->tilingId,
 		((double)clock() - timeBeginPart) / CLOCKS_PER_SEC
 	);  fflush(stdout);
 
 	timeBeginPart = clock();
 	pathStats_populate(tlngDescendantP);
-	printf("tiling_descendant(): tilingId=%" PRIi8 ", %0.3lfs for pathStats_populate() with #PathStats=%li,  /prev~=%0.4lg\n",
+	printf(
+		"tiling_descendant(): tilingId=%" PRIi8 ", %.3lfs for pathStats_populate() with #PathStats=%li,  /prev~=%.4lg\n",
 		tlngDescendantP->tilingId,
 		((double)clock() - timeBeginPart) / CLOCKS_PER_SEC,
 		tlngDescendantP->numPathStats,
@@ -164,8 +166,21 @@ void tiling_descendant(
 	);  fflush(stdout);
 
 	timeBeginPart = clock();
+	tlngDescendantP->boundingPathNumVertices = tiling_export_PaintBoundary(NULL, TSV, tlngDescendantP, 0, NULL, NULL);  // first NULL signals not to output; other NULLs and ef and indentDepth irrelevant.
+	if( tlngDescendantP->boundingPathNumVertices <= 0 )
+		 fprintf(stderr, "tiling_export_PaintBoundary(), tiling_export_PaintBoundary() returned %li, which is weirdly non-positive. Continuing.\n", tlngDescendantP->boundingPathNumVertices);
+	printf(
+		"tiling_descendant(): tilingId=%" PRIi8 ", %.3lfs for tiling_export_PaintBoundary(NULL, ...) to return %li, the \"NULL\" meaning not to print anything.\n",
+		tlngDescendantP->tilingId,
+		((double)clock() - timeBeginPart) / CLOCKS_PER_SEC,
+		tlngDescendantP->boundingPathNumVertices
+	);  fflush(stdout);
+
+	tlngDescendantP->populated = true;
+
+	timeBeginPart = clock();
 	verifyHypothesisedProperties(tlngDescendantP);
-	printf("tiling_descendant(): tilingId=%" PRIi8 ", %0.3lfs for verifyHypothesisedProperties()\n",
+	printf("tiling_descendant(): tilingId=%" PRIi8 ", %.3lfs for verifyHypothesisedProperties()\n",
 		tlngDescendantP->tilingId,
 		((double)clock() - timeBeginPart) / CLOCKS_PER_SEC
 	);  fflush(stdout);
@@ -192,10 +207,9 @@ void tiling_descendant(
 		);  fflush(stderr);
 	// Simple checks: end
 
-
 	double thisTime = (double)(clock() - timeBeginDescendant) / CLOCKS_PER_SEC;
 	printf("tiling_descendant(): tilingId=%" PRIi8 ", numFats=%li, numThins=%li, numPathsClosed=%li, numPathsOpen=%li, numPathStats=%li"
-		", execution time ~= %0.3lf seconds; all tilings' time = %0.3lfs. (Both excl. this t's disk-writing time.)\n",
+		", execution time ~= %.3lf seconds; all tilings' time = %.3lfs. (Both excl. this t's disk-writing time.)\n",
 		tlngDescendantP->tilingId, tlngDescendantP->numFats, tlngDescendantP->numThins,
 		tlngDescendantP->numPathsClosed, tlngDescendantP->numPathsOpen, tlngDescendantP->numPathStats,
 		thisTime,
@@ -230,6 +244,8 @@ void tiling_initial(
 	tlngP->pathStats_NumMax = 0;
 	tlngP->pathStat = NULL;
 	tlngP->numPathStats = 0;  // This needed when paths_sort() with pathStat not yet assigned.
+	tlngP->boundingPathNumVertices  = -1 ;
+	tlngP->populated = false;
 
 	tlngP->rhombi_NumMax = 4;  // Initial thin, + two fats added by holesFill(), + one spare.
 
@@ -275,13 +291,21 @@ void tiling_initial(
 	if( holesFillQ(tlngP) )
 		holesFill(tlngP);
 
+	rhombi_sort(tlngP,  &rhombiGt_ByY,  true);
+
 	paths_populate(tlngP);
 	wanted_populate(tlngP);
 	insideness_populate(tlngP);
 	pathStats_populate(tlngP);
 
+	tlngP->boundingPathNumVertices = tiling_export_PaintBoundary(NULL, TSV, tlngP, 0, NULL, NULL);  // first NULL signals not to output; other NULLs and ef and indentDepth irrelevant.
+	if( tlngP->boundingPathNumVertices <= 0 )
+		 fprintf(stderr, "tiling_initial(), tiling_export_PaintBoundary() returned %li, which is weirdly non-positive. Continuing.\n", tlngP->boundingPathNumVertices);
+
 	double const angMultiple = tlngP->rhombi[0].angleDegrees / 18;
 	tlngP->axisAligned = ( fabs(round(angMultiple) - angMultiple) < 0.000005 );  // A multiple of 18 degrees, to within 0.0935 dots across A3 at 3600dpi.
+
+	tlngP->populated = true;
 
 	export_soloTiling(tlngP,  timeBegin);
 }  // tiling_initial()

@@ -17,7 +17,7 @@ Documentation pages:&nbsp;
 ## Security ##
 
 [C](https://en.wikipedia.org/wiki/C_(programming_language)) is a fabulous low-level programming language, dating back to 1972. 
-The language has great power over the computer on which it is running, able to inspect and alter memory, and likewise read and write from disks. 
+The language has great power over the computer on which it is running, at a low level able to inspect and alter memory, and likewise read and write from disks. 
 This used to be thought fast and powerful, but is now described as insecure. 
 One should be careful about code downloaded from the internet; one should be more careful about C&nbsp;code downloaded from the internet. 
 Indeed, since 17<small><sup>th</sup></small>&nbsp;January 2025 the US Government has been [discouraging the use&nbsp;of&nbsp;C](https://www.cisa.gov/resources-tools/resources/product-security-bad-practices): 
@@ -28,15 +28,24 @@ So, even though this is not &ldquo;critical infrastructure&rdquo;, be careful.
 Run this code only in your compiler&rsquo;s debug mode, as that will block pointer mischief. 
 Yes it will execute slower, but execution is a once-off to generate data: pay the slower to gain the full paranoia.
 
-Also, this code needs to output many files. 
-Give it write access only to one chosen output directory, and block all read access.
+Also, this code outputs multiple files ([.json](json.md) [.tsv](tsv.md), [.svg](svg.md), [.ps](postscript_distillable.md), [.ps](postscript_data.md)). 
+Allow writing only to the chosen output directory `filePath_staticConst[]`; block all other writing; block all file reading.
 
-Yes, I know that this code is not naughty. 
-But you cannot know that I truthfully know that, so if executing this C, indeed any downloaded C, you ought to be paranoid.
+Yes, I know that this code is not naughty, and I believe that it is not careless. 
+But it&rsquo;s 8.2k lines of&nbsp;C, so you cannot easily know that I truthfully know or believe these. 
+If executing this downloaded C, indeed any downloaded C, you should be paranoid, meaning execute only in your compiler&rsquo;s debug mode, with file access restricted as in the previous&nbsp;&para;.
 
-Version: this [C](https://en.wikipedia.org/wiki/C_(programming_language)) code uses inline comments `//`, types `bool`, `int8_t` and `long long int`, and an inline struct initialisation. 
-Hence this code needs at least [C99](https://en.wikipedia.org/wiki/C99). 
-This code should not compile pedanticly as original ANSI&nbsp;C =&nbsp;C89.
+Language version: this 
+[C](https://en.wikipedia.org/wiki/C_(programming_language)) code uses 
+inline comments [`//`](https://en.cppreference.com/w/c/comment.html), types 
+[`bool`](https://en.cppreference.com/w/c/language/arithmetic_types.html#Boolean_type), 
+[`int8_t`](https://en.cppreference.com/w/c/types/integer.html#Types) and 
+[<code>long&nbsp;long&nbsp;int</code>](https://en.cppreference.com/w/c/language/arithmetic_types.html#Integer_types), and 
+[inline struct initialisation](https://en.cppreference.com/w/c/language/struct_initialization.html). 
+Hence this code needs &ge;&nbsp;[C99](https://en.wikipedia.org/wiki/C99). 
+This C&nbsp;code is not valid 
+ANSI&nbsp;C&nbsp;=&nbsp;[C89](https://en.wikipedia.org/wiki/ANSI_C#C89), 
+nor valid [K&R&nbsp;&lsquo;original&rsquo;](https://en.wikipedia.org/wiki/The_C_Programming_Language).
 
 
 ## Changes to the C, mandatory and optional ##
@@ -65,13 +74,13 @@ For this, set `svg_toPaint_xMin()` etc to suitable values.
 Perhaps also choose the displayed width of the SVG with `svg_displayWidth()`, and consider `svg_strokeWidth()`.
 (For similar control over PDF from the [distillable PostScript output](postscript_distillable.md), the controls are within the PostScript file: `/ToPaint_XMin -7 def`, etc.)
 
-In `main()` a call of `fscanf()` asks how many loops of `TilingId` should there be. 
+In `main()` a call of `fscanf()` asks how many loops of `TilingId` should there be (which is bounded above by `numTilings_Max` as described below). 
 This is an important question, answering which takes the next section of this page.
 
 
 ## Loops of TilingId ##
 
-The C code creates an initial tiling, then loops creating each new tiling from the previous. 
+The C code creates an initial tiling, then loops recursively creating each new tiling from the previous. 
 From one loop to the next the number of tiles grows, approximately, by a factor &gap;&nbsp;&phi;&sup2;&nbsp;&asymp;&nbsp;2.618 &asymp;&nbsp;10<small><sup>0.42</sup></small> &asymp;&nbsp;10<small><sup>(1&#8239;&divide;&#8239;2.4)</sup></small>. 
 The table below shows the numbers of fat and thin tiles in each tiling. 
 
@@ -81,32 +90,32 @@ Areas in the following table assume tiles of the same size, with &asymp;&nbsp;1m
 
 
 
-| Tl&rsquo;g<br>Id | Num<br>Fats | Num<br>Thins | Long<br>-est<br>closed<br>path | Long<br>-est<br>open<br>path | Area<br>metric | Area<br>imperial<br>&CupCap;&nbsp;US | JSON<br>size | &Sum;<small><sub>0&#10141;_n_</sub></small><br>exec.<br>time |
-|----------------------------------:|-----------:|-----------:|-------:|--------:|--------------------:|----------------------:|--------------:|:------------:|
-|  [0](../images/Penrose_Rh_00.svg) |          2 |          1 |        |       2 |                     |                       |   2&#8239;KiB |              |
-|  [1](../images/Penrose_Rh_01.svg) |          9 |          4 |        |       3 |                     |                       |   8&#8239;KiB |              |
-|  [2](../images/Penrose_Rh_02.svg) |         32 |         18 |      5 |       8 |   0.9&#8239;m&sup2; |     10&#8239;ft&sup2; |  31&#8239;KiB |              |
-|  [3](../images/Penrose_Rh_03.svg) |         98 |         55 |      5 |      15 |   2.9&#8239;m&sup2; |     31&#8239;ft&sup2; |  98&#8239;KiB |              |
-|  [4](../images/Penrose_Rh_04.svg) |        281 |        166 |     15 |      32 |     8&#8239;m&sup2; |     90&#8239;ft&sup2; | 297&#8239;KiB |              |
-|  [5](../images/Penrose_Rh_05.svg) |        776 |        464 |     25 |      63 |    23&#8239;m&sup2; |    248&#8239;ft&sup2; | 855&#8239;KiB |              |
-|  [6](../images/Penrose_Rh_06.svg) |      2,098 |      1,273 |     55 |     128 |    63&#8239;m&sup2; |    673&#8239;ft&sup2; | 2.3&#8239;MiB |              |
-|  [7](../images/Penrose_Rh_07.svg) |      5,601 |      3,420 |    105 |     255 |   167&#8239;m&sup2; |  1,801&#8239;ft&sup2; | 6.4&#8239;MiB |              |
-|  [8](../images/Penrose_Rh_08.svg) |     14,840 |      9,106 |    215 |     512 |   444&#8239;m&sup2; |  4,778&#8239;ft&sup2; |  17&#8239;MiB |  2&#8239;s   |
-|  [9](../images/Penrose_Rh_09.svg) |     39,138 |     24,079 |    425 |   1,023 | 1,171&#8239;m&sup2; | 12,609&#8239;ft&sup2; |  47&#8239;MiB |  6&#8239;s   |
-| [10](../images/Penrose_Rh_10.svg) |    102,929 |     63,438 |    855 |   2,048 | 3,082&#8239;m&sup2; | 33,177&#8239;ft&sup2; | 125&#8239;MiB | 16&#8239;s   |
-| [11](../images/Penrose_Rh_11.svg) |    270,224 |    166,720 |  1,705 |   4,095 | 8,094&#8239;m&sup2; |          2.0&#8239;ac | 331&#8239;MiB | 40&#8239;s   |
-|  12                               |    708,674 |    437,521 |  3,415 |   8,192 |        2.1&#8239;ha |          5.2&#8239;ac | 876&#8239;MiB |  2&#8239;min |
-|  13                               |  1,857,305 |  1,147,124 |  6,825 |  16,383 |        5.6&#8239;ha |           14&#8239;ac | 2.3&#8239;GiB |  5&#8239;min |
-|  14                               |  4,865,680 |  3,005,938 | 13,655 |  32,768 |         15&#8239;ha |           36&#8239;ac | 6.0&#8239;GiB | 20&#8239;min |
-|  15                               | 12,743,682 |  7,874,055 | 27,305 |  65,535 |         38&#8239;ha |           94&#8239;ac |  16&#8239;GiB | 1.3&#8239;hr |
-|  16                               | 33,371,753 | 20,621,686 | 54,615 | 131,072 |        100&#8239;ha |          247&#8239;ac |  42&#8239;GiB |  6&#8239;hr  |
+| Tl&rsquo;g<br>Id | Num<br>Fats | Num<br>Thins | Long<br>-est<br>closed<br>path | Long<br>-est<br>open<br>path | Area<br>metric | Area<br>imperial<br>&CupCap;&nbsp;US | JSON<br>size | &asymp;&#8239;&Sum;<small><sub>0&#10141;_n_</sub></small><br>exec.<br>time |
+|----------------------------------:|-----------:|-----------:|-------:|--------:|--------------------:|----------------------:|---------------:|:-------------:|
+| [&numsp;0](../images/Penrose_Rh_00.svg) |      2 |        1 |        |       2 |                     |                       |  2.4&#8239;KiB |               |
+| [&numsp;1](../images/Penrose_Rh_01.svg) |      9 |        4 |        |       3 |                     |                       |  9.5&#8239;KiB |               |
+| [&numsp;2](../images/Penrose_Rh_02.svg) |     32 |       18 | 5&lsquo;r&rsquo; |  8 | 0.9&#8239;m&sup2; |  10&#8239;ft&sup2; |   34&#8239;KiB |               |
+| [&numsp;3](../images/Penrose_Rh_03.svg) |     98 |       55 | 5&lsquo;p&rsquo; | 15 | 2.9&#8239;m&sup2; |  31&#8239;ft&sup2; |  104&#8239;KiB |               |
+| [&numsp;4](../images/Penrose_Rh_04.svg) |    281 |      166 |     15 |      32 |     8&#8239;m&sup2; |     90&#8239;ft&sup2; |  308&#8239;KiB |               |
+| [&numsp;5](../images/Penrose_Rh_05.svg) |    776 |      464 |     25 |      63 |    23&#8239;m&sup2; |    248&#8239;ft&sup2; |  874&#8239;KiB |               |
+| [&numsp;6](../images/Penrose_Rh_06.svg) |  2,098 |    1,273 |     55 |     128 |    63&#8239;m&sup2; |    673&#8239;ft&sup2; |  2.4&#8239;MiB |               |
+| [&numsp;7](../images/Penrose_Rh_07.svg) |  5,601 |    3,420 |    105 |     255 |   167&#8239;m&sup2; |  1,801&#8239;ft&sup2; |  6.5&#8239;MiB |   1&#8239;s   |
+| [&numsp;8](../images/Penrose_Rh_08.svg) | 14,840 |    9,106 |    215 |     512 |   444&#8239;m&sup2; |  4,778&#8239;ft&sup2; | 17.5&#8239;MiB |   3&#8239;s   |
+| [&numsp;9](../images/Penrose_Rh_09.svg) | 39,138 |   24,079 |    425 |   1,023 | 1,171&#8239;m&sup2; | 12,609&#8239;ft&sup2; |   47&#8239;MiB |   7&#8239;s   |
+| [10](../images/Penrose_Rh_10.svg) |    102,929 |     63,438 |    855 |   2,048 | 3,082&#8239;m&sup2; | 33,177&#8239;ft&sup2; |  125&#8239;MiB |  18&#8239;s   |
+| [11](../images/Penrose_Rh_11.svg) |    270,224 |    166,720 |  1,705 |   4,095 | 8,094&#8239;m&sup2; |          2.0&#8239;ac |  331&#8239;MiB |  44&#8239;s   |
+|  12                               |    708,674 |    437,521 |  3,415 |   8,192 |        2.1&#8239;ha |          5.2&#8239;ac |  877&#8239;MiB |   2&#8239;min |
+|  13                               |  1,857,305 |  1,147,124 |  6,825 |  16,383 |        5.6&#8239;ha |           14&#8239;ac |  2.3&#8239;GiB | 5.5&#8239;min |
+|  14                               |  4,865,680 |  3,005,938 | 13,655 |  32,768 |         15&#8239;ha |           36&#8239;ac |  6.0&#8239;GiB |  21&#8239;min |
+|  15                               | 12,743,682 |  7,874,055 | 27,305 |  65,535 |         38&#8239;ha |           94&#8239;ac | 15.8&#8239;GiB |  1.3&#8239;hr |
+|  16                               | 33,371,753 | 20,621,686 | 54,615 | 131,072 |        100&#8239;ha |          247&#8239;ac | 41.5&#8239;GiB |  6.5&#8239;hr |
 
 
 ### Area comparisons ###
 
 To compare to the areas in the table (which assume an edge length of 151mm &asymp;&nbsp;5.9&Prime;), the following are areas of familiar or famous spaces.
 
-* A large domestic room could be 23&#8239;feet&#8239;&times;&#8239;23&#8239;feet =&nbsp;529&#8239;ft&sup2; &asymp; (7&#8239;m)&sup2; &asymp;&nbsp;49&#8239;m&sup2;.
+* A small apartment (British English: &lsquo;flat&rsquo;) or a large domestic room could be 23&#8239;feet&#8239;&times;&#8239;23&#8239;feet =&nbsp;529&#8239;ft&sup2; &asymp; (7&#8239;m)&sup2; =&nbsp;49&#8239;m&sup2;.
 * A [tennis court](https://www.tiauk.org/app/uploads/2021/03/key-dimensions-court-guidance-lta.pdf) is 78&#8239;feet&#8239;&times;&#8239;36&nbsp;feet =&nbsp;2,808&#8239;ft&sup2; &asymp;&nbsp;261&#8239;m&sup2;;
 * An NBA [basketball court](https://en.wikipedia.org/wiki/Basketball_court) is 94&#8239;feet&#8239;&times;&#8239;50&nbsp;feet =&nbsp;4,700&#8239;ft&sup2; &asymp;&nbsp;437&#8239;m&sup2;;
 * A category-4 [UEFA stadium field](https://en.wikipedia.org/wiki/UEFA_stadium_categories#Differences_between_categories) is 105&#8239;m&#8239;&times;&#8239;68&#8239;m =&nbsp;7,140&#8239;m&sup2; =&nbsp;0.714&#8239;ha &asymp;&nbsp;76,854&#8239;ft&sup2; &asymp;&nbsp;1.76&#8239;ac;
@@ -132,24 +141,30 @@ With the previous paragraph&rsquo;s constraints, the proportionate increase in a
 That is, with tiles of edge length 500mm, `TilingId` 16 could asymmetrically and practicably cover &asymp;&#8239;2&#8239;km&sup2; &asymp;&#8239;0.85&#8239;mile&sup2;. 
 But, of course, your space might not be square, and your tiles might not be 500mm.
 
-### Limits ###
+
+### Speed ###
 
 The quoted execution times are from a 2.7&#8239;GHz quad-core iMac with 32&#8239;GiB of memory. 
-Execution was in [Xcode](https://developer.apple.com/xcode/)&rsquo;s debug mode to catch possible stray pointer misbehaviours (of which there were none).
+Execution was in [Xcode](https://developer.apple.com/xcode/)&rsquo;s debug mode to catch possible stray pointer misbehaviours (of which there were none); and with memory&#8209;alignment at its natural value by <code>#define&nbsp;MEMORY_FRUGALITY_OUTRANKS_SPEED&nbsp;false</code> in [<kbd>penrose.h</kbd>](../C/penrose.h).
+
+
+### Limits ###
 
 A deeper recursion would need more memory. 
-It might be that one more recursion, so &asymp;&#8239;0.14&nbsp;billion rhombi, would require 64&#8239;GiB of memory; and two more, &asymp;&#8239;0.37&nbsp;billion rhombi, would require &asymp;&#8239;160&#8239;GiB, and execution would likely take a few weeks. 
-Also consider: the disk space to hold the JSON; the disk space to hold the database used for post-processing such as selection of relevant rhombi; the storage space and software on the computer in the tile-laying machines. 
-Indeed, I doubt that your physical area really needs many more tens of millions of tiles.
+It might be that one more recursion, so &asymp;&#8239;0.14&nbsp;billion rhombi, would require 64&#8239;GiB of memory; and two more, &asymp;&#8239;0.37&nbsp;billion rhombi, would require &asymp;&#8239;160&#8239;GiB, for which execution would take&mdash;approximate estimate&mdash;most of two weeks. 
+Also consider: the disk space to hold the JSON; the disk space to hold the database used for post-processing such as selection of relevant rhombi; the storage space and software on the computers in the tile&#8209;laying machines. 
+But it could fairly be asked whether your physical area _really_ needs many more tens of millions of tiles (answer&nbsp;=&nbsp;it doesn&rsquo;t).
 
-Somewhere not far beyond `numTilings = 19`, there might be a need to enlarge some types from `long int` (&le;&nbsp;2<small><sup>31</sup></small>&#8239;&minus;&#8239;1 &asymp;&nbsp;2&nbsp;billion, and which should not be `unsigned` as it needs to be able to hold `-1`) to `long long int` (&le;&nbsp;2<small><sup>63</sup></small>&#8239;&minus;&#8239;1 &asymp;&nbsp;9&nbsp;quintillion =&nbsp;9&#8239;&times;&#8239;10<small><sup>18</sup></small>).
+For `tilingId`&nbsp;&ge;&nbsp;20&nbsp; &DoubleLongRightArrow;&nbsp; &gap;&nbsp;2.5&#8239;bn rhombi, there would be a need to enlarge some types from <code>long&nbsp;int</code> (&le;&nbsp;2<small><sup>31</sup></small>&#8239;&minus;&#8239;1 &asymp;&nbsp;2&nbsp;billion) to [<code>long&nbsp;long&nbsp;int</code>](https://en.cppreference.com/w/c/language/arithmetic_types.html#Integer_types) (&le;&nbsp;2<small><sup>63</sup></small>&#8239;&minus;&#8239;1 &asymp;&nbsp;9&#8239;&times;&#8239;10<small><sup>18</sup></small> =&nbsp;9&nbsp;quintillion), which needs to be able to hold `-1` so cannot be `unsigned`. 
+This would require changing some `sprintf()` and `fprintf()` instances of &ldquo;`%li`&rdquo; to &ldquo;`%lli`&rdquo;. 
+If this is necessary, perhaps also improve the floating-point precision, both internal and as exported, by replacing `double` with [<code>long&nbsp;double</code>](https://en.cppreference.com/w/c/language/arithmetic_types.html#Real_floating_types) ([wikipedia](https://en.wikipedia.org/wiki/Long_double)), which would necessitate further changes to <code>&hellip;printf()</code>. In [<kbd>main.c</kbd>](../C/main.c) is <code>static&nbsp;int8_t&nbsp;const <b>numTilings_Max</b>&nbsp;=&nbsp;17;</code>, which prevents the accidental start, by a typing error such as &ldquo;<kbd>117</kbd>&rdquo;, of a task that is certain to fail eventually. If you really want to allow larger values&mdash;but almost certainly you don&rsquo;t&mdash;then increase `numTilings_Max`.
 
-Anyway, by me, not tested beyond `numTilings = 17`&nbsp; &DoubleLongRightArrow;&nbsp;&nbsp;0&#8239;&le;&#8239;`tilingId`&#8239;&le;&#8239;16, the largest of which has almost fifty&#8209;four million rhombi.
+Anyway, by me, not tested beyond `numTilings`&nbsp;=&nbsp;17&nbsp; &DoubleLongRightArrow;&nbsp; 0&#8239;&le;&#8239;`tilingId`&#8239;&le;&#8239;16, the largest of which has almost fifty&#8209;four million rhombi.
 
 
 ## Code workings ##
 
-The following is an overrview, but only an overview, of the workings of the code. 
+The following is an overview, but only an overview, of the workings of the code. 
 
 ### The header ###
 
@@ -211,7 +226,7 @@ And there are other positions for which holes or gaps have a unique completion, 
 
     These extra rhombi require neighbourification, and for some of the `holesFill()` patterns, re-de-duplication. 
 
-* [<kbd>paths.c</kbd>](../C/paths.c) finds paths. Naturally enough, start at an as-yet-unpathed fat rhombus, and trace using neighbours. If it is an open path, then on coming to an end it restarts from there. For closed paths, there a rhombus must be chosen to have zero `.withinPathNum`, so to be the first rhombus of the path. This is chosen by `rhWithinPathMoreSpecial()` to be one of the rhombi that is as close as possible to the centre of the path, and in the first quadrant.
+* [<kbd>paths.c</kbd>](../C/paths.c) finds paths. Naturally enough, start at an as-yet-unpathed fat rhombus, and trace using neighbours. If it is an open path, then on coming to an end it restarts from there. For closed paths, a rhombus must be chosen to have zero `.withinPathNum`, so to be the first rhombus of the path. This is chosen by `rhWithinPathMoreSpecial()` to be one of the rhombi that is as close as possible to the centre of the path, and in the first quadrant.
 
 * Which is the smallest enclosing path?  But the level of the question varies.  
     - Open paths cannot have an enclosing path.
@@ -249,7 +264,7 @@ And there are other positions for which holes or gaps have a unique completion, 
 
 * There is occasional need to `sprintf()` to a string, for subsequent use. So [<kbd>main.c</kbd>](../C/main.c) creates `scratchString[]` of length 32767, which many export routines access with <code>extern&nbsp;char&nbsp;scratchString[];</code>.
 
-* Some of the output files are large. There should be some effort to not enlarge them needlessly. In particular, the likes of &ldquo;<samp>1.000000000</samp>&rdquo; should be trimmed to &ldquo;<samp>1</samp>&rdquo;. This should not be done with scientific notation: if an _x_ or _y_ value is almost zero, then it should be &ldquo;<samp>0</samp>&rdquo; rather than &ldquo;<samp>-1.234567E-89</samp>&rdquo;. So there is a routine `stringClean()`, in [<kbd>stringClean.c</kbd>](../C/stringClean.c), which cleans a string in this style. Almost always, the string passed to this is `scratchString`. 
+* Some of the output files are large. There should be some effort to not enlarge them needlessly. In particular, the likes of &ldquo;<samp>1.000000000</samp>&rdquo; should be trimmed to &ldquo;<samp>1</samp>&rdquo;. Numbers should not be shown in scientific notation: if an _x_ or _y_ value is almost zero, then it should be &ldquo;<samp>0</samp>&rdquo; rather than &ldquo;<samp>-1.234567E-89</samp>&rdquo;. So there is a routine `stringClean()`, in [<kbd>stringClean.c</kbd>](../C/stringClean.c), which cleans a string in this style. The string passed to this is always `scratchString`.
 
 
 There are two very different types of export format. 
@@ -258,6 +273,7 @@ There are two very different types of export format.
 
 * Those with `enum` `ExportFormat` values {`PS_rhomb`, `PS_arcs`, `SVG_rhomb`, `SVG_arcs`} output something useful as-is. That is, an SVG can be viewed; a PostScript file can be distilled (using [Adobe Distiller](https://en.wikipedia.org/wiki/Adobe_Distiller) or [Ghostscript](https://en.wikipedia.org/wiki/Ghostscript)) into a PDF. For these, code in [<kbd>export_SoloTiling.c</kbd>](../C/export_SoloTiling.c) calls the appropriate one of [<kbd>export_PaintArcsPS.c</kbd>](../C/export_PaintArcsPS.c), [<kbd>export_PaintArcsSVG.c</kbd>](../C/export_PaintArcsSVG.c), [<kbd>export_PaintRhPS.c</kbd>](../C/export_PaintRhPS.c), [<kbd>export_PaintRhSVG.c</kbd>](../C/export_PaintRhSVG.c). Some SVG processing is in [<kbd>Smalls_SVG.c</kbd>](../C/Smalls_SVG.c).
 
+* The routine `tiling_export_PaintBoundary()` in [<kbd>export_BoundarySVG.c</kbd>](../C/export_BoundarySVG.c) computes and exports (but does not store internally) the exterior boundary of the rhombi. The purpose is to provide a background colour for the `SVG_arcs`, but it will also work with an `ExportFormat` of `SVG_rhomb`, `PS_arcs`, `PS_rhomb`, `PS_data`, `TSV`, and `JSON`. For large tilings with _n_ tiles, the number of points on the boundary seems to be slightly less than 3&radic;_n_. The first call of [<kbd>export_BoundarySVG.c</kbd>](../C/export_BoundarySVG.c) computes the boundary&rsquo;s length, which is stored, exporting nothing.
 
 ---
 

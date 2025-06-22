@@ -1,6 +1,6 @@
 %!PS
 
-/DataAsOf (D:20250421143557) def
+/DataAsOf (D:20250622155907) def
 /Licence (GNU General Public License, Version 3, 29 June 2007) def
 /URL (https://githubcom/jdaw1/penrose_tiling/) def
 /Author (Julian D A Wiseman of wwwjdawisemancom) def
@@ -45,7 +45,7 @@ Actual_XMax Actual_XMin add -2 div  Actual_YMax Actual_YMin add -2 div  translat
 /TileMatrix matrix currentmatrix def
 
 mark
-	/CreationDate (D:20250421143557)
+	/CreationDate (D:20250622155907)
 	/Title (Penrose tiling)
 	/Author (Julian D. A. Wiseman)
 	/Subject (http://github.com/jdaw1/penrose_tiling/)
@@ -123,7 +123,7 @@ flush
 
 FontName FontSize selectfont  % Useful default if PaintByRhombus is to show, for example, the RhId.
 0 setgray  2 setlinejoin  [] 0 setdash
-PaperMatrix setmatrix  EdgeLength 60 div ScaleFactor mul  setlinewidth
+PaperMatrix setmatrix  EdgeLength 16 div ScaleFactor mul  setlinewidth
 
 % PaintByRhombus collects the items on the stack, and then paints as appropriate.
 % Most of its inner may be rewritten, e.g. for different decoration, or to aid debugging such as by show'ing RhId.
@@ -216,7 +216,7 @@ PaperMatrix setmatrix  EdgeLength 60 div ScaleFactor mul  setlinewidth
 		} if  % painting triangles
 		//false  % stroke arcs?
 		{
-			//PaperMatrix setmatrix  0.06 setlinewidth  0 setgray  1 setlinecap  1 setlinejoin  [] 0 setdash
+			//PaperMatrix setmatrix  0 setgray  1 setlinecap  1 setlinejoin  [] 0 setdash
 			WestX WestY  EdgeLength 2 div   EastX EastY  2 index    AngDeg dup dup dup
 			IsFat
 				{144 sub exch 36 sub   7 2 roll   36 add exch 144 add}
@@ -228,12 +228,175 @@ PaperMatrix setmatrix  EdgeLength 60 div ScaleFactor mul  setlinewidth
 		{
 			TileMatrix setmatrix
 			NorthX NorthY moveto  SouthX SouthY lineto
-			PaperMatrix setmatrix  0 setgray  stroke
+			0 setgray  PaperMatrix setmatrix  stroke
 		} if  % stroking diagonal
 	} if  % Inside Wanted box
 	end  % 15 dict
 } bind def  % /PaintByRhombus
 
+
+
+TileMatrix setmatrix
+% Bounding path
+4.763932023 0 moveto
+4.854101966 0.277514551 lineto
+4.618033989 0.449027977 lineto
+4.527864045 0.726542528 lineto
+4.236067977 0.726542528 lineto
+4.326237921 1.004057079 lineto
+4.090169944 1.175570505 lineto
+4 1.453085056 lineto
+3.763932023 1.624598481 lineto
+3.673762079 1.902113033 lineto
+3.381966011 1.902113033 lineto
+3.472135955 2.179627584 lineto
+3.236067977 2.351141009 lineto
+3.145898034 2.628655561 lineto
+2.854101966 2.628655561 lineto
+2.94427191 2.906170112 lineto
+2.708203932 3.077683537 lineto
+2.618033989 3.355198089 lineto
+2.381966011 3.526711514 lineto
+2.291796068 3.804226065 lineto
+2 3.804226065 lineto
+2.090169944 4.081740617 lineto
+1.854101966 4.253254042 lineto
+1.763932023 4.530768593 lineto
+1.527864045 4.702282018 lineto
+1.437694101 4.97979657 lineto
+1.145898034 4.97979657 lineto
+1.236067977 5.257311121 lineto
+1 5.428824546 lineto
+0.909830056 5.706339098 lineto
+0.618033989 5.706339098 lineto
+0.708203932 5.983853649 lineto
+0.472135955 6.155367074 lineto
+0.381966011 6.432881626 lineto
+0.145898034 6.604395051 lineto
+0.05572809 6.881909602 lineto
+-0.236067977 6.881909602 lineto
+-0.145898034 7.159424154 lineto
+-0.381966011 7.330937579 lineto
+-0.472135955 7.60845213 lineto
+-0.763932023 7.60845213 lineto
+-0.854101966 7.330937579 lineto
+-1.090169944 7.159424154 lineto
+-1 6.881909602 lineto
+-1.291796068 6.881909602 lineto
+-1.381966011 6.604395051 lineto
+-1.618033989 6.432881626 lineto
+-1.708203932 6.155367074 lineto
+-1.94427191 5.983853649 lineto
+-1.854101966 5.706339098 lineto
+-2.145898034 5.706339098 lineto
+-2.236067977 5.428824546 lineto
+-2.472135955 5.257311121 lineto
+-2.381966011 4.97979657 lineto
+-2.673762079 4.97979657 lineto
+-2.763932023 4.702282018 lineto
+-3 4.530768593 lineto
+-3.090169944 4.253254042 lineto
+-3.326237921 4.081740617 lineto
+-3.236067977 3.804226065 lineto
+-3.527864045 3.804226065 lineto
+-3.618033989 3.526711514 lineto
+-3.854101966 3.355198089 lineto
+-3.94427191 3.077683537 lineto
+-4.180339887 2.906170112 lineto
+-4.090169944 2.628655561 lineto
+-4.381966011 2.628655561 lineto
+-4.472135955 2.351141009 lineto
+-4.708203932 2.179627584 lineto
+-4.618033989 1.902113033 lineto
+-4.909830056 1.902113033 lineto
+-5 1.624598481 lineto
+-5.236067977 1.453085056 lineto
+-5.326237921 1.175570505 lineto
+-5.562305899 1.004057079 lineto
+-5.472135955 0.726542528 lineto
+-5.763932023 0.726542528 lineto
+-5.854101966 0.449027977 lineto
+-6.090169944 0.277514551 lineto
+-6 0 lineto
+-6.090169944 -0.277514551 lineto
+-5.854101966 -0.449027977 lineto
+-5.763932023 -0.726542528 lineto
+-5.472135955 -0.726542528 lineto
+-5.562305899 -1.004057079 lineto
+-5.326237921 -1.175570505 lineto
+-5.236067977 -1.453085056 lineto
+-5 -1.624598481 lineto
+-4.909830056 -1.902113033 lineto
+-4.618033989 -1.902113033 lineto
+-4.708203932 -2.179627584 lineto
+-4.472135955 -2.351141009 lineto
+-4.381966011 -2.628655561 lineto
+-4.090169944 -2.628655561 lineto
+-4.180339887 -2.906170112 lineto
+-3.94427191 -3.077683537 lineto
+-3.854101966 -3.355198089 lineto
+-3.618033989 -3.526711514 lineto
+-3.527864045 -3.804226065 lineto
+-3.236067977 -3.804226065 lineto
+-3.326237921 -4.081740617 lineto
+-3.090169944 -4.253254042 lineto
+-3 -4.530768593 lineto
+-2.763932023 -4.702282018 lineto
+-2.673762079 -4.97979657 lineto
+-2.381966011 -4.97979657 lineto
+-2.472135955 -5.257311121 lineto
+-2.236067977 -5.428824546 lineto
+-2.145898034 -5.706339098 lineto
+-1.854101966 -5.706339098 lineto
+-1.94427191 -5.983853649 lineto
+-1.708203932 -6.155367074 lineto
+-1.618033989 -6.432881626 lineto
+-1.381966011 -6.604395051 lineto
+-1.291796068 -6.881909602 lineto
+-1 -6.881909602 lineto
+-1.090169944 -7.159424154 lineto
+-0.854101966 -7.330937579 lineto
+-0.763932023 -7.60845213 lineto
+-0.472135955 -7.60845213 lineto
+-0.381966011 -7.330937579 lineto
+-0.145898034 -7.159424154 lineto
+-0.236067977 -6.881909602 lineto
+0.05572809 -6.881909602 lineto
+0.145898034 -6.604395051 lineto
+0.381966011 -6.432881626 lineto
+0.472135955 -6.155367074 lineto
+0.708203932 -5.983853649 lineto
+0.618033989 -5.706339098 lineto
+0.909830056 -5.706339098 lineto
+1 -5.428824546 lineto
+1.236067977 -5.257311121 lineto
+1.145898034 -4.97979657 lineto
+1.437694101 -4.97979657 lineto
+1.527864045 -4.702282018 lineto
+1.763932023 -4.530768593 lineto
+1.854101966 -4.253254042 lineto
+2.090169944 -4.081740617 lineto
+2 -3.804226065 lineto
+2.291796068 -3.804226065 lineto
+2.381966011 -3.526711514 lineto
+2.618033989 -3.355198089 lineto
+2.708203932 -3.077683537 lineto
+2.94427191 -2.906170112 lineto
+2.854101966 -2.628655561 lineto
+3.145898034 -2.628655561 lineto
+3.236067977 -2.351141009 lineto
+3.472135955 -2.179627584 lineto
+3.381966011 -1.902113033 lineto
+3.673762079 -1.902113033 lineto
+3.763932023 -1.624598481 lineto
+4 -1.453085056 lineto
+4.090169944 -1.175570505 lineto
+4.326237921 -1.004057079 lineto
+4.236067977 -0.726542528 lineto
+4.527864045 -0.726542528 lineto
+4.618033989 -0.449027977 lineto
+4.854101966 -0.277514551 lineto closepath
+gsave 1 setgray fill grestore gsave 0.8 setgray 1 setlinejoin PaperMatrix setmatrix 3.84 setlinewidth stroke grestore newpath  % or, perhaps, zap with "newpath"
 
 
 % Formats for Thin and Fat rhombi:

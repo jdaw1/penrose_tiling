@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // export_PaintArcsSVG.c, in PenroseC
 
@@ -87,7 +87,7 @@ void tiling_export_PaintArcsSVG(
 	// Output preamble
 
 	sprintf(scratchString,
-		"<svg width='%0.9lf' height='%0.9lf' viewBox='%0.9lf %0.9lf %0.9lf %0.9lf' preserveAspectRatio='xMidYMid meet' id='Penrose_Arcs_%02" PRIi8 "'",
+		"<svg width='%.9lf' height='%.9lf' viewBox='%.9lf %.9lf %.9lf %.9lf' preserveAspectRatio='xMidYMid meet' id='Penrose_Arcs_%02" PRIi8 "'",
 		displayWidth,
 		displayWidth * (strokeWidth + actual_yMax - actual_yMin) / (strokeWidth + actual_xMax - actual_xMin),
 		( actual_xMin)             ,
@@ -101,26 +101,46 @@ void tiling_export_PaintArcsSVG(
 	(*numLinesThisFileP) ++ ;
 
 	(*numCharsThisFileP) += fprintf(fp,
-		"<!-- TilingId = %" PRIi8 ";  NumFats = %li;  NumThins = %li;  ==> #tiles= %li;  NumPathsClosed = %li;  NumPathsOpen = %li -->\n"
+		"<!-- TilingId = %" PRIi8 ";  NumFats = %li;  NumThins = %li;  ==> #tiles= %li;  NumPathsClosed = %li;  NumPathsOpen = %li;  BoundingPathNumVertices = %li -->\n"
 		"<!-- Licence = \"%s\"; URL = \"%s\"; Author = \"%s\""  "."  " -->\n",
-		tlngP->tilingId,  tlngP->numFats,  tlngP->numThins,  tlngP->numFats + tlngP->numThins,  tlngP->numPathsClosed,  tlngP->numPathsOpen,
+		tlngP->tilingId,  tlngP->numFats,  tlngP->numThins,  tlngP->numFats + tlngP->numThins,  tlngP->numPathsClosed,  tlngP->boundingPathNumVertices,  tlngP->numPathsOpen,
 		TextLicence, TextURL, TextAuthor  // Do not stringClean() these.
 	);
 	(*numLinesThisFileP) += 2 ;
-	sprintf(scratchString,
-		"<!-- EdgeLength = %0.14lf. -->\n",
-		tlngP->edgeLength
-	);
+	sprintf(scratchString, tlngP->edgeLength >= 0.1 ? "%.15lf" : "%.15E", tlngP->edgeLength);
 	stringClean(scratchString);
+	(*numCharsThisFileP) += fprintf(fp,  "<!-- EdgeLength = %s -->\n",  scratchString);
+	(*numLinesThisFileP) ++;
+
+	sprintf(scratchString,
+		"<!-- Browser fail for large SVG? Bug report at https://issues.chromium.org/issues/390969197 -->\n"
+		"\n"
+		"<g transform='scale(1,-1)'> <!-- PostScript and Excel positive y goes up the page, SVG it goes down. This reflection makes SVG behave as PostScript and Excel. -->\n"
+		"\n"
+	);
 	(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
 	(*numLinesThisFileP) += newlinesInString(scratchString);
-	(*numCharsThisFileP) += fprintf(fp, "<!-- Browser fail for large SVG? Bug report at https://issues.chromium.org/issues/390969197 -->\n");
-	(*numLinesThisFileP) ++ ;
 
-	(*numCharsThisFileP) += fprintf(fp,
-		"<g transform='scale(1,-1)'> <!-- PostScript and Excel positive y goes up the page, SVG it goes down. This reflection makes SVG behave as the others. -->\n"
-		"<g transform='scale(%0.14lf)'> <!-- edgeLength/2 -->\n",  tlngP->edgeLength / 2
-	);
+	if( exportQ(boundingPath, SVG_arcs, tlngP, *numLinesThisFileP) )
+	{
+		sprintf(scratchString,
+			"<!-- This path traces the outside of the rhombi, intended to be fill'able as a background colour to the arcs. -->\n"
+			"<!-- The viewBox is almost tight to the arcs, but is a slight subset of the rhombi. -->\n"
+			"<!-- If, as default, filling this path with a neutral background colour, e.g. white, it works as-is. -->\n"
+			"<!-- But if manually editing so that path stroke'd, or fill'd dramatically, then slightly enlarge the viewBox. -->\n"
+			"<!-- Enlargement amount depends on whether vector-effect='non-scaling-stroke', on stroke-width, and slightly on stroke-linejoin. -->\n"
+			"<path fill='#FFF'  stroke='none' vector-effect='non-scaling-stroke' stroke-width='2px' stroke-linejoin='round'  d='\n"
+		);
+		(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
+		(*numLinesThisFileP) += newlinesInString(scratchString);
+		tiling_export_PaintBoundary(fp,  SVG_arcs,  tlngP,  0,  numLinesThisFileP,  numCharsThisFileP);
+		(*numCharsThisFileP) += fprintf(fp, "'/> <!-- Outside of tiling of rhombi. -->\n\n");
+		(*numLinesThisFileP) += 2;
+	}  // exportQ(boundingPath ...)
+
+	sprintf(scratchString,  tlngP->edgeLength / 2 >= 0.1 ? "%.15lf" : "%.15E",  tlngP->edgeLength / 2);
+	stringClean(scratchString);
+	(*numCharsThisFileP) += fprintf(fp, "<g transform='scale(%s)'> <!-- edgeLength/2, so that all arc radii are precisely 1, lessening file size -->\n\n", scratchString);
 	(*numLinesThisFileP) += 2 ;
 
 	sprintf(scratchString,
@@ -207,7 +227,7 @@ void tiling_export_PaintArcsSVG(
 			(*numCharsThisFileP) += fprintf(fp, ", ShortestOuter=%li", pathP->pathId_ShortestOuter);
 		if( pathP->pathId_LongestInner  >= 0 )
 			(*numCharsThisFileP) += fprintf(fp, ", LongestInner=%li" , pathP->pathId_LongestInner );
-		sprintf(scratchString,  ", centreX=%0.9lf, centreY=%0.9lf",  pathP->centre.x,  pathP->centre.y);
+		sprintf(scratchString,  ", centreX=%.9lf, centreY=%.9lf",  pathP->centre.x,  pathP->centre.y);
 		stringClean(scratchString);
 		(*numCharsThisFileP) += fprintf(fp, "%s -->\n", scratchString);
 		(*numLinesThisFileP) ++ ;
@@ -222,7 +242,7 @@ void tiling_export_PaintArcsSVG(
 		else
 			(*numCharsThisFileP) += fprintf(fp, "<path class='cBig sf'");
 
-		sprintf(scratchString, " d='M %0.9lf %0.9lf\n",
+		sprintf(scratchString, " d='M %.9lf %.9lf\n",
 			( (edgeN ? rhP->north.x : rhP->south.x)  +  (edgeE ? rhP->east.x : rhP->west.x) ) / tlngP->edgeLength,
 			( (edgeN ? rhP->north.y : rhP->south.y)  +  (edgeE ? rhP->east.y : rhP->west.y) ) / tlngP->edgeLength
 		);
@@ -253,7 +273,7 @@ void tiling_export_PaintArcsSVG(
 			// https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths#arcs
 			// A rx ry x-axis-rotation large-arc-flag sweep-flag x y
 			sprintf(scratchString,
-				"\t%s1 1 0 0 %i %0.9lf %0.9lf",
+				"\t%s1 1 0 0 %i %.9lf %.9lf",
 				firstArc ? "A " : "",
 				edgeN == edgeE ? 1 : 0,
 				( (edgeN ? rhP->south.x : rhP->north.x) + (edgeE ? rhP->east.x : rhP->west.x) ) / tlngP->edgeLength,
@@ -295,7 +315,13 @@ void tiling_export_PaintArcsSVG(
 		}  // do
 		while( rhIdStart != rhId  ||  edgeStartE != edgeE);
 
-		(*numCharsThisFileP) += fprintf(fp,  "Z'/> <!-- pathId=%li -->\n",  pathId);
+		(*numCharsThisFileP) += fprintf(fp,
+			"Z'/> <!-- c%li%s_%s, pathId=%li -->\n",
+			pathP->pathLength,
+			pathP->pathLength == 5 ? (pathP->pointy ? "p" : "r") : "",
+			oddToOutSide ? "o" : "e",
+			pathId
+		);
 		(*numLinesThisFileP) ++;
 
 		fflush(fp);
@@ -329,7 +355,7 @@ void tiling_export_PaintArcsSVG(
 				y = (rhP->east.y + rhP->south.y) / tlngP->edgeLength;
 				if( fabs(currentpoint.x - x) > 4E-10  ||  fabs(currentpoint.y - y)  > 4E-10 )
 				{
-					sprintf(scratchString, "M %0.9lf %0.9lf ", x, y);
+					sprintf(scratchString, "M %.9lf %.9lf ", x, y);
 					stringClean(scratchString);
 					(*numCharsThisFileP) += fprintf(fp, "\t%s",scratchString);
 				}
@@ -337,7 +363,7 @@ void tiling_export_PaintArcsSVG(
 					(*numCharsThisFileP) += fprintf(fp, "\t");
 				currentpoint.x = (rhP->east.x + rhP->north.x) / tlngP->edgeLength;
 				currentpoint.y = (rhP->east.y + rhP->north.y) / tlngP->edgeLength;
-				sprintf(scratchString, "A 1 1 0 0 0 %0.9lf %0.9lf", currentpoint.x, currentpoint.y);
+				sprintf(scratchString, "A 1 1 0 0 0 %.9lf %.9lf", currentpoint.x, currentpoint.y);
 				stringClean(scratchString);
 				(*numCharsThisFileP) += fprintf(fp, "%s\n",scratchString);
 				(*numLinesThisFileP) ++;
@@ -349,7 +375,7 @@ void tiling_export_PaintArcsSVG(
 				y = (rhP->west.y + rhP->north.y) / tlngP->edgeLength;
 				if( fabs(currentpoint.x - x) > 4E-10  ||  fabs(currentpoint.y - y)  > 4E-10 )
 				{
-					sprintf(scratchString, "M %0.9lf %0.9lf ", x, y);
+					sprintf(scratchString, "M %.9lf %.9lf ", x, y);
 					stringClean(scratchString);
 					(*numCharsThisFileP) += fprintf(fp, "\t%s",scratchString);
 				}
@@ -357,7 +383,7 @@ void tiling_export_PaintArcsSVG(
 					(*numCharsThisFileP) += fprintf(fp, "\t");
 				currentpoint.x = (rhP->west.x + rhP->south.x) / tlngP->edgeLength;
 				currentpoint.y = (rhP->west.y + rhP->south.y) / tlngP->edgeLength;
-				sprintf(scratchString, "A 1 1 0 0 0 %0.9lf %0.9lf", currentpoint.x, currentpoint.y);
+				sprintf(scratchString, "A 1 1 0 0 0 %.9lf %.9lf", currentpoint.x, currentpoint.y);
 				stringClean(scratchString);
 				(*numCharsThisFileP) += fprintf(fp, "%s\n",scratchString);
 				(*numLinesThisFileP) ++;

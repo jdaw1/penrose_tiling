@@ -1,6 +1,6 @@
 %!PS
 
-/DataAsOf (D:20250421143557) def
+/DataAsOf (D:20250622155907) def
 /Licence (GNU General Public License, Version 3, 29 June 2007) def
 /URL (https://githubcom/jdaw1/penrose_tiling/) def
 /Author (Julian D A Wiseman of wwwjdawisemancom) def
@@ -60,14 +60,14 @@ Actual_XMax Actual_XMin add -2 div  Actual_YMax Actual_YMin add -2 div  translat
 {
 	//TileMatrix setmatrix   1 setlinejoin  [] 0 setdash
 	[
-		% {gsave  0 setgray  0 setlinecap  EdgeLength 20 div setlinewidth  stroke  grestore}  % #gsave ... grestore for each stroke, except the last. At finish path should be empty.
-		% {       1 setgray  1 setlinecap  EdgeLength 60 div setlinewidth  stroke          }  % This pair paints thick black, then thin inner white. If uncommented, delete next line.
-		{0 setgray  1 setlinecap  EdgeLength 30 div setlinewidth  stroke}  % Thin black only.
+		% {gsave  0 setgray  0 setlinecap  PaperMatrix setmatrix  EdgeLength 16 div ScaleFactor mul setlinewidth  stroke  grestore}  % #gsave ... grestore for each stroke, except the last. At finish path should be empty.
+		% {       1 setgray  1 setlinecap  PaperMatrix setmatrix  EdgeLength 48 div ScaleFactor mul setlinewidth  stroke          }  % This pair paints thick black, then thin inner white. If uncommented, delete next line.
+		{0 setgray  1 setlinecap  PaperMatrix setmatrix  EdgeLength 24 div ScaleFactor mul setlinewidth  stroke}  % Thin black only.
 	] {exec} forall
 } bind def  % StrokeMulti
 
 mark
-	/CreationDate (D:20250421143557)
+	/CreationDate (D:20250622155907)
 	/Title (Penrose tiling)
 	/Author (Julian D. A. Wiseman)
 	/Subject (http://github.com/jdaw1/penrose_tiling/)
@@ -176,6 +176,24 @@ false  % Testing
 } bind def  % /PaintPath
 
 
+
+
+% Bounding path
+2 0 moveto
+2.618033989 1.902113033 lineto
+1 3.077683537 lineto
+0.381966011 4.97979657 lineto
+-1.618033989 4.97979657 lineto
+-2.236067977 3.077683537 lineto
+-3.854101966 1.902113033 lineto
+-3.236067977 0 lineto
+-3.854101966 -1.902113033 lineto
+-2.236067977 -3.077683537 lineto
+-1.618033989 -4.97979657 lineto
+0.381966011 -4.97979657 lineto
+1 -3.077683537 lineto
+2.618033989 -1.902113033 lineto closepath
+newpath  % gsave 0.8 setgray fill grestore 0.4 setgray 1 setlinejoin PaperMatrix setmatrix 1.92 setlinewidth stroke 
 
 
 //TileMatrix setmatrix

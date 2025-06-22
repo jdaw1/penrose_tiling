@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // export_SoloTiling.c, in PenroseC
 
@@ -24,10 +24,10 @@ void export_soloTiling(
 	rhombi_sort(tlngP,  &rhombiGt_ByY,  true);
 
 	ef = SVG_rhomb;
-	if( exportQ(Anything, ef, tlngP, numLinesThisFile) )
+	if( exportQ(anything, ef, tlngP, numLinesThisFile) )
 	{
 		sprintf(fileName,
-			"%sPenrose_%s_Rh_%02" PRIi8 ".%s",
+			"%sPenrose%s_Rh_%02" PRIi8 ".%s",
 			tlngP->filePath,  tlngP->timeString,  tlngP->tilingId,  fileExtension_from_ExportFormat(fileExtension, ef)
 		);
 		numLinesThisFile = 0;
@@ -36,7 +36,7 @@ void export_soloTiling(
 		tiling_export_PaintRhombiSVG(fp, tlngP, &numLinesThisFile, &numCharsThisFile);
 		fflush(fp); fclose(fp);
 		printf(
-			"export_soloTiling(): tilingId=%" PRIi8 ", exported %lli chars %li lines, so %0.1lf c/l, to %s\n",
+			"export_soloTiling(): tilingId=%" PRIi8 ", exported %lli chars %li lines, so %.1lf c/l, to %s\n",
 			tlngP->tilingId,  numCharsThisFile,  numLinesThisFile,  (double)numCharsThisFile / (double)numLinesThisFile, fileName
 		);  fflush(stdout);
 
@@ -45,10 +45,10 @@ void export_soloTiling(
 
 
 	ef = SVG_arcs;
-	if( exportQ(Anything, ef, tlngP, numLinesThisFile) )
+	if( exportQ(anything, ef, tlngP, numLinesThisFile) )
 	{
 		sprintf(fileName,
-			"%sPenrose_%s_Arcs_%02" PRIi8 ".%s",
+			"%sPenrose%s_Arcs_%02" PRIi8 ".%s",
 			tlngP->filePath,  tlngP->timeString,  tlngP->tilingId,  fileExtension_from_ExportFormat(fileExtension, ef)
 		);
 		numLinesThisFile = 0;
@@ -57,7 +57,7 @@ void export_soloTiling(
 		tiling_export_PaintArcsSVG(fp, tlngP, &numLinesThisFile, &numCharsThisFile);
 		fflush(fp); fclose(fp);
 		printf(
-			"export_soloTiling(): tilingId=%" PRIi8 ", exported %lli chars %li lines, so %0.1lf c/l, to %s\n",
+			"export_soloTiling(): tilingId=%" PRIi8 ", exported %lli chars %li lines, so %.1lf c/l, to %s\n",
 			tlngP->tilingId,  numCharsThisFile,  numLinesThisFile,  (double)numCharsThisFile / (double)numLinesThisFile, fileName
 		);  fflush(stdout);
 
@@ -66,14 +66,14 @@ void export_soloTiling(
 
 
 	ef = PS_rhomb;
-	if( exportQ(Anything, ef, tlngP, numLinesThisFile) )
+	if( exportQ(anything, ef, tlngP, numLinesThisFile) )
 	{
 		rhombi_sort(tlngP,  &rhombiGt_ByPath,  true);
 		numCharsThisFile = 0;
 		numLinesThisFile = 0;
 
 		sprintf(fileName,
-			"%sPenrose_%s_Rh_%02" PRIi8 ".%s",
+			"%sPenrose%s_Rh_%02" PRIi8 ".%s",
 			tlngP->filePath,  tlngP->timeString,  tlngP->tilingId,  fileExtension_from_ExportFormat(fileExtension, ef)
 		);
 		numLinesThisFile = 0;
@@ -82,7 +82,7 @@ void export_soloTiling(
 		tiling_export_PaintRhombiPS(fp, tlngP, &numLinesThisFile, &numCharsThisFile, false);
 		fflush(fp); fclose(fp);
 		printf(
-			"export_soloTiling(): tilingId=%" PRIi8 ", exported %lli chars %li lines, so %0.1lf c/l, to %s\n",
+			"export_soloTiling(): tilingId=%" PRIi8 ", exported %lli chars %li lines, so %.1lf c/l, to %s\n",
 			tlngP->tilingId,  numCharsThisFile,  numLinesThisFile,  (double)numCharsThisFile / (double)numLinesThisFile, fileName
 		);  fflush(stdout);
 
@@ -91,11 +91,11 @@ void export_soloTiling(
 
 
 	ef = PS_arcs;
-	if( exportQ(Anything, ef, tlngP, numLinesThisFile) )
+	if( exportQ(anything, ef, tlngP, numLinesThisFile) )
 	{
 		rhombi_sort(tlngP,  &rhombiGt_ByPath,  true);
 		sprintf(
-			fileName,  "%sPenrose_%s_Arcs_%02" PRIi8 ".%s",
+			fileName,  "%sPenrose%s_Arcs_%02" PRIi8 ".%s",
 			tlngP->filePath,  tlngP->timeString,  tlngP->tilingId,  fileExtension_from_ExportFormat(fileExtension, ef)
 		);
 		numLinesThisFile = 0;
@@ -104,7 +104,7 @@ void export_soloTiling(
 		tiling_export_PaintArcsPS(fp, tlngP, &numLinesThisFile, &numCharsThisFile);
 		fflush(fp); fclose(fp);
 		printf(
-			"export_soloTiling(): tilingId=%" PRIi8 ", exported %lli chars %li lines, so %0.1lf c/l, to %s\n",
+			"export_soloTiling(): tilingId=%" PRIi8 ", exported %lli chars %li lines, so %.1lf c/l, to %s\n",
 			tlngP->tilingId,  numCharsThisFile,  numLinesThisFile,  (double)numCharsThisFile / (double)numLinesThisFile, fileName
 		);  fflush(stdout);
 

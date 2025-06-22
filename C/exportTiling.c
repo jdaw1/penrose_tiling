@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // exportTiling.c, in PenroseC
 
@@ -9,7 +9,7 @@ void tiling_export(
 	ExportFormat        const exportFormat,
 	bool exportQ(ExportWhat const exprtWhat, ExportFormat const exportFormat, const Tiling * const tlngP, const unsigned long int numLinesThisFileP),
 	Tiling            * const tlngP,
-	int                 const indentDepth,
+	int8_t              const indentDepth,
 	bool                const notLast,
 	TilingId            const tilingId,
 	unsigned long int * const numLinesThisFileP,
@@ -22,7 +22,7 @@ void tiling_export(
 	long int rhNumOutput, pathsNumToBeOutput, PathStarts_MaxPerLine;
 	extern char scratchString[];
 
-	if( ! exportQ(Anything, exportFormat, tlngP, *numLinesThisFileP) )
+	if( ! exportQ(anything, exportFormat, tlngP, *numLinesThisFileP) )
 		return;
 
 	switch(exportFormat)
@@ -75,11 +75,11 @@ void tiling_export(
 		(*numLinesThisFileP) ++;
 
 		(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
-		(*numCharsThisFileP) += fprintf(fp, "/DataAsOf (D:%04d%02d%02d%02d%02d%02d)   /Licence (%s)  /URL (%s)  /Author (%s)  /TilingId %" PRIi8 "   /NumFats %li   /NumThins %li",
+		(*numCharsThisFileP) += fprintf(fp, "/DataAsOf (D:%04d%02d%02d%02d%02d%02d)   /Licence (%s)  /URL (%s)  /Author (%s)  /TilingId %" PRIi8 "   /NumFats %li   /NumThins %li   /BoundingPathNumVertices %li",
 			(1900 + tlngP->timeData->tm_year),  (1 + tlngP->timeData->tm_mon),  tlngP->timeData->tm_mday,
 			tlngP->timeData->tm_hour,  tlngP->timeData->tm_min,  (int)(tlngP->timeData->tm_sec),
 			TextLicence, TextURL, TextAuthor,
-			tilingId,  tlngP->numFats,  tlngP->numThins
+			tilingId,  tlngP->numFats,  tlngP->numThins,  tlngP->boundingPathNumVertices
 		);
 		sprintf(scratchString, "/EdgeLength %.16E", tlngP->edgeLength);  // Extra precision
 		stringClean(scratchString);
@@ -128,7 +128,7 @@ void tiling_export(
 			(*numLinesThisFileP) ++;
 		}  // if exportpathStats
 
-		if(exportQ(Paths, exportFormat, tlngP, *numLinesThisFileP) )
+		if(exportQ(paths, exportFormat, tlngP, *numLinesThisFileP) )
 		{
 			pathsNumToBeOutput = tlngP->numPathsClosed + tlngP->numPathsOpen < 65535 ? tlngP->numPathsClosed + tlngP->numPathsOpen : 65535 ;
 			(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
@@ -174,7 +174,7 @@ void tiling_export(
 		}  // if exportPaths
 
 
-		if( exportQ(Rhombi, exportFormat, tlngP, *numLinesThisFileP) )
+		if( exportQ(rhombi, exportFormat, tlngP, *numLinesThisFileP) )
 		{
 			(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
 			(*numCharsThisFileP) += fprintf(fp,
@@ -202,14 +202,26 @@ void tiling_export(
 				tlngP->wantedPostScriptNumberRhombi, tlngP->wantedPostScriptNumberPaths
 			);
 			(*numLinesThisFileP) ++;
-			(*numCharsThisFileP) += fprintf(fp,
-				"/Licence (%s)\n"
-				"/URL (%s)\n"
-				"/Author (%s)\n",
-				TextLicence, TextURL, TextAuthor
-			);
-			(*numLinesThisFileP) += 3;
 		}  // if exportRhombi
+
+		if( exportQ(boundingPath, exportFormat, tlngP, *numLinesThisFileP) )
+		{
+			(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
+			(*numCharsThisFileP) += fprintf(fp, "/RhombiBoundingPath {\n");
+			(*numLinesThisFileP) ++;
+			tiling_export_PaintBoundary(fp,  PS_data,  tlngP,  indentDepth,  numLinesThisFileP,  numCharsThisFileP);
+			(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
+			(*numCharsThisFileP) += fprintf(fp, "}  %% /RhombiBoundingPath\n");
+			(*numLinesThisFileP) ++;
+		}  // if boundingPath
+
+		(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
+		(*numCharsThisFileP) += fprintf(fp, "/Licence (%s)\n", TextLicence);
+		(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
+		(*numCharsThisFileP) += fprintf(fp, "/URL (%s)\n", TextURL);
+		(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
+		(*numCharsThisFileP) += fprintf(fp, "/Author (%s)\n", TextAuthor);
+		(*numLinesThisFileP) += 3;
 
 		(*numCharsThisFileP) += fIndent(fp, indentDepth);
 		(*numCharsThisFileP) += fprintf(fp, ">>  %% - tilingId=%" PRIi8 "\n", tilingId);
@@ -242,7 +254,7 @@ void tiling_export(
 			fflush(stderr);
 		}
 
-		break;  // from PS  (inside tiling_export)
+		break;  // from PS_data  (inside tiling_export)
 
 
 
@@ -255,10 +267,10 @@ void tiling_export(
 		(*numCharsThisFileP) += fprintf(fp,
 			"\"DataAsOf\":\"%04d-%02d-%02dT%02d:%02d:%02d\",  \"TilingId\":%" PRIi8   // Time local, not necessarily UTC, hence no trailing Z.
 			",   \"NumFats\":%li,   \"NumThins\":%li"
-			",   \"NumPathsClosed\":%li,   \"NumPathsOpen\":%li",
+			",   \"NumPathsClosed\":%li,   \"NumPathsOpen\":%li,   \"BoundingPathNumVertices\":%li",
 			(1900 + tlngP->timeData->tm_year),  (1 + tlngP->timeData->tm_mon),  tlngP->timeData->tm_mday,
 			tlngP->timeData->tm_hour,  tlngP->timeData->tm_min,  tlngP->timeData->tm_sec,
-			tilingId,  tlngP->numFats,  tlngP->numThins,  tlngP->numPathsClosed,  tlngP->numPathsOpen
+			tilingId,  tlngP->numFats,  tlngP->numThins,  tlngP->numPathsClosed,  tlngP->numPathsOpen,  tlngP->boundingPathNumVertices
 		);
 		sprintf(scratchString, ",  \"EdgeLength\":%.16E", tlngP->edgeLength);  // Extra precision
 		stringClean(scratchString);
@@ -291,26 +303,28 @@ void tiling_export(
 		(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
 		(*numCharsThisFileP) += fprintf(fp,
 			"\"WantedPostScriptNumberRhombi\":%li,   \"WantedPostScriptNumberPaths\":%li,"  
-			"\"Licence\":\"%s\",   \"URL\":\"%s\",  \"Author\":\"%s\","  "\n",
+			"\"Licence\":\"%s\",   \"URL\":\"%s\",  \"Author\":\"%s\"",
 			tlngP->wantedPostScriptNumberRhombi,  tlngP->wantedPostScriptNumberPaths,
 			TextLicence, TextURL, TextAuthor
 		);
-		(*numLinesThisFileP) ++;
 
 		if( exportQ(pathStats, exportFormat, tlngP, *numLinesThisFileP) )
 		{
+			(*numCharsThisFileP) += fprintf(fp, ",\n");
+			(*numLinesThisFileP) ++;
 			(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
 			(*numCharsThisFileP) += fprintf(fp, "\"PathStats\":[\n");
 			(*numLinesThisFileP) ++;
 			for( pathStatId = 0  ;  pathStatId < tlngP->numPathStats  ;  pathStatId++ )
 				pathStat_export(fp, exportFormat, tlngP, &(tlngP->pathStat[pathStatId]), indentDepth, (pathStatId < tlngP->numPathStats - 1), numLinesThisFileP, numCharsThisFileP);
 			(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
-			(*numCharsThisFileP) += fprintf(fp, "],\n");
-			(*numLinesThisFileP) ++;
-		}  // if exportpathStats
+			(*numCharsThisFileP) += fprintf(fp, "]");
+		}  // if export pathStats
 
-		if( exportQ(Paths, exportFormat, tlngP, *numLinesThisFileP) )
+		if( exportQ(paths, exportFormat, tlngP, *numLinesThisFileP) )
 		{
+			(*numCharsThisFileP) += fprintf(fp, ",\n");
+			(*numLinesThisFileP) ++;
 			(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
 			(*numCharsThisFileP) += fprintf(fp, "\"Paths\":[\n");
 			(*numLinesThisFileP) ++;
@@ -326,12 +340,13 @@ void tiling_export(
 				(*numLinesThisFileP) ++;
 			}  // pathId
 			(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
-			(*numCharsThisFileP) += fprintf(fp, "],\n");
-			(*numLinesThisFileP) ++;
-		}  // if exportPaths
+			(*numCharsThisFileP) += fprintf(fp, "]");
+		}  // if export Paths
 
-		if( exportQ(Rhombi, exportFormat, tlngP, *numLinesThisFileP) )
+		if( exportQ(rhombi, exportFormat, tlngP, *numLinesThisFileP) )
 		{
+			(*numCharsThisFileP) += fprintf(fp, ",\n");
+			(*numLinesThisFileP) ++;
 			(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
 			(*numCharsThisFileP) += fprintf(fp, "\"Rhombi\":[\n");
 			(*numLinesThisFileP) ++;
@@ -344,12 +359,27 @@ void tiling_export(
 			}  // rhId
 
 			(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
-			(*numCharsThisFileP) += fprintf(fp, "]\n");
+			(*numCharsThisFileP) += fprintf(fp, "]");
 			(*numLinesThisFileP) ++;
 		}  // if exportRhombi
 
+		if( exportQ(boundingPath, exportFormat, tlngP, *numLinesThisFileP) )
+		{
+			(*numCharsThisFileP) += fprintf(fp, ",\n");
+			(*numLinesThisFileP) ++;
+			(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
+			(*numCharsThisFileP) += fprintf(fp, "\"RhombiBoundingPath\":[\n");
+			(*numLinesThisFileP) ++;
+			tiling_export_PaintBoundary(fp,  JSON,  tlngP,  2 + indentDepth,  numLinesThisFileP,  numCharsThisFileP);
+			(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
+			(*numCharsThisFileP) += fprintf(fp, "]");
+		}  // if boundingPath
+
+		(*numCharsThisFileP) += fprintf(fp, "\n");
+		(*numLinesThisFileP) ++;
+
 		(*numCharsThisFileP) += fIndent(fp, indentDepth);
-		(*numCharsThisFileP) += fprintf(fp, notLast ? "},\n" :  "}\n");
+		(*numCharsThisFileP) += fprintf(fp, notLast ? "},\n" : "}\n");
 		(*numLinesThisFileP) ++;
 
 		break;  // from JSON  (inside tiling_export)
@@ -359,28 +389,38 @@ void tiling_export(
 		// These strings are intended to be unique range names for creation and use within Excel (Formula > Defined Names > Create from Selection).
 		(*numCharsThisFileP) += fprintf(fp,
 			"T_%02" PRIi8 ".TilingId"                  "\tT_%02" PRIi8 ".AxisAligned"             "\tT_%02" PRIi8 ".EdgeLength"
-			"\tT_%02" PRIi8 ".NumFats"                 "\tT_%02" PRIi8 ".NumThins"                "\tT_%02" PRIi8 ".NumPathsClosed"         "\tT_%02" PRIi8 ".NumPathsOpen"         "\tT_%02" PRIi8 ".NumPathStats"
+			"\tT_%02" PRIi8 ".NumFats"                 "\tT_%02" PRIi8 ".NumThins"                "\tT_%02" PRIi8 ".NumPathsClosed"
+			"\tT_%02" PRIi8 ".NumPathsOpen"            "\tT_%02" PRIi8 ".NumPathStats"            "\tT_%02" PRIi8 ".BoundingPathNumVertices"
 			"\tT_%02" PRIi8 ".MinX"                    "\tT_%02" PRIi8 ".MaxX"                    "\tT_%02" PRIi8 ".MinY"                   "\tT_%02" PRIi8 ".MaxY"
 			"\tT_%02" PRIi8 ".WantedPostScriptCentreX" "\tT_%02" PRIi8 ".WantedPostScriptCentreY" "\tT_%02" PRIi8 ".WantedPostScriptAspect" "\tT_%02" PRIi8 ".WantedPostScriptHalfWidth" "\tT_%02" PRIi8 ".WantedPostScriptHalfHeight"
 			"\tT_%02" PRIi8 ".WantedPostScriptNumberRhombi"   "\tT_%02" PRIi8 ".WantedPostScriptNumberPaths"
 			"\tT_%02" PRIi8 ".Licence" "\tT_%02" PRIi8 ".URL" "\tT_%02" PRIi8 ".Author" "\n",
 			tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,
-			tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,
+			tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,
+			tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,
 			tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,
 			tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,
 			tlngP->tilingId, tlngP->tilingId,
 			tlngP->tilingId, tlngP->tilingId, tlngP->tilingId
 		);
 		(*numLinesThisFileP) ++;
+		(*numCharsThisFileP) += fprintf(fp, "%" PRIi8 "\t%s", tilingId,  tlngP->axisAligned ? "TRUE" : "FALSE");
+		sprintf(scratchString,  tlngP->edgeLength >= 0.1 ? "%.16lf" : "%.16E",  tlngP->edgeLength);
+		stringClean(scratchString);
+		(*numCharsThisFileP) += fprintf(fp, "\t%s", scratchString);
+		(*numCharsThisFileP) += fprintf(fp,
+			"\t%li"    "\t%li"    "\t%li"
+			"\t%li"    "\t%li"    "\t%li",
+			tlngP->numFats,  tlngP->numThins,  tlngP->numPathsClosed,
+			tlngP->numPathsOpen,  tlngP->numPathStats,  tlngP->boundingPathNumVertices
+		);
 		sprintf(scratchString,
-			"%" PRIi8      "\t%s"     "\t%.16E"
-			"\t%li"    "\t%li"    "\t%li"    "\t%li"    "\t%li"
 			"\t%.12f"  "\t%.12f"  "\t%.12f"  "\t%.12f"
-			"\t%.12f"  "\t%.12f"  "\t%.12f"  "\t%.12f"  "\t%.12f",
-			tilingId,  tlngP->axisAligned ? "TRUE" : "FALSE",  tlngP->edgeLength,
-			tlngP->numFats, tlngP->numThins, tlngP->numPathsClosed, tlngP->numPathsOpen, tlngP->numPathStats,
+			"\t%.12f"  "\t%.12f"
+			"\t%.12f"  "\t%.12f"  "\t%.12f",
 			tlngP->xMin, tlngP->xMax, tlngP->yMin, tlngP->yMax,
-			tlngP->wantedPostScriptCentre.x, tlngP->wantedPostScriptCentre.y, tlngP->wantedPostScriptAspect, tlngP->wantedPostScriptHalfWidth, tlngP->wantedPostScriptHalfWidth * tlngP->wantedPostScriptAspect
+			tlngP->wantedPostScriptCentre.x, tlngP->wantedPostScriptCentre.y,
+			tlngP->wantedPostScriptAspect, tlngP->wantedPostScriptHalfWidth, tlngP->wantedPostScriptHalfWidth * tlngP->wantedPostScriptAspect
 		);
 		stringClean(scratchString);
 		(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
@@ -412,7 +452,7 @@ void tiling_export(
 			}  // pathStatId
 		}  // if ... exportQ(pathStats, ...)
 
-		if( tlngP->numPathsClosed + tlngP->numPathsOpen > 0  &&  exportQ(Paths, exportFormat, tlngP, *numLinesThisFileP) )
+		if( tlngP->numPathsClosed + tlngP->numPathsOpen > 0  &&  exportQ(paths, exportFormat, tlngP, *numLinesThisFileP) )
 		{
 			path_export(fp, exportFormat, tlngP, (Path *)NULL, indentDepth, false, numLinesThisFileP, numCharsThisFileP);  // NULL pointer to Path means print just header, no data.
 			(*numCharsThisFileP) += fprintf(fp, "\n");
@@ -429,7 +469,7 @@ void tiling_export(
 			}  // pathId
 		}  // if ... exportQ(Paths, ...)
 
-		if( (tlngP->numThins > 0 || tlngP->numFats > 0)  &&  exportQ(Rhombi, exportFormat, tlngP, *numLinesThisFileP) )
+		if( (tlngP->numThins > 0 || tlngP->numFats > 0)  &&  exportQ(rhombi, exportFormat, tlngP, *numLinesThisFileP) )
 		{
 			(*numCharsThisFileP) += fprintf(fp, "\n");
 			(*numLinesThisFileP) ++;
@@ -443,6 +483,14 @@ void tiling_export(
 				(*numLinesThisFileP) ++;
 			}  // rhId
 		}  // if ... exportQ(Rhombi, ...)
+
+
+		if( (tlngP->numThins > 0 || tlngP->numFats > 0)  &&  exportQ(boundingPath, exportFormat, tlngP, *numLinesThisFileP) )
+		{
+			(*numCharsThisFileP) += fprintf(fp, "\n");
+			(*numLinesThisFileP) ++;
+			tiling_export_PaintBoundary(fp,  TSV,  tlngP,  0,  numLinesThisFileP,  numCharsThisFileP);
+		}  // boundingPath
 
 		(*numCharsThisFileP) += fprintf(fp, "\n\n\n");
 		(*numLinesThisFileP) += 3;

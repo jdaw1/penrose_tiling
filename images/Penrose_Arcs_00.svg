@@ -1,10 +1,27 @@
 <svg width='960' height='1357.047035649' viewBox='-2.837195102 -3.178810661 4.438322226 6.357621323' preserveAspectRatio='xMidYMid meet' id='Penrose_Arcs_00' xmlns='http://www.w3.org/2000/svg'>
-<!-- TilingId = 0;  NumFats = 2;  NumThins = 1;  ==> #tiles= 3;  NumPathsClosed = 0;  NumPathsOpen = 1 -->
+<!-- TilingId = 0;  NumFats = 2;  NumThins = 1;  ==> #tiles= 3;  NumPathsClosed = 0;  NumPathsOpen = 6;  BoundingPathNumVertices = 1 -->
 <!-- Licence = "GNU General Public License, Version 3, 29 June 2007"; URL = "https://github.com/jdaw1/penrose_tiling/"; Author = "Julian D. A. Wiseman of www.jdawiseman.com". -->
-<!-- EdgeLength = 3.23606797749979. -->
+<!-- EdgeLength = 3.23606797749979 -->
 <!-- Browser fail for large SVG? Bug report at https://issues.chromium.org/issues/390969197 -->
-<g transform='scale(1,-1)'> <!-- PostScript and Excel positive y goes up the page, SVG it goes down. This reflection makes SVG behave as the others. -->
-<g transform='scale(1.61803398874989)'> <!-- edgeLength/2 -->
+
+<g transform='scale(1,-1)'> <!-- PostScript and Excel positive y goes up the page, SVG it goes down. This reflection makes SVG behave as PostScript and Excel. -->
+
+<!-- This path traces the outside of the rhombi, intended to be fill'able as a background colour to the arcs. -->
+<!-- The viewBox is almost tight to the arcs, but is a slight subset of the rhombi. -->
+<!-- If, as default, filling this path with a neutral background colour, e.g. white, it works as-is. -->
+<!-- But if manually editing so that path stroke'd, or fill'd dramatically, then slightly enlarge the viewBox. -->
+<!-- Enlargement amount depends on whether vector-effect='non-scaling-stroke', on stroke-width, and slightly on stroke-linejoin. -->
+<path fill='#FFF'  stroke='none' vector-effect='non-scaling-stroke' stroke-width='2px' stroke-linejoin='round'  d='
+	M 1 -3.077683537
+	L 2 0
+	1 3.077683537
+	-2.236067977 3.077683537
+	-3.236067977 0
+	-2.236067977 -3.077683537
+Z'/> <!-- Outside of tiling of rhombi. -->
+
+<g transform='scale(1.618033988749895)'> <!-- edgeLength/2, so that all arc radii are precisely 1, lessening file size -->
+
 <style>
 	.sf {stroke: #000;  stroke-width: 0.1;  paint-order: fill stroke markers;} <!-- sf = stroke's formatting -->
 	.c5r_o  {fill: #FFF;}

@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // wanted.c, in PenroseC
 
@@ -90,7 +90,7 @@ double wanted_halfWidth(Tiling * const tlngP)
 			fractionBetween = ( sqrt(PostScriptArrayLengthMax) - sqrt(countSmall) ) / ( sqrt(countLarge) - sqrt(countSmall) );
 
 			/* printf(
-				"wanted_halfWidth(): tilingId=%" PRIi8 ", loopCount=%" PRIi8 ", countSmall=%li, countLarge=%li, fractionBetween=%0.9lf, halfWidthLarge=%0.9lf, halfWidthSmall=%0.9lf, halfWidthSmall_Min=%0.9lf.\n",
+				"wanted_halfWidth(): tilingId=%" PRIi8 ", loopCount=%" PRIi8 ", countSmall=%li, countLarge=%li, fractionBetween=%.9lf, halfWidthLarge=%.9lf, halfWidthSmall=%.9lf, halfWidthSmall_Min=%.9lf.\n",
 				tlngP->tilingId, loopCount, countSmall, countLarge, fractionBetween, halfWidthLarge, halfWidthSmall, halfWidthSmall_Min
 			);  fflush(stdout); */
 
@@ -119,7 +119,7 @@ double wanted_halfWidth(Tiling * const tlngP)
 
 		if( (double)countSmall < 0.99 * PostScriptArrayLengthMax )  // 65535 * 0.01 = 655.35
 			fprintf(stderr,
-				"wanted_halfWidth(): possible error, tilingId=%" PRIi8 ", failure to converge with countSmall=%li, countLarge=%li, halfWidthSmall=%0.9lf, halfWidthLarge=%0.9lf.\n",
+				"wanted_halfWidth(): possible error, tilingId=%" PRIi8 ", failure to converge with countSmall=%li, countLarge=%li, halfWidthSmall=%.9lf, halfWidthLarge=%.9lf.\n",
 				tlngP->tilingId, countSmall, countLarge, halfWidthSmall, halfWidthLarge
 			);  fflush(stderr);
 

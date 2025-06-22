@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // paths.c, in PenroseC
 
@@ -462,7 +462,7 @@ know_pathLength:
 	{
 		pathThisP = &(tlngP->path[ pathId ]);
 		rhThisP = &(tlngP->rhombi[ pathThisP->rhId_PathCentreClosest ]);
-		pathThisP->pointy = ( 5 == pathThisP->pathLength  &&  pathThisP->pathClosed  &&  points_same_2(tlngP, rhThisP->north, pathThisP->centre) ) ;
+		pathThisP->pointy = ( 5 == pathThisP->pathLength  &&  pathThisP->pathClosed  &&  points_same_2(tlngP->edgeLength, rhThisP->north, pathThisP->centre) ) ;
 
 		pathThisP->pathClosedTypeNum = pathClosedTypeNum(pathThisP->pathClosed,  pathThisP->pathLength,  pathThisP->pointy);
 	}  // rhId_This

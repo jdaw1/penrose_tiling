@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // fillHoles.c, in PenroseC
 
@@ -157,7 +157,7 @@ static inline int8_t fillTypeA(Tiling * const tlngP, RhombId const rhId_A)
 		}  // South
 	}  // for( nghbrNum ... )
 
-	if( points_different_3(tlngP,  tlngP->rhombi[rhId_A].south,  tlngP->rhombi[rhId_B].south,  tlngP->rhombi[rhId_C].south) )
+	if( points_diff_3(tlngP->edgeLength,  tlngP->rhombi[rhId_A].south,  tlngP->rhombi[rhId_B].south,  tlngP->rhombi[rhId_C].south) )
 		return 0;  // This test should be redundant
 
 	double const new_S_x = median_3( tlngP->rhombi[rhId_A].south.x,  tlngP->rhombi[rhId_B].south.x,  tlngP->rhombi[rhId_C].south.x);  // Precision fussiness
@@ -271,7 +271,7 @@ static inline int8_t fillTypeB(Tiling * const tlngP, RhombId const rhId_Start)
 	if( thin_0 < 0  ||  thin_3 < 0 )  // Should be redundant
 		return 0;
 
-	if( points_different_4(tlngP,
+	if( points_diff_4(tlngP->edgeLength,
 		tlngP->rhombi[rhIds[0]].south,
 		tlngP->rhombi[rhIds[1]].south,
 		tlngP->rhombi[rhIds[2]].south,
@@ -373,7 +373,7 @@ static inline int8_t fillTypeC(Tiling * const tlngP, RhombId const rhId_Orig)
 				continue;  // next nghbrNum
 			if( nghbrP->physique == Fat )
 			{
-				if( points_same_2(tlngP,  xyOrigNorth,  tlngP->rhombi[rhId_Next].north) )
+				if( points_same_2(tlngP->edgeLength,  xyOrigNorth,  tlngP->rhombi[rhId_Next].north) )
 				{
 					foundNext = true;
 					break;
@@ -382,8 +382,8 @@ static inline int8_t fillTypeC(Tiling * const tlngP, RhombId const rhId_Orig)
 			else
 			{
 				// Thin
-				if( points_same_2(tlngP,  xyOrigNorth,  tlngP->rhombi[rhId_Next].east)
-				||  points_same_2(tlngP,  xyOrigNorth,  tlngP->rhombi[rhId_Next].west) )
+				if( points_same_2(tlngP->edgeLength,  xyOrigNorth,  tlngP->rhombi[rhId_Next].east)
+				||  points_same_2(tlngP->edgeLength,  xyOrigNorth,  tlngP->rhombi[rhId_Next].west) )
 				{
 					foundNext = true;
 					break;
@@ -516,7 +516,7 @@ static inline int8_t fillTypeE(Tiling * const tlngP, RhombId const rhId_Start)
 		if( rhIds[fatNum] < 0
 		||  Fat != tlngP->rhombi[rhIds[fatNum]].physique
 		||  tlngP->rhombi[rhIds[fatNum]].numNeighbours <= 1
-		||  ( fatNum > 0  &&  points_different_2(tlngP, tlngP->rhombi[rhId_Start].south, tlngP->rhombi[rhIds[fatNum]].south) )  )
+		||  ( fatNum > 0  &&  points_diff_2(tlngP->edgeLength, tlngP->rhombi[rhId_Start].south, tlngP->rhombi[rhIds[fatNum]].south) )  )
 			return 0;
 
 		thin_NE[fatNum] = false;
@@ -651,7 +651,7 @@ static inline int8_t fillTypeF(Tiling * const tlngP, RhombId const rhId_Start)
 				if( Fat == tlngP->rhombi[rhId_Next].physique )
 				{
 					// Fat
-					if( points_same_2(tlngP, origNorth, tlngP->rhombi[rhId_Next].north) )
+					if( points_same_2(tlngP->edgeLength, origNorth, tlngP->rhombi[rhId_Next].north) )
 					{
 						thereIsGoodNghbr = true;
 						break;  // for( nghbrNum ... )
@@ -660,13 +660,13 @@ static inline int8_t fillTypeF(Tiling * const tlngP, RhombId const rhId_Start)
 				else
 				{
 					// Thin
-					if( points_same_2(tlngP, origNorth, tlngP->rhombi[rhId_Next].east) )
+					if( points_same_2(tlngP->edgeLength, origNorth, tlngP->rhombi[rhId_Next].east) )
 					{
 						numThinsMatchingEast ++;
 						thereIsGoodNghbr = true;
 						break;  // for( nghbrNum ... )
 					}  // orig north == this east
-					if( points_same_2(tlngP, origNorth, tlngP->rhombi[rhId_Next].west) )
+					if( points_same_2(tlngP->edgeLength, origNorth, tlngP->rhombi[rhId_Next].west) )
 					{
 						numThinsMatchingWest ++;
 						thereIsGoodNghbr = true;
@@ -758,7 +758,7 @@ static inline int8_t fillTypeG(Tiling * const tlngP, RhombId const rhId_Orig)
 
 	// debug
 /*
-	printf("fillTypeG(), tilingId=%02" PRIi8 ",  CentreX=%0.4lf,  CentreY=%0.4lf,  rhId_Orig=%li,  rhId_E=%li,  rhId_W=%li\n",
+	printf("fillTypeG(), tilingId=%02" PRIi8 ",  CentreX=%.4lf,  CentreY=%.4lf,  rhId_Orig=%li,  rhId_E=%li,  rhId_W=%li\n",
 		tlngP->tilingId,
 		(tlngP->rhombi[rhId_Orig].north.x + tlngP->rhombi[rhId_Orig].south.x) / 2,
 		(tlngP->rhombi[rhId_Orig].north.y + tlngP->rhombi[rhId_Orig].south.y) / 2,

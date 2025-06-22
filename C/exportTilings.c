@@ -1,11 +1,11 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // exportTilings.c, in PenroseC
 
 #include "penrose.h"
 #define indentationString "\t"  // Could be replaced with something like "    ".
 
-int fIndent(FILE* const fp, int const indentDepth)
+int fIndent(FILE* const fp, int8_t const indentDepth)
 {
 	int indentNum, numChars;
 	for(numChars=indentNum=0;  indentNum < indentDepth;  indentNum++)
@@ -19,7 +19,7 @@ void tilings_export(
 	ExportFormat        const exportFormat,
 	bool exportQ(ExportWhat const exprtWhat, ExportFormat const exportFormat, const Tiling * const tlngP, const unsigned long int numLinesThisFile),
 	Tiling            * const tlngs,
-	int                 const indentDepth,
+	int8_t              const indentDepth,
 	long int            const numTilings,
 	unsigned long int * const numLinesThisFileP,
 	unsigned long long int * const numCharsThisFileP
@@ -52,8 +52,7 @@ void tilings_export(
 
 	for( tilingId = 0  ;  tilingId < numTilings;  tilingId++ )
 	{
-		if( tlngs[tilingId].edgeLength > 0  &&  (tlngs[tilingId].numFats > 0  ||  tlngs[tilingId].numThins > 0)
-		&&  exportQ(Anything, exportFormat, &(tlngs[tilingId]), *numLinesThisFileP) )
+		if( tlngs[tilingId].populated  &&  exportQ(anything, exportFormat, &(tlngs[tilingId]), *numLinesThisFileP) )
 		{
 			tiling_export(
 				fp,
@@ -61,7 +60,7 @@ void tilings_export(
 				exportQ,
 				&(tlngs[tilingId]),
 				1 + indentDepth,
-				(tilingId < numTilings - 1),
+				(tilingId < numTilings - 1)  &&  tlngs[1 + tilingId].populated,  // notLast
 				tilingId,
 				numLinesThisFileP,
 				numCharsThisFileP
@@ -69,6 +68,8 @@ void tilings_export(
 			(*numCharsThisFileP) += fprintf(fp, "\n\n\n");
 			(*numLinesThisFileP) += 3;
 		}  // export Anything
+		else
+			break ;
 	}  // tilingId
 
 

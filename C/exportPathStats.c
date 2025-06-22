@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // exportPathStats.c, in PenroseC
 
@@ -10,7 +10,7 @@ void pathStat_export(
 	ExportFormat const exportFormat,
 	const Tiling * const tlngP,
 	PathStats const * const pathStatP,
-	int const indentDepth,
+	int8_t const indentDepth,
 	bool const notLast,
 	unsigned long int * const numLinesThisFileP,
 	unsigned long long int * const numCharsThisFileP

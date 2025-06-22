@@ -1,9 +1,70 @@
 <svg width='960' height='1359.078591779' viewBox='-5.496008831 -6.905782478 9.755949684 13.811564956' preserveAspectRatio='xMidYMid meet' id='Penrose_Rhombi_03' xmlns='http://www.w3.org/2000/svg'>
-<!-- TilingId = 3;  NumFats = 98;  NumThins = 55;  ==> #tiles= 153;  NumPathsClosed = 7;  NumPathsOpen = 11 -->
+<!-- TilingId = 3;  NumFats = 98;  NumThins = 55;  ==> #tiles= 153;  NumPathsClosed = 7;  NumPathsOpen = 11;  BoundingPathNumVertices = 54 -->
 <!-- Licence = "GNU General Public License, Version 3, 29 June 2007"; URL = "https://github.com/jdaw1/penrose_tiling/"; Author = "Julian D. A. Wiseman of www.jdawiseman.com". -->
 <!-- EdgeLength = 0.76393202250021; stroke-width defined to be EdgeLength / 16. If changing stroke-width, need to alter viewBox, for which it might help to know that, without line, and assuming inclusion of all the C-generated rhombi, values would be -5.472135955 -6.881909602 9.708203932 13.763819205. -->
 <!-- Browser fail for large SVG? Bug report at https://issues.chromium.org/issues/390969197 -->
 <g transform='scale(1,-1)'> <!-- PostScript and Excel positive y goes up the page, SVG it goes down. This reflection makes SVG behave as the others. -->
+<!-- This path traces the outside of the rhombi, intended to be fill'able as a background colour. -->
+<!-- As all rhombi are filled, usually redundant. Indeed, usually omitted from SVG file. -->
+<!-- If stroke'd wide, then slightly enlarge the viewBox. -->
+<!-- Enlargement amount depends on whether vector-effect='non-scaling-stroke', on stroke-width, and slightly on stroke-linejoin. -->
+<path fill='#FFF'  stroke='none' vector-effect='non-scaling-stroke' stroke-width='2px' stroke-linejoin='round'  d='
+	M 4 0
+	L 4.236067977 0.726542528
+	3.618033989 1.175570505
+	3.381966011 1.902113033
+	2.618033989 1.902113033
+	2.854101966 2.628655561
+	2.236067977 3.077683537
+	2 3.804226065
+	1.381966011 4.253254042
+	1.145898034 4.97979657
+	0.381966011 4.97979657
+	0.618033989 5.706339098
+	0 6.155367074
+	-0.236067977 6.881909602
+	-1 6.881909602
+	-1.236067977 6.155367074
+	-1.854101966 5.706339098
+	-1.618033989 4.97979657
+	-2.381966011 4.97979657
+	-2.618033989 4.253254042
+	-3.236067977 3.804226065
+	-3.472135955 3.077683537
+	-4.090169944 2.628655561
+	-3.854101966 1.902113033
+	-4.618033989 1.902113033
+	-4.854101966 1.175570505
+	-5.472135955 0.726542528
+	-5.236067977 0
+	-5.472135955 -0.726542528
+	-4.854101966 -1.175570505
+	-4.618033989 -1.902113033
+	-3.854101966 -1.902113033
+	-4.090169944 -2.628655561
+	-3.472135955 -3.077683537
+	-3.236067977 -3.804226065
+	-2.618033989 -4.253254042
+	-2.381966011 -4.97979657
+	-1.618033989 -4.97979657
+	-1.854101966 -5.706339098
+	-1.236067977 -6.155367074
+	-1 -6.881909602
+	-0.236067977 -6.881909602
+	0 -6.155367074
+	0.618033989 -5.706339098
+	0.381966011 -4.97979657
+	1.145898034 -4.97979657
+	1.381966011 -4.253254042
+	2 -3.804226065
+	2.236067977 -3.077683537
+	2.854101966 -2.628655561
+	2.618033989 -1.902113033
+	3.381966011 -1.902113033
+	3.618033989 -1.175570505
+	4.236067977 -0.726542528
+Z'/> <!-- Outside of tiling of rhombi. -->
+
 
 <defs>
 	<path id='t' d='M 0 0   L -0.23606797749979 0.72654252800536   -0.47213595499958 0   -0.23606797749979 -0.72654252800536  Z'/> <!-- thin -->

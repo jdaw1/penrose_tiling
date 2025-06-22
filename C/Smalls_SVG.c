@@ -1,10 +1,10 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // smalls_SVG.c, in PenroseC
 
 #include "penrose.h"
 
-#define almostZero 5E-10  // consistent with %0.9lf
+#define almostZero 5E-10  // consistent with %.9lf
 
 char * svgTransform(char * const str,  double const x,  double const y,  double const angDeg, short int angMod )
 {
@@ -33,22 +33,22 @@ char * svgTransform(char * const str,  double const x,  double const y,  double 
 			if( fabs(x) <= almostZero )
 				str[0] = 0;
 			else
-				sprintf(str, " transform='translate(%0.9lf)'", x);
+				sprintf(str, " transform='translate(%.9lf)'", x);
 		}  // angDegNew == 0
 		else
 		{
 			if( fabs(x) <= almostZero )
-				sprintf(str, " transform='rotate(%0.9lf)'", angDegNew);
+				sprintf(str, " transform='rotate(%.9lf)'", angDegNew);
 			else
-				sprintf(str, " transform='translate(%0.9lf) rotate(%0.9lf)'", x, angDegNew);
+				sprintf(str, " transform='translate(%.9lf) rotate(%.9lf)'", x, angDegNew);
 		}  // angDegNew != 0
 	}  // y == 0
 	else
 	{
 		if( fabs(angDegNew) <= almostZero )
-			sprintf(str, " transform='translate(%0.9lf,%0.9lf)'", x, y);
+			sprintf(str, " transform='translate(%.9lf,%.9lf)'", x, y);
 		else
-			sprintf(str, " transform='translate(%0.9lf,%0.9lf) rotate(%0.9lf)'", x, y, angDegNew);
+			sprintf(str, " transform='translate(%.9lf,%.9lf) rotate(%.9lf)'", x, y, angDegNew);
 	}  // y != 0
 
 	stringClean(scratchString);
@@ -174,5 +174,3 @@ void exportColourSVG(char * const strA,  char * const strB,  bool * const isWhit
 
 	} // Open
 }  // exportColourSVG()
-
-

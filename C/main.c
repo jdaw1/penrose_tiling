@@ -1,10 +1,12 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // main.c, in PenroseC
 
 #include "penrose.h"
 
-static int8_t const numTilings_Max = 17;  // Hard-wired contraint to catch CPU-expensive mistyping. Sensible limit for 32GiB machine. YMMV.
+// Hard-wired contraint to catch CPU-expensive mistyping. Likely limit for 160 GiB machine.
+// Approx. execution times: numTilings=8 ==> 1 second; 13 ==> 2 minutes; 17 ==> 6.5 hours; 19 might be 2 weeks.
+static int8_t const numTilings_Max = 17;
 
 char scratchString[scratchStringLength] ;  // Mostly used for post-processing of doubles: removal of trailing 0s and trailing decimal points. Size harmlessly generous: 6k would have been sufficient, the boundary need being the preamble in tiling_export_PaintRhombiPS.
 
@@ -27,12 +29,13 @@ int main(void)
 	char timeString[250], fileName[256], fileExtension[16];
 
 	printf(
-		"main(): sizeof(Rhombus)=%li;  sizeof(Path)=%li;  sizeof(PathStats)=%li;  sizeof(Tiling)=%li\n\n",
-		(long int)(sizeof(Rhombus)),  (long int)(sizeof(Path)),  (long int)(sizeof(PathStats)),  (long int)(sizeof(Tiling))
+		// https://stackoverflow.com/questions/15610053/correct-printf-format-specifier-for-size-t-zu-or-iu
+		"main(): sizeof(Physique)=%d;  sizeof(XY)=%d;  sizeof(Neighbour)=%d;  sizeof(Rhombus)=%d;  sizeof(Path)=%d;  sizeof(PathStats)=%d;  sizeof(Tiling)=%d\n\n",
+		(int)(sizeof(Physique)),  (int)(sizeof(XY)),  (int)(sizeof(Neighbour)),  (int)(sizeof(Rhombus)),  (int)(sizeof(Path)),  (int)(sizeof(PathStats)),  (int)(sizeof(Tiling))
 	);
 
 	printf(
-		"\n\a\n"  // Bell sound! Good luck.
+		"\n\a\n"  // Bell sound! Doesn't work on my Mac -- maybe your system is better.
 		"What is to be the recursion depth = numTilings?\n"
 		"For testing choose in range 8 to 12.\n"
 		"By memory constraint on a 32GiB machine, maximum is 17, run time being, on author's computer, about 5 hours. Obviously, YMMV.\n"
@@ -57,15 +60,19 @@ int main(void)
 
 	time(&prog_start);
 	timeData = localtime(&prog_start);
-	sprintf(timeString, "%04d%02d%02d_%02d%02d%02d",
-		(1900 + timeData->tm_year),  (1 + timeData->tm_mon),  timeData->tm_mday,
-		timeData->tm_hour,  timeData->tm_min,  (int)(timeData->tm_sec)
-	);
-	
+	if( file_names_include_timeString() )
+		sprintf(timeString, "_%04d%02d%02d_%02d%02d%02d",
+			(1900 + timeData->tm_year),  (1 + timeData->tm_mon),  timeData->tm_mday,
+			timeData->tm_hour,  timeData->tm_min,  (int)(timeData->tm_sec)
+		);
+	else
+		sprintf(timeString, "");
+
 	clock_t const timeBeginConstruction = clock();
 
 	for( tilingId = 0;  tilingId < numTilings;  tilingId++ )
 	{
+		tlngs[tilingId].populated                = false;
 		tlngs[tilingId].tilingId                 = tilingId;
 		tlngs[tilingId].numTilings               = numTilings;
 		tlngs[tilingId].edgeLength               = 0;
@@ -77,10 +84,10 @@ int main(void)
 		tlngs[tilingId].numPathsClosed           = 0;
 		tlngs[tilingId].numPathsOpen             = 0;
 		tlngs[tilingId].numPathStats             = 0;
-		tlngs[tilingId].xMin                     = DBL_MAX;
-		tlngs[tilingId].yMin                     = DBL_MAX;
-		tlngs[tilingId].xMax                     = - DBL_MAX;
-		tlngs[tilingId].yMax                     = - DBL_MAX;
+		tlngs[tilingId].xMin                     = DBL_MAX /  2;
+		tlngs[tilingId].yMin                     = DBL_MAX /  2;
+		tlngs[tilingId].xMax                     = DBL_MAX / -2;
+		tlngs[tilingId].yMax                     = DBL_MAX / -2;
 		tlngs[tilingId].rhombi                   = NULL;
 		tlngs[tilingId].path                     = NULL;
 		tlngs[tilingId].pathStat                 = NULL;
@@ -136,8 +143,7 @@ int main(void)
 		int ef_num;
 
 		// If ExportFormat acquires other possibilites, give attention to this, to the "3" in next line, and to the extension calculation.
-		// Also, want PS_data last, because of sort-by wanted.
-		const ExportFormat exportFormat[3] = {TSV, PS_data, JSON};  // TSV most useful, so first; JSON most massive, so last.
+		const ExportFormat exportFormat[3] = {TSV, PS_data, JSON};
 		for( ef_num = 0  ;  ef_num < 3  ; ef_num++ )
 		{
 			ef = exportFormat[ef_num];
@@ -147,7 +153,7 @@ int main(void)
 
 			anythingToExport = false;
 			for( tilingIdTest = 0  ;  tilingIdTest <= tilingId  ;  tilingIdTest++ )
-				if( exportQ(Anything, ef, &(tlngs[tilingIdTest]), numLinesThisFile ) )  // If any to be output in this ExportFormat
+				if( exportQ(anything, ef, &(tlngs[tilingIdTest]), numLinesThisFile ) )  // If any to be output in this ExportFormat
 				{
 					anythingToExport = true;
 					break;
@@ -156,7 +162,7 @@ int main(void)
 			if( anythingToExport )
 			{
 				sprintf(fileName,
-					"%sPenrose_%s_Rhombi_%02" PRIi8 ".%s",
+					"%sPenrose%s_Rhombi_%02" PRIi8 ".%s",
 					tlngs[tilingId].filePath,  timeString,  tilingId,
 					fileExtension_from_ExportFormat(fileExtension, ef)
 				);
@@ -174,7 +180,7 @@ int main(void)
 				);
 				fflush(fp); fclose(fp);
 				printf(
-					"main(): during tilingId=%" PRIi8 ", exported %lli chars %li lines, so %0.1lf c/l, to %s\n",
+					"main(): during tilingId=%" PRIi8 ", exported %lli chars %li lines, so %.1lf c/l, to %s\n",
 					tilingId,  numCharsThisFile,  numLinesThisFile,  (double)numCharsThisFile / (double)numLinesThisFile,  fileName
 				);  fflush(stdout);
 			}  // If any to be output in this ExportFormat
@@ -183,7 +189,7 @@ int main(void)
 		printf(
 			"main(): tilingId=%" PRIi8 " constructed and exported:\n"
 			"#Fats=%li; #Thins=%li; #PathsClosed=%li; #PathsOpen=%li; #PathStats=%li; LongestPathClosed=%li; #LongestPathOpen=%li;\n"
-			"total execution time = %0.3lfs\n",
+			"total execution time = %.3lfs\n",
 			tilingId,  tlngs[tilingId].numFats,  tlngs[tilingId].numThins,  tlngs[tilingId].numPathsClosed,  tlngs[tilingId].numPathsOpen,  tlngs[tilingId].numPathStats,
 			longestPathClosed,  longestPathOpen,  ((double)clock() - timeBeginConstruction) / CLOCKS_PER_SEC
 		);  fflush(stdout);

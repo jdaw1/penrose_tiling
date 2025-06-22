@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // neighbours.c, in PenroseC
 
@@ -74,37 +74,37 @@ void twoRhombi_Neighbourify(Tiling * const tlngP,  RhombId const rhId_A,  RhombI
 	do {
 
 		do {
-			if( points_same_2(tlngP,  rhP_A->north,  rhP_B->north) ) {edge_A_N = true ;  edge_B_N = true ;  pointsSame++;  break;}
-			if( points_same_2(tlngP,  rhP_A->north,  rhP_B->south) ) {edge_A_N = true ;  edge_B_N = false;  pointsSame++;  break;}
-			if( points_same_2(tlngP,  rhP_A->north,  rhP_B->east ) ) {edge_A_N = true ;  edge_B_E = true ;  pointsSame++;  break;}
-			if( points_same_2(tlngP,  rhP_A->north,  rhP_B->west ) ) {edge_A_N = true ;  edge_B_E = false;  pointsSame++;  break;}
+			if( points_same_2(tlngP->edgeLength,  rhP_A->north,  rhP_B->north) ) {edge_A_N = true ;  edge_B_N = true ;  pointsSame++;  break;}
+			if( points_same_2(tlngP->edgeLength,  rhP_A->north,  rhP_B->south) ) {edge_A_N = true ;  edge_B_N = false;  pointsSame++;  break;}
+			if( points_same_2(tlngP->edgeLength,  rhP_A->north,  rhP_B->east ) ) {edge_A_N = true ;  edge_B_E = true ;  pointsSame++;  break;}
+			if( points_same_2(tlngP->edgeLength,  rhP_A->north,  rhP_B->west ) ) {edge_A_N = true ;  edge_B_E = false;  pointsSame++;  break;}
 		} while(false);  // Minimal break'able loop construct
 
 		do {
-			if( points_same_2(tlngP,  rhP_A->south,  rhP_B->north) ) {edge_A_N = false;  edge_B_N = true ;  pointsSame++;  break;}
-			if( points_same_2(tlngP,  rhP_A->south,  rhP_B->south) ) {edge_A_N = false;  edge_B_N = false;  pointsSame++;  break;}
-			if( points_same_2(tlngP,  rhP_A->south,  rhP_B->east ) ) {edge_A_N = false;  edge_B_E = true ;  pointsSame++;  break;}
-			if( points_same_2(tlngP,  rhP_A->south,  rhP_B->west ) ) {edge_A_N = false;  edge_B_E = false;  pointsSame++;  break;}
-		} while(false);  // Minimal break'able loop construct
-
-		if( pointsSame == 2 )
-			break;
-
-		do {
-			if( points_same_2(tlngP,  rhP_A->east ,  rhP_B->north) ) {edge_A_E = true ;  edge_B_N = true ;  pointsSame++;  break;}
-			if( points_same_2(tlngP,  rhP_A->east ,  rhP_B->south) ) {edge_A_E = true ;  edge_B_N = false;  pointsSame++;  break;}
-			if( points_same_2(tlngP,  rhP_A->east ,  rhP_B->east ) ) {edge_A_E = true ;  edge_B_E = true ;  pointsSame++;  break;}
-			if( points_same_2(tlngP,  rhP_A->east ,  rhP_B->west ) ) {edge_A_E = true ;  edge_B_E = false;  pointsSame++;  break;}
+			if( points_same_2(tlngP->edgeLength,  rhP_A->south,  rhP_B->north) ) {edge_A_N = false;  edge_B_N = true ;  pointsSame++;  break;}
+			if( points_same_2(tlngP->edgeLength,  rhP_A->south,  rhP_B->south) ) {edge_A_N = false;  edge_B_N = false;  pointsSame++;  break;}
+			if( points_same_2(tlngP->edgeLength,  rhP_A->south,  rhP_B->east ) ) {edge_A_N = false;  edge_B_E = true ;  pointsSame++;  break;}
+			if( points_same_2(tlngP->edgeLength,  rhP_A->south,  rhP_B->west ) ) {edge_A_N = false;  edge_B_E = false;  pointsSame++;  break;}
 		} while(false);  // Minimal break'able loop construct
 
 		if( pointsSame == 2 )
 			break;
 
 		do {
-			if( points_same_2(tlngP,  rhP_A->west ,  rhP_B->north) ) {edge_A_E = false;  edge_B_N = true ;  pointsSame++;  break;}
-			if( points_same_2(tlngP,  rhP_A->west ,  rhP_B->south) ) {edge_A_E = false;  edge_B_N = false;  pointsSame++;  break;}
-			if( points_same_2(tlngP,  rhP_A->west ,  rhP_B->east ) ) {edge_A_E = false;  edge_B_E = true ;  pointsSame++;  break;}
-			if( points_same_2(tlngP,  rhP_A->west ,  rhP_B->west ) ) {edge_A_E = false;  edge_B_E = false;  pointsSame++;  break;}
+			if( points_same_2(tlngP->edgeLength,  rhP_A->east ,  rhP_B->north) ) {edge_A_E = true ;  edge_B_N = true ;  pointsSame++;  break;}
+			if( points_same_2(tlngP->edgeLength,  rhP_A->east ,  rhP_B->south) ) {edge_A_E = true ;  edge_B_N = false;  pointsSame++;  break;}
+			if( points_same_2(tlngP->edgeLength,  rhP_A->east ,  rhP_B->east ) ) {edge_A_E = true ;  edge_B_E = true ;  pointsSame++;  break;}
+			if( points_same_2(tlngP->edgeLength,  rhP_A->east ,  rhP_B->west ) ) {edge_A_E = true ;  edge_B_E = false;  pointsSame++;  break;}
+		} while(false);  // Minimal break'able loop construct
+
+		if( pointsSame == 2 )
+			break;
+
+		do {
+			if( points_same_2(tlngP->edgeLength,  rhP_A->west ,  rhP_B->north) ) {edge_A_E = false;  edge_B_N = true ;  pointsSame++;  break;}
+			if( points_same_2(tlngP->edgeLength,  rhP_A->west ,  rhP_B->south) ) {edge_A_E = false;  edge_B_N = false;  pointsSame++;  break;}
+			if( points_same_2(tlngP->edgeLength,  rhP_A->west ,  rhP_B->east ) ) {edge_A_E = false;  edge_B_E = true ;  pointsSame++;  break;}
+			if( points_same_2(tlngP->edgeLength,  rhP_A->west ,  rhP_B->west ) ) {edge_A_E = false;  edge_B_E = false;  pointsSame++;  break;}
 		} while(false);  // Minimal break'able loop construct
 
 	} while(false);  // Minimal break'able loop construct
@@ -186,8 +186,8 @@ void neighbours_populate(Tiling * const tlngP)
 
 					fprintf(stderr,
 						"\n\nneighbours_populate(): error, need to connect two rhombi, but >=1 already has >=4 neighbours: tilingId=%" PRIi8 ";\n"
-						"\trhId1=%li, numNeighbours=%hi = [%li,%li,%li,%li], centre = (%0.9lf, %0.9lf);\n"
-						"\trhId2=%li, numNeighbours=%hi = [%li,%li,%li,%li], centre = (%0.9lf, %0.9lf).\n"
+						"\trhId1=%li, numNeighbours=%hi = [%li,%li,%li,%li], centre = (%.9lf, %.9lf);\n"
+						"\trhId2=%li, numNeighbours=%hi = [%li,%li,%li,%li], centre = (%.9lf, %.9lf).\n"
 						"Too many neighbours likely to be caused by duplicate rhombi. "
 						"This likely because holesFill() has made the same rhombus twice. "
 						"If a type of filling is known to do that, as one is, then, after, it should call rhombi_purgeDuplicates(). "

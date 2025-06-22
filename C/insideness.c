@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // insideness.c, in PenroseC
 
@@ -136,7 +136,7 @@ void insideness_populate(Tiling * const tlngP)
 	/*
 	for( pathIdRange_Id = 0  ;  pathIdRange_Id < pathIdRangeNum_Num  ;  pathIdRange_Id ++ )  // so increasinglength
 		printf(
-			"insideness_populate(), pathIdRange: tilingId=%" PRIi8 ", pathLength=%li, radiusMax=%0.9lf, pathId_Start=%li, pathId_Final=%li\n",
+			"insideness_populate(), pathIdRange: tilingId=%" PRIi8 ", pathLength=%li, radiusMax=%.9lf, pathId_Start=%li, pathId_Final=%li\n",
 			tlngP->tilingId, pathIdRange[pathIdRange_Id].pathLength, pathIdRange[pathIdRange_Id].radiusMax,
 			pathIdRange[pathIdRange_Id].pathId_Start, pathIdRange[pathIdRange_Id].pathId_Final
 		);

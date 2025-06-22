@@ -1,16 +1,16 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // smalls.c, in PenroseC
 
 #include "penrose.h"
 
-inline double max_2(double const d0, double const d1)  {return( d0 >= d1 ? d0 : d1 );}  // max_2()
-inline double min_2(double const d0, double const d1)  {return( d0 <= d1 ? d0 : d1 );}  // min_2()
+/* Most of these functions 'should' be inline, but C99 does not allow an elegant single definition of inline. So not. :-( */
 
-extern double max_4(double const d0, double const d1, double const d2, double const d4)  {return max_2( d0 >= d1 ? d0 : d1,  d2 >= d4 ? d2 : d4 );}  // max_4()
-extern double min_4(double const d0, double const d1, double const d2, double const d4)  {return min_2( d0 <= d1 ? d0 : d1,  d2 <= d4 ? d2 : d4 );}  // min_4()
+extern double max_2(double const d0, double const d1)  {return( d0 >= d1 ? d0 : d1 );}  // max_2()
+extern double min_2(double const d0, double const d1)  {return( d0 <= d1 ? d0 : d1 );}  // min_2()
 
-
+extern double max_4(double const d0, double const d1, double const d2, double const d3)  {return max_2( d0 >= d1 ? d0 : d1,  d2 >= d3 ? d2 : d3 );}  // max_4()
+extern double min_4(double const d0, double const d1, double const d2, double const d3)  {return min_2( d0 <= d1 ? d0 : d1,  d2 <= d3 ? d2 : d3 );}  // min_4()
 
 
 extern double avg_2(double const d0, double const d1)
@@ -45,19 +45,19 @@ extern double median_4(double const d0, double const d1, double const d2, double
 
 
 
-extern bool points_different_2(Tiling const * const tlngP, XY const xy0, XY const xy1)
+extern bool points_diff_2(double const edgeLength, XY const xy0, XY const xy1)
 {
-	const double threshold = tlngP->edgeLength / 16;
+	const double threshold = edgeLength / 16;
 	return(
 		fabs(xy0.x - xy1.x) > threshold  ||
 		fabs(xy0.y - xy1.y) > threshold
 	);
-}  // points_different_2()
+}  // points_diff_2()
 
 
-extern bool points_same_2(Tiling const * const tlngP, XY const xy0, XY const xy1)
+extern bool points_same_2(double const edgeLength, XY const xy0, XY const xy1)
 {
-	const double threshold = tlngP->edgeLength / 16;
+	const double threshold = edgeLength / 16;
 	return(
 		fabs(xy0.x - xy1.x) <= threshold  &&
 		fabs(xy0.y - xy1.y) <= threshold
@@ -65,9 +65,9 @@ extern bool points_same_2(Tiling const * const tlngP, XY const xy0, XY const xy1
 }  // points_same_2()
 
 
-extern bool points_different_3(Tiling const * const tlngP, XY const xy0, XY const xy1, XY const xy2)
+extern bool points_diff_3(double const edgeLength, XY const xy0, XY const xy1, XY const xy2)
 {
-	const double threshold = tlngP->edgeLength / 16;
+	const double threshold = edgeLength / 16;
 	return(
 		fabs(xy0.x - xy1.x) > threshold  ||
 		fabs(xy0.y - xy1.y) > threshold  ||
@@ -76,12 +76,12 @@ extern bool points_different_3(Tiling const * const tlngP, XY const xy0, XY cons
 		fabs(xy2.x - xy0.x) > threshold  ||
 		fabs(xy2.y - xy0.y) > threshold
 	);
-}  // points_different_3()
+}  // points_diff_3()
 
 
-extern bool points_same_3(Tiling const * const tlngP, XY const xy0, XY const xy1, XY const xy2)
+extern bool points_same_3(double const edgeLength, XY const xy0, XY const xy1, XY const xy2)
 {
-	const double threshold = tlngP->edgeLength / 16;
+	const double threshold = edgeLength / 16;
 	return(
 		fabs(xy0.x - xy1.x) <= threshold  &&
 		fabs(xy0.y - xy1.y) <= threshold  &&
@@ -93,9 +93,9 @@ extern bool points_same_3(Tiling const * const tlngP, XY const xy0, XY const xy1
 }  // points_same_3()
 
 
-extern bool points_different_4(Tiling const * const tlngP, XY const xy0, XY const xy1, XY const xy2, XY const xy3)
+extern bool points_diff_4(double const edgeLength, XY const xy0, XY const xy1, XY const xy2, XY const xy3)
 {
-	const double threshold = tlngP->edgeLength / 16;
+	const double threshold = edgeLength / 16;
 	return(
 		fabs(xy0.x - xy1.x) > threshold  ||
 		fabs(xy0.y - xy1.y) > threshold  ||
@@ -110,12 +110,12 @@ extern bool points_different_4(Tiling const * const tlngP, XY const xy0, XY cons
 		fabs(xy1.x - xy3.x) > threshold  ||
 		fabs(xy1.y - xy3.y) > threshold
 	);
-}  // points_different_4()
+}  // points_diff_4()
 
 
-extern bool points_same_4(Tiling const * const tlngP, XY const xy0, XY const xy1, XY const xy2, XY const xy3)
+extern bool points_same_4(double const edgeLength, XY const xy0, XY const xy1, XY const xy2, XY const xy3)
 {
-	const double threshold = tlngP->edgeLength / 16;
+	const double threshold = edgeLength / 16;
 	return(
 		fabs(xy0.x - xy1.x) <= threshold  &&
 		fabs(xy0.y - xy1.y) <= threshold  &&
