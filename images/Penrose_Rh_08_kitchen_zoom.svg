@@ -8194,8 +8194,8 @@ Gridlines, end, commented out -->
 <g
 	transform='translate(-1.41,-0.75) scale(0.000456183493359) rotate(90)' 
 >
-	<use href='#KitchenRoomPath'     fill='#FFF' stroke-width='6px' stroke='#FFF' opacity='0.3333'/>
-	<use href='#KitchenFittingsPath' fill='none' stroke-width='2px' stroke='#000' opacity='0.4'/>
+	<use href='#KitchenRoomPath'     fill='none' stroke-width='8px' stroke='#FFF' opacity='0.6'/>
+	<use href='#KitchenFittingsPath' fill='none' stroke-width='4px' stroke='#000' opacity='0.5'/>
 	<use href='#KitchenRoomPath'     fill='none' stroke-width='2px' stroke='#000' opacity='0.8'/>
 </g>
 
