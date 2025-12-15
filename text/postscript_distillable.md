@@ -164,17 +164,15 @@ Obviously, for the particulars of your project, changes are needed.
 
 Start by possibly changing `mmTileEdge`, which defaults to `152.5`, being 150mm of tile + 2.5mm grout. 
 
-Next, in the PostScript file are two instances of the string &ldquo;Where on the map&rdquo;. 
+Next, in the PostScript file are two instances of the string &ldquo;Where on the map?&rdquo;. 
 Go to second instance, which is almost at the end of the file. 
 Just before this is are routines `KitchenRoomPath` and `KitchenFurniturePath`, specifying their shape in millimetres. 
 Adjust this template to your details. 
 But where on the map is your kitchen to be: which part of the tile pattern do you want? 
-Change the parameters of the `translate` near &ldquo;Where on the map&rdquo;. 
+Change the parameters of the `translate` near &ldquo;Where on the map?&rdquo;. 
 
-Back to the first instance of the string, at about line 47 of the file. 
-This chooses what is to be shown on the page: the `translate` choosing where, and the `scale` filling the page. 
-Simplest is to understate the scale (maybe `2`), by trial-and-error set the `translate` approximately correct, then increase the zoom and re-improve the `translate`. 
-
-If the PDF is to be published online, perhaps lessen the file size by shrinking the bounding box controlled by `ToPaint_XMin`, `ToPaint_XMax`, `ToPaint_YMin`, and `ToPaint_YMax`.
+Back to the first instance of the string, at about line 17 of the file. 
+The `ToPaint_XMin`, `ToPaint_XMax`, `ToPaint_YMin`, and `ToPaint_YMax`: choose what is to be painted. 
+The `/ScaleFactor` should choose widsely given these, but you might want to change.
 
 Indeed, for those tiling a non-huge space, this PostScript or its SVG equivalents, appropriately amended, might be all that is needed from this repo.

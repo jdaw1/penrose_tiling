@@ -1,6 +1,6 @@
 %!PS
 
-/DataAsOf (D:202512152140) def  % Manually changed to deate of kitchen edits.
+/DataAsOf (D:202512152145) def  % Manually changed to deate of kitchen edits.
 /Licence (GNU General Public License, Version 3, 29 June 2007) def
 /URL (https://github.com/jdaw1/penrose_tiling/) def
 /Author (Julian D A Wiseman of www.jdawiseman.com) def
@@ -14,53 +14,13 @@
 /YMin -7.951478980668843 def
 /YMax 7.951478980668843 def
 
+% Where on the map?
 /ToPaint_XMin -2.9 def  % Manually set. Also observe manual tweak of ScaleFactor.
 /ToPaint_YMin -2.8 def
 /ToPaint_XMax +0.1 def
 /ToPaint_YMax +1.2 def
 
 /mmTileEdge 152.5 def  % 150mm + 2.5mm grout
-
-% Room should be measured in the same units as mmTileEdge.
-% Placement set near end of file. Search for "KitchenRoomPath".
-/KitchenRoomPath
-{
-	% in mm
-	-2675 -3317.5 moveto
-	 +475     0   rlineto
-	    0  -215   rlineto
-	+3280     0   rlineto
-	    0   +70   rlineto
-	 +960     0   rlineto
-	    0 +3810   rlineto
-	 +350     0   rlineto
-	    0  +185   rlineto
-	 +285     0   rlineto
-	    0 +2750   rlineto
-	-1135     0   rlineto
-	    0  +250   rlineto
-	-3370     0   rlineto
-	    0  -250   rlineto
-	 -845     0   rlineto
-	closepath
-} bind def  % /KitchenRoomPath
-
-/KitchenFurniturePath
-{
-	% in mm
-	  -10   -2040   moveto
-	 -650       0   rlineto
-	    0   +1000   rlineto
-	 -220       0   rlineto
-	    0   +1600   rlineto
-	+1090       0   rlineto
-	    0   -1050   rlineto
-	 -220       0   rlineto
-	closepath
-
-	-2075  -3532.5 moveto  % cabinets
-	-2075  +3282.5 lineto
-} bind def % /KitchenFurniturePath
 
 
 
@@ -79,6 +39,7 @@
 def  % /ScaleFactor. User alterable. Could be of form "6 EdgeLength div", making an edge be 6pt on the paper.
 /FontName /Helvetica def  % /TrebuchetMS /GothamNarrow
 /FontSize EdgeLength ScaleFactor mul 0.3 mul def
+
 
 << /PageSize [PageWidth PageHeight] >> setpagedevice
 /PaperMatrix matrix currentmatrix def
@@ -24949,10 +24910,53 @@ gsave 1 setgray fill grestore gsave 0.8 setgray 1 setlinejoin PaperMatrix setmat
 
 % Paint kitchen.
 
-2 dict begin
+4 dict begin
+
+% Room should be measured in the same units as mmTileEdge.
+% Placement set near end of file. Search for "KitchenRoomPath".
+/KitchenRoomPath
+{
+	% in mm
+	-2675 -3317.5 moveto
+	 +475     0   rlineto
+	    0  -215   rlineto
+	+3280     0   rlineto
+	    0   +70   rlineto
+	 +960     0   rlineto
+	    0 +3810   rlineto
+	 +350     0   rlineto
+	    0  +185   rlineto
+	 +285     0   rlineto
+	    0 +2750   rlineto
+	-1135     0   rlineto
+	    0  +250   rlineto
+	-3370     0   rlineto
+	    0  -250   rlineto
+	 -845     0   rlineto
+	closepath
+} bind def  % /KitchenRoomPath
+
+/KitchenFurniturePath
+{
+	% in mm
+	  -10   -2040   moveto
+	 -650       0   rlineto
+	    0   +1000   rlineto
+	 -220       0   rlineto
+	    0   +1600   rlineto
+	+1090       0   rlineto
+	    0   -1050   rlineto
+	 -220       0   rlineto
+	closepath
+
+	-2075  -3532.5 moveto  % cabinets
+	-2075  +3282.5 lineto
+} bind def % /KitchenFurniturePath
+
 gsave
 TileMatrix setmatrix
 EdgeLength mmTileEdge div  dup  scale  % Edge length, tiling space, is EdgeLength. Edge length, mm, is mmTileEdge. So to convert mm (room) to tiling space, scale by EdgeLength / mmTileEdge.
+% Where on the map?
 -3130 -1660 translate  % Places KitchenRoomPath, in same units. I.e., offset of tile pattern relative to room.
 /RoomMatrix matrix currentmatrix def
 
