@@ -111,7 +111,7 @@ The [author](https://jdawiseman.com/author.html) has a very strong sense of shap
 Indeed, this might be why I am so fond the Penrose tiling.
 
 But my sense of colour is much much weaker. 
-Indeed, I generally consider design in black-and-white, with colour being added an afterthought.
+Indeed, I generally consider design in black-and-white, with colour being added as an afterthought.
 
 Hence end users are strongly encouraged not to be shy about reaching into the output to change colours. 
 The two [distillable PostScript outputs](postscript_distillable.md), and the [two types of SVG](svg.md), are deliberately friendly to those making changes. 

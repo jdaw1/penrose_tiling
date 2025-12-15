@@ -88,10 +88,10 @@ It is a delightful simple clean text-based user-alterable [Turing-complete](http
 But, even in the most flattering light, PostScript shows its age.
 
 [This author](https://jdawiseman.com/author.html) is fond of PostScript, and has done much work in it. 
-(Indeed, I maintain and use a [splendid PostScript program](https://github.com/jdaw1/placemat/blob/main/README.md#readme) of a mere 15&frac23;k lines &mdash; perhaps it would be safest not to look.) 
+(Indeed, I maintain and use a [splendid PostScript program](https://github.com/jdaw1/placemat/blob/main/README.md#readme) of a mere &asymp;&#8239;16k lines &mdash; perhaps it would be safest not to look.) 
 
-PostScript is a natural and relatively simple way to generate PDFs from a low-level language such as&nbsp;C: it writes ASCII-text PostScript, which is then converted to PDF. 
-That conversion, that &lsquo;distillation&rsquo;, requires an application, likely to be either [Adobe&nbsp;Distiller](https://en.wikipedia.org/wiki/Adobe_Distiller) or [Ghostscript](https://en.wikipedia.org/wiki/Ghostscript) or an online conversion service such as [ps2pdf.org](https://www.ps2pdf.org/convert.htm). 
+PostScript is a natural and relatively simple way to generate PDFs from a low-level language such as&nbsp;C: the&nbsp;C writes ASCII-text PostScript, which is then converted to PDF. 
+That conversion, that &lsquo;distillation&rsquo;, requires an application, likely to be either [Adobe&nbsp;Distiller](https://en.wikipedia.org/wiki/Adobe_Distiller) or [Ghostscript](https://en.wikipedia.org/wiki/Ghostscript) or an online route to Ghostscript such as [ps2pdf.org](https://www.ps2pdf.org/convert.htm). 
 For these purposes, any would be satisfactory (but Adobe is expensive).
 
 
@@ -120,12 +120,18 @@ Both have:
 ```
 
 The `360 mul 127 div` converts millimetres to the units of PostScript, DTP points. 
-A2 is 594mm&#8239;&times;&#8239;420mm; A3 is 420mm&#8239;&times;&#8239;297mm; A4 is 297mm&#8239;&times;&#8239;210mm. 
-For US&nbsp;8&frac12;&Prime;&#8239;&times;&#8239;11&Prime; use <code>/PageWidth&nbsp;8.5&nbsp;72&nbsp;mul&nbsp;def</code> and <code>/PageHeight&nbsp;11&nbsp;72&nbsp;mul&nbsp;def</code> (&because;&nbsp;72pt&nbsp;&equiv;&nbsp;1&Prime;), and likewise for other inch-specified page sizes.
-(*NB*: [1&nbsp;inch is defined](https://en.wikipedia.org/wiki/International_yard_and_pound) to be exactly 25.4mm; [1&nbsp;DTP&nbsp;point is defined](https://en.wikipedia.org/wiki/Point_(typography)) to be 1&frasl;72 of an inch; &DoubleLongRightArrow; 360pt&nbsp;=&nbsp;127mm &Longleftrightarrow; 1mm&nbsp;=&nbsp;360&frasl;127pt.)
+[ISO&nbsp;216 paper sizes](https://en.wikipedia.org/wiki/ISO_216):&nbsp; A4 is 297&#8239;mm&#8239;&times;&#8239;210&#8239;mm;&nbsp; 
+A3 is 420&#8239;mm&#8239;&times;&#8239;297&#8239;mm;&nbsp; 
+A2 is 594&#8239;mm&#8239;&times;&#8239;420&#8239;mm.&nbsp; 
+For the US size&nbsp;8&frac12;&Prime;&#8239;&times;&#8239;11&Prime; use <code>/PageWidth&nbsp;8.5&nbsp;72&nbsp;mul&nbsp;def</code> and <code>/PageHeight&nbsp;11&nbsp;72&nbsp;mul&nbsp;def</code> (&because;&nbsp;72&#8239;pt&nbsp;&equiv;&nbsp;1&Prime;), and likewise for other inch-specified page sizes.
+(*NB*: [1&nbsp;inch is defined](https://en.wikipedia.org/wiki/International_yard_and_pound) to be exactly 25.4&#8239;mm;&nbsp; 
+[1&nbsp;DTP&nbsp;point is defined](https://en.wikipedia.org/wiki/Point_(typography)) to be 1&frasl;72 of an inch;&nbsp; 
+&Longleftrightarrow;&nbsp; 1&#8239;pt&nbsp;=&nbsp;127&frasl;360&#8239;mm&nbsp; 
+&Longleftrightarrow;&nbsp; 1&#8239;pt&nbsp;=&nbsp;0.35277&#773;&#8239;mm&nbsp; 
+&DoubleLongRightArrow;&nbsp; 1&#8239;mm&nbsp;&asymp;&nbsp;2.8346&#8239;pt.)
 
 
-The `/Margin 18 def` says 18pt =&nbsp;18&frasl;72&nbsp;inch =&nbsp;&frac13;&Prime; &asymp;&nbsp;8.5mm. 
+The <code>/Margin&nbsp;18&nbsp;def</code> says 18&#8239;pt =&nbsp;18&frasl;72&nbsp;inch =&nbsp;&frac13;&Prime; &asymp;&nbsp;8.5&#8239;mm. 
 If not liked, change.
 
 In the arcs file, `/LongestPathToBeFilled 215 def` is as explained in the [SVG&nbsp;documentation](svg.md).
@@ -135,7 +141,7 @@ The `ScaleFactor` is derived from values computed from the `ToPaint_XMin` etc, b
 The rhombus output specifies the routine `PaintByRhombus`, which takes parameters off the stack, and then paints the parameter-specified rhombus. 
 It encodes conditions making the choice of which colour, and then a `setrgbcolor` or a `setgray`. 
 The [author](https://jdawiseman.com/author.html) has strong shape perception but very weak colour perception, so you might well want to change the colours. 
-Really, don&rsquo;t trust my colours: be not shy about recolouration.
+Really, don&rsquo;t love my colours: be not shy about recolouration.
 
 The rhombus code also has multiple sections of commented-out code that were used in debugging, with nearby explanatory comments. 
 If useful to you, play and experiment. 
