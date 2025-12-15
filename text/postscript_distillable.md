@@ -173,6 +173,6 @@ Change the parameters of the `translate` near &ldquo;Where on the map?&rdquo;.
 
 Back to the first instance of the string, at about line 17 of the file. 
 The `ToPaint_XMin`, `ToPaint_XMax`, `ToPaint_YMin`, and `ToPaint_YMax`: choose what is to be painted. 
-The `/ScaleFactor` should choose widsely given these, but you might want to change.
+The `/ScaleFactor` should choose wisely given these, but you might want to change.
 
 Indeed, for those tiling a non-huge space, this PostScript or its SVG equivalents, appropriately amended, might be all that is needed from this repo.
