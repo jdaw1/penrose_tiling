@@ -1,6 +1,6 @@
 %!PS
 
-/DataAsOf (D:20250622155907) def
+/DataAsOf (D:20260407212051) def
 /Licence (GNU General Public License, Version 3, 29 June 2007) def
 /URL (https://githubcom/jdaw1/penrose_tiling/) def
 /Author (Julian D A Wiseman of wwwjdawisemancom) def
@@ -11,8 +11,8 @@
 
 /XMin -3.854101966249685 def
 /XMax 2.618033988749895 def
-/YMin -4.979796569765561 def
-/YMax 4.979796569765561 def
+/YMin -4.97979656976556 def
+/YMax 4.97979656976556 def
 
 /ToPaint_XMin -4 def  % User changeable
 /ToPaint_XMax +3 def
@@ -45,7 +45,7 @@ Actual_XMax Actual_XMin add -2 div  Actual_YMax Actual_YMin add -2 div  translat
 /TileMatrix matrix currentmatrix def
 
 mark
-	/CreationDate (D:20250622155907)
+	/CreationDate (D:20260407212051)
 	/Title (Penrose tiling)
 	/Author (Julian D. A. Wiseman)
 	/Subject (http://github.com/jdaw1/penrose_tiling/)
@@ -112,6 +112,8 @@ mark (FontName = ) FontName (; FontSize = ) FontSize ConcatenateToMark =
 
 flush
 
+/PaintedNumByType 0 dict def
+
 FontName FontSize selectfont  % Useful default if PaintByRhombus is to show, for example, the RhId.
 0 setgray  2 setlinejoin  [] 0 setdash
 PaperMatrix setmatrix  EdgeLength 16 div ScaleFactor mul  setlinewidth
@@ -132,14 +134,16 @@ PaperMatrix setmatrix  EdgeLength 16 div ScaleFactor mul  setlinewidth
 		NorthY //Actual_YMax ge  EastY //Actual_YMax ge  SouthY //Actual_YMax ge  WestY //Actual_YMax ge  and and and {pop //false exit} if
 	} repeat  % 1
 	{
-		% Code inside here is intended to be user alterable.
 		//TileMatrix setmatrix
+		% Code inside here is intended to be user alterable.
 		//true  % paint rhombi?
 		{
 			NorthX NorthY moveto  EastX EastY lineto  SouthX SouthY lineto  WestX WestY lineto  closepath
 			IsFat
 			{
 				% Fat
+				PathClosed {PathLength 5 eq {Pointy {(p_)} {(r_)} ifelse} {(c_)} ifelse} {(o_)} ifelse PathLength 10 string cvs Concatenate cvn
+				//PaintedNumByType exch  2 copy known {2 copy get 1 add} {1} ifelse put
 				gsave
 				//false
 				1 {  % repeat
@@ -183,6 +187,7 @@ PaperMatrix setmatrix  EdgeLength 16 div ScaleFactor mul  setlinewidth
 %				} if  % PathClosed not
 			}{
 				% Thin
+				//PaintedNumByType /thin 2 copy known {2 copy get 1 add} {1} ifelse put
 				gsave 0.8 setgray fill grestore
 				//PaperMatrix setmatrix  0 setgray  stroke
 				% Code that highlights the north corners of thin rhombi. Used in debugging. By default commented out.
@@ -265,6 +270,24 @@ gsave 1 setgray fill grestore gsave 0.8 setgray 1 setlinejoin PaperMatrix setmat
 0.381966011 -1.175570505 1 -3.077683537 2.618033989 -1.902113033 2 0 72 2 0 false 3 false 0 0 0 0 true PaintByRhombus
 
 showpage
+
+mark  (\n\n\nNum rhombi painted:)
+(  thin=) PaintedNumByType /thin 2 copy known {get} {pop pop 0} ifelse
+(;  fat=) 0 PaintedNumByType {exch /thin ne {add} {pop} ifelse} forall
+(.\n\nPainted fat rhombi by path type \(r_ound, p_ointy, c_losed, o_pen\):\n)
+[ (r) (p) (c) (o) ]  % Partial sorting of this log output.
+{
+	/MetaType exch 0 get def
+	//PaintedNumByType
+	{
+		1 index dup  /thin ne  exch
+		12 string cvs 0 get MetaType eq  and
+		{
+			12 string cvs (=) exch (,  )
+		} {pop pop} ifelse  % /thin ne, MetaType eq
+	} forall  % PaintedNumByType
+} forall  % MetaType
+pop (.\n) ConcatenateToMark =
 
 (\n\n) =
 count              (      = count: this really should be 0\n)   dup 0  4 -1 roll  6 string cvs  putinterval

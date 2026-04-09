@@ -1,8 +1,9 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // smalls.c, in PenroseC
 
 #include "penrose.h"
+#include <string.h>
 
 /* Most of these functions 'should' be inline, but C99 does not allow an elegant single definition of inline. So not. :-( */
 
@@ -206,3 +207,48 @@ bool collinear(XY const xy0, XY const xy1, XY const xy2, const Tiling * const tl
 		* tlngP->edgeLength * tlngP->edgeLength
 	);
 }  // collinear()
+
+
+
+FILE * file_open(const char *filename,  const char *mode,  const char *errorString)
+{
+	FILE *fp = fopen(filename, mode);
+	if( fp == NULL )
+	{
+		printf(
+			"\n\nError: fopen('%s', '%s') returned NULL; errorString being '%s'. Exiting.\n\n",
+			filename, mode, errorString
+		);
+		exit(EXIT_FAILURE);
+	}
+	else
+		return fp;
+}  // file_open()
+
+
+
+char * filename_new_extension(const char * const filenameOld,  char * strNew,  const char * const extensionNew)
+{
+	size_t i;
+	bool good;
+	strcpy(strNew, filenameOld);
+
+	for(i = 0;  strNew[i] != 0  ;  i++ )
+		;
+
+	for( ;  ;  i-- )
+	{
+		if( strNew[i] == '.' )
+			{good = true;  break;}
+		if( i < 0  ||  i > 16000)  // size_t usually unsigned
+			{good = false;  break;}
+	}
+
+	if( good )
+	{
+		strcpy(strNew + i + 1,  extensionNew);
+		return strNew ;
+	}
+	else
+		return NULL ;
+}  // filename_new_extension()

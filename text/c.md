@@ -53,12 +53,11 @@ nor valid [K&R&nbsp;&lsquo;original&rsquo;](https://en.wikipedia.org/wiki/The_C_
 The C code cannot quite be executed directly out of the box: a few trivial customisations are needed, which are in the [<kbd>controls.c</kbd>](../C/controls.c) file.
 
 * **Most important**: to what directory should output go, as used by <code>fopen(&hellip;, "w")</code>? 
-This is in `filePath_staticConst[]`, which has default value `"/Users/JDAW/Documents/outputPenrose/"`. 
-Almost certainly, you should change this default.
+This is in `filePath_staticConst[]` and almost certainly you should change this.
 
 * After an SVG or a distillable PostScript file is finished, should an application be called to display it or distill it? 
 This is done by <code>execute_SVG_PostProcessing(&hellip;)</code> and <code>execute_PostScript_PostProcessing(&hellip;)</code>. 
-By default, these call Chrome and Adobe Distiller, in my computer&rsquo;s location of these applications. 
+By default, these call Chrome and GhostScript, in my computer&rsquo;s location of these applications. 
 These calls are made by the <code>system(&hellip;)</code> command, which could in theory do anything, so check that your (and indeed, my) invocations are safe. 
 Or, to have them do nothing, replace both of these <code>execute_&hellip;</code> routines with a do&#8209;nothing `{return;}`.
 
@@ -85,30 +84,30 @@ From one loop to the next the number of tiles grows, approximately, by a factor 
 The table below shows the numbers of fat and thin tiles in each tiling. 
 
 [My kitchen](../images/20230923_kitchen_tiles.png) uses tiles with an edge length of 150mm. 
-Areas in the following table assume tiles of the same size, with &asymp;&nbsp;1mm of grouting, so fat and thin are assumed to occupy areas of (0.151m)&sup2;&#8239;&times;&#8239;Sin(72&deg;)&nbsp;&asymp;&nbsp;0.02168&#8239;m&sup2; &asymp;&nbsp;1m&sup2;&#8239;/&#8239;46.1 and (0.151m)&sup2;&#8239;&times;&#8239;Sin(36&deg;)&nbsp;&asymp;&nbsp;0.01340&#8239;m&sup2; &asymp;&nbsp;1m&sup2;&#8239;/&#8239;74.6.
+Areas in the following table assume tiles of the same size, with &asymp;&nbsp;1mm of grouting, so fat and thin are assumed to occupy areas of (0.151m)&sup2;&#8239;&times;&#8239;Sin(72&deg;)&nbsp;&asymp;&nbsp;0.02168&#8239;m&sup2; &asymp;&nbsp;1m&sup2;&#8239;/&#8239;46.1 and (0.151m)&sup2;&#8239;&times;&#8239;Sin(36&deg;)&nbsp;&asymp;&nbsp;0.01340&#8239;m&sup2; &asymp;&nbsp;1m&sup2;&#8239;/&#8239;74.6, weighted-averaging 0.02045&#8239;m&sup2; &asymp;&nbsp;1m&sup2;&#8239;/48.9 (but allow for edge cutting).
 
 
 
 
 | Tl&rsquo;g<br>Id | Num<br>Fats | Num<br>Thins | Long<br>-est<br>closed<br>path | Long<br>-est<br>open<br>path | Area<br>metric | Area<br>imperial<br>&CupCap;&nbsp;US | JSON<br>size | &asymp;&#8239;&Sum;<small><sub>0&#10141;_n_</sub></small><br>exec.<br>time |
-|----------------------------------:|-----------:|-----------:|-------:|--------:|--------------------:|----------------------:|---------------:|:-------------:|
+|----------------------------------:|-----------:|-----------:|-------:|--------:|--------------------:|----------------------:|---------------:|--------------:|
 | [&numsp;0](../images/Penrose_Rh_00.svg) |      2 |        1 |        |       2 |                     |                       |  2.4&#8239;KiB |               |
 | [&numsp;1](../images/Penrose_Rh_01.svg) |      9 |        4 |        |       3 |                     |                       |  9.5&#8239;KiB |               |
 | [&numsp;2](../images/Penrose_Rh_02.svg) |     32 |       18 | 5&lsquo;r&rsquo; |  8 | 0.9&#8239;m&sup2; |  10&#8239;ft&sup2; |   34&#8239;KiB |               |
 | [&numsp;3](../images/Penrose_Rh_03.svg) |     98 |       55 | 5&lsquo;p&rsquo; | 15 | 2.9&#8239;m&sup2; |  31&#8239;ft&sup2; |  104&#8239;KiB |               |
 | [&numsp;4](../images/Penrose_Rh_04.svg) |    281 |      166 |     15 |      32 |     8&#8239;m&sup2; |     90&#8239;ft&sup2; |  308&#8239;KiB |               |
 | [&numsp;5](../images/Penrose_Rh_05.svg) |    776 |      464 |     25 |      63 |    23&#8239;m&sup2; |    248&#8239;ft&sup2; |  874&#8239;KiB |               |
-| [&numsp;6](../images/Penrose_Rh_06.svg) |  2,098 |    1,273 |     55 |     128 |    63&#8239;m&sup2; |    673&#8239;ft&sup2; |  2.4&#8239;MiB |               |
-| [&numsp;7](../images/Penrose_Rh_07.svg) |  5,601 |    3,420 |    105 |     255 |   167&#8239;m&sup2; |  1,801&#8239;ft&sup2; |  6.5&#8239;MiB |   1&#8239;s   |
-| [&numsp;8](../images/Penrose_Rh_08.svg) | 14,840 |    9,106 |    215 |     512 |   444&#8239;m&sup2; |  4,778&#8239;ft&sup2; | 17.5&#8239;MiB |   3&#8239;s   |
-| [&numsp;9](../images/Penrose_Rh_09.svg) | 39,138 |   24,079 |    425 |   1,023 | 1,171&#8239;m&sup2; | 12,609&#8239;ft&sup2; |   47&#8239;MiB |   7&#8239;s   |
-| [10](../images/Penrose_Rh_10.svg) |    102,929 |     63,438 |    855 |   2,048 | 3,082&#8239;m&sup2; | 33,177&#8239;ft&sup2; |  125&#8239;MiB |  18&#8239;s   |
-| [11](../images/Penrose_Rh_11.svg) |    270,224 |    166,720 |  1,705 |   4,095 | 8,094&#8239;m&sup2; |          2.0&#8239;ac |  331&#8239;MiB |  44&#8239;s   |
-|  12                               |    708,674 |    437,521 |  3,415 |   8,192 |        2.1&#8239;ha |          5.2&#8239;ac |  877&#8239;MiB |   2&#8239;min |
-|  13                               |  1,857,305 |  1,147,124 |  6,825 |  16,383 |        5.6&#8239;ha |           14&#8239;ac |  2.3&#8239;GiB | 5.5&#8239;min |
-|  14                               |  4,865,680 |  3,005,938 | 13,655 |  32,768 |         15&#8239;ha |           36&#8239;ac |  6.0&#8239;GiB |  21&#8239;min |
-|  15                               | 12,743,682 |  7,874,055 | 27,305 |  65,535 |         38&#8239;ha |           94&#8239;ac | 15.8&#8239;GiB |  1.3&#8239;hr |
-|  16                               | 33,371,753 | 20,621,686 | 54,615 | 131,072 |        100&#8239;ha |          247&#8239;ac | 41.5&#8239;GiB |  6.5&#8239;hr |
+| [&numsp;6](../images/Penrose_Rh_06.svg) |  2,098 |    1,273 |     55 |     128 |    63&#8239;m&sup2; |    673&#8239;ft&sup2; |  2.4&#8239;MiB | 0.1&#8239;s   |
+| [&numsp;7](../images/Penrose_Rh_07.svg) |  5,601 |    3,420 |    105 |     255 |   167&#8239;m&sup2; |  1,801&#8239;ft&sup2; |  6.5&#8239;MiB | 0.3&#8239;s   |
+| [&numsp;8](../images/Penrose_Rh_08.svg) | 14,840 |    9,106 |    215 |     512 |   444&#8239;m&sup2; |  4,778&#8239;ft&sup2; | 17.5&#8239;MiB | 0.8&#8239;s   |
+| [&numsp;9](../images/Penrose_Rh_09.svg) | 39,138 |   24,079 |    425 |   1,023 | 1,171&#8239;m&sup2; | 12,609&#8239;ft&sup2; |   47&#8239;MiB | 2.7&#8239;s   |
+| [10](../images/Penrose_Rh_10.svg) |    102,929 |     63,438 |    855 |   2,048 | 3,082&#8239;m&sup2; | 33,177&#8239;ft&sup2; |  125&#8239;MiB | 5.9&#8239;s   |
+| [11](../images/Penrose_Rh_11.svg) |    270,224 |    166,720 |  1,705 |   4,095 | 8,094&#8239;m&sup2; |          2.0&#8239;ac |  331&#8239;MiB |  14&#8239;s   |
+|  12                               |    708,674 |    437,521 |  3,415 |   8,192 |        2.1&#8239;ha |          5.2&#8239;ac |  877&#8239;MiB |  41&#8239;s   |
+|  13                               |  1,857,305 |  1,147,124 |  6,825 |  16,383 |        5.6&#8239;ha |           14&#8239;ac |  2.3&#8239;GiB | 108&#8239;s   |
+|  14                               |  4,865,680 |  3,005,938 | 13,655 |  32,768 |         15&#8239;ha |           36&#8239;ac |  6.0&#8239;GiB |   7&#8239;min |
+|  15                               | 12,743,682 |  7,874,055 | 27,305 |  65,535 |         38&#8239;ha |           94&#8239;ac | 15.8&#8239;GiB |  29&#8239;min |
+|  16                               | 33,371,753 | 20,621,686 | 54,615 | 131,072 |        100&#8239;ha |          247&#8239;ac | 41.5&#8239;GiB |  2.5&#8239;hr |
 
 
 ### Area comparisons ###
@@ -144,20 +143,23 @@ But, of course, your space might not be square, and your tiles might not be 500m
 
 ### Speed ###
 
-The quoted execution times are from a 2.7&#8239;GHz quad-core iMac with 32&#8239;GiB of memory. 
-Execution was in [Xcode](https://developer.apple.com/xcode/)&rsquo;s debug mode to catch possible stray pointer misbehaviours (of which there were none); and with memory&#8209;alignment at its natural value by <code>#define&nbsp;MEMORY_FRUGALITY_OUTRANKS_SPEED&nbsp;false</code> in [<kbd>penrose.h</kbd>](../C/penrose.h).
+The quoted execution times are from a ten-core &lap;4.4&#8239;GHz Apple&nbsp;M4 Mac&nbsp;mini with 16&#8239;GiB of memory. 
+Execution was in [Xcode](https://developer.apple.com/xcode/)&rsquo;s debug mode to catch possible stray pointer misbehaviours (of which there were none); and with memory&#8209;alignment at its natural value by <code>#define&nbsp;MEMORY_FRUGALITY_OUTRANKS_SPEED&nbsp;false</code> in [<kbd>penrose.h</kbd>](../C/penrose.h). 
+Your execution times might be faster, might be slower.
 
 
 ### Limits ###
 
 A deeper recursion would need more memory. 
-It might be that one more recursion, so &asymp;&#8239;0.14&nbsp;billion rhombi, would require 64&#8239;GiB of memory; and two more, &asymp;&#8239;0.37&nbsp;billion rhombi, would require &asymp;&#8239;160&#8239;GiB, for which execution would take&mdash;approximate estimate&mdash;most of two weeks. 
-Also consider: the disk space to hold the JSON; the disk space to hold the database used for post-processing such as selection of relevant rhombi; the storage space and software on the computers in the tile&#8209;laying machines. 
-But it could fairly be asked whether your physical area _really_ needs many more tens of millions of tiles (answer&nbsp;=&nbsp;it doesn&rsquo;t).
+It might be that one more recursion, so &asymp;&#8239;0.14&nbsp;billion rhombi, would require 64&#8239;GiB of memory; and two more, &asymp;&#8239;0.37&nbsp;billion rhombi, would require &asymp;&#8239;160&#8239;GiB, likely requiring a few days to execute. 
+Also consider: the disk space to hold its JSON (&gap;&#8239;285&#8239;GiB); the disk space to hold the database used for post-processing such as selection of relevant rhombi; the storage space and software on the computers in the tile&#8209;laying machines. 
+And it could fairly be asked whether your physical area _really_ needs many more tens of millions of tiles (likely answer:&nbsp;no).
 
-For `tilingId`&nbsp;&ge;&nbsp;20&nbsp; &DoubleLongRightArrow;&nbsp; &gap;&nbsp;2.5&#8239;bn rhombi, there would be a need to enlarge some types from <code>long&nbsp;int</code> (&le;&nbsp;2<small><sup>31</sup></small>&#8239;&minus;&#8239;1 &asymp;&nbsp;2&nbsp;billion) to [<code>long&nbsp;long&nbsp;int</code>](https://en.cppreference.com/w/c/language/arithmetic_types.html#Integer_types) (&le;&nbsp;2<small><sup>63</sup></small>&#8239;&minus;&#8239;1 &asymp;&nbsp;9&#8239;&times;&#8239;10<small><sup>18</sup></small> =&nbsp;9&nbsp;quintillion), which needs to be able to hold `-1` so cannot be `unsigned`. 
+For `tilingId`&nbsp;&ge;&nbsp;20&nbsp; &DoubleLongRightArrow;&nbsp; &gap;&nbsp;2.5&#8239;bn rhombi, &asymp;&#8239;90&#8239;km&sup2;, there would be a need to enlarge some types from <code>long&nbsp;int</code> (&le;&nbsp;2<small><sup>31</sup></small>&#8239;&minus;&#8239;1 &asymp;&nbsp;2&nbsp;billion) to [<code>long&nbsp;long&nbsp;int</code>](https://en.cppreference.com/w/c/language/arithmetic_types.html#Integer_types) (&le;&nbsp;2<small><sup>63</sup></small>&#8239;&minus;&#8239;1 &asymp;&nbsp;9&#8239;&times;&#8239;10<small><sup>18</sup></small> =&nbsp;9&nbsp;quintillion), which needs to be able to hold `-1` so cannot be `unsigned`. 
 This would require changing some `sprintf()` and `fprintf()` instances of &ldquo;`%li`&rdquo; to &ldquo;`%lli`&rdquo;. 
-If this is necessary, perhaps also improve the floating-point precision, both internal and as exported, by replacing `double` with [<code>long&nbsp;double</code>](https://en.cppreference.com/w/c/language/arithmetic_types.html#Real_floating_types) ([wikipedia](https://en.wikipedia.org/wiki/Long_double)), which would necessitate further changes to <code>&hellip;printf()</code>. In [<kbd>main.c</kbd>](../C/main.c) is <code>static&nbsp;int8_t&nbsp;const <b>numTilings_Max</b>&nbsp;=&nbsp;17;</code>, which prevents the accidental start, by a typing error such as &ldquo;<kbd>117</kbd>&rdquo;, of a task that is certain to fail eventually. If you really want to allow larger values&mdash;but almost certainly you don&rsquo;t&mdash;then increase `numTilings_Max`.
+If this is necessary, perhaps also improve the floating-point precision, both internal and as exported, by replacing `double` with [<code>long&nbsp;double</code>](https://en.cppreference.com/w/c/language/arithmetic_types.html#Real_floating_types) ([wikipedia](https://en.wikipedia.org/wiki/Long_double)), which would necessitate further changes to format strings passed to <code>&hellip;printf()</code>. 
+In [<kbd>main.c</kbd>](../C/main.c) is <code>static&nbsp;int8_t&nbsp;const <b>numTilings_Max</b>&nbsp;=&nbsp;17;</code>, which prevents the accidental start, by a typing error such as &ldquo;<kbd>117</kbd>&rdquo;, of a task that is certain to fail eventually. 
+If you really want to allow larger values&mdash;but almost certainly you don&rsquo;t&mdash;then increase `numTilings_Max`.
 
 Anyway, by me, not tested beyond `numTilings`&nbsp;=&nbsp;17&nbsp; &DoubleLongRightArrow;&nbsp; 0&#8239;&le;&#8239;`tilingId`&#8239;&le;&#8239;16, the largest of which has almost fifty&#8209;four million rhombi.
 
@@ -184,8 +186,7 @@ There is a `malloc()` of this length, and trivial initialisation.
 The showtime loop: <code>if(&nbsp;tilingId&nbsp;==&nbsp;0&nbsp;)</code> it calls `tiling_initial()`; otherwise passing the previous tiling into `tiling_descendant()`.
 
 These two, `tiling_initial()` and `tiling_descendant()`, are in [<kbd>tilings.c</kbd>](../C/tilings.c). 
-The latter is more complicated; the former creates an initial rhombus and does much as the former. 
-These invoke much work.
+The former creates an initial rhombus and does minor bureacracy; the latter is more complicated and does much work.
 
 * Computes `rhombi_NumMax`, and `malloc()` enough space for that many rhombi. 
 
@@ -257,7 +258,7 @@ And there are other positions for which holes or gaps have a unique completion, 
     The largest possible area is then chosen, such that there are &le;&#8239;65535 rhombi (sometimes _x_ or _y_ equalities compel the number of rhombi to be slightly less than 65535). 
     (The other two PostScript output formats merely paint one thing after another, so never need a large PostScript array, and hence can cope with lots of stuff.)
 
-* Some minor and small administration functions are in [<kbd>smalls.c</kbd>](../C/smalls.c). Numbers comparisons (which perhaps should have been overloaded, but which weren&rsquo;t): `max_2()`, `min_2()`, `max_4()`, `min_4()`, `avg_2()`, `median_3()`, `median_4()`. Point comparisons (ditto): `points_different_2()`, `points_same_2()`, `points_different_3()`, `points_same_3()`, `points_different_4()`, `points_same_4()`, `collinear()`. Small exporting helpers: `newlinesInString()`, `fileExtension_from_ExportFormat()`. 
+* Some minor and small administration functions are in [<kbd>smalls.c</kbd>](../C/smalls.c). Numbers comparisons (which perhaps should have been overloaded, but which weren&rsquo;t): `max_2()`, `min_2()`, `max_4()`, `min_4()`, `avg_2()`, `median_3()`, `median_4()`. Point comparisons (ditto): `points_different_2()`, `points_same_2()`, `points_different_3()`, `points_same_3()`, `points_different_4()`, `points_same_4()`, `collinear()`. Small exporting helpers: `file_open()` which does `fopen` with error handling, `newlinesInString()`, `fileExtension_from_ExportFormat()`, `filename_new_extension()` which is used to rename a <kbd>.ps</kbd> to a <kbd>.pdf</kbd>.
 
 
 ### Exporting code ###

@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // penrose.h, in PenroseC
 
@@ -248,6 +248,8 @@ typedef struct  // Tiling, never packed because <=20 of them, yet frequent acces
 
 // Functions and sub-routines
 
+FILE * file_open(const char *filename,  const char * mode,  const char * errorString);
+
 extern double    max_2(double const d0, double const d1);
 extern double    min_2(double const d0, double const d1);
 extern double    min_4(double const d0, double const d1, double const d2, double const d3);
@@ -479,6 +481,7 @@ char * svgTransform(
 );  // svgTransform()
 
 char * fileExtension_from_ExportFormat(char * const str, ExportFormat const ef);
+char * filename_new_extension(const char * const filenameOld,  char * strNew,  const char * const extensioNew);
 
 XY     wantedPostScriptCentre(void);
 double wantedPostScriptAspect(void);

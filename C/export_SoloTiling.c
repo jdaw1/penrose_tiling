@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // export_SoloTiling.c, in PenroseC
 
@@ -32,7 +32,7 @@ void export_soloTiling(
 		);
 		numLinesThisFile = 0;
 		numCharsThisFile = 0;
-		fp=fopen(fileName, "w");
+		fp = file_open(fileName, "w", "export_soloTiling: SVG_rhomb");
 		tiling_export_PaintRhombiSVG(fp, tlngP, &numLinesThisFile, &numCharsThisFile);
 		fflush(fp); fclose(fp);
 		printf(
@@ -53,7 +53,7 @@ void export_soloTiling(
 		);
 		numLinesThisFile = 0;
 		numCharsThisFile = 0;
-		fp=fopen(fileName, "w");
+		fp = file_open(fileName, "w", "export_soloTiling: SVG_arcs");
 		tiling_export_PaintArcsSVG(fp, tlngP, &numLinesThisFile, &numCharsThisFile);
 		fflush(fp); fclose(fp);
 		printf(
@@ -78,7 +78,7 @@ void export_soloTiling(
 		);
 		numLinesThisFile = 0;
 		numCharsThisFile = 0;
-		fp=fopen(fileName, "w");
+		fp = file_open(fileName, "w", "export_soloTiling: PS_rhomb");
 		tiling_export_PaintRhombiPS(fp, tlngP, &numLinesThisFile, &numCharsThisFile, false);
 		fflush(fp); fclose(fp);
 		printf(
@@ -100,7 +100,7 @@ void export_soloTiling(
 		);
 		numLinesThisFile = 0;
 		numCharsThisFile = 0;
-		fp=fopen(fileName, "w");
+		fp = file_open(fileName, "w", "export_soloTiling: PS_arcs");
 		tiling_export_PaintArcsPS(fp, tlngP, &numLinesThisFile, &numCharsThisFile);
 		fflush(fp); fclose(fp);
 		printf(

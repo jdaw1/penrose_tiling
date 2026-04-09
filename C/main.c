@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // main.c, in PenroseC
 
@@ -167,7 +167,7 @@ int main(void)
 					fileExtension_from_ExportFormat(fileExtension, ef)
 				);
 				numLinesThisFile = 0;
-				fp=fopen(fileName, "w");
+				fp = file_open(fileName, "w", "main");
 				tilings_export(
 					fp,
 					ef,

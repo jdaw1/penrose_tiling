@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // neighbours.c, in PenroseC
 
@@ -199,7 +199,7 @@ void neighbours_populate(Tiling * const tlngP)
 					);
 					fflush(stderr);
 					sprintf(scratchString, "%serror_neighbours_populate.tsv", tlngP->filePath);
-					fp = fopen(scratchString, "w");
+					fp = file_open(scratchString, "w", "neighbours_populate");
 
 					tiling_export(
 						fp,

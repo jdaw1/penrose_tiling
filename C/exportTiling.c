@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // exportTiling.c, in PenroseC
 
@@ -303,7 +303,7 @@ void tiling_export(
 		(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
 		(*numCharsThisFileP) += fprintf(fp,
 			"\"WantedPostScriptNumberRhombi\":%li,   \"WantedPostScriptNumberPaths\":%li,"  
-			"\"Licence\":\"%s\",   \"URL\":\"%s\",  \"Author\":\"%s\"",
+			"   \"Licence\":\"%s\",   \"URL\":\"%s\",  \"Author\":\"%s\"",
 			tlngP->wantedPostScriptNumberRhombi,  tlngP->wantedPostScriptNumberPaths,
 			TextLicence, TextURL, TextAuthor
 		);
