@@ -33,6 +33,11 @@ void tiling_export_PaintRhombiPS(
 	const Path *pathP;
 	PathStats *pathStatP;
 
+	const double toPaint_xMin = postScript_toPaint_xMin(tlngP);  // in controls.c
+	const double toPaint_yMin = postScript_toPaint_yMin(tlngP);
+	const double toPaint_xMax = postScript_toPaint_xMax(tlngP);
+	const double toPaint_yMax = postScript_toPaint_yMax(tlngP);
+
 	// PostScript definitions, preamble, comment about what is changeable, etc.
 	sprintf(scratchString,
 		"%%!PS\n"
@@ -360,7 +365,11 @@ void tiling_export_PaintRhombiPS(
 	for( rhId_This = tlngP->numFats + tlngP->numThins - 1  ;  rhId_This >= 0  ;  rhId_This -- )
 	{
 		rhThisP = &(tlngP->rhombi[rhId_This]);
-		if( Thin == rhThisP->physique )
+		if( Thin == rhThisP->physique
+		&&  rhThisP->xMax > toPaint_xMin
+		&&  rhThisP->xMin < toPaint_xMax
+		&&  rhThisP->yMax > toPaint_yMin
+		&&  rhThisP->yMin < toPaint_yMax )
 		{
 			sprintf(scratchString,
 				"%.9lf %.9lf %.9lf %.9lf %.9lf %.9lf %.9lf %.9lf %.9lf",
@@ -374,7 +383,7 @@ void tiling_export_PaintRhombiPS(
 				scratchString, rhThisP->numNeighbours,  rhThisP->filledType, rhId_This
 			);
 			(*numLinesThisFileP) ++;
-		}  // Thin
+		}  // Thin and inside toPaint_...
 	}  // for( rhId ... )
 
 
@@ -388,15 +397,18 @@ void tiling_export_PaintRhombiPS(
 			pathStatP = &(tlngP->pathStat[pathStatId]) ;
 
 		for( rhId_This = tlngP->numFats + tlngP->numThins - 1 ;  rhId_This >= 0  ;  rhId_This -- )
-			if( Fat == tlngP->rhombi[rhId_This].physique )
+		{
+			rhThisP = &(tlngP->rhombi[rhId_This]);
+			if( Fat == rhThisP->physique )
 			{
-				rhThisP = &(tlngP->rhombi[rhId_This]);
-				pathP   = &(tlngP->path[ rhThisP->pathId ]);
-				if(
-					pathStatP->pathClosed == pathP->pathClosed  &&
-					pathStatP->pathLength == pathP->pathLength  &&
-					( 5 != pathP->pathLength  ||  (!pathP->pathClosed)  ||  pathStatP->pointy == pathP->pointy )
-				)
+				pathP = &(tlngP->path[ rhThisP->pathId ]);  // Known to be fat
+				if( pathStatP->pathClosed == pathP->pathClosed
+				&&  pathStatP->pathLength == pathP->pathLength
+				&&  ( 5 != pathP->pathLength  ||  (!pathP->pathClosed)  ||  pathStatP->pointy == pathP->pointy )
+				&&  rhThisP->xMax > toPaint_xMin
+				&&  rhThisP->xMin < toPaint_xMax
+				&&  rhThisP->yMax > toPaint_yMin
+				&&  rhThisP->yMin < toPaint_yMax )
 				{
 					sprintf(scratchString,
 						"%.9lf %.9lf %.9lf %.9lf %.9lf %.9lf %.9lf %.9lf %.9lf",
@@ -416,8 +428,9 @@ void tiling_export_PaintRhombiPS(
 						pathStatId, rhThisP->pathId, rhId_This
 					);
 					(*numLinesThisFileP) ++;
-				}  // if( 'pathId' == 'pathStatP' )
+				}  // if( 'pathId' == 'pathStatP' ) and inside toPaint_...
 			}  // Fat
+		}  // for( rhId_This ... )
 	}  // for( pathStatId ... )
 
 

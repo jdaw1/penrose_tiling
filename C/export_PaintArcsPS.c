@@ -35,6 +35,11 @@ void tiling_export_PaintArcsPS(
 	double angThisStart, angThisEnd, xMin, xMax, yMin, yMax;
 	int8_t nghbrNum, nnn;
 
+	const double toPaint_xMin = postScript_toPaint_xMin(tlngP);  // in controls.c
+	const double toPaint_yMin = postScript_toPaint_yMin(tlngP);
+	const double toPaint_xMax = postScript_toPaint_xMax(tlngP);
+	const double toPaint_yMax = postScript_toPaint_yMax(tlngP);
+
 	arcdEast = malloc( (tlngP->numFats + tlngP->numThins) * sizeof(bool) );
 	arcdWest = malloc( (tlngP->numFats + tlngP->numThins) * sizeof(bool) );
 	if( NULL == arcdEast ) fprintf(stderr, "tiling_export_PaintArcsPS(): !!! NULL == arcdEast, with tilingId=%" PRIi8 ". Continuing, with slight misbehaviour. !!!\n", tlngP->tilingId);
@@ -274,6 +279,12 @@ void tiling_export_PaintArcsPS(
 		if( ! pathP->pathVeryClosed )  // Close to edge, such that arc might not be complete
 			continue;
 
+		if( pathP->xMax < toPaint_xMin
+		||  pathP->xMin > toPaint_xMax
+		||  pathP->yMax < toPaint_yMin
+		||  pathP->yMin > toPaint_yMax )
+			continue;
+
 		arcCentrePrev.x = DBL_MAX;  // So certain to be different to first rhombus in path
 		arcCentrePrev.y = DBL_MAX;
 		if( 1 == pathP->pathClosedTypeNum % 2 )
@@ -415,10 +426,21 @@ void tiling_export_PaintArcsPS(
 	for( rhId = 0  ;  rhId < tlngP->numFats + tlngP->numThins  ;  rhId ++ )
 	{
 		rhP = &(tlngP->rhombi[rhId]);
+
+		if( rhP->xMax < toPaint_xMin
+		||  rhP->xMin > toPaint_xMax
+		||  rhP->yMax < toPaint_yMin
+		||  rhP->yMin > toPaint_yMax )
+			continue;
+
 		either = false;
 		angThisStart = rhP->angleDegrees  +  (Fat == rhP->physique  ?   36  :  72 );
 		if(angThisStart >= 180) angThisStart -= 360;
-		if( NULL == arcdEast  ||  (! arcdEast[rhId]) )
+		if( (NULL == arcdEast  ||  (! arcdEast[rhId]))
+		&& rhP->east.x  +  tlngP->edgeLength / 2  >  toPaint_xMin
+		&& rhP->east.x  -  tlngP->edgeLength / 2  <  toPaint_xMax
+		&& rhP->east.y  +  tlngP->edgeLength / 2  >  toPaint_yMin
+		&& rhP->east.y  -  tlngP->edgeLength / 2  <  toPaint_yMax )
 		{
 			sprintf(scratchString,
 				"%.9lf %.9lf moveto  %.9lf %.9lf R %.9lf %.9lf arc",
@@ -429,8 +451,12 @@ void tiling_export_PaintArcsPS(
 			stringClean(scratchString);
 			(*numCharsThisFileP) += fprintf(fp, "%s",scratchString);
 			either = true;
-		}  // ! arcdEast[]
-		if( NULL == arcdWest  ||  (! arcdWest[rhId]) )
+		}  // ! arcdEast[], inside toPaint_...
+		if( (NULL == arcdWest  ||  (! arcdWest[rhId]))
+		&& rhP->west.x  +  tlngP->edgeLength / 2  >  toPaint_xMin
+		&& rhP->west.x  -  tlngP->edgeLength / 2  <  toPaint_xMax
+		&& rhP->west.y  +  tlngP->edgeLength / 2  >  toPaint_yMin
+		&& rhP->west.y  -  tlngP->edgeLength / 2  <  toPaint_yMax )
 		{
 			angThisStart += (angThisStart > 90 ? -180 : 180);
 			sprintf(scratchString,
@@ -443,7 +469,7 @@ void tiling_export_PaintArcsPS(
 			stringClean(scratchString);
 			(*numCharsThisFileP) += fprintf(fp, "%s",scratchString);
 			either = true;
-		}  // ! arcdWest[]
+		}  // ! arcdWest[], inside toPaint_...
 		if( either )
 		{
 			(*numCharsThisFileP) += fprintf(fp, "\n");  fflush(fp);
