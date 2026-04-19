@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // export_PaintArcsPS.c, in PenroseC
 
@@ -8,11 +8,11 @@
 
 /*
 	The ExportFormats export as data: arrays of stuff.
-	But PostScript's maximum array length is 65535.
+	But PostScript's maximum array length is 65535 (https://www.adobe.com/jp/print/postscript/pdfs/PLRM.pdf#page=753  PLRM3, Appendix B, p739, table B.1, row 3).
 	So this code just outputs raw PostScript instructions, one after the other.
 	All painting is determined one rhombus at a time: rhombi are not stored in a way that allows reasoning at a less-local level than one-at-a-time.
 	There is some room for post-C hand editing of the PostScript, but much less flexibly the the other PostScript data format.
-	There limit on the number of rhombi is printer memory and resolution, so much much larger than 2^16.
+	The limit on the number of rhombi is printer memory and resolution, so much much larger than 2^16.
 
 	Because this is just raw PostScript commands, this exporting C code does not have the structure of the other formats' C code.
 	It is different and stand-alone.
@@ -440,7 +440,7 @@ void tiling_export_PaintArcsPS(
 		&& rhP->east.x  +  tlngP->edgeLength / 2  >  toPaint_xMin
 		&& rhP->east.x  -  tlngP->edgeLength / 2  <  toPaint_xMax
 		&& rhP->east.y  +  tlngP->edgeLength / 2  >  toPaint_yMin
-		&& rhP->east.y  -  tlngP->edgeLength / 2  <  toPaint_yMax )
+		&& rhP->east.y  -  tlngP->edgeLength / 2  <  toPaint_yMax )  // This is slightly generous; harmlessly, orientation-dependent, some near misses will be admitted.
 		{
 			sprintf(scratchString,
 				"%.9lf %.9lf moveto  %.9lf %.9lf R %.9lf %.9lf arc",
@@ -456,7 +456,7 @@ void tiling_export_PaintArcsPS(
 		&& rhP->west.x  +  tlngP->edgeLength / 2  >  toPaint_xMin
 		&& rhP->west.x  -  tlngP->edgeLength / 2  <  toPaint_xMax
 		&& rhP->west.y  +  tlngP->edgeLength / 2  >  toPaint_yMin
-		&& rhP->west.y  -  tlngP->edgeLength / 2  <  toPaint_yMax )
+		&& rhP->west.y  -  tlngP->edgeLength / 2  <  toPaint_yMax )  // This is slightly generous; harmlessly, orientation-dependent, some near misses will be admitted.
 		{
 			angThisStart += (angThisStart > 90 ? -180 : 180);
 			sprintf(scratchString,
