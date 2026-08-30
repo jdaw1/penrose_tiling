@@ -21,7 +21,7 @@ Behold!
 
 <div align="center">
 
-![tilingId=10, extract, in black-and-white and grey](../images/Penrose_Rh_10_clipped_bw.svg)
+![tilingId=09, extract, in black-and-white and grey](../images/Penrose_Rh_09_clipped_bw.svg)
 
 </div>
 
@@ -32,33 +32,41 @@ This works really well on the scale of a kitchen ([e.g.](../images/20230923_kitc
 But there is a property that might be unwanted on the scale of hectares. 
 That is, local texture is quite uniform.
 
-In the limit there are &frac12;(1&nbsp;+&nbsp;&radic;5) &asymp;&nbsp;1.618 times as many fats as thins, each of which has an area bigger by the same ratio, 
+For big tilings there are &frac12;(1&nbsp;+&nbsp;&radic;5) &asymp;&nbsp;1.618 times as many fats as thins, each of which has an area bigger by the same ratio, 
 so the fats become (5&nbsp;+&nbsp;&radic;5)/10 &asymp;&nbsp;72.36% of the area, 
 and the thins are (5&nbsp;&minus;&nbsp;&radic;5)/10 &asymp; 27.639% of the area. 
-This is true in the limit, but is approximately true even for small areas. 
+In a tachincal mathematical sense this is true in the limit, but is approximately true even for small areas. 
 I.e., the local texture is quite uniform.
 
 But wait! 
 Each fat tile has two fat neighbours. 
 So fat tiles form paths. 
 Paths that don&rsquo;t reach the edge are closed, and there are such paths only of particular lengths: 
-5, 5 (two types of 5-path), 15, 25, 55, 105, 215, 425, 855, 1705, 3415, 6825, &hellip;.
+5, 5 (two types of 5-path), 15, 25, 55, 105, 215, 425, 855, 1705, 3415, 6825, &hellip;, [<i>n</i>&#8239;&minus;&#8239;2]&#8239;&times;&#8239;2&nbsp;+&nbsp;[<i>n</i>&#8239;&minus;&#8239;1].
 
 Let&rsquo;s colour paths by length.
 
 <div align="center">
 
-![tilingId=10, extract, in colour](../images/Penrose_Rh_10_clipped_colour.svg)
+![tilingId=09, extract, in colour](../images/Penrose_Rh_09_clipped_colour.svg)
 
 </div>
 
 The &lsquo;round&rsquo; paths of length 5 are white, also marked with a small interior circle. 
-The &lsquo;pointy&rsquo; paths of length 5 are pale green (&lsquo;round&rsquo; versus &lsquo;pointy&rsquo; visible by inspecting the touching thins).
-Paths of length 15 are dark green; 25s are dark blue; 55s are bright blue; the 105 is pink; 215 is brown/maroon; 425 is dull green; the red is a long open path.
+The &lsquo;pointy&rsquo; paths of length 5 are pale green (&lsquo;round&rsquo; versus &lsquo;pointy&rsquo; named by the arrangement of the touching thins).
+Paths of length 15 are dark green; 
+25s are dark blue; 
+55s are bright blue; 
+105s are pink; 
+the 215 is brown/maroon; 
+the tiny part of the 425 is dull green; 
+855 absent from this diagram; 
+the fragments of the 1705 are orange;
+and the dull darkish red is a long open path.
 
 And the optical uniformity has disappeared: at all scales there is structure, interesting and playful and curious structure.
 
-Long paths are, in a sense that is precisely definable, &asymp;&#8239;1.44 dimensional. 
+Long paths are, in technical a sense that is precisely definable, [ln](https://en.wikipedia.org/wiki/Natural_logarithm)(2)&#8239;/&#8239;ln([&phi;](https://en.wikipedia.org/wiki/Golden_ratio))&nbsp;&asymp;&nbsp;1.44 [dimensional](https://en.wikipedia.org/wiki/Fractal_dimension). 
 This number is, in effect, a measure of their wiggliness. 
 It is an aesthetically pleasing dimension: definitely bigger than boring 1; definitely smaller than conventional 2; puzzlingly between.
 
@@ -90,7 +98,7 @@ The C:
 * Identifies, for both closed paths and for thin rhombi, the smallest enclosing path and related information;
 * Exports much data in multiple formats:
     * [JSON](https://en.wikipedia.org/wiki/JSON), for subsequent machine manipulation,
-    * [TSV](https://en.wikipedia.org/wiki/Tab-separated_values),
+    * [TSV](https://en.wikipedia.org/wiki/Tab-separated_values) for Excel,
     * [SVG](https://en.wikipedia.org/wiki/SVG) of rhombi, for display in a browser and in this documentation, 
     * SVG of arcs within the rhombi, for display in a browser, 
     * [PostScript](https://en.wikipedia.org/wiki/PostScript), painting rhombi, for conversion to [PDF](https://en.wikipedia.org/wiki/PDF),
@@ -98,25 +106,27 @@ The C:
     * PostScript as data, for use by a PostScript program.
 * The TSV is for importation into a spreadsheet. There is an example spreadsheet, with VBA for chart control and for creation of range names; the plottable series being dynamic arrays.
 * Two of the three PostScript formats are themselves a mix of code and data, these two being user-changeable.
-* The SVG output is also sufficiently reader-friendly to be user-changeable.
+* The SVG and the PostScript output are sufficiently reader&#8209;friendly to be user&#8209;changeable.
 
 Hence there is much code, and much useful output.
 
-Indeed, for small tilings (a room rather than hectares), the output in this repo, with the large files hosted elsewhere, might well suffice.
-I.e., you might well not need the C at all.
+Indeed, for small tilings, a room rather than hectares, the output in this repo will suffice: merely see [guidelines](postscript_distillable.md#kitchen) about changing [a PostScript file](../postscript_pdf/Kitchen_Rh_09.ps). 
+I.e., for non&#8209;huge tilings, the C isn&rsquo;t needed.
 
 ## Shape and colour ##
 
 The [author](https://jdawiseman.com/author.html) has a very strong sense of shape, especially of geometrical shape. 
-Indeed, this might be why I am so fond the Penrose tiling.
+Indeed, this might be why I am so fond of the Penrose tiling.
 
 But my sense of colour is much much weaker. 
-Indeed, I generally consider design in black-and-white, with colour being added as an afterthought.
+Indeed, I generally see colour as an discrete arbitrary label, rather than as a continuous synaesthetic joy.
 
-Hence end users are strongly encouraged not to be shy about reaching into the output to change colours. 
+Hence end users are strongly encouraged to reach into the output to change colours. 
 The two [distillable PostScript outputs](postscript_distillable.md), and the [two types of SVG](svg.md), are deliberately friendly to those making changes. 
-E.g., in the PostScript search for &ldquo;[<code>setrgbcolor</code>](https://www.adobe.com/jp/print/postscript/pdfs/PLRM.pdf#page=695)&rdquo;, and change. 
-E.g., in the SVG, search for &ldquo;[<code>fill=</code>](https://www.w3schools.com/graphics/svg_fill.asp)&rdquo;, and change.
+E.g., in the PostScript search for 
+&ldquo;[<code>setrgbcolor</code>](https://www.adobe.com/jp/print/postscript/pdfs/PLRM.pdf#page=695)&rdquo; and 
+&ldquo;[<code>setgray</code>](https://www.adobe.com/jp/print/postscript/pdfs/PLRM.pdf#page=685)&rdquo;, and change. 
+E.g., in the SVG, search for &ldquo;[<code>fill=</code>](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/fill)&rdquo;, and play.
 
 ## Links ##
 

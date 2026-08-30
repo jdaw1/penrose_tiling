@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // sortPaths.c, in PenroseC
 
@@ -40,7 +40,7 @@ void paths_sort(Tiling * const tlngP,  int orderedFn(const Path * const, const P
 		fprintf(stderr,
 			"Error in paths_sort: malloc(...) == NULL;  tlngP->numPathsClosed = %li;  tlngP->numPathsOpen = %li;  sizeof(PathId) = %li.",
 			tlngP->numPathsClosed,  tlngP->numPathsOpen,  sizeof(PathId)
-		);
+		);  // fprintf()
 		fflush(stderr);
 		exit(EXIT_FAILURE) ;
 	}  // pathIdsNew == NULL

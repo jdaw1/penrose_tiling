@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // penrose.h, in PenroseC
 
@@ -18,30 +18,38 @@
 // Breaking alignment conventions might, depending on machine and compiler, cause crashes: if so, set to false.
 #define MEMORY_FRUGALITY_OUTRANKS_SPEED false
 
-#define scratchStringLength 32767
+#define scratchStringLength 65535
 
-// Useful constants, to 28dp. Comparison: Sun-Jupiter distance ~= 10^27 proton widths.
-static double const DegreesPerRadian          = 57.2957795130823208767981548141;   // 180/Pi
-static double const GoldenRatioSquare         =  2.6180339887498948482045868344;   // (sqrt(5) + 3) / 2
-static double const GoldenRatio               =  1.6180339887498948482045868344;   // (sqrt(5) + 1) / 2
-static double const GoldenRatioReciprocal     =  0.6180339887498948482045868344;   // (sqrt(5) - 1) / 2
-static double const HalfRoot5Plus2Sqrt5       =  1.5388417685876267012851452880;   // sqrt(2*sqrt(5) + 5) / 2
-static double const Cos18                     =  0.951056516295153572116439333379; // sqrt(2*sqrt(5) + 10) / 4
-static double const Cos36                     =  0.8090169943749474241022934172;   // (sqrt(5) + 1) / 4
-static double const Quarter5MinusSqrt5        =  0.6909830056250525758977065828;   // (5 - sqrt(5)) / 4
-static double const Sin36                     =  0.5877852522924731291687059546;   // sqrt((5 - sqrt(5)) / 8)
-static double const Half3MinusSqrt5           =  0.3819660112501051517954131656;   // (3 - sqrt(5)) / 2  =  2 - GoldenRatio
-static double const HalfRoot5Minus2Sqrt5      =  0.3632712640026804429477333787;   // sqrt(5 - 2*sqrt(5)) / 2
-static double const Cos72                     =  0.3090169943749474241022934172;   // (sqrt(5) - 1) / 4 = GoldenRatioReciprocal / 2
-static double const QuarterRoot50Minus22Sqrt5 =  0.2245139882897926862209725759;   // sqrt(50 - 22*sqrt(5)) / 4
-static double const Quarter3MinusSqrt5        =  0.1909830056250525758977065828;   // (3 - sqrt(5)) / 4 = Half3MinusSqrt5 / 2
+// Useful constants, to >=96dp. Comparisons, approximate: Universe size is 10^42 proton widths; octuple arithmetic is 71 d.p.
+// Done in Mathematica Engine with "WriteString["stdout", N[ ... , 98], "\n"] ".
+static double const DegreesPerRadian          = 57.295779513082320876798154814105170332405472466564321549160243861202847148321552632440968995851111  ;  // 180 / Pi
+static double const Pi                        =  3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421171 ;  // Pi
+static double const GoldenRatioSquare         =  2.6180339887498948482045868343656381177203091798057628621354486227052604628189024497072072041893911 ;  // (Sqrt[5] + 3) / 2
+static double const GoldenRatio               =  1.6180339887498948482045868343656381177203091798057628621354486227052604628189024497072072041893911 ;  // (Sqrt[5] + 1) / 2
+static double const GoldenRatioReciprocal     =  0.6180339887498948482045868343656381177203091798057628621354486227052604628189024497072072041893911 ;  // (Sqrt[5] - 1) / 2
+static double const HalfRoot5Plus2Sqrt5       =  1.5388417685876267012851452880184549120033510717688962135195781251874316442475454592272968608335527 ;  // Sqrt[2*Sqrt[5] + 5] / 2
+static double const Cos18                     =  0.95105651629515357211643933337938214340569863412575022244730564443015317008519350171879281097081138;  // Sqrt[2*Sqrt[5] + 10] / 4
+static double const Cos36                     =  0.80901699437494742410229341718281905886015458990288143106772431135263023140945122485360360209469557;  // (Sqrt[5] + 1) / 4
+static double const Cos72                     =  0.30901699437494742410229341718281905886015458990288143106772431135263023140945122485360360209469557;  // (Sqrt[5] - 1) / 4 = GoldenRatioReciprocal / 2
+static double const Quarter5MinusSqrt5        =  0.69098300562505257589770658281718094113984541009711856893227568864736976859054877514639639790530443;  // (5 - Sqrt[5]) / 4
+static double const Quarter3MinusSqrt5        =  0.19098300562505257589770658281718094113984541009711856893227568864736976859054877514639639790530443;  // (3 - Sqrt[5]) / 4 = Half3MinusSqrt5 / 2
+static double const Sin36                     =  0.58778525229247312916870595463907276859765243764314599107227248075727847416235195750850404986274134;  // Sqrt[(5 - Sqrt[5]) / 8]
+static double const Half3MinusSqrt5           =  0.38196601125010515179541316563436188227969082019423713786455137729473953718109755029279279581060886;  // (3 - Sqrt[5]) / 2  =  2 - GoldenRatio
+static double const HalfRoot5Minus2Sqrt5      =  0.36327126400268044294773337874030937480804619648260423137503316367287469592284154421028876110807005;  // Sqrt[5 - 2*Sqrt[5]] / 2
+static double const QuarterRoot50Minus22Sqrt5 =  0.22451398828979268622097257589876339378960624116054175969723931708440377823951041329821528875467129;  // Sqrt[50 - 22*Sqrt[5]] / 4
 
 static char   const TextURL[]     = "https://github.com/jdaw1/penrose_tiling/";    // No internal double quotes; no unbalanced parentheses;
 static char   const TextAuthor[]  = "Julian D. A. Wiseman of www.jdawiseman.com";  // escaping insufficient to survive output as PostScript etc.
-static char   const TextLicence[] = ("GNU General Public License, Version 3, 29 June 2007");
+static char   const TextLicence[] = "GNU General Public License, Version 3, 29 June 2007";
+
+static long int const PostScriptArrayLengthMax = 65535;
 
 
 // Types
+
+typedef enum {oneThin = 36,  oneFat = 72,  round5 = 5} SeedType;
+
+typedef enum {anything,  pathStats,  paths,  rhombi,  boundingPath} ExportWhat;
 
 typedef enum  // ExportFormat
 {
@@ -57,10 +65,6 @@ typedef enum  // ExportFormat
 	// But, not caught by the compiler, will be a need to add new section(s) to main(), within which search for "exportFormat = ".
 } ExportFormat;
 
-
-typedef enum {anything,  pathStats,  paths,  rhombi,  boundingPath} ExportWhat;
-
-
 typedef enum  // Physique
 #if MEMORY_FRUGALITY_OUTRANKS_SPEED
 __attribute__ ((__packed__))
@@ -69,6 +73,8 @@ __attribute__ ((__packed__))
 	Thin = 36,  // Rhombus with angles, in degrees, 36 144 36 144, area = Sin[36 deg] * edge^2 ~= 0.587785252292 * edge^2
 	Fat  = 72   // Rhombus with angles, in degrees, 72 108 72 108, area = Sin[72 deg] * edge^2 ~= 0.951056516295 * edge^2, so GoldenRatio * Thin
 } Physique;
+
+
 
 
 typedef struct  // XY
@@ -131,7 +137,7 @@ __attribute__ ((__packed__))
 	bool       closerPathCentreN;
 	bool       closerPathCentreE;
 
-	bool       wantedPostScript;  // <==> any of its are fats
+	bool       wantedPostScript;
 } Rhombus;
 
 
@@ -152,10 +158,10 @@ __attribute__ ((__packed__))
 	RhombId     rhId_ThinWithin_Last;
 
 	XY          centre;  // This an XY struct because this a meaningful point; not true of extremal corners.
-	double      xMin;
-	double      xMax;
-	double      yMin;
-	double      yMax;
+	RhombId     xMin_rhId;  // Pointer to rhombus, rather than double, because user might want centre, might want extreme.
+	RhombId     xMax_rhId;
+	RhombId     yMin_rhId;
+	RhombId     yMax_rhId;
 
 	double      radiusMin;  // To innermost corner of any of the rhombi.
 	double      radiusMax;  // To outermost corner of any of the rhombi.
@@ -172,7 +178,7 @@ __attribute__ ((__packed__))
 	bool        pathVeryClosed;  // All neighbouring tiles have four neightbours. I.e., far from outside of whole tiling.
 	bool        pointy;  // If pathClosed && 5==pathLength then: true ==> ten neighbouring thins in a pointy star; false ==> five neighbouring thins lying flat to it.
 	int8_t      pathClosedTypeNum;  // -1=open; 1=5r, 2=5p, 3=15, 4=25, 5=55, ...
-	bool        wantedPostScript;  // <==> any of its are fats
+	bool        wantedPostScript;  // <==> any of its fats are wanted
 } Path;
 
 
@@ -193,8 +199,8 @@ __attribute__ ((__packed__))
 	long int   insideDeep_MaxNumFats_Num ;
 	long int   insideThis_MaxNumThins_Num;
 	long int   insideDeep_MaxNumThins_Num;
-	double     radiusMinMin;  // To innermost corner of rhombus.
-	double     radiusMaxMax;  // To outermost corner of rhombus.
+	double     radiusMin;  // To innermost middle rhombus.
+	double     radiusMax;  // To outermost middle rhombus.
 	double     widthMax;
 	double     heightMax;
 	bool       pathClosed;
@@ -205,24 +211,34 @@ __attribute__ ((__packed__))
 
 typedef struct  // Tiling, never packed because <=20 of them, yet frequent access to members, especially edgeLength, numFats, numThins, numPathsClosed, numPathsOpen.
 {
+	size_t     mallocsPersistentSumSimple;
 	TilingId   tilingId;
+	SeedType   seedType;
 	int8_t     numTilings;
 	bool       axisAligned;
 	double     edgeLength;
-	XY         wantedPostScriptCentre;
+	XY         wantedPostScriptCentre;  // As if edge length is 1.
 	double     wantedPostScriptAspect;  // Height over Width
-	double     wantedPostScriptHalfWidth;   // 'wantedPostScriptHalfHeight' = wantedPostScriptHalfWidth * wantedPostScriptAspect
-	long int   wantedPostScriptNumberRhombi;
-	long int   wantedPostScriptNumberPaths;
+	double     wantedPostScriptHalfWidth;   // As if edge length is 1; 'wantedPostScriptHalfHeight' = wantedPostScriptHalfWidth * wantedPostScriptAspect
+	long int   wantedPostScriptNumRhombi;
+	long int   wantedPostScriptNumPaths;
 	long int   numFats;
 	long int   numThins;
+	long int   numThins_0T4F;
+	long int   numThins_1T3F;
 	long int   rhombi_NumMax;
-	long int   boundingPathNumVertices;
+	long long int boundingPathNumVertices;  // Could, in theory, be two plus twice num rhombi, hence long long. In practice, of order sqrt(num rhombi).
 	Rhombus    * rhombi;
-	double     xMax;
-	double     xMin;
-	double     yMax;
-	double     yMin;
+	RhombId    xMin_rhId;  // Pointer to rhombus, rather than double, because user might want centre, might want extremal corner.
+	RhombId    xMax_rhId;
+	RhombId    yMin_rhId;
+	RhombId    yMax_rhId;
+	double     xMaxSuggestedZoom;
+	double     xMinSuggestedZoom;
+	double     yMaxSuggestedZoom;
+	double     yMinSuggestedZoom;
+	double     radiusMax;
+	double     radiusShortOpen;
 
 	long int   path_NumMax;
 	Path       * path;
@@ -241,6 +257,8 @@ typedef struct  // Tiling, never packed because <=20 of them, yet frequent acces
 	RhombId    * wantedPostScriptRhombNum;
 	PathId     * wantedPostScriptPathNum;
 
+	double     SecondsToStartExportFromStartThisTiling;
+	double     SecondsToStartExportFromStartFirstTiling;
 	bool       populated;
 } Tiling;
 
@@ -282,11 +300,9 @@ void rhombus_append_descendants(Tiling* tlngP, Rhombus* rhP);
 
 void tiling_empty(Tiling * const tlngP);
 
-void tiling_initial(
-	Tiling * const tlngP,
-	double const init_thin_xNorth,  double const init_thin_xSouth,  double const init_thin_yNorth,  double const init_thin_ySouth,
-	XY const wantedPostScriptCentre,  double const wantedPostScriptAspect
-);  // tiling_initial()
+SeedType initial_Tiling_Layout(void);
+void tiling_initial(Tiling * const tlngP);
+bool tiling_simple_tests(const Tiling * const tlngP);
 
 void tiling_descendant(
 	Tiling * const tlngDescendantP,
@@ -312,6 +328,9 @@ void oneRhombi_Neighbourify(
 	bool const isSortedWithin
 );
 void neighbours_populate(Tiling * const tlngP);
+void bounding_box_tiling(Tiling * const tlngP);
+void radii_populate(Tiling * const tlngP);
+void thins_0T4F_1T3F_count(Tiling * const tlngP);
 
 bool holesFillQ(const Tiling * const tlngP);
 void holesFill(Tiling * const tlngP);
@@ -346,13 +365,14 @@ void wanted_populate(Tiling * const tlngP);
 extern long int newlinesInString(char const * const str);
 
 const char * filePath(void);
-bool file_names_include_timeString(void);
+void file_names_timeString_set(char * const timeString, const struct tm * const timeData);
 const double svg_toPaint_xMin(const Tiling * const tlngP);
 const double svg_toPaint_xMax(const Tiling * const tlngP);
 const double svg_toPaint_yMin(const Tiling * const tlngP);
 const double svg_toPaint_yMax(const Tiling * const tlngP);
 const double svg_displayWidth(const Tiling * const tlngP);
 const double svg_strokeWidth( const Tiling * const tlngP);
+const bool showGridlines(const Tiling * const tlngP, ExportFormat const ef);
 const long int svg_arcs_longestPathToBeColoured(void);
 void execute_SVG_PostProcessing(       const Tiling * const tlngP,  const unsigned long int numLinesThisFile,  const unsigned long long int numCharsThisFile, const char * const fileName,  ExportFormat const ef);
 
@@ -380,9 +400,17 @@ void rhombus_export(
 	unsigned long long int * const numCharsThisFileP
 );  // rhombus_export()
 
-long int tiling_export_PaintBoundary(
+void preamble_export_PS(
+	FILE* const fp,
+	Tiling const * const tlngP,
+	unsigned long int * const numLinesThisFileP,
+	unsigned long long int * const numCharsThisFileP
+);
+
+long long int tiling_export_PaintBoundary(
 	FILE * const fp,
 	ExportFormat        const exportFormat,
+	double              const scalingFactor,
 	const Tiling      * const tlngP,
 	int8_t              const indentDepth,
 	unsigned long int * const numLinesThisFileP,
@@ -411,10 +439,7 @@ void pathStat_export(
 	unsigned long long int * const numCharsThisFileP
 );  // pathStat_export()
 
-void export_soloTiling(
-	Tiling * const tlngP,
-	clock_t const timeBeginDescendant
-);  // export_soloTiling()
+void export_soloTiling(Tiling * const tlngP);
 
 void tiling_export(
 	FILE              * const fp,
@@ -438,6 +463,21 @@ void tilings_export(
 	unsigned long int * const numLinesThisFileP,
 	unsigned long long int * const numCharsThisFileP
 );  // tilings_export()
+
+void tiling_export_Gridlines(
+	FILE* const fp,
+	Tiling const      * const tlngP,
+	ExportFormat const ef,
+	unsigned long int * const numLinesThisFileP,
+	unsigned long long int * const numCharsThisFileP
+);  // tiling_export_Gridlines()
+
+void tiling_export_subroutines_PS(
+	FILE* const fp,
+	ExportFormat const ef,
+	unsigned long int * const numLinesThisFileP,
+	unsigned long long int * const numCharsThisFileP
+);  // tiling_export_subroutines_PS()
 
 void tiling_export_PaintRhombiPS(
 	FILE* const fp,
@@ -479,6 +519,7 @@ void tiling_export_PaintArcsSVG(
 
 char * svgTransform(
 	char * const str,
+	int const numDecimalPlaces,
 	double const x,
 	double const y,
 	double const angDeg,
@@ -488,5 +529,7 @@ char * svgTransform(
 char * fileExtension_from_ExportFormat(char * const str, ExportFormat const ef);
 char * filename_new_extension(const char * const filenameOld,  char * strNew,  const char * const extensioNew);
 
-XY     wantedPostScriptCentre(void);
-double wantedPostScriptAspect(void);
+XY     wantedPostScriptCentre(Tiling const * const tlngP);
+double wantedPostScriptAspect(Tiling const * const tlngP);
+
+char * seed_type_name(char * const nameString,  const SeedType seed);

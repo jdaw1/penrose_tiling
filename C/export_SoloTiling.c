@@ -1,13 +1,10 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // export_SoloTiling.c, in PenroseC
 
 #include "penrose.h"
 
-void export_soloTiling(
-	Tiling * const tlngP,
-	clock_t const timeBeginDescendant
-)
+void export_soloTiling(Tiling * const tlngP)
 {
 	ExportFormat ef;
 	FILE * fp;
@@ -21,15 +18,13 @@ void export_soloTiling(
 	// than the others. And because of the possibility that the last few tilings are very very
 	// slow to make, worth exporting these as they become ready.
 
-	rhombi_sort(tlngP,  &rhombiGt_ByY,  true);
-
 	ef = SVG_rhomb;
 	if( exportQ(anything, ef, tlngP, numLinesThisFile) )
 	{
 		sprintf(fileName,
 			"%sPenrose%s_Rh_%02" PRIi8 ".%s",
 			tlngP->filePath,  tlngP->timeString,  tlngP->tilingId,  fileExtension_from_ExportFormat(fileExtension, ef)
-		);
+		);  // sprintf()
 		numLinesThisFile = 0;
 		numCharsThisFile = 0;
 		fp = file_open(fileName, "w", "export_soloTiling: SVG_rhomb");
@@ -50,7 +45,7 @@ void export_soloTiling(
 		sprintf(fileName,
 			"%sPenrose%s_Arcs_%02" PRIi8 ".%s",
 			tlngP->filePath,  tlngP->timeString,  tlngP->tilingId,  fileExtension_from_ExportFormat(fileExtension, ef)
-		);
+		);  // sprintf()
 		numLinesThisFile = 0;
 		numCharsThisFile = 0;
 		fp = file_open(fileName, "w", "export_soloTiling: SVG_arcs");
@@ -68,14 +63,13 @@ void export_soloTiling(
 	ef = PS_rhomb;
 	if( exportQ(anything, ef, tlngP, numLinesThisFile) )
 	{
-		rhombi_sort(tlngP,  &rhombiGt_ByPath,  true);
 		numCharsThisFile = 0;
 		numLinesThisFile = 0;
 
 		sprintf(fileName,
 			"%sPenrose%s_Rh_%02" PRIi8 ".%s",
 			tlngP->filePath,  tlngP->timeString,  tlngP->tilingId,  fileExtension_from_ExportFormat(fileExtension, ef)
-		);
+		);  // sprintf()
 		numLinesThisFile = 0;
 		numCharsThisFile = 0;
 		fp = file_open(fileName, "w", "export_soloTiling: PS_rhomb");
@@ -93,11 +87,10 @@ void export_soloTiling(
 	ef = PS_arcs;
 	if( exportQ(anything, ef, tlngP, numLinesThisFile) )
 	{
-		rhombi_sort(tlngP,  &rhombiGt_ByPath,  true);
 		sprintf(
 			fileName,  "%sPenrose%s_Arcs_%02" PRIi8 ".%s",
 			tlngP->filePath,  tlngP->timeString,  tlngP->tilingId,  fileExtension_from_ExportFormat(fileExtension, ef)
-		);
+		);  // sprintf()
 		numLinesThisFile = 0;
 		numCharsThisFile = 0;
 		fp = file_open(fileName, "w", "export_soloTiling: PS_arcs");

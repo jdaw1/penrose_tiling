@@ -1,12 +1,12 @@
 # Penrose Tilings #
 
 A Penrose tiling is a beautiful thing, of which [the&nbsp;author](https://jdawiseman.com/author.html) is very fond. 
-It is an aperiodic tiling, made from two rhombi with tight corners of 72&deg; and 36&deg;. 
+It is an aperiodic tiling, made from two rhombi with acute corners of 72&deg; and 36&deg;. 
 Behold!
 
 <div align="center">
 
-![tilingId=10, extract, in colour](images/Penrose_Rh_10_clipped_colour.svg)
+![tilingId=09, extract, in colour](images/Penrose_Rh_09_clipped_colour.svg)
 
 </div>
 
@@ -31,3 +31,14 @@ Documentation pages:&nbsp;
 &bull;&nbsp;[PostScript&nbsp;output&nbsp;(distillable)](text/postscript_distillable.md);&nbsp; 
 &bull;&nbsp;[PostScript&nbsp;output&nbsp;(data)](text/postscript_data.md);&nbsp; 
 &bull;&nbsp;[Physical&nbsp;tiling](text/physical_tiling.md).
+
+
+<div align="center">
+
+![tilingId=09, extract, in colour](images/Penrose_09_arcs_clipped.svg)
+
+![tilingId=09, extract, in colour](images/Penrose_09_clipped.svg)
+
+![tilingId=09, extract, in colour](images/Penrose_Rh_09_clipped_bw.svg)
+
+</div>

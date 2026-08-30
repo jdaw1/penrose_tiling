@@ -48,9 +48,10 @@ But the overall structure of the data, and the meaning of its fields, resembles 
     - `T_`, being single values applicable to the whole tiling,
     - `PthStat_` being arrays of PathStats,
     - `Pth_`, being arrays of paths,
-    - `Rh_`, being arrays of rhombi.
+    - `Rh_`, being arrays of rhombi,
+    - `Bndry_`, being the polygon bounding the whole tiling.
 
-* There is then a two-digit tiling number. I.e., range names begin with&mdash;the table names are&mdash;strings of the form<br>`T_00.`, `PthStat_00.`, `Pth_00.`, `Rh_00.`,<br>`T_01.`, `PthStat_01.`, `Pth_01.`, `Rh_01.`,<br>`T_02.`, `PthStat_02.`, `Pth_02.`, `Rh_02.`, etc.
+* There is then a two-digit tiling number. I.e., range names begin with&mdash;the table names are&mdash;strings of the form<br>`T_00.`, `PthStat_00.`, `Pth_00.`, `Rh_00.`, `Bndry_00.`,<br>`T_01.`, `PthStat_01.`, `Pth_01.`, `Rh_01.`, `Bndry_01.`,<br>`T_02.`, `PthStat_02.`, `Pth_02.`, `Rh_02.`, `Bndry_02.`, etc.
 
 * After the dot is a field name. 
 
@@ -64,14 +65,16 @@ But the overall structure of the data, and the meaning of its fields, resembles 
 
     - For the rhombi, fields are: `TilingId`, `RhId`, `Wantedness_PostScript`, `Physique`, `FilledHole`, `Xn`, `Yn`, `Xs`, `Ys`, `Xe`, `Ye`, `Xw`, `Yw`, `AngleDeg`, `NumNeighbours`, `NeighbourEdge_0`, `NeighbourEdge_1`, `NeighbourEdge_2`, `NeighbourEdge_3`, `NeighbourNum_0`, `NeighbourNum_1`, `NeighbourNum_2`, `NeighbourNum_3`, `NNN_0`, `NNN_1`, `NNN_2`, `NNN_3`, `PathId`, `WithinPathNum`, `EdgeClosestToPathCentre`, `PathId_ShortestOuter`. The neighbours information, which in the [JSON&nbsp;output](json.md) are shaped as an array of at most 4 dictionaries, in the TSV have been unrolled into fields ending `_0`, `_1`, `_2`, and `_3`.
 
-* All fields have broadly the same meaning as in the [JSON&nbsp;output](json.md), except that values absent in the [JSON&nbsp;output](json.md) have in the TSV become the Excel-idiomatic `#N/A`.
+    - And the bounding pygon has six fields: `TilingId`, `VertexNum`, `RhId`, `Corner` (a string, `North` | `South` | `East` | `West`), `X`, and `Y`.
+
+* All fields have broadly the same meaning as in the [JSON&nbsp;output](json.md), except that values absent in the [JSON&nbsp;output](json.md) have in the TSV become the Excel&#8209;idiomatic `#N/A`.
 
 
 
 ## Spreadsheet ##
 
-There is an example spreadsheet containing intricate chart-plotting formulae. 
-For most Excel-esque tasks likely to be attempted with this data, this spreadsheet is strongly recommended as a starting point. 
+There is an example spreadsheet containing intricate chart&#8209;plotting formulae. 
+For most Excel&#8209;esque tasks likely to be attempted with this data, this spreadsheet is strongly recommended as a starting point. 
 
 However, it is very unsecure to download from the internet macro-enabled documents, and hence many corporate firewalls, sensibly, block them. 
 But this this spreadsheet needs a small amount of macro-support: 
@@ -96,22 +99,24 @@ There follows a PNG of a chart made by the spreadsheet.
 Of course, the user can play and alter and delete, and copy parts with variations. 
 That is the purpose of a spreadsheet. 
 
-The chart has nine series. 
+The chart has ten series. 
 
-1. The shading of the thins, as lines no markers. (In Excel shading in an abomination; this shading is therefore an abomination; the spill formula by which the plottable series are made therefore must be an abomination, and indeed is an abomination. Microsoft:&nbsp;[tut&nbsp;tut](https://feedbackportal.microsoft.com/feedback/idea/2cc833e2-d1fe-ef11-a4dd-7c1e52ead3c1).)
+1. The boundary of the whole tiling.
 
-2. Edges of all the rhombi, as lines no markers.
+2. The shading of the thins, as lines no markers. (In Excel shading in an abomination; this shading is therefore an abomination; the spill formula by which the plottable series are made therefore must be an abomination, and indeed is an abomination. Microsoft:&nbsp;[tut&nbsp;tut](https://feedbackportal.microsoft.com/feedback/idea/2cc833e2-d1fe-ef11-a4dd-7c1e52ead3c1).)
 
-3. The round centres of the closed non-pointy 5-paths, shown as markers no lines.
+3. Edges of all the rhombi, as lines no markers.
 
-4. There is an identified path, chosen in range name `Chart.PathId_Important`, in the pictured example having PathId &Equal; `51`. This series is the centres of the thins that are touching that path but outside it, shown as markers no lines.
+4. The round centres of the closed non-pointy 5-paths, shown as markers no lines.
 
-5. Centres of the thins that are immediately inside the path (so not inside a path inside the path), shown as markers no lines.
+5. There is an identified path, chosen in range name `Chart.PathId_Important`, in the pictured example having PathId &Equal; `13`. This series is the centres of the thins that are touching that path but outside it, shown as markers no lines.
 
-6. Paths immediately inside the chosen path.
+6. Centres of the thins that are immediately inside the path (so not inside a path inside the path), shown as markers no lines.
 
-7. The chosen path itself.
+7. Paths immediately inside the chosen path.
 
-8. Small dot markers in the north corner of all rhombi.
+8. The chosen path itself.
 
-9. Path labels, showing length (except for 5s) and Id, as no markers no lines only labels.
+9. Small dot markers in the north corner of all rhombi.
+
+10. Path labels, showing length (except for 5s) and Id, as no markers no lines only labels.

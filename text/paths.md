@@ -21,29 +21,29 @@ This page describes observed properties of paths.
 Much of this observed data, in the table and elsewhere on this page, seems not to have been said elsewhere. 
 But much of what is said is here is observation, rather than proof. 
 So: if anything said here is wrong, please raise an issue explaining what&rsquo;s wrong. 
-And: if anything said here has been said by others before, please raise an issue with links to sources.)
+And: if anything said here has been said by others before, please raise an issue with links to sources, and appropriate acknowledgements will be added.
 
 Each fat tiles has two fat neighbours. 
-So fat tiles form paths, as is visible in the next image.
+So fat tiles form paths.
 
 Tiles are orientated. 
 That is, for each fat tile, one of its acute 72&deg; corners is &lsquo;north&rsquo;, with east-south-west clockwise from north. 
 For the thins, one of the obtuse 144&deg; corners is &lsquo;north&rsquo;. 
 This need not matter when laying tiles, but matters for the computation. 
-In the following diagram, north corners have been marked with small circles.
+In the following diagram: of tiles north corners have been marked with small circles; and paths have been coloured by length.
 
 <div align="center">
 
-![tilingId=10, extract, in colour, with norths marked](../images/Penrose_Rh_10_clipped_norths.svg)
+![tilingId=09, extract, in colour, with norths marked](../images/Penrose_Rh_09_clipped_norths.svg)
 
 </div>
 
-(Note: these north-corner circles were added to the SVG by a small alteration, done by hand, taking only a few minutes, each marked with the comment &ldquo;<code>\<\!\-\- north-corner circle \-\-\></code>&rdquo;. 
+(Note: these north&#8209;corner circles were added to the SVG by a small alteration, done by hand, taking only a few minutes, each marked with the comment &ldquo;<code>\<\!\-\- north-corner circle \-\-\></code>&rdquo;. 
 Do search for and play with the three lines containing that &mdash; for thin tiles, fats in closed paths, and fats in open paths. 
-The output really is user-changeable.)
+The output really is user&#8209;changeable.)
 
 Paths that don&rsquo;t reach the edge are closed, and there are such paths only of particular lengths: 
-5, 5 (two types of 5-path), 15, 25, 55, 105, 215, 425, 855, 1705, 3415, 6825, &hellip;,&nbsp; 2&times;[_n_&minus;2]&nbsp;+&nbsp;[_n_&minus;1]&nbsp; =&nbsp;&nbsp;(2<small><sup>*n*</sup></small>&nbsp;&minus;&nbsp;(&minus;1)<small><sup>*n*</sup></small>)&times;5&frasl;3. 
+5, 5 (two types of 5&#8209;path), 15, 25, 55, 105, 215, 425, 855, 1705, 3415, 6825, &hellip;,&nbsp; [<i>n</i>&#8239;&minus;&#8239;2]&#8239;&times;&#8239;2&nbsp;+&nbsp;[<i>n</i>&#8239;&minus;&#8239;1]&nbsp; =&nbsp;&nbsp;(2<small><sup>*n*</sup></small>&nbsp;&minus;&nbsp;(&minus;1)<small><sup>*n*</sup></small>)&#8239;&times;&#8239;5&frasl;3. 
 All closed paths have rotational symmetry of order&nbsp;5, and have lines of reflection symmetry every 36&deg;.
 
 Within a closed path of rank *n*&nbsp;&ge;&nbsp;3, the largest enclosed path is of rank *n*&nbsp;&minus;&nbsp;2, of which there is only one.
@@ -51,13 +51,13 @@ Inside the *n* are none of the *n*&nbsp;&minus;&nbsp;1; none of the *n*&nbsp;&mi
 
 The next table contains much about such closed paths. 
 In it:
-* &phi; =&nbsp;the golden ratio =&nbsp;&frac12;(&radic;5&nbsp;+&nbsp;1) &asymp;&nbsp;1.618;
+* &phi; =&nbsp;the [golden ratio](https://en.wikipedia.org/wiki/Golden_ratio) =&nbsp;&frac12;(&radic;5&nbsp;+&nbsp;1) &asymp;&nbsp;1.618;
 * &phi;<small><sup>2</sup></small>&nbsp; =&nbsp;&nbsp;&frac12;(&radic;5&nbsp;+&nbsp;3)&nbsp; =&nbsp;&nbsp;&phi;&nbsp;+&nbsp;1 &asymp;&nbsp;2.618;
 * &phi;<small><sup>&minus;1</sup></small>&nbsp; =&nbsp;&nbsp;&frac12;(&radic;5&nbsp;&minus;&nbsp;1)&nbsp; =&nbsp;&nbsp;&phi;&nbsp;&minus;&nbsp;1 &asymp;&nbsp;0.618;
 * &phi;<small><sup>&minus;2</sup></small>&nbsp; =&nbsp;&nbsp;&frac12;(3&nbsp;&minus;&nbsp;&radic;5)&nbsp; =&nbsp;&nbsp;2&nbsp;&minus;&nbsp;&phi; &asymp;&nbsp;0.381966.
 
 
-| *n* |   Length | Num<br>Interior<br>Fats | Num<br>Interior<br>Thins | Outward<br>direction | Radius<br>Min<br>&divide;Edge | Radius<br>Max<br>&divide;Edge |
+| *n*&nbsp;=<br>Rank |   Length | Num<br>Interior<br>Fats | Num<br>Interior<br>Thins | Outward<br>direction | Radius<br>Min<br>&divide;Edge | Radius<br>Max<br>&divide;Edge |
 |----:|---------:|--------:|--------:|------:|-------:|-------:|
 |   1 |  Round 5 |       0 |       0 | North |   0.81 |   0.81 |
 |   2 | Pointy 5 |       0 |       0 | South |   0.81 |   0.81 |
@@ -81,9 +81,10 @@ In it:
 
 Observe that the length of a long path varies as the square root of its area (which is a linear measure) to the power of ln(2)&#8239;/&#8239;ln(&phi;)&nbsp;&asymp;&nbsp;1.44042. 
 That is, long paths are approximately 1.44 dimensional. 
-(Trivially ln(2)&#8239;/&#8239;ln(&phi;)&nbsp;&NotElement;&nbsp;&Qopf;, but I don&rsquo;t know whether [algebraic](http://en.wikipedia.org/wiki/Algebraic_number).) 
+(Technicality: trivially, ln(2)&#8239;/&#8239;ln(&phi;)&nbsp;&NotElement;&nbsp;[&Qopf;](https://en.wikipedia.org/wiki/Rational_number), and hence is [transcendental](https://en.wikipedia.org/wiki/Transcendental_number) by the [Gelfond–Schneider theorem](https://en.wikipedia.org/wiki/Gelfond%E2%80%93Schneider_theorem#mwNQ).) 
 
 The observed data is consistent with, in a suffiently large tiling, the number of closed paths of each length being [geometrically distributed](http://en.wikipedia.org/wiki/Geometric_distribution), with decay 
 &frac12;(3&nbsp;&minus;&nbsp;&radic;5) &asymp;&nbsp;0.381966. 
+A proof or disproof would be welcomed. 
 If this is precisely true, then the average of the lengths of paths tends to 5&nbsp;+&nbsp;2&radic;5 &asymp;&nbsp;9.472. 
 If it is not very false, then for a random fat tile, the average of the length of the path containing it is unbounded.

@@ -1,7 +1,7 @@
-<svg width='960' height='1605.675899279' viewBox='-3.607584972 -5.04229657 5.979101966 10.08459314' preserveAspectRatio='xMidYMid meet' id='Penrose_Arcs_01' xmlns='http://www.w3.org/2000/svg'>
-<!-- TilingId = 1;  NumFats = 9;  NumThins = 4;  ==> #tiles= 13;  NumPathsClosed = 0;  NumPathsOpen = 14;  BoundingPathNumVertices = 3 -->
+<svg width='960' height='956.164' viewBox='-2.815040911 -2.803792486 5.630081822 5.607584972' preserveAspectRatio='xMidYMid meet' id='Penrose_Arcs_01' xmlns='http://www.w3.org/2000/svg'>
+<!-- TilingId = 1;  NumFats = 20;  NumThins = 10;  ==> #tiles= 30;  NumPathsClosed = 1;  NumPathsOpen = 5;  BoundingPathNumVertices = 20 -->
 <!-- Licence = "GNU General Public License, Version 3, 29 June 2007"; URL = "https://github.com/jdaw1/penrose_tiling/"; Author = "Julian D. A. Wiseman of www.jdawiseman.com". -->
-<!-- EdgeLength = 2 -->
+<!-- EdgeLength = 0.618033988749895 -->
 <!-- Browser fail for large SVG? Bug report at https://issues.chromium.org/issues/390969197 -->
 
 <g transform='scale(1,-1)'> <!-- PostScript and Excel positive y goes up the page, SVG it goes down. This reflection makes SVG behave as PostScript and Excel. -->
@@ -12,23 +12,29 @@
 <!-- But if manually editing so that path stroke'd, or fill'd dramatically, then slightly enlarge the viewBox. -->
 <!-- Enlargement amount depends on whether vector-effect='non-scaling-stroke', on stroke-width, and slightly on stroke-linejoin. -->
 <path fill='#FFF'  stroke='none' vector-effect='non-scaling-stroke' stroke-width='2px' stroke-linejoin='round'  d='
-	M 2 0
-	L 2.618033989 1.902113033
-	1 3.077683537
-	0.381966011 4.97979657
-	-1.618033989 4.97979657
-	-2.236067977 3.077683537
-	-3.854101966 1.902113033
-	-3.236067977 0
-	-3.854101966 -1.902113033
-	-2.236067977 -3.077683537
-	-1.618033989 -4.97979657
-	0.381966011 -4.97979657
-	1 -3.077683537
-	2.618033989 -1.902113033
+	M 3.077683537 0
+	L 2.489898285 0.809016994
+	2.489898285 1.809016994
+	1.538841769 2.118033989
+	0.951056516 2.927050983
+	0 2.618033989
+	-0.951056516 2.927050983
+	-1.538841769 2.118033989
+	-2.489898285 1.809016994
+	-2.489898285 0.809016994
+	-3.077683537 0
+	-2.489898285 -0.809016994
+	-2.489898285 -1.809016994
+	-1.538841769 -2.118033989
+	-0.951056516 -2.927050983
+	0 -2.618033989
+	0.951056516 -2.927050983
+	1.538841769 -2.118033989
+	2.489898285 -1.809016994
+	2.489898285 -0.809016994
 Z'/> <!-- Outside of tiling of rhombi. -->
 
-<g transform='scale(1)'> <!-- edgeLength/2, so that all arc radii are precisely 1, lessening file size -->
+<g transform='scale(0.5)'> <!-- 1/2, so that all arc radii are precisely 1, lessening file size -->
 
 <style>
 	.sf {stroke: #000;  stroke-width: 0.1;  paint-order: fill stroke markers;} <!-- sf = stroke's formatting -->
@@ -49,53 +55,99 @@ Z'/> <!-- Outside of tiling of rhombi. -->
 	.cBig   {fill: #FFF;}
 </style>
 
+<!-- pathId=0, length=5p, centreX=0, centreY=0 -->
+<path class='c5p_e sf' d='M -0.587785252 2.427050983
+	A 1 1 0 0 0 -0.587785252 0.809016994
+	1 1 0 0 0 -2.126627021 1.309016994
+	1 1 0 0 0 -2.126627021 1.927050983
+	1 1 0 0 1 -3.077683537 3.236067977
+	1 1 0 0 1 -4.028740053 1.927050983
+	1 1 0 0 0 -4.028740053 1.309016994
+	1 1 0 0 0 -4.392011317 0.809016994
+	1 1 0 0 1 -4.392011317 -0.809016994
+	1 1 0 0 1 -2.853169549 -0.309016994
+	1 1 0 0 0 -2.489898285 0.190983006
+	1 1 0 0 0 -0.951056516 -0.309016994
+	1 1 0 0 0 -1.902113033 -1.618033989
+	1 1 0 0 0 -2.489898285 -1.427050983
+	1 1 0 0 1 -4.028740053 -1.927050983
+	1 1 0 0 1 -3.077683537 -3.236067977
+	1 1 0 0 0 -2.489898285 -3.427050983
+	1 1 0 0 0 -2.126627021 -3.927050983
+	1 1 0 0 1 -0.587785252 -4.427050983
+	1 1 0 0 1 -0.587785252 -2.809016994
+	1 1 0 0 0 -0.951056516 -2.309016994
+	1 1 0 0 0 0 -1
+	1 1 0 0 0 0.951056516 -2.309016994
+	1 1 0 0 0 0.587785252 -2.809016994
+	1 1 0 0 1 0.587785252 -4.427050983
+	1 1 0 0 1 2.126627021 -3.927050983
+	1 1 0 0 0 2.489898285 -3.427050983
+	1 1 0 0 0 3.077683537 -3.236067977
+	1 1 0 0 1 4.028740053 -1.927050983
+	1 1 0 0 1 2.489898285 -1.427050983
+	1 1 0 0 0 1.902113033 -1.618033989
+	1 1 0 0 0 0.951056516 -0.309016994
+	1 1 0 0 0 2.489898285 0.190983006
+	1 1 0 0 0 2.853169549 -0.309016994
+	1 1 0 0 1 4.392011317 -0.809016994
+	1 1 0 0 1 4.392011317 0.809016994
+	1 1 0 0 0 4.028740053 1.309016994
+	1 1 0 0 0 4.028740053 1.927050983
+	1 1 0 0 1 3.077683537 3.236067977
+	1 1 0 0 1 2.126627021 1.927050983
+	1 1 0 0 0 2.126627021 1.309016994
+	1 1 0 0 0 0.587785252 0.809016994
+	1 1 0 0 0 0.587785252 2.427050983
+	1 1 0 0 0 1.175570505 2.618033989
+	1 1 0 0 1 2.126627021 3.927050983
+	1 1 0 0 1 0.587785252 4.427050983
+	1 1 0 0 0 0 4.236067977
+	1 1 0 0 0 -0.587785252 4.427050983
+	1 1 0 0 1 -2.126627021 3.927050983
+	1 1 0 0 1 -1.175570505 2.618033989
+	1 1 0 0 0 -0.587785252 2.427050983
+Z'/> <!-- c5p_e, pathId=0 -->
+
 <!-- Arcs, not part of a closed loop, in thins. -->
 <path class='sf' fill='none' d='
-	M -1.927050983 -4.028740053 A 1 1 0 0 0 -1.309016994 -4.028740053
-	M -1.309016994 -2.126627021 A 1 1 0 0 0 -1.927050983 -2.126627021
-	M -0.809016994 -0.587785252 A 1 1 0 0 0 -0.618033989 -1.175570505
-	M 1.190983006 -0.587785252 A 1 1 0 0 0 1 -0
-	A 1 1 0 0 0 1.190983006 0.587785252
-	M -0.618033989 1.175570505 A 1 1 0 0 0 -0.809016994 0.587785252
-	M -1.927050983 2.126627021 A 1 1 0 0 0 -1.309016994 2.126627021
-	M -1.309016994 4.028740053 A 1 1 0 0 0 -1.927050983 4.028740053
 '/> <!-- End of stroking of loose ends not in a closed path that are in thins. -->
 
 <!-- Arcs, not part of a closed loop, in fats. -->
 <path class='sf' fill='none' d='
-	M 0 -3.077683537 A 1 1 0 0 0 -1.309016994 -4.028740053
-	M -0.618033989 -4.97979657 A 1 1 0 0 0 0.690983006 -4.028740053
-	M 0.690983006 -2.126627021 A 1 1 0 0 0 -0.618033989 -1.175570505
-	M -1.309016994 -2.126627021 A 1 1 0 0 0 0 -3.077683537
-	M -1.927050983 -2.126627021 A 1 1 0 0 0 -2.427050983 -0.587785252
-	M -3.545084972 -0.951056516 A 1 1 0 0 0 -3.045084972 -2.489898285
-	M 1.809016994 -2.489898285 A 1 1 0 0 0 2.309016994 -0.951056516
-	M 1.190983006 -0.587785252 A 1 1 0 0 0 0.690983006 -2.126627021
-	M -0.809016994 0.587785252 A 1 1 0 0 0 -2.427050983 0.587785252
-	M -2.427050983 -0.587785252 A 1 1 0 0 0 -0.809016994 -0.587785252
-	M -3.045084972 2.489898285 A 1 1 0 0 0 -3.545084972 0.951056516
-	M -2.427050983 0.587785252 A 1 1 0 0 0 -1.927050983 2.126627021
-	M 0.690983006 2.126627021 A 1 1 0 0 0 1.190983006 0.587785252
-	M 2.309016994 0.951056516 A 1 1 0 0 0 1.809016994 2.489898285
-	M 0 3.077683537 A 1 1 0 0 0 -1.309016994 2.126627021
-	M -0.618033989 1.175570505 A 1 1 0 0 0 0.690983006 2.126627021
-	M 0.690983006 4.028740053 A 1 1 0 0 0 -0.618033989 4.97979657
-	M -1.309016994 4.028740053 A 1 1 0 0 0 0 3.077683537
+	M 0.951056516 -5.545084972 A 1 1 0 0 0 2.489898285 -5.045084972
+	M -2.489898285 -5.045084972 A 1 1 0 0 0 -0.951056516 -5.545084972
+	M -5.567581822 0.809016994 A 1 1 0 0 0 -5.567581822 -0.809016994
+	M -4.97979657 -2.618033989 A 1 1 0 0 0 -4.028740053 -3.927050983
+	M 5.567581822 -0.809016994 A 1 1 0 0 0 5.567581822 0.809016994
+	M 4.028740053 -3.927050983 A 1 1 0 0 0 4.97979657 -2.618033989
+	M -0.951056516 5.545084972 A 1 1 0 0 0 -2.489898285 5.045084972
+	M -4.028740053 3.927050983 A 1 1 0 0 0 -4.97979657 2.618033989
+	M 2.489898285 5.045084972 A 1 1 0 0 0 0.951056516 5.545084972
+	M 4.97979657 2.618033989 A 1 1 0 0 0 4.028740053 3.927050983
 '/> <!-- End of stroking of loose ends not in a closed path that are in fats. -->
 
-</g> <!-- scale(edgeLength/2) -->
-
-<!-- If gridlines wanted, uncomment these. -->
-<!-- Gridlines, start, commented out 
-<path vector-effect='non-scaling-stroke' stroke-width='3px' stroke='#000' opacity='0.2' d='
-	M -4 -5  h 7   M -4 -4  h 7   M -4 -3  h 7   M -4 -2  h 7   M -4 -1  h 7   M -4 0  h 7   M -4 1  h 7   M -4 2  h 7   M -4 3  h 7   M -4 4  h 7
-	M -4 -5  v 10   M -3 -5  v 10   M -2 -5  v 10   M -1 -5  v 10   M 0 -5  v 10   M 1 -5  v 10   M 2 -5  v 10
+</g> <!-- scale(0.5) -->
+<!-- To uncomment gridlines delete this line, and the line at end of this 'paragraph'.
+<path vector-effect='non-scaling-stroke' stroke-width='3px' stroke='#000' opacity='0.25' d='
+	M -3.07768 -2  h 6.15537   M -3.07768 -1  h 6.15537   M -3.07768 0  h 6.15537   M -3.07768 1  h 6.15537   M -3.07768 2  h 6.15537
+	M -3 -2.92705  v 5.85410   M -2 -2.92705  v 5.85410   M -1 -2.92705  v 5.85410   M 0 -2.92705  v 5.85410   M 1 -2.92705  v 5.85410   M 2 -2.92705  v 5.85410   M 3 -2.92705  v 5.85410
 '/>
-<g font-size='0.2' paint-order='stroke fill' stroke-width='0.04' stroke='#FFF' stroke-linejoin='round' fill='#000' opacity='1' text-anchor='middle'>
-	<g transform='translate(-3,-4)'><text text-anchor='start' alignment-baseline='baseline' transform='scale(1,-1)'>(&#8722;3,&#8722;4)</text></g>
-	<g transform='translate(2,4)'><text text-anchor='end' alignment-baseline='hanging' transform='scale(1,-1)'>(+2,+4)</text></g>
+<g font-size='0.098' font-weight='bold' paint-order='stroke fill' stroke-width='0.016' stroke='#FFF' stroke-linejoin='round' fill='#000' opacity='1' text-anchor='middle'>
+	<g transform='translate(2.8277,-2)'><text text-anchor='end' alignment-baseline='central' transform='scale(1,-1)'>&#8722;2</text></g>
+	<g transform='translate(2.8277,-1)'><text text-anchor='end' alignment-baseline='central' transform='scale(1,-1)'>&#8722;1</text></g>
+	<g transform='translate(2.8277,0)'><text text-anchor='end' alignment-baseline='central' transform='scale(1,-1)'>0</text></g>
+	<g transform='translate(2.8277,1)'><text text-anchor='end' alignment-baseline='central' transform='scale(1,-1)'>1</text></g>
+	<g transform='translate(2.8277,2)'><text text-anchor='end' alignment-baseline='central' transform='scale(1,-1)'>2</text></g>
+	<g transform='translate(-3,-2.6771)'><text text-anchor='middle' alignment-baseline='text-bottom' transform='scale(1,-1)'>&#8722;3</text></g>
+	<g transform='translate(-2,-2.6771)'><text text-anchor='middle' alignment-baseline='text-bottom' transform='scale(1,-1)'>&#8722;2</text></g>
+	<g transform='translate(-1,-2.6771)'><text text-anchor='middle' alignment-baseline='text-bottom' transform='scale(1,-1)'>&#8722;1</text></g>
+	<g transform='translate(0,-2.6771)'><text text-anchor='middle' alignment-baseline='text-bottom' transform='scale(1,-1)'>0</text></g>
+	<g transform='translate(1,-2.6771)'><text text-anchor='middle' alignment-baseline='text-bottom' transform='scale(1,-1)'>1</text></g>
+	<g transform='translate(2,-2.6771)'><text text-anchor='middle' alignment-baseline='text-bottom' transform='scale(1,-1)'>2</text></g>
+	<g transform='translate(3,-2.6771)'><text text-anchor='middle' alignment-baseline='text-bottom' transform='scale(1,-1)'>3</text></g>
 </g>
-Gridlines, end, commented out -->
+To uncomment gridlines delete this line, and the line at start of this 'paragraph'. -->
 
 </g> <!-- scale(1,-1) -->
 </svg>

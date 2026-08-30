@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // export_PaintRhPS.c, in PenroseC
 
@@ -29,66 +29,22 @@ void tiling_export_PaintRhombiPS(
 	extern char scratchString[];
 	RhombId rhId_This;
 	PathStatId pathStatId;
-	const Rhombus *rhThisP;
-	const Path *pathP;
-	PathStats *pathStatP;
+	const Rhombus   *rhThisP;
+	const Path      *pathP;
+	const PathStats *pathStatP;
 
 	const double toPaint_xMin = postScript_toPaint_xMin(tlngP);  // in controls.c
-	const double toPaint_yMin = postScript_toPaint_yMin(tlngP);
 	const double toPaint_xMax = postScript_toPaint_xMax(tlngP);
+	const double toPaint_yMin = postScript_toPaint_yMin(tlngP);
 	const double toPaint_yMax = postScript_toPaint_yMax(tlngP);
 
 	// PostScript definitions, preamble, comment about what is changeable, etc.
-	sprintf(scratchString,
-		"%%!PS\n"
-		"\n"
-		"/DataAsOf (D:%04d%02d%02d%02d%02d%02d) def\n"
-		"/Licence (%s) def\n"
-		"/URL (%s) def\n"
-		"/Author (%s) def\n"
-		"/TilingId %" PRIi8 " def\n"
-		"/NumFats %li def\n"
-		"/NumThins %li def\n"
-		"/EdgeLength %.16E def\n"
-		"\n"
-		"/XMin %.16G def\n"
-		"/XMax %.16G def\n"
-		"/YMin %.16G def\n"
-		"/YMax %.16G def\n"
-		"\n"
-		"/ToPaint_XMin %+li def  %% User changeable\n"
-		"/ToPaint_XMax %+li def\n"
-		"/ToPaint_YMin %+li def\n"
-		"/ToPaint_YMax %+li def\n",
-		(1900 + tlngP->timeData->tm_year),  (1 + tlngP->timeData->tm_mon),  tlngP->timeData->tm_mday,
-		tlngP->timeData->tm_hour,  tlngP->timeData->tm_min,  (int)(tlngP->timeData->tm_sec),
-		TextLicence, TextURL, TextAuthor,
-		tlngP->tilingId,  tlngP->numFats,  tlngP->numThins,
-		tlngP->edgeLength,
-		tlngP->xMin, tlngP->xMax, tlngP->yMin, tlngP->yMax,
-		(long int)floor(tlngP->xMin), (long int)ceil(tlngP->xMax), (long int)floor(tlngP->yMin), (long int)ceil(tlngP->yMax)
-	);
-	stringClean(scratchString);
-	(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
-	(*numLinesThisFileP) += newlinesInString(scratchString);
+	preamble_export_PS(fp,  tlngP,  numLinesThisFileP,  numCharsThisFileP);
 
 	// Using \t tabs, because an actual 9-tab might get converted to spaces by an evil IDE.
 	sprintf(scratchString,
 		"\n"
-		"\n"
-		"/PageWidth  297 360 mul 127 div def  %% A3, long side."  "  User alterable: for US Tabloid use \"11 72 mul\".\n"
-		"/PageHeight 420 360 mul 127 div def  %% A3, short side." "  User alterable: for US Tabloid use \"17 72 mul\".\n"
-		"/Margin 18 def  %% 18pt = 0.25\" = 6.35mm. Enlarge if the printer can't work so close to the edge. Used only for default value of scale.\n"
-		"\n"
-		"/Actual_XMin  XMin ToPaint_XMin  2 copy lt {exch} if pop  def\n"
-		"/Actual_YMin  YMin ToPaint_YMin  2 copy lt {exch} if pop  def\n"
-		"/Actual_XMax  XMax ToPaint_XMax  2 copy gt {exch} if pop  def\n"
-		"/Actual_YMax  YMax ToPaint_YMax  2 copy gt {exch} if pop  def\n"
-		"/ScaleFactor\n"
-			"\tPageWidth  Margin 2 mul sub  Actual_XMax Actual_XMin sub  div  %% Tight-fiting x.\n"
-			"\tPageHeight Margin 2 mul sub  Actual_YMax Actual_YMin sub  div  %% Tight-fiting y.\n"
-			"\t2 copy gt {exch} if pop  %% Lesser of them.\n"
-		"def  %% /ScaleFactor. User alterable. Could be of form \"6 EdgeLength div\", making an edge be 6pt on the paper.\n"
+		"\n\n\n"
 		"/FontName /Helvetica def  %% /TrebuchetMS /GothamNarrow\n"
 		"/FontSize EdgeLength ScaleFactor mul 0.3 mul def\n"
 		"\n"
@@ -100,7 +56,7 @@ void tiling_export_PaintRhombiPS(
 		"%% 0 rotate  %% User alterable. Optional rotation, angle in degrees, positive rotating image anti-clockise. By default commented out.\n"
 		"/TileMatrix matrix currentmatrix def\n"
 		"\n"
-	);
+	);  // sprintf()
 	(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
 	(*numLinesThisFileP) += newlinesInString(scratchString);
 
@@ -116,70 +72,15 @@ void tiling_export_PaintRhombiPS(
 		"\n",
 		(1900 + tlngP->timeData->tm_year),  (1 + tlngP->timeData->tm_mon),  tlngP->timeData->tm_mday,
 		tlngP->timeData->tm_hour,  tlngP->timeData->tm_min,  (int)(tlngP->timeData->tm_sec)
-	);
+	);  // sprintf()
 	(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
 	(*numLinesThisFileP) += newlinesInString(scratchString);
 
-	sprintf(scratchString,
-		"%% Functions taken from https://github.com/jdaw1/placemat/blob/main/PostScript/placemat.ps\n"
-		"/ToString\n"
-		"{\n"
-		"\t1 dict begin  dup type cvlit /Type exch def\n"
-		"\t1 {\n"
-		"\t\tType /integertype  eq {11 string cvs exit ( ) Concatenate} if\n"
-		"\t\tType /realtype     eq {16 string cvs exit ( ) Concatenate} if\n"
-		"\t\tType /nametype     eq {dup length string cvs exit} if\n"
-		"\t\tType /stringtype   eq {exit} if\n"
-		"\t\tType /booleantype  eq {5 string cvs exit} if\n"
-		"\t\tType /operatortype eq {127 string cvs exit} if\n"
-		"\t\tType /marktype     eq {pop (mark) exit} if\n"
-		"\t\tType /nulltype     eq {pop (null) exit} if\n"
-		"\t\tpop (-- not handled --)  %% fall-back\n"
-		"\t} repeat  end\n"
-		"} bind def  %% /ToString\n"
-		"\n"
-		"/Concatenate {2 copy length exch length dup 3 1 roll add string dup dup 5 3 roll exch putinterval 3 -1 roll 0 exch putinterval} bind def\n"
-		"\n"
-		"%% mark string|number|other ... string|number|other  ConcatenateToMark  string\n"
-		"/ConcatenateToMark\n"
-		"{\n"
-		"\t4 dict begin\n"
-		"\tcounttomark /ctm exch def  /n 0 def\n"
-		"\tctm {ToString  dup length n add /n exch def  ctm 1 roll} repeat\n"
-		"\t/p 0 def  /s n 65535 2 copy gt {exch} if pop string def\n"
-		"\tctm  -1  0\n"
-		"\t{\n"
-		"\t\tdup 0 gt\n"
-		"\t\t{\n"
-		"\t\t\t-1 roll   dup length p add  65532 le\n"
-		"\t\t\t\t{s exch p exch dup length p add /p exch def putinterval}\n"
-		"\t\t\t\t{s exch p exch 0 65532 p sub getinterval putinterval  s 65532 (...) putinterval  cleartomark  s  exit}\n"
-		"\t\t\tifelse  %% too long\n"
-		"\t\t} {pop pop s} ifelse\n"
-		"\t} for\n"
-		"\tend\n"
-		"} bind def  %% /ConcatenateToMark\n"
-		"\n"
-		"() =\n"
-		"/NumRhombi NumFats NumThins add def"
-		"[/TilingId /DataAsOf /NumFats /NumThins /NumRhombi /EdgeLength  /XMin /XMax /YMin /YMax  /ToPaint_XMin /ToPaint_XMax /ToPaint_YMin /ToPaint_YMax]\n"
-		"{\n"
-			"\tdup 12 string cvs ( = ) Concatenate  exch load\n"
-			"\tdup type /stringtype eq {(\") exch (\") Concatenate Concatenate} {16 string cvs} ifelse\n"
-			"\tConcatenate =\n"
-		"} forall\n"
-		"mark (\\nPageWidth = ) PageWidth  (pt = ) PageWidth 72 div  (\" = ) PageWidth  127 mul 360 div (mm) ConcatenateToMark =\n"
-		"mark   (PageHeight = ) PageHeight (pt = ) PageHeight 72 div (\" = ) PageHeight 127 mul 360 div (mm) ConcatenateToMark =\n"
-		"mark (T, B, L, and R margins each = ) Margin (pt = ) Margin 72 div (\" = ) Margin 127 mul 360 div (mm) ConcatenateToMark =\n"
-		"mark (ScaleFactor = ) ScaleFactor ConcatenateToMark =\n"
-		"mark (On paper, length of an edge is ) EdgeLength ScaleFactor mul (pt = ) 1 index 72 div (\" = 1\"/) 1 2 index div ( = ) 5 index 127 mul 360 div (mm = 1mm/) 1 2 index div ConcatenateToMark =\n"
-		"mark (FontName = ) FontName (; FontSize = ) FontSize ConcatenateToMark =\n"
-
-		"\n\n(\\n\\nPathStats:\\n\\nPathClosed\\tPathLength\\tNumPaths\\tMaxNumThisFats\\tMaxNumDeepFats\\tMaxNumThisThins\\tMaxNumDeepThins\\tMaxNumThisFats_Num\\tMaxNumDeepFats_Num\\tMaxNumThisThins_Num\\tMaxNumDeepThins_Num\\tRadiusMinMin_EdgeLengths\\tRadiusMaxMax_EdgeLengths\\tWidthMax_EdgeLengths\\tHeightMax_EdgeLengths) =\n"
-	);
+	sprintf(scratchString, "\n/ShowTileCounts false def\n\n");
 	(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
 	(*numLinesThisFileP) += newlinesInString(scratchString);
 
+	tiling_export_subroutines_PS(fp,  PS_rhomb,  numLinesThisFileP,  numCharsThisFileP);
 
 	if( !deBugMode )
 	{
@@ -190,10 +91,11 @@ void tiling_export_PaintRhombiPS(
 				pathStatP->pathClosed ? "Closed" : "Open",
 				pathStatP->pathLength  *  ( pathStatP->pathClosed  &&  5==pathStatP->pathLength  &&  !pathStatP->pointy ? -1 : 1),  // Much abbreviated output.
 				pathStatP->numPaths
-			);
+			);  // fprintf()
 			if( pathStatP->pathClosed)
 			{
-				(*numCharsThisFileP) += fprintf(fp, "\\t%li\\t%li\\t%li\\t%li\\t%li\\t%li\\t%li\\t%li\\t%.8f\\t%.8f\\t%.8f\\t%.8f",
+				(*numCharsThisFileP) += fprintf(fp,
+					"\\t%li\\t%li\\t%li\\t%li\\t%li\\t%li\\t%li\\t%li\\t%.9f\\t%.9f\\t%.9f\\t%.9f",
 					pathStatP->insideThis_MaxNumFats,
 					pathStatP->insideDeep_MaxNumFats,
 					pathStatP->insideThis_MaxNumThins,
@@ -202,11 +104,11 @@ void tiling_export_PaintRhombiPS(
 					pathStatP->insideDeep_MaxNumFats_Num,
 					pathStatP->insideThis_MaxNumThins_Num,
 					pathStatP->insideDeep_MaxNumThins_Num,
-					pathStatP->radiusMinMin / tlngP->edgeLength,  // Not stringClean()'d, for more even visual spacing in output.
-					pathStatP->radiusMaxMax / tlngP->edgeLength,
-					pathStatP->widthMax     / tlngP->edgeLength,
-					pathStatP->heightMax    / tlngP->edgeLength
-				);
+					pathStatP->radiusMin / tlngP->edgeLength,  // Not stringClean()'d, for more even visual spacing in output.
+					pathStatP->radiusMax / tlngP->edgeLength,
+					pathStatP->widthMax  / tlngP->edgeLength,
+					pathStatP->heightMax / tlngP->edgeLength
+				);  // fprintf()
 			}  // pathClosed
 			(*numCharsThisFileP) += fprintf(fp, ") =\n");
 			(*numLinesThisFileP) ++;
@@ -227,7 +129,7 @@ void tiling_export_PaintRhombiPS(
 		"%% Most of its inner may be rewritten, e.g. for different decoration, or to aid debugging such as by show'ing RhId.\n"
 		"/PaintByRhombus\n"
 			"{\n"
-			"\t15 dict begin  %% Populating this dictionary with values on stack.\n"
+			"\t17 dict begin  %% Populating this dictionary with values on stack.\n"
 			"\t/IsFat exch def  /RhId exch def\n"
 			"\tIsFat {[/PathId /PathStatId /WithinPathNum /Pointy /PathLength /PathClosed] {exch def} forall} if  %% Fats only\n"
 			"\t[/FilledType /NumNeighbours /AngDeg /NorthY /NorthX /EastY /EastX /SouthY /SouthX /WestY /WestX] {exch def} forall  %% All rhombi\n"
@@ -239,10 +141,17 @@ void tiling_export_PaintRhombiPS(
 			"\t\tNorthY //Actual_YMax ge  EastY //Actual_YMax ge  SouthY //Actual_YMax ge  WestY //Actual_YMax ge  and and and {pop //false exit} if\n"
 			"\t} repeat  %% 1\n"
 			"\t{\n"
+				"\t\t/CentreX NorthX SouthX add 2 div def  /CentreY NorthY SouthY add 2 div def\n"
 				"\t\t//TileMatrix setmatrix\n"
-				"\t\t%% Code inside here is intended to be user alterable.\n"
-				"\t\t//true  %% paint rhombi?\n"
+				"\t\t%% Boolean: and for this bool example variations follow, the first slightly complicated, one second very simple.\n"
+				"\t\t%% CentreX ToPaint_XMin 0.52 mul 0.48 ToPaint_XMax mul add le  CentreY ToPaint_YMin 0.54 mul 0.46 ToPaint_YMax mul add le  or  %% If uncommented, replaces following line.\n"
+				"\t\t//true  %% Paint rhombi? Perhaps comment out this line, then uncomment and edit previous line.\n"
 				"\t\t{\n"
+					"\t\t\tgsave\n"
+					"\t\t\ttrue   CentreX dup mul CentreY dup mul add RadiusShortOpen dup mul ge  and  %% Boolean: fade the far-away rhombi? But not rendered correctly by Preview; use Reader.\n"
+					"\t\t\t{\n"
+						"\t\t\t\t[ currenttransfer   /exec cvx   1   /exch cvx   /sub cvx  0.4  /mul cvx   1   /exch cvx   /sub cvx ] cvx bind settransfer\n"
+					"\t\t\t} if  %% Fade the far-away rhombi? But not rendered correctly by Preview; use Reader.\n"
 					"\t\t\tNorthX NorthY moveto  EastX EastY lineto  SouthX SouthY lineto  WestX WestY lineto  closepath\n"
 					"\t\t\tIsFat\n"
 					"\t\t\t{\n"
@@ -252,10 +161,10 @@ void tiling_export_PaintRhombiPS(
 						"\t\t\t\tgsave\n"
 						"\t\t\t\t//false\n"
 						"\t\t\t\t1 {  %% repeat\n"
-						"\t\t\t\t\t%% These colours use changeable. If not specified then not fill'd.\n"
-						"\t\t\t\t\t%% Closed ==> 5 5 15 25 55 105 215 425 855 1705 3415 6825 13655 27305 54615 109225 218455 436905 873815 ... ([n-1] + 2*[n-2])\n"
+						"\t\t\t\t\t%% These colours user changeable. If not specified then not fill'd.\n"
+						"\t\t\t\t\t%% Closed ==> 5 5 15 25 55 105 215 425 855 1705 3415 6825 13655 27305 54615 109225 218455 436905 873815 1747625 3495255 6990505 ... ([n-1] + 2*[n-2])\n"
 						"\t\t\t\t\tPathLength    5 eq PathClosed and Pointy and {0.6 1   0.6 setrgbcolor pop //true exit} if  %% Very light green\n"
-						"\t\t\t\t\tPathLength   15 eq PathClosed and  {0   0.3 0   setrgbcolor pop //true exit} if  %% very dark green\n"
+						"\t\t\t\t\tPathLength   15 eq PathClosed and  {0   0.3 0   setrgbcolor pop //true exit} if  %% Very dark green\n"
 						"\t\t\t\t\tPathLength   25 eq PathClosed and  {0   0   0.6 setrgbcolor pop //true exit} if  %% Dark blue\n"
 						"\t\t\t\t\tPathLength   55 eq PathClosed and  {0   0   1   setrgbcolor pop //true exit} if  %% Blue\n"
 						"\t\t\t\t\tPathLength  105 eq PathClosed and  {1   0.4 1   setrgbcolor pop //true exit} if  %% Pink\n"
@@ -284,6 +193,13 @@ void tiling_export_PaintRhombiPS(
 							"\t\t\t\t\tgsave 1 setgray fill grestore\n"
 							"\t\t\t\t\t//PaperMatrix setmatrix  0 setgray  stroke\n"
 						"\t\t\t\t} if  %% Last rhombus in Closed, Length=5, non-Pointy\n"
+						"\t\t\t\tShowTileCounts\n"
+						"\t\t\t\t{\n"
+							"\t\t\t\t\t//TileMatrix setmatrix NorthX SouthX add 2 div  NorthY SouthY add 2 div  moveto\n"
+							"\t\t\t\t\t0 PaintedNumByType {exch /thin ne {add} {pop} ifelse} forall  10 string cvs  dup\n"
+							"\t\t\t\t\t//PaperMatrix setmatrix  stringwidth pop -2 div   FontSize -0.4 mul  rmoveto\n"
+							"\t\t\t\t\ttrue charpath gsave FontSize 8 div setlinewidth 1 setgray 1 setlinejoin stroke grestore 0 setgray fill\n"
+						"\t\t\t\t} if  %% ShowTileCounts\n"
 						"\t\t\t\t%% Code that shows text about each fat rhombus. Used in debugging. By default commented out.\n"
 						maybeTesting "\t\t\t\tPathClosed not  pop true  %% Choose: all, or only fats in open paths?\n"
 						maybeTesting "\t\t\t\t{\n"
@@ -295,6 +211,13 @@ void tiling_export_PaintRhombiPS(
 						"\t\t\t\t//PaintedNumByType /thin 2 copy known {2 copy get 1 add} {1} ifelse put\n"
 						"\t\t\t\tgsave 0.8 setgray fill grestore\n"
 						"\t\t\t\t//PaperMatrix setmatrix  0 setgray  stroke\n"
+						"\t\t\t\tShowTileCounts\n"
+						"\t\t\t\t{\n"
+							"\t\t\t\t\t//TileMatrix setmatrix NorthX SouthX add 2 div  NorthY SouthY add 2 div  moveto\n"
+							"\t\t\t\t\t//PaintedNumByType /thin get  10 string cvs  dup\n"
+							"\t\t\t\t\t//PaperMatrix setmatrix  stringwidth pop -2 div   FontSize -0.4 mul  rmoveto\n"
+							"\t\t\t\t\ttrue charpath gsave FontSize 8 div setlinewidth 1 setgray 1 setlinejoin stroke grestore 0 setgray fill\n"
+						"\t\t\t\t} if  %% ShowTileCounts\n"
 						"\t\t\t\t%% Code that highlights the north corners of thin rhombi. Used in debugging. By default commented out.\n"
 						maybeTesting "\t\t\t\tgsave newpath //TileMatrix setmatrix  NorthX NorthY 2 copy  moveto\n"
 						maybeTesting "\t\t\t\tEdgeLength 4 div  AngDeg 180 IsFat {36} {72} ifelse sub add  dup IsFat {72} {144} ifelse add  arc  closepath\n"
@@ -304,6 +227,7 @@ void tiling_export_PaintRhombiPS(
 						maybeTesting "\t\t\t\t//TileMatrix setmatrix  NorthX SouthX add 2 div  NorthY SouthY add 2 div  moveto  0 setgray\n"
 						maybeTesting "\t\t\t\t//PaperMatrix setmatrix mark RhId FilledType dup 0 gt {(,) exch} {pop} ifelse ConcatenateToMark dup stringwidth pop -2 div //FontSize -0.3 mul rmoveto show\n"
 					"\t\t\t} ifelse  %% IsFat\n"
+					"\t\t\tgrestore\n"
 					"\t\t\tnewpath\n"
 				"\t\t} if  %% painting rhombi\n"
 				"\t\t//false  %% paint triangles?\n"
@@ -335,7 +259,7 @@ void tiling_export_PaintRhombiPS(
 			"\tend  %% 15 dict\n"
 		"} bind def  %% /PaintByRhombus\n"
 		"\n"
-	);
+	);  // sprintf()
 	(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
 	(*numLinesThisFileP) += newlinesInString(scratchString);
 
@@ -344,9 +268,28 @@ void tiling_export_PaintRhombiPS(
 		(*numCharsThisFileP) += fprintf(fp, "\n\nTileMatrix setmatrix\n");
 		(*numCharsThisFileP) += fprintf(fp, "%% Bounding path\n");
 		(*numLinesThisFileP) += 4;
-		tiling_export_PaintBoundary(fp,  PS_rhomb,  tlngP,  0,  numLinesThisFileP,  numCharsThisFileP);
-		(*numCharsThisFileP) += fprintf(fp, "gsave 1 setgray fill grestore gsave 0.8 setgray 1 setlinejoin PaperMatrix setmatrix 3.84 setlinewidth stroke grestore newpath  %% or, perhaps, zap with \"newpath\"\n");
-		(*numLinesThisFileP) ++;
+		tiling_export_PaintBoundary(
+			fp,
+			PS_rhomb,
+			1.0 / tlngP->edgeLength,
+			tlngP,
+			0,
+			numLinesThisFileP,numCharsThisFileP
+		);  // tiling_export_PaintBoundary()
+		sprintf(scratchString,
+			"closepath\n"
+			"gsave\n"
+				"\tPaperMatrix setmatrix\n"
+				"\tEdgeLength 0.3125 mul ScaleFactor mul setlinewidth\n"
+				"\t0.4 setgray\n"
+				"\t1 setlinejoin  %% round, PLRM3 p673-4\n"
+				"\t1 setlinecap  %% In GhostScript 10.06.0 the closepath seems not to work for tilingId>=6. Presumably long path length. This achieves optical equivalent.\n"
+				"\tstroke\n"
+			"grestore\n"
+			"1 setgray  fill\n"
+		);  // sprintf()
+		(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
+		(*numLinesThisFileP) += newlinesInString(scratchString);
 	}  // if boundingPath
 
 
@@ -357,12 +300,12 @@ void tiling_export_PaintRhombiPS(
 		"\t%% WestX WestY SouthX SouthY EastX EastY NorthX NorthY Angle /RhId false  PaintByRhombus  %% ==> Thin\n"
 		"\t%% WestX WestY SouthX SouthY EastX EastY NorthX NorthY Angle PathClosed PathLength Pointy WithinPathNum /PathStatId /PathId /RhId true  PaintByRhombus  %% ==> Fat\n"
 		"\n"
-	);
+	);  // sprintf()
 	(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
 	(*numLinesThisFileP) += newlinesInString(scratchString);
 
 	// Thins
-	for( rhId_This = tlngP->numFats + tlngP->numThins - 1  ;  rhId_This >= 0  ;  rhId_This -- )
+	for( rhId_This = 0  ;  rhId_This < tlngP->numFats + tlngP->numThins  ;  rhId_This ++ )
 	{
 		rhThisP = &(tlngP->rhombi[rhId_This]);
 		if( Thin == rhThisP->physique
@@ -372,16 +315,22 @@ void tiling_export_PaintRhombiPS(
 		&&  rhThisP->yMin < toPaint_yMax )
 		{
 			sprintf(scratchString,
-				"%.9lf %.9lf %.9lf %.9lf %.9lf %.9lf %.9lf %.9lf %.9lf",
-				rhThisP->west.x, rhThisP->west.y, rhThisP->south.x, rhThisP->south.y,
-				rhThisP->east.x, rhThisP->east.y, rhThisP->north.x, rhThisP->north.y,
+				"%.9lf %.9lf %.9lf %.9lf %.9lf %.9lf %.9lf %.9lf %.10lf",
+				rhThisP->west.x  / tlngP->edgeLength,
+				rhThisP->west.y  / tlngP->edgeLength,
+				rhThisP->south.x / tlngP->edgeLength,
+				rhThisP->south.y / tlngP->edgeLength,
+				rhThisP->east.x  / tlngP->edgeLength,
+				rhThisP->east.y  / tlngP->edgeLength,
+				rhThisP->north.x / tlngP->edgeLength,
+				rhThisP->north.y / tlngP->edgeLength,
 				rhThisP->angleDegrees
-			);
+			);  // sprintf()
 			stringClean(scratchString);
 			(*numCharsThisFileP) += fprintf(fp,
 				"%s %" PRIi8 " %" PRIi8 " %li false PaintByRhombus\n",
 				scratchString, rhThisP->numNeighbours,  rhThisP->filledType, rhId_This
-			);
+			);  // fprintf()
 			(*numLinesThisFileP) ++;
 		}  // Thin and inside toPaint_...
 	}  // for( rhId ... )
@@ -411,11 +360,17 @@ void tiling_export_PaintRhombiPS(
 				&&  rhThisP->yMin < toPaint_yMax )
 				{
 					sprintf(scratchString,
-						"%.9lf %.9lf %.9lf %.9lf %.9lf %.9lf %.9lf %.9lf %.9lf",
-						rhThisP->west.x, rhThisP->west.y, rhThisP->south.x, rhThisP->south.y,
-						rhThisP->east.x, rhThisP->east.y, rhThisP->north.x, rhThisP->north.y,
+						"%.9lf %.9lf %.9lf %.9lf %.9lf %.9lf %.9lf %.9lf %.10lf",
+						rhThisP->west.x  / tlngP->edgeLength,
+						rhThisP->west.y  / tlngP->edgeLength,
+						rhThisP->south.x / tlngP->edgeLength,
+						rhThisP->south.y / tlngP->edgeLength,
+						rhThisP->east.x  / tlngP->edgeLength,
+						rhThisP->east.y  / tlngP->edgeLength,
+						rhThisP->north.x / tlngP->edgeLength,
+						rhThisP->north.y / tlngP->edgeLength,
 						rhThisP->angleDegrees
-					);
+					);  // sprintf()
 					stringClean(scratchString);
 					(*numCharsThisFileP) += fprintf(fp,
 						"%s %" PRIi8 " %" PRIi8 " %s %li %s %li %li %li %li true PaintByRhombus\n",
@@ -426,18 +381,244 @@ void tiling_export_PaintRhombiPS(
 						deBugMode ? "false" : ((5 == pathP->pathLength && pathP->pathClosed && pathP->pointy) ? "true" : "false"),
 						deBugMode ? -1 : rhThisP->withinPathNum,
 						pathStatId, rhThisP->pathId, rhId_This
-					);
+					);  // fprintf()
 					(*numLinesThisFileP) ++;
 				}  // if( 'pathId' == 'pathStatP' ) and inside toPaint_...
 			}  // Fat
 		}  // for( rhId_This ... )
 	}  // for( pathStatId ... )
 
+	sprintf(scratchString,
+		"false   SeedType /Round_5 eq and  RadiusShortOpen 0 gt and  %% Boolean: paint circle excluding fats in short open paths\n"
+		"{\n"
+			"\tTileMatrix setmatrix   0 30 330 {/ang exch def  0  0  RadiusShortOpen  ang  dup 30 add  arc} for  %% 30 degree pieces for pointless accuracy.\n"
+			"\tPaperMatrix setmatrix  1 setlinejoin\n"
+			"\tgsave 3 setlinewidth 1 setgray stroke grestore\n"
+			"\t1 setlinewidth 0 setgray stroke\n"
+		"} if  %% circle bounding interesting well-populated rhombii\n"
+	);  // sprintf()
+	(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
+	(*numLinesThisFileP) += newlinesInString(scratchString);
+
+	tiling_export_Gridlines(fp,  tlngP,  PS_rhomb,  numLinesThisFileP,  numCharsThisFileP);  // Code always present; whether or not active controlled by showGridlines()
+			
+	sprintf(scratchString,
+		"TilingId -9 eq  %% Boolean: paint kitchen? Perhaps change \"-9\" to \"9\".\n"
+		"{\n"
+			"\t4 dict begin\n\n"
+
+			"\t/mmTileEdge 150.6 def  %% Tile edges must have matching lengths. This is that length, in millimetres, allowing for grouting.\n\n"
+			
+			"\t%% Going to do a translation, in TileSpace, in which a tile is of length EdgeLength = 1.\n"
+			"\t%% Almost certainly, you want to translate to a point within ToPaint_XMin etc.\n"
+			"\t%% This point is the origin, the zero point, for the drawing of the room.\n"
+			"\t%% Suggestion: make it the point from which physical tiling will start, so the point of certain tile alignment,\n"
+			"\t%% so allowing (small) changes in mmTileEdge to correctly adjust for mis-judgements of grouting thickness.\n"
+			"\tTileMatrix setmatrix  -11.3 -21.8 translate\n"
+			"\tEdgeLength mmTileEdge div dup scale  /KitchenMatrix matrix currentmatrix def\n\n"
+			
+			"\tfalse  %% Boolean: identify zero location (advice: use to assist choice of it, then disable).\n"
+			"\t{\n"
+				"\t\t2 dict begin\n"
+				"\t\t/FontSize 5 def\n"
+				"\t\tKitchenMatrix setmatrix   mmTileEdge EdgeLength div dup scale   matrix currentmatrix\n"
+				"\t\t[ 10000 6000 4000 3000 2000 1500 1000 600 400 300 200 150 100 60 40 30 20 15 10 6 4 3 2 1 0.01 ]\n"
+				"\t\tdup\n"
+				"\t\t{\n"
+					"\t\t\t/U_p exch def\n"
+					"\t\t\tU_p  Actual_XMax Actual_XMin sub  lt\n"
+					"\t\t\tU_p  Actual_YMax Actual_YMin sub  lt   or\n"
+					"\t\t\t{\n"
+						"\t\t\t\t/V_p 0.666666 U_p mul def  /U_n U_p neg def  /V_n V_p neg def  %% U, V; positive, negative\n"
+						"\t\t\t\tU_p V_p moveto  U_p U_p  2 copy  V_p U_p  curveto\n"
+						"\t\t\t\tV_n U_p lineto  U_n U_p  2 copy  U_n V_p  curveto\n"
+						"\t\t\t\tU_n V_n lineto  U_n U_n  2 copy  V_n U_n  curveto\n"
+						"\t\t\t\tV_p U_n lineto  U_p U_n  2 copy  U_p V_n  curveto closepath\n"
+					"\t\t\t} if  %% U_p <= page size\n"
+				"\t\t} forall  %% U_p\n"
+				"\t\tPaperMatrix setmatrix gsave 1.44 setlinewidth 0.8 setgray stroke grestore 0.48 setlinewidth 0.2 setgray stroke\n"
+				"\t\t{  %% forall with fixed array, again\n"
+					"\t\t\t/U exch def\n"
+					"\t\t\tU Actual_XMax Actual_XMin sub lt   U Actual_YMax Actual_YMin sub lt   or   U 0.5 gt  and\n"
+					"\t\t\t{\n"
+					 	"\t\t\t\tdup setmatrix  U neg U moveto\n"
+					 	"\t\t\t\tPaperMatrix setmatrix 0 FontSize -0.4 mul rmoveto\n"
+						"\t\t\t\tU 20 string cvs  FontName FontSize 3 -1 roll  ShowOutlined\n"
+					"\t\t\t} if  %% U <= page size\n"
+				"\t\t} forall  %% U\n"
+				"\t\tpop   end\n"
+			"\t} if  %% Test zero location\n\n"
+
+			"\t%% Room specified in the mm, per mmTileEdge.\n"
+			"\t%% The starting 'moveto' should ideally be to a point near 0,0; i.e., near the place chosen the previous paragraph.\n"
+			"\t%% Carefully measure room; carefully echo those measurements to this section. Start with a 'moveto', then better to use 'rlineto's.\n"
+			"\t/KitchenRoomPath\n"
+			"\t{\n"
+				"\t\t%% in mm\n"
+				"\t\t    0      0  moveto\n"  // Living room north
+				"\t\t-3735      0  rlineto\n"
+				"\t\t    0   +320  rlineto\n"
+				"\t\t -190      0  rlineto\n"
+				"\t\t    0   +305  rlineto\n"  // Downpipe box: Check
+				"\t\t +225      0  rlineto\n"
+				"\t\t    0  +5160  rlineto\n"
+				"\t\t-2590      0  rlineto\n"  // table holding
+				"\t\t    0   -140  rlineto\n"
+				"\t\t -355      0  rlineto\n"
+				"\t\t    0   -585  rlineto\n"
+				"\t\t -237      0  rlineto\n"
+				"\t\t    0  -3587  rlineto\n"  // New windows
+				"\t\t +237      0  rlineto\n"
+				"\t\t    0  -1973  rlineto\n"
+				"\t\t -250      0  rlineto\n"
+				"\t\t    0  -3370  rlineto\n"
+				"\t\t +250      0  rlineto\n"
+				"\t\t    0   -845  rlineto\n"
+				"\t\t+6500      0  rlineto\n"
+				"\t\t    0   +475  rlineto\n"
+				"\t\t +215      0  rlineto\n"
+				"\t\t    0  +3280  rlineto\n"
+				"\t\t  -70      0  rlineto\n"
+				"\t\t    0   +960  rlineto\n"
+				"\t\tclosepath\n"
+			"\t} bind def  %% /KitchenRoomPath\n\n"
+
+			"\t/KitchenFurniturePath\n"
+			"\t{\n"
+				"\t\t%% in mm\n"
+				"\t\t-1380  -2050  moveto  %% island\n"
+				"\t\t    0   -650  rlineto\n"
+				"\t\t-1000      0  rlineto\n"
+				"\t\t    0   -220  rlineto\n"
+				"\t\t-1600      0  rlineto\n"
+				"\t\t    0  +1090  rlineto\n"
+				"\t\t+1050      0  rlineto\n"
+				"\t\t    0   -220  rlineto\n"
+				"\t\tclosepath\n\n"
+
+				"\t\t-2030      0  moveto  %% cupboard\n"
+				"\t\t    0   -150  rlineto\n"
+				"\t\t-1070      0  rlineto\n"
+				"\t\t    0    150  rlineto\n\n"
+
+				"\t\t-6645	 -500  moveto  %% fridge box\n"
+				"\t\t +640      0  rlineto\n"
+				"\t\t    0   +760  rlineto\n"
+				"\t\t -640      0  rlineto\n\n"
+
+				"\t\t-6645  -4180  moveto  %% cabinets\n"
+				"\t\t 6715      0  rlineto\n"
+			"\t} bind def  %% /KitchenFurniturePath\n\n"
+
+			"\tgsave\n"
+			"\t[\n"
+				"\t\t{3 setlinewidth  1 setgray  1 setlinejoin  0 setlinecap}  %% setlinewidth in PaperMatrix, so in points\n"
+				"\t\t{1 setlinewidth  0 setgray  0 setlinejoin  1 setlinecap}\n"
+			"\t]\n"
+			"\t{\n"
+				"\t\t/KitchenFormatting exch def\n"
+				"\t\t[ {KitchenRoomPath} {KitchenFurniturePath} ]\n"
+				"\t\t{\n"
+					"\t\t\tKitchenMatrix setmatrix   exec\n"
+					"\t\t\tPaperMatrix setmatrix  KitchenFormatting  stroke\n"
+				"\t\t}\n"
+				"\t\tforall  %% Paths\n"
+			"\t} forall  %% Formatting\n"
+			"\tgrestore\n"
+			"\tend\n"
+		"} if  %% Paint kitchen?\n\n\n"
+	);  // sprintf()
+	(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
+	(*numLinesThisFileP) += newlinesInString(scratchString);
+
 
 	sprintf(scratchString,
-		"\n"
-		"showpage\n"
-		"\n"
+		"false   %% Boolean: label orientation, do or don\'t?\n"
+		"{\n"
+			"\t1 dict begin\n"
+			"\t/FontSize 14 def\n\n"
+
+			"\tPaperMatrix setmatrix   FontName FontSize selectfont\n\n"
+
+			"\tFontName FontSize  [(Label at top: e.g., ) /quotedblleft (Garden) /quotedblright (.)]\n"
+			"\tPageWidth 2 div  PageHeight Margin FontSize add sub  moveto   dup StringWidthGeneral -2 div 0 rmoveto   ShowOutlined\n\n"
+
+			"\tFontName FontSize  [(Label at bottom: e.g., ) /quotedblleft (North) /quotedblright (.)]\n"
+			"\tPageWidth 2 div  Margin  moveto   dup StringWidthGeneral -2 div 0 rmoveto   ShowOutlined\n\n"
+
+			"\tFontName FontSize  [(Label at left: e.g., ) /quotedblleft (South) /quotedblright (.)]\n"
+			"\tgsave\n"
+			"\tMargin FontSize add  PageHeight 2 div translate 90 rotate\n"
+			"\t0 0 moveto   dup StringWidthGeneral -2 div 0 rmoveto   ShowOutlined\n"
+			"\tgrestore\n\n"
+
+			"\tFontName FontSize  [(Label at right: e.g., ) /quotedblleft (Street) /quotedblright (.)]\n"
+			"\tgsave\n"
+			"\tPageWidth Margin FontSize add sub  PageHeight 2 div translate -90 rotate\n"
+			"\t0 0 moveto   dup StringWidthGeneral -2 div 0 rmoveto   ShowOutlined\n"
+			"\tgrestore\n\n"
+
+			"\tend\n"
+		"} if   %% Show label orientations?\n\n\n"
+	);  // sprintf()
+	(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
+	(*numLinesThisFileP) += newlinesInString(scratchString);
+
+
+	sprintf(scratchString,
+		"false   %% Boolean: decorative text, do or don\'t?\n"
+		"{\n"
+			"\t7 dict begin\n"
+			"\tPaperMatrix setmatrix\n"
+			"\t/FontSize 16 def\n"
+			"\t/X 0.52 PageWidth  mul def  %% User changeable.\n"
+			"\t/Y 0.96 PageHeight mul def  %% User changeable.\n"
+			"\t/LineHeight  FontSize  1.3 mul def  %% User changeable.\n\n"
+
+			"\tFontName FontSize selectfont   0 setgray\n"
+			"\t/indent  %% by longer of these two strings\n"
+				"\t\t(Round 5)  StringWidthGeneral\n"
+				"\t\t(Pointy 5) StringWidthGeneral  2 copy lt {exch} if pop\n"
+			"\tdef  %% /indent\n\n"
+
+			"\t%% In TextLines, each item is an array,\n"
+			"\t%% each subarray containing strings, glyphs, or executables.\n"
+			"\t/TextLines [\n"
+				"\t\t[(Path colours:)]\n"
+				"\t\t[ {indent  (Round 5) StringWidthGeneral sub 0 rmoveto}  (Round 5 = white with circle;)]\n"
+				"\t\t[ {indent (Pointy 5) StringWidthGeneral sub 0 rmoveto} (Pointy 5 = pale green;)]\n"
+				"\t\t[ {indent       (15) StringWidthGeneral sub 0 rmoveto}       (15 = dark green;)]\n"
+				"\t\t[ {indent       (25) StringWidthGeneral sub 0 rmoveto}       (25 = dark blue;)]\n"
+				"\t\t[ {indent       (55) StringWidthGeneral sub 0 rmoveto}       (55 = bright blue;)]\n"
+				"\t\t[ {indent      (105) StringWidthGeneral sub 0 rmoveto}      (105 = pink;)]\n"
+				"\t\t[ {indent      (215) StringWidthGeneral sub 0 rmoveto}      (215 = maroon;)]\n"
+				"\t\t[ {indent      (425) StringWidthGeneral sub 0 rmoveto}      (425 = medium green;)]\n"
+				"\t\t[ {indent     (1705) StringWidthGeneral sub 0 rmoveto}     (1705 = orange;)]\n"
+				"\t\t[ {indent     (Open) StringWidthGeneral sub 0 rmoveto}     (Open = bright red.)]\n"
+				"\t\t[]\n"
+				"\t\t[(GitHub.com/jdaw1/penrose_tiling)]\n"
+				"\t\t[(has code, including for this page.)]\n"
+				"\t\t[]\n"
+				"\t\t[/emdash ( J. D. A. Wiseman, August 2026)]\n"
+			"\t] def  %% /TextLines\n\n"
+
+			"\t0  1  TextLines length 1 sub\n"
+			"\t{\n"
+				"\t\t/lineNum exch def\n"
+				"\t\tX  Y lineNum  LineHeight mul sub  moveto\n"
+				"\t\tFontName   FontSize   TextLines lineNum get   ShowOutlined\n"
+			"\t} for  %% lineNum\n"
+			"\tend\n"
+		"} if  %% Show decorative text?\n\n\n"
+	);  // sprintf()
+	(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
+	(*numLinesThisFileP) += newlinesInString(scratchString);
+
+
+	sprintf(scratchString,
+		"showpage\n\n\n"
+
+
 		"mark  (\\n\\n\\nNum rhombi painted:)\n"
 		"(  thin=) PaintedNumByType /thin 2 copy known {get} {pop pop 0} ifelse\n"
 		"(;  fat=) 0 PaintedNumByType {exch /thin ne {add} {pop} ifelse} forall\n"
@@ -462,7 +643,7 @@ void tiling_export_PaintRhombiPS(
 		"count 0 gt {(+pstack) = pstack (-pstack) =} if\n"
 		"\n"
 		"{countdictstack 3 gt {8 {() =} repeat currentdict {exch == =} forall end} {exit} ifelse} bind loop  %% Final debugging\n"
-	);
+	);  // sprintf()
 	(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
 	(*numLinesThisFileP) += newlinesInString(scratchString);
 

@@ -1,35 +1,50 @@
 %!PS
 
-/DataAsOf (D:20250622155907) def
-/Licence (GNU General Public License, Version 3, 29 June 2007) def
-/URL (https://githubcom/jdaw1/penrose_tiling/) def
-/Author (Julian D A Wiseman of wwwjdawisemancom) def
 /TilingId 0 def
-/NumFats 2 def
-/NumThins 1 def
-/EdgeLength 3.2360679774997898E+00 def
+/SeedType /Round_5 def
+/EdgeLength 1 def
+/AxisAligned true def
+/NumFats 5 def
+/NumThins 5 def
+/NumThins_0T4F 0 def
+/NumThins_1T3F 0 def
+/NumPathsClosed 1 def
+/NumPathsOpen 0 def
+/NumPathsStats 1 def
+/BoundingPathNumVertices 10 def
+/XMin -1.538841769 def
+/XMax 1.538841769 def
+/YMin -1.618033989 def
+/YMax 1.618033989 def
+/RadiusMax 1.618033989 def
+/RadiusShortOpen 1.618033989 def
+/DataAsOf (D:20260830000308) def
+/SecondsToStartExportFromStartFirstTiling 0.000189 def
+/SecondsToStartExportFromStartThisTiling 0.000189 def
+/InternalToC_EdgeLength 1 def
+/Licence (GNU General Public License, Version 3, 29 June 2007) def
+/URL (https://github.com/jdaw1/penrose_tiling/) def
+/Author (Julian D. A. Wiseman of www.jdawiseman.com) def
+/WantedPostScriptCentreX 0 def
+/WantedPostScriptCentreY 0 def
+/WantedPostScriptHalfWidth 1.538841769 def
+/WantedPostScriptHalfHeight 2.215932147 def
+/WantedPostScriptAspect 1.44 def
+/wantedPostScriptNumRhombi 10 def
+/wantedPostScriptNumPaths 1 def
 
-/XMin -3.23606797749979 def
-/XMax 2 def
-/YMin -3.077683537175254 def
-/YMax 3.077683537175254 def
 
-/ToPaint_XMin -4 def  % User changeable
-/ToPaint_XMax +2 def
-/ToPaint_YMin -4 def
-/ToPaint_YMax +4 def
-
-/R 1.618033988749895 def
-
-/LongestPathToBeFilled 215 def  % User alterable If being increased, might need to add more colours to PaintPath
+% Next four user changeable, for zoom. Commented suggestions are:  original enclosing all tiles;  maximum elegant area,
+% enclosing the 1 closed path of length 5 and the 0 of length -1;  and for my kitchen.
+/ToPaint_XMin -2 def  % -2  or  -1.538841  or  -57.5  % Last column works with my kitchen, tilingId==9.
+/ToPaint_XMax  2 def  %  2  or   0.000000  or  -10.0
+/ToPaint_YMin -2 def  % -2  or  -1.618033  or  -53.0
+/ToPaint_YMax  2 def  %  2  or  -0.500000  or   17.0
 
 
 
-
-/PageWidth  297 360 mul 127 div def  % A3, long side.  User alterable: for US Tabloid use "11 72 mul".
-/PageHeight 420 360 mul 127 div def  % A3, short side.  User alterable: for US Tabloid use "17 72 mul".
-/OnPageTileCentreX PageWidth  0.5 mul def  % User alterable. This has tiling positioned wrt centre of paper page.
-/OnPageTileCentreY PageHeight 0.5 mul def  % User alterable. This has tiling positioned wrt centre of paper page.
+/PageWidth  420 360 mul 127 div def  % A3, long side.  User alterable: for US Tabloid use "11 72 mul".
+/PageHeight 297 360 mul 127 div def  % A3, short side.  User alterable: for US Tabloid use "17 72 mul".
 /Margin 18 def  % 18pt = 0.25" = 6.35mm. Enlarge if the printer can't work so close to the edge. Used only for default value of scale.
 
 /Actual_XMin  XMin ToPaint_XMin  2 copy lt {exch} if pop  def
@@ -42,12 +57,13 @@
 	2 copy gt {exch} if pop  % Lesser of them.
 	% pop 150  % For endpapers, on A3, with TilingId=9,  perhaps choose X -3.4 to 2.4,  Y -4 to 4,  then scaling of 150. But YMMV.
 def  % /ScaleFactor. User alterable. Could be of form "6 EdgeLength div", making an edge be 6pt on the paper.
+/R 0.5 def
 
-% Expands box to match whole page (which might have different aspect ratio to original ToPaint_ choices). If unwanted, delete next four lines.
-/Actual_XMin            OnPageTileCentreX neg ScaleFactor div  Actual_XMin Actual_XMax add 2 div add
-/Actual_XMax PageWidth  OnPageTileCentreX sub ScaleFactor div  Actual_XMin Actual_XMax add 2 div add  def def
-/Actual_YMin            OnPageTileCentreY neg ScaleFactor div  Actual_YMin Actual_YMax add 2 div add
-/Actual_YMax PageHeight OnPageTileCentreY sub ScaleFactor div  Actual_YMin Actual_YMax add 2 div add  def def
+/LongestPathToBeFilled 215 def  % User alterable If being increased, might need to add more colours to PaintPath
+
+
+/OnPageTileCentreX PageWidth  0.5 mul def  % User alterable. This has tiling positioned wrt centre of paper page.
+/OnPageTileCentreY PageHeight 0.5 mul def  % User alterable. This has tiling positioned wrt centre of paper page.
 
 << /PageSize [PageWidth PageHeight] >> setpagedevice
 /PaperMatrix matrix currentmatrix def
@@ -67,7 +83,7 @@ Actual_XMax Actual_XMin add -2 div  Actual_YMax Actual_YMin add -2 div  translat
 } bind def  % StrokeMulti
 
 mark
-	/CreationDate (D:20250622155907)
+	/CreationDate (D:20260830000308)
 	/Title (Penrose tiling)
 	/Author (Julian D. A. Wiseman)
 	/Subject (http://github.com/jdaw1/penrose_tiling/)
@@ -179,20 +195,226 @@ false  % Testing
 
 
 % Bounding path
-1 -3.077683537 moveto
-2 0 lineto
-1 3.077683537 lineto
--2.236067977 3.077683537 lineto
--3.236067977 0 lineto
--2.236067977 -3.077683537 lineto closepath
+1.538841769 -0.5 moveto  % rhId=9, corner=east
+1.538841769 0.5 lineto  % 7s
+0.951056516 1.309016994 lineto  % 7e
+0 1.618033989 lineto  % 5s
+-0.951056516 1.309016994 lineto  % 5e
+-1.538841769 0.5 lineto  % 6s
+-1.538841769 -0.5 lineto  % 6e
+-0.951056516 -1.309016994 lineto  % 8s
+0 -1.618033989 lineto  % 8e
+0.951056516 -1.309016994 lineto  % 9s
 newpath  % gsave 0.8 setgray fill grestore 0.4 setgray 1 setlinejoin PaperMatrix setmatrix 1.92 setlinewidth stroke 
 
 
 //TileMatrix setmatrix
-0.5 1.538841769 moveto  0 0 R 72 180 arc   -2.736067977 1.538841769 moveto  -2.236067977 3.077683537 R 252 360 arc
--0.618033989 -3.077683537 moveto  -2.236067977 -3.077683537 R 0 108 arc   -1.618033989 0 moveto  0 0 R 180 288 arc
-0.5 1.538841769 moveto  1 3.077683537 R -108 -72 arc   1.5 -1.538841769 moveto  1 -3.077683537 R 72 108 arc
+0.951056516 0.809016994 moveto  0.951056516 0.309016994 R 90 198 arc   0 0.5 moveto  0 1 R 270 378 arc
+1.06331351 -0.654508497 moveto  0.587785252 -0.809016994 R 18 126 arc   0.475528258 0.154508497 moveto  0.951056516 0.309016994 R 198 306 arc
+-0.293892626 -1.213525492 moveto  -0.587785252 -0.809016994 R -54 54 arc   0.293892626 -0.404508497 moveto  0.587785252 -0.809016994 R 126 234 arc
+-1.244949142 -0.095491503 moveto  -0.951056516 0.309016994 R -126 -18 arc   -0.293892626 -0.404508497 moveto  -0.587785252 -0.809016994 R 54 162 arc
+-0.475528258 1.154508497 moveto  0 1 R 162 270 arc   -0.475528258 0.154508497 moveto  -0.951056516 0.309016994 R -18 90 arc
+-0.475528258 1.154508497 moveto  -0.951056516 1.309016994 R -18 18 arc   0.475528258 1.463525492 moveto  0.951056516 1.309016994 R 162 198 arc
+-1.244949142 -0.095491503 moveto  -1.538841769 -0.5 R 54 90 arc   -1.244949142 0.904508497 moveto  -0.951056516 1.309016994 R 234 270 arc
+0.951056516 0.809016994 moveto  0.951056516 1.309016994 R -90 -54 arc   1.538841769 0 moveto  1.538841769 -0.5 R 90 126 arc
+-0.293892626 -1.213525492 moveto  0 -1.618033989 R 126 162 arc   -1.244949142 -0.904508497 moveto  -1.538841769 -0.5 R -54 -18 arc
+1.06331351 -0.654508497 moveto  1.538841769 -0.5 R -162 -126 arc   0.475528258 -1.463525492 moveto  0 -1.618033989 R 18 54 arc
 PaperMatrix setmatrix  StrokeMulti
+% Functions taken from https://github.com/jdaw1/placemat/blob/main/PostScript/placemat.ps
+/ToString
+{
+	1 dict begin  dup type cvlit /Type exch def
+	1 {
+		Type /integertype  eq {11 string cvs exit ( ) Concatenate} if
+		Type /realtype     eq {16 string cvs exit ( ) Concatenate} if
+		Type /nametype     eq {dup length string cvs exit} if
+		Type /stringtype   eq {exit} if
+		Type /booleantype  eq {5 string cvs exit} if
+		Type /operatortype eq {127 string cvs exit} if
+		Type /marktype     eq {pop (mark) exit} if
+		Type /nulltype     eq {pop (null) exit} if
+		pop (-- not handled --)  % fall-back
+	} repeat  end
+} bind def  % /ToString
+
+/Concatenate {2 copy length exch length dup 3 1 roll add string dup dup 5 3 roll exch putinterval 3 -1 roll 0 exch putinterval} bind def
+
+% mark string|number|other ... string|number|other  ConcatenateToMark  string
+/ConcatenateToMark
+{
+	4 dict begin
+	counttomark /ctm exch def  /n 0 def
+	ctm {ToString  dup length n add /n exch def  ctm 1 roll} repeat
+	/p 0 def  /s n 65535 2 copy gt {exch} if pop string def
+	ctm  -1  0
+	{
+		dup 0 gt
+		{
+			-1 roll   dup length p add  65532 le
+				{s exch p exch dup length p add /p exch def putinterval}
+				{s exch p exch 0 65532 p sub getinterval putinterval  s 65532 (...) putinterval  cleartomark  s  exit}
+			ifelse  % too long
+		} {pop pop s} ifelse
+	} for
+	end
+} bind def  % /ConcatenateToMark
+
+
+
+
+% Computes the path of a glyph, with the charpath-style boolean flag, moving the currentpoint as if after a show.
+/GlyphPathMoveto
+{
+	2 dict begin
+	/bln exch def
+	/GlyphNameThis exch def
+	currentfont
+	currentfont length dict begin
+	currentfont {1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding [ 256 {/.notdef} repeat ] def
+	Encoding 97 GlyphNameThis put  % ASCII a = 97
+	currentdict
+	end
+	/TemporaryFont exch definefont pop
+	/TemporaryFont 1 selectfont
+	currentpoint exch (a) stringwidth pop add exch
+	(a) bln charpath % (a) has been redefined
+	moveto
+	setfont
+	/TemporaryFont undefinefont
+	end
+} bind def  % /GlyphPathMoveto
+
+% http://groups.google.com/g/comp.lang.postscript/c/hZmiLPonDl8  "Possible bug in Mac Distiller's charpath?", 16 Feb 2008
+% There is a current point.
+% CompoundString bool  CharPathGeneral  -
+/CharPathGeneral
+{
+	2 dict begin
+	/bln exch def
+	/param exch def
+	1 {
+		/param load xcheck {[ param ]     bln CharPathGeneral         exit} if  % executable
+		param type /arraytype  eq {param {bln CharPathGeneral} forall exit} if  % array
+		param type /stringtype eq {param  bln                charpath exit} if  % string
+		param type /nametype   eq {param  bln GlyphPathMoveto         exit} if  % glyph
+		(
+CharPathGeneral: type error. Continuing.) = param == (
+) =
+	} repeat  % 1
+	end
+} bind def  % /CharPathGeneral
+
+/StringWidthGeneral {gsave nulldevice 0 0 moveto true CharPathGeneral currentpoint pop grestore} bind def
+
+% FontName FontSize CompoundString  ShowOutlined  -
+/ShowOutlined
+{
+	3 dict begin
+	/CompoundString exch def  /FontSize exch def  /FontName exch def
+	FontName FontSize selectfont
+	CompoundString true CharPathGeneral
+	gsave FontSize 8 div setlinewidth 1 setgray 1 setlinejoin stroke grestore 0 setgray fill
+	end
+} bind def  % /ShowOutlined
+
+
+() =
+/NumRhombi NumFats NumThins add def[/TilingId /DataAsOf /NumFats /NumThins /NumRhombi /EdgeLength  /XMin /XMax /YMin /YMax  /ToPaint_XMin /ToPaint_XMax /ToPaint_YMin /ToPaint_YMax]
+{
+	dup 12 string cvs ( = ) Concatenate  exch load
+	dup type /stringtype eq {(") exch (") Concatenate Concatenate} {16 string cvs} ifelse
+	Concatenate =
+} forall
+mark (\nPageWidth = ) PageWidth  (pt = ) PageWidth 72 div  (" = ) PageWidth  127 mul 360 div (mm) ConcatenateToMark =
+mark   (PageHeight = ) PageHeight (pt = ) PageHeight 72 div (" = ) PageHeight 127 mul 360 div (mm) ConcatenateToMark =
+mark (T, B, L, and R margins each = ) Margin (pt = ) Margin 72 div (" = ) Margin 127 mul 360 div (mm) ConcatenateToMark =
+mark (ScaleFactor = ) ScaleFactor ConcatenateToMark =
+mark (On paper, length of an edge is ) EdgeLength ScaleFactor mul (pt = ) 1 index 72 div (" = 1"/) 1 2 index div ( = ) 5 index 127 mul 360 div (mm = 1mm/) 1 2 index div ConcatenateToMark =
+
+
+(\n\nPathStats:\n\nPathClosed\tPathLength\tNumPaths\tMaxNumThisFats\tMaxNumDeepFats\tMaxNumThisThins\tMaxNumDeepThins\tMaxNumThisFats_Num\tMaxNumDeepFats_Num\tMaxNumThisThins_Num\tMaxNumDeepThins_Num\tRadiusMinMin_EdgeLengths\tRadiusMaxMax_EdgeLengths\tWidthMax_EdgeLengths\tHeightMax_EdgeLengths) =
+
+
+/FontName /Helvetica def
+
+
+
+false  % Boolean: paint gridlines?
+{
+	14 dict begin
+
+/FontName /Helvetica-Bold def
+	/SizeX Actual_XMax Actual_XMin sub def
+	/SizeY Actual_YMax Actual_YMin sub def
+	/GridStepX
+	1 {
+		SizeX   16 le {   1 exit} if
+		SizeX   32 le {   2 exit} if
+		SizeX   80 le {   5 exit} if
+		SizeX  160 le {  10 exit} if
+		SizeX  320 le {  20 exit} if
+		SizeX  800 le {  50 exit} if
+		SizeX 1600 le { 100 exit} if
+		SizeX 3200 le { 500 exit} if
+		SizeX 8000 le {1000 exit} if
+		SixeX log 0.3 sub floor cvi 10 exch exp exit
+	} repeat def  % 1, /GridStepX
+	/GridStepY
+	1 {
+		SizeY   16 le {   1 exit} if
+		SizeY   32 le {   2 exit} if
+		SizeY   80 le {   5 exit} if
+		SizeY  160 le {  10 exit} if
+		SizeY  320 le {  20 exit} if
+		SizeY  800 le {  50 exit} if
+		SizeY 1600 le { 100 exit} if
+		SizeY 3200 le { 500 exit} if
+		SizeY 8000 le {1000 exit} if
+		SixeY log 0.3 sub floor cvi 10 exch exp exit
+	} repeat def  % 1, /GridStepY
+	/StartX  Actual_XMin GridStepX div ceiling cvi GridStepX mul  def
+	/StartY  Actual_YMin GridStepY div ceiling cvi GridStepY mul  def
+
+	//TileMatrix setmatrix
+
+	StartY  GridStepY  Actual_YMax
+	{
+		/GridVal exch def
+		Actual_XMin GridVal moveto  Actual_XMax GridVal lineto
+	} for  % GridVal, horizontal lines
+	StartX  GridStepX  Actual_XMax
+	{
+		/GridVal exch def
+		GridVal Actual_YMin moveto  GridVal Actual_YMax lineto
+	} for  % GridVal, vertical lines
+	matrix currentmatrix  PaperMatrix setmatrix
+	gsave 0.72 setlinewidth 1 setgray 1 setlinecap stroke grestore
+	0.24 setlinewidth 0 setgray 0 setlinecap stroke
+	setmatrix
+
+	/FontSize Actual_YMax Actual_YMin sub 60 div def
+	FontName FontSize selectfont
+	StartY  GridStepY  Actual_YMax
+	{
+		/GridVal exch def
+		Actual_XMax  GridVal FontSize 0.3 mul sub  moveto
+		FontName FontSize
+		GridVal 0 lt {[/minus GridVal abs 16 string cvs]} {GridVal 16 string cvs} ifelse
+		dup StringWidthGeneral neg 0 rmoveto  ShowOutlined
+	} for  % GridVal, y labels
+	StartX  GridStepX  Actual_XMax
+	{
+		/GridVal exch def
+		GridVal  Actual_YMin  moveto
+		FontName FontSize
+		GridVal 0 lt {[/minus GridVal abs 16 string cvs]} {GridVal 16 string cvs} ifelse
+		dup StringWidthGeneral -2 div 0 rmoveto  ShowOutlined
+	} for  % GridVal, x labels
+	end
+} if  % Paint gridlines?
+
+
 
 showpage
 

@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // insideness.c, in PenroseC
 
@@ -114,17 +114,17 @@ void insideness_populate(Tiling * const tlngP)
 				fprintf(stderr,
 					"insideness_populate(): pathIdRangeNum_Num=%li >= pathIdRangeNum_NumMax=%li\n",
 					pathIdRangeNum_Num, pathIdRangeNum_NumMax
-				);
+				);  // fprintf()
 				fflush(stderr);
 				exit(EXIT_FAILURE);
 			}
 			pathIdRange[pathIdRangeNum_Num].pathLength = tlngP->path[pathThisId].pathLength;
-			pathIdRange[pathIdRangeNum_Num].radiusMax = tlngP->path[pathThisId].radiusMax;
+			pathIdRange[pathIdRangeNum_Num].radiusMax  = tlngP->path[pathThisId].radiusMax ;
 			pathIdRange[pathIdRangeNum_Num].pathClosedTypeNum = pathClosedTypeNum(
 				tlngP->path[pathThisId].pathClosed,
 				tlngP->path[pathThisId].pathLength,
 				tlngP->path[pathThisId].pointy
-			);
+			);  // pathClosedTypeNum()
 			pathIdRange[pathIdRangeNum_Num].pathId_Start = pathThisId;
 			pathIdRange[pathIdRangeNum_Num].pathId_Final = pathThisId;
 			pathIdRangeNum_Num ++;
@@ -139,7 +139,7 @@ void insideness_populate(Tiling * const tlngP)
 			"insideness_populate(), pathIdRange: tilingId=%" PRIi8 ", pathLength=%li, radiusMax=%.9lf, pathId_Start=%li, pathId_Final=%li\n",
 			tlngP->tilingId, pathIdRange[pathIdRange_Id].pathLength, pathIdRange[pathIdRange_Id].radiusMax,
 			pathIdRange[pathIdRange_Id].pathId_Start, pathIdRange[pathIdRange_Id].pathId_Final
-		);
+		);  // printf()
 	*/
 
 	// Fats' insideness done at level of Path.
@@ -159,14 +159,14 @@ void insideness_populate(Tiling * const tlngP)
 						pathIdRange[pathIdRange_Id].pathId_Final,
 						tlngP->path[pathThisId].centre.y - pathIdRange[pathIdRange_Id].radiusMax - tlngP->edgeLength / 5,
 						false  // bool const above (i.e., false ==> want smaller y)
-					);
+					);  // PathByY()
 					pathLoopEnd = PathByY(
 						tlngP->path,
 						pathLoopStart,
 						pathIdRange[pathIdRange_Id].pathId_Final,
 						tlngP->path[pathThisId].centre.y + pathIdRange[pathIdRange_Id].radiusMax + tlngP->edgeLength / 5,
 						true  // bool const above
-					);
+					);  // PathByY()
 
 					for( pathOuterId = pathLoopStart  ;  pathOuterId <= pathLoopEnd  ;  pathOuterId++ )
 					{
@@ -189,7 +189,7 @@ void insideness_populate(Tiling * const tlngP)
 this_path_done: ;
 	}  // for( pathThisId ... )
 
-	free(pathIdRange);
+	if(pathIdRange != NULL)  {free(pathIdRange); pathIdRange = NULL;}
 
 
 	// Thins' insideness done at level of Rhombus.
@@ -206,6 +206,7 @@ this_path_done: ;
 			nghbrNum_best = -1;
 			pathLength_Shortest = LONG_MAX;
 
+			// An internal thin adjacent to a hole would have fewer than four neighbours. Hence cannot restrict to four-neighbour case.
 			for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombi[rhId].numNeighbours  ;  nghbrNum ++ )
 			{
 				nghbrP = &(tlngP->rhombi[rhId].neighbours[nghbrNum]);
@@ -213,14 +214,17 @@ this_path_done: ;
 				{
 					pathThisId = tlngP->rhombi[ nghbrP->rhId ].pathId ;
 					if( ! tlngP->path[pathThisId].pathClosed )
+					{
+						nghbrNum_best = -1;  // Already set, ....pathId_ShortestOuter = -1;
 						break;  // for( nghbrNum ... )
+					}
 					if( pathThisId >= 0 )  // Should be redundant
 					{
 						if( pathLength_Shortest > tlngP->path[pathThisId].pathLength  )
 						{
 							pathLength_Shortest = tlngP->path[pathThisId].pathLength;
 							nghbrNum_best = nghbrNum;
-						}  // pathLength_Shortest > ...
+						}  // new best neighbour
 					}  // if( pathThisId >= 0 )
 				}  // Fat neighbour
 			}  // for( nghbrNum ... )

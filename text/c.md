@@ -19,20 +19,21 @@ Documentation pages:&nbsp;
 [C](https://en.wikipedia.org/wiki/C_(programming_language)) is a fabulous low-level programming language, dating back to 1972. 
 The language has great power over the computer on which it is running, at a low level able to inspect and alter memory, and likewise read and write from disks. 
 This used to be thought fast and powerful, but is now described as insecure. 
-One should be careful about code downloaded from the internet; one should be more careful about C&nbsp;code downloaded from the internet. 
+One should be careful about code downloaded from the internet; one should be extra careful about C&nbsp;code downloaded from the internet. 
 Indeed, since 17<small><sup>th</sup></small>&nbsp;January 2025 the US Government has been [discouraging the use&nbsp;of&nbsp;C](https://www.cisa.gov/resources-tools/resources/product-security-bad-practices): 
 
 > **1)** The development of new product lines for use in service of critical infrastructure or NCFs in a memory-unsafe language (e.g., C or C++) where readily available alternative memory-safe languages could be used is dangerous and significantly elevates risk to national security, national economic security, and national public health and safety.
 
 So, even though this is not &ldquo;critical infrastructure&rdquo;, be careful. 
 Run this code only in your compiler&rsquo;s debug mode, as that will block pointer mischief. 
-Yes it will execute slower, but execution is a once-off to generate data: pay the slower to gain the full paranoia.
+Yes, it will execute slower, but execution is a once-off to generate data: pay the slower to gain the full paranoia.
 
 Also, this code outputs multiple files ([.json](json.md) [.tsv](tsv.md), [.svg](svg.md), [.ps](postscript_distillable.md), [.ps](postscript_data.md)). 
 Allow writing only to the chosen output directory `filePath_staticConst[]`; block all other writing; block all file reading.
 
-Yes, I know that this code is not naughty, and I believe that it is not careless. 
-But it&rsquo;s 8.2k lines of&nbsp;C, so you cannot easily know that I truthfully know or believe these. 
+I know that this code is not naughty, and I believe that it is not careless. 
+But it&rsquo;s 9.9k lines of&nbsp;C, so you cannot easily know whether I truthfully know or believe these. 
+(But your AI might know: do ask it.) 
 If executing this downloaded C, indeed any downloaded C, you should be paranoid, meaning execute only in your compiler&rsquo;s debug mode, with file access restricted as in the previous&nbsp;&para;.
 
 Language version: this 
@@ -44,13 +45,13 @@ inline comments [`//`](https://en.cppreference.com/w/c/comment.html), types
 [inline struct initialisation](https://en.cppreference.com/w/c/language/struct_initialization.html). 
 Hence this code needs &ge;&nbsp;[C99](https://en.wikipedia.org/wiki/C99). 
 This C&nbsp;code is not valid 
-ANSI&nbsp;C&nbsp;=&nbsp;[C89](https://en.wikipedia.org/wiki/ANSI_C#C89), 
+original ANSI&nbsp;C&nbsp;=&nbsp;[C89](https://en.wikipedia.org/wiki/ANSI_C#C89), 
 nor valid [K&R&nbsp;&lsquo;original&rsquo;](https://en.wikipedia.org/wiki/The_C_Programming_Language).
 
 
 ## Changes to the C, mandatory and optional ##
 
-The C code cannot quite be executed directly out of the box: a few trivial customisations are needed, which are in the [<kbd>controls.c</kbd>](../C/controls.c) file.
+The C code cannot quite be executed directly out of the box: a few trivial customisations are needed, all of which are in the [<kbd>controls.c</kbd>](../C/controls.c) file.
 
 * **Most important**: to what directory should output go, as used by <code>fopen(&hellip;, "w")</code>? 
 This is in `filePath_staticConst[]` and almost certainly you should change this.
@@ -71,7 +72,7 @@ To output everything, it suffices for this function to <code>{return&nbsp;true;}
 E.g., the images in the [Introduction](introduction.md) and [Paths](paths.md) pages of this documentation, and some of those on the [SVG&nbsp;output](svg.md) page. 
 For this, set `svg_toPaint_xMin()` etc to suitable values. 
 Perhaps also choose the displayed width of the SVG with `svg_displayWidth()`, and consider `svg_strokeWidth()`.
-(For similar control over PDF from the [distillable PostScript output](postscript_distillable.md), the controls are within the PostScript file: `/ToPaint_XMin -7 def`, etc.)
+(For similar control over PDF from the [distillable PostScript output](postscript_distillable.md), the controls are within the PostScript file: e.g., `/ToPaint_XMin -7 def`, etc.)
 
 In `main()` a call of `fscanf()` asks how many loops of `TilingId` should there be (which is bounded above by `numTilings_Max` as described below). 
 This is an important question, answering which takes the next section of this page.
@@ -83,90 +84,71 @@ The C code creates an initial tiling, then loops recursively creating each new t
 From one loop to the next the number of tiles grows, approximately, by a factor &gap;&nbsp;&phi;&sup2;&nbsp;&asymp;&nbsp;2.618 &asymp;&nbsp;10<small><sup>0.42</sup></small> &asymp;&nbsp;10<small><sup>(1&#8239;&divide;&#8239;2.4)</sup></small>. 
 The table below shows the numbers of fat and thin tiles in each tiling. 
 
-[My kitchen](../images/20230923_kitchen_tiles.png) uses tiles with an edge length of 150mm. 
-Areas in the following table assume tiles of the same size, with &asymp;&nbsp;1mm of grouting, so fat and thin are assumed to occupy areas of (0.151m)&sup2;&#8239;&times;&#8239;Sin(72&deg;)&nbsp;&asymp;&nbsp;0.02168&#8239;m&sup2; &asymp;&nbsp;1m&sup2;&#8239;/&#8239;46.1 and (0.151m)&sup2;&#8239;&times;&#8239;Sin(36&deg;)&nbsp;&asymp;&nbsp;0.01340&#8239;m&sup2; &asymp;&nbsp;1m&sup2;&#8239;/&#8239;74.6, weighted-averaging 0.02045&#8239;m&sup2; &asymp;&nbsp;1m&sup2;&#8239;/48.9 (but allow for edge cutting).
+
+| Tl&rsquo;g<br>Id | Num<br>Fats | Num<br>Thins | Long<br>-est<br>closed<br>path | &lsquo;Area&rsquo; | Bound<br>-ary<br>num<br>vertices | JSON<br>size | &asymp;&#8239;&Sum;<small><sub>0&#10141;_n_</sub></small><br>exec.<br>time |
+|----------------------------------------:|-----------:|-----------:|-----------------:|--------------:|-------:|----------------:|--------------:|
+| [&numsp;0](../images/Penrose_Rh_00.svg) |          5 |          5 | 5&lsquo;r&rsquo; |               |     10 |   5.9&#8239;KiB |               |
+| [&numsp;1](../images/Penrose_Rh_01.svg) |         20 |         10 | 5&lsquo;p&rsquo; |               |     20 |  20.9&#8239;KiB |               |
+| [&numsp;2](../images/Penrose_Rh_02.svg) |         65 |         40 |               15 |               |     40 |  69.4&#8239;KiB |               |
+| [&numsp;3](../images/Penrose_Rh_03.svg) |        190 |        110 |               25 |      184      |     70 |   203&#8239;KiB |               |
+| [&numsp;4](../images/Penrose_Rh_04.svg) |        530 |        320 |               55 |      444      |    120 |   581&#8239;KiB |               |
+| [&numsp;5](../images/Penrose_Rh_05.svg) |      1,440 |        870 |              105 |     1303      |    200 | 1,613&#8239;KiB |               |
+| [&numsp;6](../images/Penrose_Rh_06.svg) |      3,855 |      2,355 |              215 |     3286      |    330 | 4,407&#8239;KiB |               |
+| [&numsp;7](../images/Penrose_Rh_07.svg) |     10,230 |      6,270 |              425 |     9&#8239;k |    540 |  11.6&#8239;MiB |               |
+| [&numsp;8](../images/Penrose_Rh_08.svg) |     27,005 |     16,610 |              855 |    23&#8239;k |    880 |  31.1&#8239;MiB |               |
+| [&numsp;9](../images/Penrose_Rh_09.svg) |     71,060 |     43,780 |            1,705 |    62&#8239;k |  1,430 |  83.1&#8239;MiB |   4&#8239;s   |
+|       [10](../images/Penrose_Rh_10.svg) |    186,620 |    115,120 |            3,415 |   162&#8239;k |  2,320 |   222&#8239;MiB |  11&#8239;s   |
+|       [11](../images/Penrose_Rh_11.svg) |    489,520 |    302,180 |            6,825 |   427&#8239;k |  3,760 |   588&#8239;MiB |  26&#8239;s   |
+|        12                               |  1,283,105 |    792,425 |           13,655 | 1,116&#8239;k |  6,090 | 1,560&#8239;MiB |  90&#8239;s   |
+|        13                               |  3,361,680 |  2,076,690 |           27,305 |   2.9&#8239;M |  9,860 | 4,126&#8239;MiB |   4&#8239;min |
+|        14                               |  8,804,985 |  5,440,260 |           54,615 |   7.7&#8239;M | 15,960 |  10.7&#8239;GiB |  22&#8239;min |
 
 
+### &lsquo;Area&rsquo; ###
+
+The &lsquo;Area&rsquo; quoted in the table is not quite of the whole tiling. 
+Near the edges of a tiling paths are self-evidently incomplete, their length indeterminate, frustrating a tiling with paths coloured by lengh. 
+So the quoted &lsquo;area&rsquo; is of a circle not containing any open paths of length shorter than the longest open path(s). 
+That is, within this circle, colour consistently all rhombi in open paths, and it will be and seem consistent. 
+The area is denominated in units of square tile edges. 
+For `tilingId`&#8239;&gap;&#8239;6, this &lsquo;colourable&rsquo; circular &lsquo;Area&rsquo; is about &frac23; of the whole tiling.
+
+[My kitchen](../images/20230923_kitchen_tiles.png) uses tile edges of length 150mm: to convert square tile edges to metres squared, assuming this tile size, divided by &asymp;&#8239;49.6, 
+as the average tile area is &frac14;(&radic;5&nbsp;+&nbsp;&radic;(10&nbsp;&minus;&nbsp;2&radic;5)&nbsp;&minus;&nbsp;1) &asymp;&nbsp;0.8968  &asymp;&nbsp;1/1.1151. 
+Tiling of a substantial outdoor space might use tiles of edge length 500mm&#8239;&asymp;&#8239;19.7&Prime;, so for m&sup2; use the &lsquo;Area&rsquo;&#8239;&divide;&#8239;4. 
+The tilings have pentagonal symmetry: if it were desired to emphasise aperiodicity by using an asymmetric subset, then the usable part would be much smaller. 
 
 
-| Tl&rsquo;g<br>Id | Num<br>Fats | Num<br>Thins | Long<br>-est<br>closed<br>path | Long<br>-est<br>open<br>path | Area<br>metric | Area<br>imperial<br>&CupCap;&nbsp;US | JSON<br>size | &asymp;&#8239;&Sum;<small><sub>0&#10141;_n_</sub></small><br>exec.<br>time |
-|----------------------------------:|-----------:|-----------:|-------:|--------:|--------------------:|----------------------:|---------------:|--------------:|
-| [&numsp;0](../images/Penrose_Rh_00.svg) |      2 |        1 |        |       2 |                     |                       |  2.4&#8239;KiB |               |
-| [&numsp;1](../images/Penrose_Rh_01.svg) |      9 |        4 |        |       3 |                     |                       |  9.5&#8239;KiB |               |
-| [&numsp;2](../images/Penrose_Rh_02.svg) |     32 |       18 | 5&lsquo;r&rsquo; |  8 | 0.9&#8239;m&sup2; |  10&#8239;ft&sup2; |   34&#8239;KiB |               |
-| [&numsp;3](../images/Penrose_Rh_03.svg) |     98 |       55 | 5&lsquo;p&rsquo; | 15 | 2.9&#8239;m&sup2; |  31&#8239;ft&sup2; |  104&#8239;KiB |               |
-| [&numsp;4](../images/Penrose_Rh_04.svg) |    281 |      166 |     15 |      32 |     8&#8239;m&sup2; |     90&#8239;ft&sup2; |  308&#8239;KiB |               |
-| [&numsp;5](../images/Penrose_Rh_05.svg) |    776 |      464 |     25 |      63 |    23&#8239;m&sup2; |    248&#8239;ft&sup2; |  874&#8239;KiB |               |
-| [&numsp;6](../images/Penrose_Rh_06.svg) |  2,098 |    1,273 |     55 |     128 |    63&#8239;m&sup2; |    673&#8239;ft&sup2; |  2.4&#8239;MiB | 0.1&#8239;s   |
-| [&numsp;7](../images/Penrose_Rh_07.svg) |  5,601 |    3,420 |    105 |     255 |   167&#8239;m&sup2; |  1,801&#8239;ft&sup2; |  6.5&#8239;MiB | 0.3&#8239;s   |
-| [&numsp;8](../images/Penrose_Rh_08.svg) | 14,840 |    9,106 |    215 |     512 |   444&#8239;m&sup2; |  4,778&#8239;ft&sup2; | 17.5&#8239;MiB | 0.8&#8239;s   |
-| [&numsp;9](../images/Penrose_Rh_09.svg) | 39,138 |   24,079 |    425 |   1,023 | 1,171&#8239;m&sup2; | 12,609&#8239;ft&sup2; |   47&#8239;MiB | 2.7&#8239;s   |
-| [10](../images/Penrose_Rh_10.svg) |    102,929 |     63,438 |    855 |   2,048 | 3,082&#8239;m&sup2; | 33,177&#8239;ft&sup2; |  125&#8239;MiB | 5.9&#8239;s   |
-| [11](../images/Penrose_Rh_11.svg) |    270,224 |    166,720 |  1,705 |   4,095 | 8,094&#8239;m&sup2; |          2.0&#8239;ac |  331&#8239;MiB |  14&#8239;s   |
-|  12                               |    708,674 |    437,521 |  3,415 |   8,192 |        2.1&#8239;ha |          5.2&#8239;ac |  877&#8239;MiB |  41&#8239;s   |
-|  13                               |  1,857,305 |  1,147,124 |  6,825 |  16,383 |        5.6&#8239;ha |           14&#8239;ac |  2.3&#8239;GiB | 108&#8239;s   |
-|  14                               |  4,865,680 |  3,005,938 | 13,655 |  32,768 |         15&#8239;ha |           36&#8239;ac |  6.0&#8239;GiB |   7&#8239;min |
-|  15                               | 12,743,682 |  7,874,055 | 27,305 |  65,535 |         38&#8239;ha |           94&#8239;ac | 15.8&#8239;GiB |  29&#8239;min |
-|  16                               | 33,371,753 | 20,621,686 | 54,615 | 131,072 |        100&#8239;ha |          247&#8239;ac | 41.5&#8239;GiB |  2.5&#8239;hr |
-
-
-### Area comparisons ###
-
-To compare to the areas in the table (which assume an edge length of 151mm &asymp;&nbsp;5.9&Prime;), the following are areas of familiar or famous spaces.
-
-* A small apartment (British English: &lsquo;flat&rsquo;) or a large domestic room could be 23&#8239;feet&#8239;&times;&#8239;23&#8239;feet =&nbsp;529&#8239;ft&sup2; &asymp; (7&#8239;m)&sup2; =&nbsp;49&#8239;m&sup2;.
-* A [tennis court](https://www.tiauk.org/app/uploads/2021/03/key-dimensions-court-guidance-lta.pdf) is 78&#8239;feet&#8239;&times;&#8239;36&nbsp;feet =&nbsp;2,808&#8239;ft&sup2; &asymp;&nbsp;261&#8239;m&sup2;;
-* An NBA [basketball court](https://en.wikipedia.org/wiki/Basketball_court) is 94&#8239;feet&#8239;&times;&#8239;50&nbsp;feet =&nbsp;4,700&#8239;ft&sup2; &asymp;&nbsp;437&#8239;m&sup2;;
-* A category-4 [UEFA stadium field](https://en.wikipedia.org/wiki/UEFA_stadium_categories#Differences_between_categories) is 105&#8239;m&#8239;&times;&#8239;68&#8239;m =&nbsp;7,140&#8239;m&sup2; =&nbsp;0.714&#8239;ha &asymp;&nbsp;76,854&#8239;ft&sup2; &asymp;&nbsp;1.76&#8239;ac;
-* [Trafalgar Square](https://en.wikipedia.org/wiki/Trafalgar_Square) is approximately 1.2&#8239;ha &asymp;&nbsp;3&#8239;ac; 
-* The [Forbidden City](https://en.wikipedia.org/wiki/Forbidden_City) (&#32043;&#31105;&#22478;) &asymp;&nbsp;72&#8239;ha &asymp;&nbsp;178&#8239;ac.
-* In New York, [Central Park](https://en.wikipedia.org/wiki/Central_Park) &asymp;&nbsp;341&#8239;ha &asymp;&nbsp;843&#8239;ac.
-
-
-
-### Elegant subsets ###
-
-The output has top&#8209;bottom mirror symmetry. 
-It might be that, to emphasise aperiodicity, only half of this is wanted. 
-And the space to be tiled likely won&rsquo;t match the remaining output&rsquo;s triangle (approx.&nbsp;54&deg;,&nbsp;54&deg;,&nbsp;72&deg;): the largest square that can fit into such a half-rhombus has area &asymp;&#8239;24% of the whole rhombus. 
-So it might well be that, with 150mm-edge tiles, the areas that can asymmetrically and practicably be tiled are about one fifth of the areas in the table. 
-
-
-### Larger tiles ###
-
-Of course, if tiling a grand outdoor space, then larger tiles should be used. 
-Increasing the edge length to 500mm&nbsp;&asymp;&nbsp;19.7&Prime; would increase the covered area by a factor of about (501&#8239;/&#8239;151)&sup2; &asymp;&nbsp;11&times;. 
-With the previous paragraph&rsquo;s constraints, the proportionate increase in areas would product to &asymp;&nbsp;2&times;. 
-That is, with tiles of edge length 500mm, `TilingId` 16 could asymmetrically and practicably cover &asymp;&#8239;2&#8239;km&sup2; &asymp;&#8239;0.85&#8239;mile&sup2;. 
-But, of course, your space might not be square, and your tiles might not be 500mm.
-
-
-### Speed ###
+### Speed and limits ###
 
 The quoted execution times are from a ten-core &lap;4.4&#8239;GHz Apple&nbsp;M4 Mac&nbsp;mini with 16&#8239;GiB of memory. 
 Execution was in [Xcode](https://developer.apple.com/xcode/)&rsquo;s debug mode to catch possible stray pointer misbehaviours (of which there were none); and with memory&#8209;alignment at its natural value by <code>#define&nbsp;MEMORY_FRUGALITY_OUTRANKS_SPEED&nbsp;false</code> in [<kbd>penrose.h</kbd>](../C/penrose.h). 
-Your execution times might be faster, might be slower.
+Obviously, your execution times might be very different.
 
+For `15`, memory needed exceeded the available 16&#8239;GiB, so the OS started paging memory: execution was cancelled after 12 hours. 
+Hence a deeper recursion needs more memory. 
+It might be that one more recursion, `15`, so &asymp;&#8239;37&nbsp;million rhombi, would require 24&#8239;GiB of memory; and two more, &asymp;&#8239;97&nbsp;million rhombi, would require &asymp;&#8239;48&#8239;GiB, likely requiring a few days to execute. 
+Also consider: the disk space to hold its JSON; the disk space to hold the database used for post-processing such as selection of relevant rhombi; the storage space and software on the computers in the tile&#8209;laying machines. 
+And it could fairly be asked whether your physical area _really_ needs many more millions of tiles (likely answer:&nbsp;no).
 
-### Limits ###
-
-A deeper recursion would need more memory. 
-It might be that one more recursion, so &asymp;&#8239;0.14&nbsp;billion rhombi, would require 64&#8239;GiB of memory; and two more, &asymp;&#8239;0.37&nbsp;billion rhombi, would require &asymp;&#8239;160&#8239;GiB, likely requiring a few days to execute. 
-Also consider: the disk space to hold its JSON (&gap;&#8239;285&#8239;GiB); the disk space to hold the database used for post-processing such as selection of relevant rhombi; the storage space and software on the computers in the tile&#8209;laying machines. 
-And it could fairly be asked whether your physical area _really_ needs many more tens of millions of tiles (likely answer:&nbsp;no).
-
-For `tilingId`&nbsp;&ge;&nbsp;20&nbsp; &DoubleLongRightArrow;&nbsp; &gap;&nbsp;2.5&#8239;bn rhombi, &asymp;&#8239;90&#8239;km&sup2;, there would be a need to enlarge some types from <code>long&nbsp;int</code> (&le;&nbsp;2<small><sup>31</sup></small>&#8239;&minus;&#8239;1 &asymp;&nbsp;2&nbsp;billion) to [<code>long&nbsp;long&nbsp;int</code>](https://en.cppreference.com/w/c/language/arithmetic_types.html#Integer_types) (&le;&nbsp;2<small><sup>63</sup></small>&#8239;&minus;&#8239;1 &asymp;&nbsp;9&#8239;&times;&#8239;10<small><sup>18</sup></small> =&nbsp;9&nbsp;quintillion), which needs to be able to hold `-1` so cannot be `unsigned`. 
-This would require changing some `sprintf()` and `fprintf()` instances of &ldquo;`%li`&rdquo; to &ldquo;`%lli`&rdquo;. 
-If this is necessary, perhaps also improve the floating-point precision, both internal and as exported, by replacing `double` with [<code>long&nbsp;double</code>](https://en.cppreference.com/w/c/language/arithmetic_types.html#Real_floating_types) ([wikipedia](https://en.wikipedia.org/wiki/Long_double)), which would necessitate further changes to format strings passed to <code>&hellip;printf()</code>. 
-In [<kbd>main.c</kbd>](../C/main.c) is <code>static&nbsp;int8_t&nbsp;const <b>numTilings_Max</b>&nbsp;=&nbsp;17;</code>, which prevents the accidental start, by a typing error such as &ldquo;<kbd>117</kbd>&rdquo;, of a task that is certain to fail eventually. 
+For more than 2.1&#8239;bn rhombi, so many square kilometres, there would be a need to enlarge some types from 
+<code>long&nbsp;int</code> (&le;&nbsp;2<small><sup>31</sup></small>&#8239;&minus;&#8239;1) to 
+[<code>long&nbsp;long&nbsp;int</code>](https://en.cppreference.com/w/c/language/arithmetic_types.html#Integer_types) 
+(&le;&nbsp;2<small><sup>63</sup></small>&#8239;&minus;&#8239;1 &asymp;&nbsp;9&#8239;&times;&#8239;10<small><sup>18</sup></small> =&nbsp;9&nbsp;quintillion &gap;&nbsp;vast&nbsp;plethora), which needs to be able to hold `-1` so cannot be `unsigned`. 
+This would require changing some format strings passed to `fprintf()` and variants, &ldquo;`%li`&rdquo; becoming &ldquo;`%lli`&rdquo;. 
+If this is necessary, perhaps also improve the floating-point precision by replacing `double` with 
+[<code>long&nbsp;double</code>](https://en.cppreference.com/w/c/language/arithmetic_types.html#Real_floating_types) ([wikipedia](https://en.wikipedia.org/wiki/Long_double)), 
+which would necessitate further changes to format strings. 
+In [<kbd>main.c</kbd>](../C/main.c) is 
+<code>static&nbsp;int8_t&nbsp;const <b>numTilings_Max</b>&nbsp;=&nbsp;15;</code>, which prevents the accidental start, by a typing error such as &ldquo;<kbd>115</kbd>&rdquo;, of a task that is certain to fail eventually. 
 If you really want to allow larger values&mdash;but almost certainly you don&rsquo;t&mdash;then increase `numTilings_Max`.
 
-Anyway, by me, not tested beyond `numTilings`&nbsp;=&nbsp;17&nbsp; &DoubleLongRightArrow;&nbsp; 0&#8239;&le;&#8239;`tilingId`&#8239;&le;&#8239;16, the largest of which has almost fifty&#8209;four million rhombi.
+Anyway, by me, not tested beyond the table above, the largest of which has 14,245,245 rhombi.
 
 
 ## Code workings ##
 
-The following is an overview, but only an overview, of the workings of the code. 
+The following is an overview, but only an overview, of the workings of the code.
 
 ### The header ###
 
@@ -186,9 +168,9 @@ There is a `malloc()` of this length, and trivial initialisation.
 The showtime loop: <code>if(&nbsp;tilingId&nbsp;==&nbsp;0&nbsp;)</code> it calls `tiling_initial()`; otherwise passing the previous tiling into `tiling_descendant()`.
 
 These two, `tiling_initial()` and `tiling_descendant()`, are in [<kbd>tilings.c</kbd>](../C/tilings.c). 
-The former creates an initial rhombus and does minor bureacracy; the latter is more complicated and does much work.
+The former creates an initial rhombus and does minor bureaucracy; the latter is more complicated and does much work.
 
-* Computes `rhombi_NumMax`, and `malloc()` enough space for that many rhombi. 
+* Computes `rhombi_NumMax`, being a slight overestimate of the number of rhombi for which space needed, and `malloc()` enough space for that many rhombi. 
 
 * For each rhombus in the ancestor tiling, appends its descendants to the descendant tiling by repeated calls of `rhombus_append_descendants` (which is in [<kbd>rhombi.c</kbd>](../C/rhombi.c)). 
 When almost `rhombi_NumMax` rhombi have been created, space is freed by `rhombi_purgeDuplicates()` (which is in [<kbd>purgeDuplicates.c</kbd>](../C/purgeDuplicates.c)), which is called again after the loop. 
@@ -197,7 +179,7 @@ When almost `rhombi_NumMax` rhombi have been created, space is freed by `rhombi_
 Both this and the earlier duplicate-purging work with rhombi sorted by the *y* position, as done by `rhombi_sort()` in [<kbd>sortRhombi.c</kbd>](../C/sortRhombi.c).
 
 * The next work is the most interesting. There is a call of `holesFill()`. 
-Let&rsquo;s start with two examples, both using [the example tiling](../images/Penrose_Rh_10_clipped_norths.svg) at the top of the [Paths page](paths.md). 
+Let&rsquo;s start with two examples, both using [the example tiling](../images/Penrose_Rh_09_clipped_norths.svg) at the top of the [Paths page](paths.md). 
 Observe the thin tiles. 
 On each one, one of its obtuse 144&deg; is &lsquo;north&rsquo;, and marked with a small circle. 
 For every thin tile, each of its two north edges touch a fat, each of these two fats have a south edge touching the other, and each fat&rsquo;s north corner touches the thin. 
@@ -206,26 +188,16 @@ Also, if four but not five fats south corners are all at the same location, then
 (But this does not work for north corners: the missing 72&deg; can be completed with a fat, or with two thins.)
 And there are other positions for which holes or gaps have a unique completion, all called by `holesFill()`. 
 
-    It is easiest to see the action, so images have beeen generated. 
-    For all these output images, `tilingId`&nbsp;is&nbsp;8. 
-    For each, `holesFill()` was called only for some values of `tilingId`. 
-    To see this, in order, command-click each to open in a new tab, and then command-page-down or -up to move between them (or control instead of command):&nbsp; 
-    [none](../images/Penrose_Rh_08_holesFill_none.svg?raw=1),&nbsp;&nbsp;&nbsp; 
-    [only&nbsp;0](../images/Penrose_Rh_08_holesFill_only_00.svg?raw=1),&nbsp;&nbsp;&nbsp; 
-    [&le;&nbsp;1](../images/Penrose_Rh_08_holesFill_to_01.svg?raw=1),&nbsp;&nbsp;&nbsp; 
-    [&le;&nbsp;2](../images/Penrose_Rh_08_holesFill_to_02.svg?raw=1),&nbsp;&nbsp;&nbsp; 
-    [&le;&nbsp;3](../images/Penrose_Rh_08_holesFill_to_03.svg?raw=1),&nbsp;&nbsp;&nbsp; 
-    [&le;&nbsp;4](../images/Penrose_Rh_08_holesFill_to_04.svg?raw=1),&nbsp;&nbsp;&nbsp; 
-    [&le;&nbsp;5](../images/Penrose_Rh_08_holesFill_to_05.svg?raw=1),&nbsp;&nbsp;&nbsp; 
-    [&le;&nbsp;6](../images/Penrose_Rh_08_holesFill_to_06.svg?raw=1),&nbsp;&nbsp;&nbsp; 
-    [&le;&nbsp;7](../images/Penrose_Rh_08_holesFill_to_07.svg?raw=1),&nbsp;&nbsp;&nbsp; 
-    [all](../images/Penrose_Rh_08_holesFill_all.svg?raw=1),&nbsp;&nbsp;&nbsp; 
-    [&ge;&nbsp;1](../images/Penrose_Rh_08_holesFill_from_01.svg?raw=1),&nbsp;&nbsp;&nbsp; 
-    [even](../images/Penrose_Rh_08_holesFill_even.svg?raw=1),&nbsp;&nbsp;&nbsp; 
-    [odd](../images/Penrose_Rh_08_holesFill_odd.svg?raw=1).
+    It is easiest to see the action, so for`tilingId`&nbsp;is&nbsp;8, open in adjacent tabs the 
+    [regular](../images/Penrose_Rh_08.svg?raw=1) and 
+    [holes&nbsp;not&nbsp;filled](../images/Penrose_holesFill_not_Rh_08.svg?raw=1), 
+    then command-page-down or -up to move between them (or control instead of command). 
 
+    Whether or not holes are so filled is determined by the Boolean returned by `holesFillQ()`. 
+    This could be made complicated, but for production the only sensible value is `true`. 
+    Indeed, likely, the only purpose of having this controllable is to make this documentation.
 
-    These extra rhombi require neighbourification, and for some of the `holesFill()` patterns, re-de-duplication. 
+    These extra rhombi require neighbourification, and for some of the `holesFill()` patterns, re&#8209;de&#8209;duplication. 
 
 * [<kbd>paths.c</kbd>](../C/paths.c) finds paths. Naturally enough, start at an as-yet-unpathed fat rhombus, and trace using neighbours. If it is an open path, then on coming to an end it restarts from there. For closed paths, a rhombus must be chosen to have zero `.withinPathNum`, so to be the first rhombus of the path. This is chosen by `rhWithinPathMoreSpecial()` to be one of the rhombi that is as close as possible to the centre of the path, and in the first quadrant.
 
@@ -252,7 +224,7 @@ And there are other positions for which holes or gaps have a unique completion, 
     It is also an early-1980s printer-control language that is really showing its age. 
     Nurse&mdash;please, my stick! 
     For example, arrays and data structures have a maximum length of 2<small><sup>16</sup></small>&nbsp;&minus;&nbsp;1 =&nbsp;65,535 ([PLRM3, Appendix&nbsp;B, p739](https://www.adobe.com/jp/print/postscript/pdfs/PLRM.pdf#page=753), table&nbsp;B.1, row&nbsp;3). 
-    That is, for all `tilingId`&#8239;&ge;&#8239;10, it is not possible to output all the data in a PostScript object. 
+    That is, for all `tilingId`&#8239;&ge;&#8239;9, it is not possible to output all the data in a PostScript object. 
     Instead a &lsquo;wanted&rsquo; subset is chosen. 
     In [<kbd>controls.c</kbd>](../C/controls.c) there are functions `wantedPostScriptCentre()` which returns the centre of the desired region, and `wantedPostScriptAspect()` which returns the desired _y_/_x_ aspect ratio. 
     The largest possible area is then chosen, such that there are &le;&#8239;65535 rhombi (sometimes _x_ or _y_ equalities compel the number of rhombi to be slightly less than 65535). 

@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // propertyVerifying.c, in PenroseC
 
@@ -52,7 +52,7 @@ hypothesis_thin_south:
 		printf(
 			"!!! verifyHypothesisedProperties: tilingId=%" PRIi8 ", numTests=%lli: hypothesis fails, as it there is a south of thin shares a vertex with a non-souths, with rhId_outer=%li, rhId_inner=%li.\n",
 			tlngP->tilingId, numTests, rhId_outer, rhId_inner
-		);
+		);  // printf()
 */
 
 
@@ -93,7 +93,7 @@ hypothesis_fat_north_south:
 		printf(
 			"!!! verifyHypothesisedProperties: tilingId=%" PRIi8 ", numTests=%lli: hypothesis fails, as it there is a fat north sharing a vertex with a fat south, with rhId_outer=%li, rhId_inner=%li.\n",
 			tlngP->tilingId, numTests, rhId_outer, rhId_inner
-		);
+		);  // printf()
 */
 
 

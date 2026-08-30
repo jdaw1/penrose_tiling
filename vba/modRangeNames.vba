@@ -9,10 +9,16 @@ Option Explicit
 
 Sub RangeNames_DeleteRef()
 	Dim n As Name, s As String, i As Integer
+
 	i = 0
 	For Each n In ActiveWorkbook.Names
-		If Left(n.RefersTo, 6) = "=#REF!" Or Right(n.RefersTo, 6) = "!#REF!" Then s = n.Name: i = i + 1: n.Delete
+		If Left(n.RefersTo, 6)  = "=#REF!" _
+		Or Right(n.RefersTo, 6) = "!#REF!" _
+		Or Right(n.RefersTo, 7) = "!#REF!#" Then 
+			s = n.Name: i = i + 1: n.Delete
+		end if
 	Next n
+
 	If i = 0 Then MsgBox "All " & ActiveWorkbook.Names.Count & " names are good: none deleted."
 	If i = 1 Then MsgBox "One name deleted, that being " & s & " (" & ActiveWorkbook.Names.Count & " names remain)."
 	If i > 1 Then MsgBox i & " names deleted, including " & s & " (" & ActiveWorkbook.Names.Count & " names remain)."

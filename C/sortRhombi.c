@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // sortRhombi.c, in PenroseC
 
@@ -75,11 +75,10 @@ void rhombi_sort(
 	int8_t         nghbrNum;
 	Rhombus        *rhP;
 	Path           *pathP;
-	long int const numRhombi = tlngP->numFats + tlngP->numThins;
+	RhombId const  numRhombi = tlngP->numFats + tlngP->numThins;
 
-	if( alsoRenumber )
-		for( rhId = 0  ;  rhId < numRhombi  ;  rhId++ )
-			tlngP->rhombi[rhId].rhId = rhId;
+	for( rhId = 0  ;  rhId < numRhombi  ;  rhId++ )
+		tlngP->rhombi[rhId].rhId = rhId;
 
 	qsort(
 		tlngP->rhombi,
@@ -97,10 +96,8 @@ void rhombi_sort(
 			fflush(stderr);
 			exit(EXIT_FAILURE) ;
 		}  // rhombIdsNew == NULL
-
 		for( rhId = 0  ;  rhId < numRhombi  ;  rhId++ )
 			rhombIdsNew[rhId] = -1;
-
 		for( rhId = 0  ;  rhId < numRhombi  ;  rhId++ )
 			if( tlngP->rhombi[rhId].rhId >= 0 )
 				rhombIdsNew[ tlngP->rhombi[rhId].rhId ] = rhId;
@@ -110,6 +107,12 @@ void rhombi_sort(
 			pathP = &(tlngP->path[pathId]);
 			pathP->rhId_ThinWithin_First = numRhombi - 1;
 			pathP->rhId_ThinWithin_Last  = 0;
+
+			if( pathP->xMin_rhId >= 0)  {pathP->xMin_rhId  =  rhombIdsNew[ pathP->xMin_rhId ];}
+			if( pathP->xMax_rhId >= 0)  {pathP->xMax_rhId  =  rhombIdsNew[ pathP->xMax_rhId ];}
+			if( pathP->yMin_rhId >= 0)  {pathP->yMin_rhId  =  rhombIdsNew[ pathP->yMin_rhId ];}
+			if( pathP->yMax_rhId >= 0)  {pathP->yMax_rhId  =  rhombIdsNew[ pathP->yMax_rhId ];}
+
 			if( tlngP->path[pathId].pathClosed )
 			{
 				pathP->rhId_PathCentreClosest  = rhombIdsNew[ pathP->rhId_PathCentreClosest  ];
@@ -136,7 +139,6 @@ void rhombi_sort(
 
 		free(rhombIdsNew);
 		rhombIdsNew = NULL;
-
 	}  // alsoRenumber
 	else
 	{

@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // smalls_SVG.c, in PenroseC
 
@@ -6,7 +6,7 @@
 
 #define almostZero 5E-10  // consistent with %.9lf
 
-char * svgTransform(char * const str,  double const x,  double const y,  double const angDeg, short int angMod )
+char * svgTransform(char * const str,  int const numDecimalPlaces,  double const x,  double const y,  double const angDeg,  short int const angMod )
 {
 	double angDegNew = angDeg;
 	int8_t i;
@@ -33,22 +33,22 @@ char * svgTransform(char * const str,  double const x,  double const y,  double 
 			if( fabs(x) <= almostZero )
 				str[0] = 0;
 			else
-				sprintf(str, " transform='translate(%.9lf)'", x);
+				sprintf(str, " transform='translate(%.*lf)'",  numDecimalPlaces, x);
 		}  // angDegNew == 0
 		else
 		{
 			if( fabs(x) <= almostZero )
-				sprintf(str, " transform='rotate(%.9lf)'", angDegNew);
+				sprintf(str, " transform='rotate(%.*lf)'",  numDecimalPlaces, angDegNew);
 			else
-				sprintf(str, " transform='translate(%.9lf) rotate(%.9lf)'", x, angDegNew);
+				sprintf(str, " transform='translate(%.*lf) rotate(%.*lf)'",  numDecimalPlaces, x,  numDecimalPlaces, angDegNew);
 		}  // angDegNew != 0
 	}  // y == 0
 	else
 	{
 		if( fabs(angDegNew) <= almostZero )
-			sprintf(str, " transform='translate(%.9lf,%.9lf)'", x, y);
+			sprintf(str, " transform='translate(%.*lf,%.*lf)'",  numDecimalPlaces, x,  numDecimalPlaces, y);
 		else
-			sprintf(str, " transform='translate(%.9lf,%.9lf) rotate(%.9lf)'", x, y, angDegNew);
+			sprintf(str, " transform='translate(%.*lf,%.*lf) rotate(%.*lf)'",  numDecimalPlaces, x,  numDecimalPlaces, y,  numDecimalPlaces, angDegNew);
 	}  // y != 0
 
 	stringClean(scratchString);
@@ -165,7 +165,7 @@ void exportColourSVG(char * const strA,  char * const strB,  bool * const isWhit
 			sprintf(strB, "#333");
 			sprintf(strA, "fill='%s' opacity='1' stroke='#000'>  <!-- Fats, open, PathLength=%li: dark grey, to give whole tiling appearance of a serrated edge -->", strB, pathLength);
 			return ;
-		}  // Open, 3 or 4, to give whole tiling appearance ofa serrated edge.
+		}  // Open, 3 or 4, to give whole tiling appearance of a serrated edge.
 
 		*isWhiteP = true;
 		sprintf(strB, "#FFF");

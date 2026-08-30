@@ -43,8 +43,8 @@ Documentation pages:&nbsp;
 	<td><a href="../images/Penrose_Arcs_07.svg">07</a></td>
 	<td><a href="../images/Penrose_Arcs_08.svg">08</a></td>
 	<td><a href="../images/Penrose_Arcs_09.svg">09</a></td>
-	<td><a href="../images/Penrose_Arcs_10.svg">10</a></td>
-	<td><a href="../images/Penrose_Arcs_11.svg">11</a></td>
+	<td></td>
+	<td></td>
 </tr>
 </table>
 
@@ -68,26 +68,26 @@ Behold the next image.
 
 <div align="center">
 
-![Arcs_10](../images/Penrose_10_arcs_clipped.svg)
+![Arcs_10](../images/Penrose_09_arcs_clipped.svg)
 
 </div>
 
 Closed paths of arcs have been filled. 
 The outermost closed paths of arcs have been filled with a colour, varying by length. 
 The paths immediately in from those have been filled white. 
-The paths immediately in from those have been filled with a non-white colour. 
+The paths immediately in from those have been filled with a non&#8209;white colour. 
 And so on. 
 
-So there is a odd-even nature to the filling. 
+So there is a odd&#8209;even nature to the filling. 
 
-In rhombi space open paths could be coloured, because, in effect, the rhombi colouration is a stroke-like painting. 
-But in these arc paths the colouration is a fill-like painting&nbsp;&DoubleLongRightArrow; open arc paths cannot be coloured. 
+In rhombi space open paths could be coloured, because, in effect, the rhombi colouration is a stroke&#8209;like painting. 
+But in these arc paths the colouration is a fill&#8209;like painting&nbsp;&DoubleLongRightArrow; open arc paths cannot be coloured. 
 
 Compare to the same pattern in rhombi space. 
 
 <div align="center">
 
-![Rh_10](../images/Penrose_Rh_10_clipped_colour.svg)
+![Rh_09 colour](../images/Penrose_Rh_09_clipped_colour.svg)
 
 </div>
 
@@ -96,16 +96,23 @@ Overlapped for easier comparison:
 
 <div align="center">
 
-![Both_10](../images/Penrose_10_clipped.svg)
+![Both_09](../images/Penrose_09_clipped.svg)
 
 </div>
+
+Perhaps open in separate tabs, to control&#8209;page&#8209;up|down between them, in the following order, the five images&nbsp; 
+[black&#8209;and&#8209;white](../images/Penrose_Rh_09_clipped_bw.svg),&nbsp; 
+[colour&nbsp;with&nbsp;norths](../images/Penrose_Rh_09_clipped_norths.svg),&nbsp; 
+[colour](../images/Penrose_Rh_09_clipped_colour.svg),&nbsp; 
+[overlapped](../images/Penrose_09_clipped.svg),&nbsp; and&nbsp;
+[arcs](../images/Penrose_09_arcs_clipped.svg).
 
 
 ## C Code ##
 
 The code for SVG output has some controls in <kbd>controls.c</kbd>. 
 
-For both rhombi and arcs, `svg_toPaint_xMin()`, `svg_toPaint_yMin()`, `svg_toPaint_xMax()`, `svg_toPaint_yMax()` return the wanted bounding box, elements wholly outside not being output. By default these are &plusmn;999999, but for the above images pictures and others in the documentation, were `-0.09830056`, `+0.46449333`, `+1.27553483`, `+1.62459848` respectively.
+For both rhombi and arcs, `svg_toPaint_xMin()`, `svg_toPaint_xMax()`, `svg_toPaint_yMin()`, `svg_toPaint_yMax()` return the wanted bounding box, elements wholly outside not being output. By default these are &pm;999999, but for the above images pictures and others in the documentation, were `-21.0`, `+42.0`, `+59.4`, `+95.9` respectively.
 
 
 ## SVG code ##
@@ -114,7 +121,7 @@ Arcs painted for the longest paths first, then shorter.
 For each path, repeatedly traverse the field `.pathId_ShortestOuter` until either there it is `-1` (so path is outside) or the next outside path is longer than the value returned by `svg_arcs_longestPathToBeColoured()` (which is in <kbd>controls.c</kbd>). 
 If there are an **e**ven number of steps to this &lsquo;outside&rsquo;, colour with a style ending `_e`; if **o**dd, `_o`. By default the `_e` are generally real colours; all the `_o` are white.
 
-* All these `<style>`&hellip;`</style>` are specified in the SVG, so amenable to alteration by a user without needing to re-run the C. 
+* All these `<style>`&hellip;`</style>` are specified in the SVG, so amenable to alteration by a user without needing to re&#8209;run the C. 
 
 * For the rhombi, the SVG specifies paths with names 
 `#t`&nbsp;=&nbsp;thin rhombus, 
@@ -122,17 +129,24 @@ If there are an **e**ven number of steps to this &lsquo;outside&rsquo;, colour w
 `#o`&nbsp;=&nbsp;fat rhombus in an open path. 
 These are all changeable, and comments include one suggested change.
 
-* For the rhombi, the object with `id='c5r'`, being round-5 paths, includes the white circle at its centre. If not wanted, delete or comment away (<code>\<!-- &hellip; --\></code>).
+* For the rhombi, the object with `id='c5r'`, being round&#8209;5 paths, includes the white circle at its centre. If not wanted, delete or comment away (<code>\<!-- &hellip; --\></code>).
 
 * At the end of each SVG file there is code, commented out, that makes gridlines. 
 If wanted, uncomment.
+
+* The C computes the largest radius including no rhombi in open paths shorter than the longest open path. 
+It is the natural &lsquo;this lot elegantly colourable&rsquo; radius. 
+Near the end of the rhombi SVGs is, commented out, code showing the circle: if wanted, uncomment.
 
 * For both arcs and rhombi, users might want to change the opening instruction. In the original of an SVG it is a single line, but here spread out for clarity.
 
 ```SVG
 <svg
-	width='960'   height='1321.998631951'
-	viewBox='-6.451357882 -8.032964799 11.666647787 16.065929598'
+	width='960'   height='913.0172'
+	viewBox='
+		-494.582463911  -519.724152384
+		 989.164927822   940.754809264
+	'
 	preserveAspectRatio='xMidYMid meet'
 	id='Penrose_Rhombi_11'
 	xmlns='http://www.w3.org/2000/svg'
@@ -142,7 +156,7 @@ If wanted, uncomment.
 The width and height are measured in screen pixels. 
 The `viewBox`, *left* *bottom* *width* *height*, is measured in the units in which rhombi etc are specified. 
 Because `preserveAspectRatio` is neither `'none'` nor `'slice'`, the two aspect ratios don&rsquo;t need to be the same. 
-Nonetheless, they have been set equal (to within &plusmn;10&#8315;&#8313;): both 1321.998631951&nbsp;&divide;&nbsp;960 and 16.065929598&nbsp;&divide;&nbsp;11.666647787 are &asymp;&nbsp;1.377081908. 
+Nonetheless, they have been set equal (to within &plusmn;3&#8239;&times;&#8239;10&#8315;&#8312;): 960&nbsp;&divide;&nbsp;913.0172&nbsp;&nbsp;&asymp;&nbsp; 1.0514588&nbsp;&nbsp;&asymp;&nbsp; 989.164927822&nbsp;&divide;&nbsp;940.754809264. 
 
 If zooming in, it might be better to do so using the C (by changing `svg_toPaint_xMin()` etc), as that would prevent the file having artefacts not shown: smaller file size is faster download is SEO happiness.
 
@@ -159,7 +173,7 @@ The first SVG includes, near the end of the file, the kitchen specification, roo
 
 </div>
 
-The next file is the same as the previous, except the first line, which has been altered to zoom (with consistent aspect ratio of 1&frac13;).
+The next file is the same as the previous, except the first line, which has been altered to zoom.
 
 <div align="center">
 
@@ -168,4 +182,8 @@ The next file is the same as the previous, except the first line, which has been
 </div>
 
 Both these files are amenable to alteration by a user. 
-Indeed, for those tiling a non-huge space, these SVGs or their PostScript equivalent, appropriately amended, might be all that is needed from this repo.
+Indeed, for those tiling a non&#8209;huge space, these SVGs or their [PostScript equivalent](postscript_distillable.md#kitchen), appropriately amended, might be all that is needed from this repo. 
+
+If making a map, both for homeowner to decide on and judge a tiling, and for the tiler to follow, I think [the PostScript](postscript_distillable.md#kitchen) is superior. 
+But if making something for a website, then SVGs better. 
+Horses for courses.

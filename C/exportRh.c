@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // exportRh.c, in PenroseC
 
@@ -33,16 +33,20 @@ void rhombus_export(
 		sprintf(scratchString,
 			"<< /RhId %li"
 			"  /WantedPS %s  /Physique %i"
-			"  /Xn %.9f  /Yn %.9f  /Xs %.9f  /Ys %.9f  /Xe %.9f  /Ye %.9f  /Xw %.9f  /Yw %.9f  /AngDeg %.9f"
+			"  /Xn %.9lf  /Yn %.9lf  /Xs %.9lf  /Ys %.9lf  /Xe %.9lf  /Ye %.9lf  /Xw %.9lf  /Yw %.9lf  /AngDeg %.10lf"
 			"  /Neighbours [ ",
 			tlngP->wantedPostScriptRhombNum[ rhP->rhId ],
 			(rhP->wantedPostScript?"true":"false"),  rhP->physique,
-			rhP->north.x, rhP->north.y,
-			rhP->south.x, rhP->south.y,
-			rhP->east.x,  rhP->east.y,
-			rhP->west.x,  rhP->west.y,
+			rhP->north.x / tlngP->edgeLength,
+			rhP->north.y / tlngP->edgeLength,
+			rhP->south.x / tlngP->edgeLength,
+			rhP->south.y / tlngP->edgeLength,
+			rhP->east.x  / tlngP->edgeLength,
+			rhP->east.y  / tlngP->edgeLength,
+			rhP->west.x  / tlngP->edgeLength,
+			rhP->west.y  / tlngP->edgeLength,
 			rhP->angleDegrees  // In PostScript all angles are in degrees (e.g.: sin, cos, atan, rotate, sethalftone, setscreen, setcolorscreen, ItalicAngle).
-		);
+		);  // sprintf()
 		stringClean(scratchString);
 		(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
 
@@ -53,7 +57,7 @@ void rhombus_export(
 				rhP->neighbours[nghbrNum].touchesE ? "E" : "W",
 				tlngP->wantedPostScriptRhombNum[ rhP->neighbours[nghbrNum].rhId ],
 				rhP->neighbours[nghbrNum].nghbrsNghbrNum
-			);
+			);  // fprintf()
 		}
 		(*numCharsThisFileP) += fprintf(fp, "] ");
 
@@ -63,7 +67,7 @@ void rhombus_export(
 				" /PathId %li  /PathRhombNum %li ",
 				tlngP->wantedPostScriptPathNum[ rhP->pathId ],
 				rhP->withinPathNum
-			);
+			);  // fprintf()
 			if( tlngP->path[rhP->pathId].pathClosed  &&  0 == rhP->withinPathNum )
 				(*numCharsThisFileP) += fprintf(fp,  " /EdgeClosestToPathCentre /%s%s ",  rhP->closerPathCentreN ? "N" : "S",  rhP->closerPathCentreE ? "E" : "W");
 		}
@@ -87,16 +91,20 @@ void rhombus_export(
 
 		sprintf(scratchString,
 			"{ \"RhId\":%li, \"WantedPS\":%s, \"Physique\":%i"
-			", \"Xn\":%.12f, \"Yn\":%.12f, \"Xs\":%.12f, \"Ys\":%.12f, \"Xe\":%.12f, \"Ye\":%.12f, \"Xw\":%.12f, \"Yw\":%.12f, \"AngleDeg\":%.10f",
+			", \"Xn\":%.9lf, \"Yn\":%.9lf, \"Xs\":%.9lf, \"Ys\":%.9lf, \"Xe\":%.9lf, \"Ye\":%.9lf, \"Xw\":%.9lf, \"Yw\":%.9lf, \"AngleDeg\":%.10lf",
 			rhP->rhId,
 			rhP->wantedPostScript ? "true" : "false",
 			rhP->physique,
-			rhP->north.x,  rhP->north.y,
-			rhP->south.x,  rhP->south.y,
-			rhP->east.x,   rhP->east.y,
-			rhP->west.x,   rhP->west.y,
+			rhP->north.x / tlngP->edgeLength,
+			rhP->north.y / tlngP->edgeLength,
+			rhP->south.x / tlngP->edgeLength,
+			rhP->south.y / tlngP->edgeLength,
+			rhP->east.x  / tlngP->edgeLength,
+			rhP->east.y  / tlngP->edgeLength,
+			rhP->west.x  / tlngP->edgeLength,
+			rhP->west.y  / tlngP->edgeLength,
 			rhP->angleDegrees  // Angles seem to be wrong by about +- 1 * 10^-12; so printing to 10d.p. seems to work.
-		);
+		);  // sprintf()
 		stringClean(scratchString);
 		(*numCharsThisFileP) += fprintf(fp, "%s,  \"Neighbours\":[", scratchString);
 
@@ -107,7 +115,7 @@ void rhombus_export(
 				rhP->neighbours[nghbrNum].rhId,
 				rhP->neighbours[nghbrNum].nghbrsNghbrNum,
 				nghbrNum < rhP->numNeighbours - 1 ? ", " : ""
-			);
+			);  // fprintf()
 		(*numCharsThisFileP) += fprintf(fp, "]");
 
 		if( Fat == rhP->physique )
@@ -151,23 +159,27 @@ void rhombus_export(
 				tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,
 				tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,
 				tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId
-			);
+			);  // fprintf()
 			break;  // from TSV  (inside rhombus_export, NULL == rhP )
 		}  // if( NULL == rhP )
 		{
 			sprintf(scratchString,
 				"%" PRIi8  "\t%li"  "\t%s"
 				"\t%i"  "\t%" PRIi8
-				"\t%.12f"  "\t%.12f"
-				"\t%.12f"  "\t%.12f"
-				"\t%.12f"  "\t%.12f"
-				"\t%.12f"  "\t%.12f"
-				"\t%.10f"  "\t%i",
+				"\t%.9lf"  "\t%.9lf"  "\t%.9lf"  "\t%.9lf"  "\t%.9lf"  "\t%.9lf"  "\t%.9lf"  "\t%.9lf"
+				"\t%.10lf"  "\t%i",
 				tlngP->tilingId,  rhP->rhId,  rhP->wantedPostScript ? "TRUE" : "FALSE",
 				rhP->physique,  rhP->filledType,
-				rhP->north.x, rhP->north.y,  rhP->south.x, rhP->south.y,  rhP->east.x,  rhP->east.y,  rhP->west.x,  rhP->west.y,
+				rhP->north.x / tlngP->edgeLength,
+				rhP->north.y / tlngP->edgeLength,
+				rhP->south.x / tlngP->edgeLength,
+				rhP->south.y / tlngP->edgeLength,
+				rhP->east.x  / tlngP->edgeLength,
+				rhP->east.y  / tlngP->edgeLength,
+				rhP->west.x  / tlngP->edgeLength,
+				rhP->west.y  / tlngP->edgeLength,
 				rhP->angleDegrees,  rhP->numNeighbours
-			);
+			);  // sprintf()
 			stringClean(scratchString);
 			(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
 
@@ -177,7 +189,7 @@ void rhombus_export(
 					(*numCharsThisFileP) += fprintf(fp, "\t%s%s",
 						rhP->neighbours[nghbrNum].touchesN ? "N" : "S",
 						rhP->neighbours[nghbrNum].touchesE ? "E" : "W"
-					);
+					);  // fprintf()
 				else
 					(*numCharsThisFileP) += fprintf(fp, "\t#N/A");
 			}

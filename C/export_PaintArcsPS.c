@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // export_PaintArcsPS.c, in PenroseC
 
@@ -34,6 +34,7 @@ void tiling_export_PaintArcsPS(
 	XY arcCentrePrev, arcCentreThis;
 	double angThisStart, angThisEnd, xMin, xMax, yMin, yMax;
 	int8_t nghbrNum, nnn;
+	char seedTypeName[32];
 
 	const double toPaint_xMin = postScript_toPaint_xMin(tlngP);  // in controls.c
 	const double toPaint_yMin = postScript_toPaint_yMin(tlngP);
@@ -50,73 +51,22 @@ void tiling_export_PaintArcsPS(
 		if( NULL != arcdWest ) arcdWest[rhId] = false;
 	}
 
+	// PostScript definitions, preamble, comment about what is changeable, etc.
+	preamble_export_PS(fp,  tlngP,  numLinesThisFileP,  numCharsThisFileP);
+
+	seed_type_name(seedTypeName,  tlngP->seedType);
 	sprintf(scratchString,
-		"%%!PS\n"
-		"\n"
-		"/DataAsOf (D:%04d%02d%02d%02d%02d%02d) def\n"
-		"/Licence (%s) def\n"
-		"/URL (%s) def\n"
-		"/Author (%s) def\n"
-		"/TilingId %" PRIi8 " def\n"
-		"/NumFats %li def\n"
-		"/NumThins %li def\n"
-		"/EdgeLength %.16E def\n"
-		"\n"
-		"/XMin %.16G def\n"
-		"/XMax %.16G def\n"
-		"/YMin %.16G def\n"
-		"/YMax %.16G def\n"
-		"\n"
-		"/ToPaint_XMin %+li def  %% User changeable\n"
-		"/ToPaint_XMax %+li def\n"
-		"/ToPaint_YMin %+li def\n"
-		"/ToPaint_YMax %+li def\n"
-		"\n"
-		"/R %.16G def\n"
-		"\n"
-		"/LongestPathToBeFilled 215 def  %% User alterable. If being increased, might need to add more colours to PaintPath.\n"
-		"\n"
-		"\n",
-		(1900 + tlngP->timeData->tm_year),  (1 + tlngP->timeData->tm_mon),  tlngP->timeData->tm_mday,
-		tlngP->timeData->tm_hour,  tlngP->timeData->tm_min,  (int)(tlngP->timeData->tm_sec),
-		TextLicence, TextURL, TextAuthor,
-		tlngP->tilingId,  tlngP->numFats,  tlngP->numThins,
-		tlngP->edgeLength,
-		tlngP->xMin, tlngP->xMax, tlngP->yMin, tlngP->yMax,
-		(long int)floor(tlngP->xMin), (long int)ceil(tlngP->xMax), (long int)floor(tlngP->yMin), (long int)ceil(tlngP->yMax),
-		tlngP->edgeLength / 2
-	);
+		"/R 0.5 def\n"
+		"\n/LongestPathToBeFilled 215 def  %% User alterable. If being increased, might need to add more colours to PaintPath.\n\n\n"
+	);  // sprintf()
 	stringClean(scratchString);
 	(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
 	(*numLinesThisFileP) += newlinesInString(scratchString);
 
-
 	// Using \t tabs, because an actual 9-tab might get converted to spaces by an evil IDE.
 	sprintf(scratchString,
-		"\n"
-		"\n"
-		"/PageWidth  297 360 mul 127 div def  %% A3, long side."  "  User alterable: for US Tabloid use \"11 72 mul\".\n"
-		"/PageHeight 420 360 mul 127 div def  %% A3, short side." "  User alterable: for US Tabloid use \"17 72 mul\".\n"
 		"/OnPageTileCentreX PageWidth  0.5 mul def  %% User alterable. This has tiling positioned wrt centre of paper page.\n"
 		"/OnPageTileCentreY PageHeight 0.5 mul def  %% User alterable. This has tiling positioned wrt centre of paper page.\n"
-		"/Margin 18 def  %% 18pt = 0.25\" = 6.35mm. Enlarge if the printer can't work so close to the edge. Used only for default value of scale.\n"
-		"\n"
-		"/Actual_XMin  XMin ToPaint_XMin  2 copy lt {exch} if pop  def\n"
-		"/Actual_YMin  YMin ToPaint_YMin  2 copy lt {exch} if pop  def\n"
-		"/Actual_XMax  XMax ToPaint_XMax  2 copy gt {exch} if pop  def\n"
-		"/Actual_YMax  YMax ToPaint_YMax  2 copy gt {exch} if pop  def\n"
-		"/ScaleFactor\n"
-			"\tPageWidth  Margin 2 mul sub  Actual_XMax Actual_XMin sub  div  %% Tight-fiting x.\n"
-			"\tPageHeight Margin 2 mul sub  Actual_YMax Actual_YMin sub  div  %% Tight-fiting y.\n"
-			"\t2 copy gt {exch} if pop  %% Lesser of them.\n"
-			"\t%% pop 150  %% For endpapers, on A3, with TilingId=9,  perhaps choose X -3.4 to 2.4,  Y -4 to 4,  then scaling of 150. But YMMV.\n"
-		"def  %% /ScaleFactor. User alterable. Could be of form \"6 EdgeLength div\", making an edge be 6pt on the paper.\n"
-		"\n"
-		"%% Expands box to match whole page (which might have different aspect ratio to original ToPaint_ choices). If unwanted, delete next four lines.\n"
-		"/Actual_XMin            OnPageTileCentreX neg ScaleFactor div  Actual_XMin Actual_XMax add 2 div add\n"
-		"/Actual_XMax PageWidth  OnPageTileCentreX sub ScaleFactor div  Actual_XMin Actual_XMax add 2 div add  def def\n"
-		"/Actual_YMin            OnPageTileCentreY neg ScaleFactor div  Actual_YMin Actual_YMax add 2 div add\n"
-		"/Actual_YMax PageHeight OnPageTileCentreY sub ScaleFactor div  Actual_YMin Actual_YMax add 2 div add  def def\n"
 		"\n"
 		"<< /PageSize [PageWidth PageHeight] >> setpagedevice\n"
 		"/PaperMatrix matrix currentmatrix def\n"
@@ -135,7 +85,7 @@ void tiling_export_PaintArcsPS(
 			"\t] {exec} forall\n"
 		"} bind def  %% StrokeMulti\n"
 		"\n"
-	);
+	);  // sprintf()
 	(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
 	(*numLinesThisFileP) += newlinesInString(scratchString);
 
@@ -151,7 +101,7 @@ void tiling_export_PaintArcsPS(
 	  "\n",
 	  (1900 + tlngP->timeData->tm_year),  (1 + tlngP->timeData->tm_mon),  tlngP->timeData->tm_mday,
 	  tlngP->timeData->tm_hour,  tlngP->timeData->tm_min,  (int)(tlngP->timeData->tm_sec)
-	);
+	);  // sprintf()
 	(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
 	(*numLinesThisFileP) += newlinesInString(scratchString);
 
@@ -257,7 +207,7 @@ void tiling_export_PaintArcsPS(
 		"} bind def  %% /PaintPath\n"
 		"\n"
 		"\n"
-	);
+	);  // sprintf()
 	(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
 	(*numLinesThisFileP) += newlinesInString(scratchString);
 
@@ -265,7 +215,15 @@ void tiling_export_PaintArcsPS(
 	{
 		(*numCharsThisFileP) += fprintf(fp, "\n\n%% Bounding path\n");
 		(*numLinesThisFileP) += 3;
-		tiling_export_PaintBoundary(fp,  PS_arcs,  tlngP,  0,  numLinesThisFileP,  numCharsThisFileP);
+		tiling_export_PaintBoundary(
+			fp,
+			PS_arcs,
+			1.0 / tlngP->edgeLength,
+			tlngP,
+			0,
+			numLinesThisFileP,
+			numCharsThisFileP
+		);  // tiling_export_PaintBoundary()
 		(*numCharsThisFileP) += fprintf(fp, "newpath  %% gsave 0.8 setgray fill grestore 0.4 setgray 1 setlinejoin PaperMatrix setmatrix 1.92 setlinewidth stroke \n");
 		(*numLinesThisFileP) ++;
 	}  // if boundingPath
@@ -273,16 +231,14 @@ void tiling_export_PaintArcsPS(
 	for( pathId = 0  ;  pathId < tlngP->numPathsClosed + tlngP->numPathsOpen  ;  pathId++ )
 	{
 		pathP = &(tlngP->path[pathId]);
-		if( (! pathP->pathClosed)  ||  pathP->pathClosedTypeNum < 2 )  // 5r, or open
+		if( (! pathP->pathClosed)  ||  pathP->pathClosedTypeNum < 2 )  // open, or 5r. But 5 closed passes.
 			break;
 
-		if( ! pathP->pathVeryClosed )  // Close to edge, such that arc might not be complete
-			continue;
-
-		if( pathP->xMax < toPaint_xMin
-		||  pathP->xMin > toPaint_xMax
-		||  pathP->yMax < toPaint_yMin
-		||  pathP->yMin > toPaint_yMax )
+		if( (! pathP->pathVeryClosed)  // Close to edge, such that arc might not be complete
+		||  tlngP->rhombi[ pathP->xMin_rhId ].xMin > toPaint_xMax
+		||  tlngP->rhombi[ pathP->xMax_rhId ].xMax < toPaint_xMin
+		||  tlngP->rhombi[ pathP->yMin_rhId ].yMin > toPaint_yMax
+		||  tlngP->rhombi[ pathP->yMax_rhId ].yMax < toPaint_yMin )
 			continue;
 
 		arcCentrePrev.x = DBL_MAX;  // So certain to be different to first rhombus in path
@@ -294,7 +250,7 @@ void tiling_export_PaintArcsPS(
 			edgeStartE = edgeE = (
 				pow(rhP->east.x - pathP->centre.x, 2) + pow(rhP->east.y - pathP->centre.y, 2) <=
 				pow(rhP->west.x - pathP->centre.x, 2) + pow(rhP->west.y - pathP->centre.y, 2)
-			);
+			);  // edgeStartE, edgeE
 		}  // pathLength is 5r, 15, 55, 215, 855, 3415, 13655, 54615, 218455, 873815, ...
 		else
 		{
@@ -303,7 +259,7 @@ void tiling_export_PaintArcsPS(
 			edgeStartE = edgeE = (
 				pow(rhP->east.x - pathP->centre.x, 2) + pow(rhP->east.y - pathP->centre.y, 2) >=
 				pow(rhP->west.x - pathP->centre.x, 2) + pow(rhP->west.y - pathP->centre.y, 2)
-			);
+			);  // edgeStartE, edgeE
 		}  // pathLength is 5p, 25, 105, 425, 1705, 6825, 27305, 109225, 436905, . ..
 		edgeN = false ;  // Arcs broadly follow south side, so always start south.
 		xMin = xMax = (edgeE ? rhP->east.x : rhP->west.x);
@@ -311,11 +267,11 @@ void tiling_export_PaintArcsPS(
 
 		sprintf(scratchString,
 			"\nTileMatrix setmatrix  %.9lf %.9lf moveto  %% pathId=%li, length=%li%s",
-			( (edgeN ? rhP->north.x : rhP->south.x)  +  (edgeE ? rhP->east.x : rhP->west.x) ) / 2,
-			( (edgeN ? rhP->north.y : rhP->south.y)  +  (edgeE ? rhP->east.y : rhP->west.y) ) / 2,
+			( (edgeN ? rhP->north.x : rhP->south.x)  +  (edgeE ? rhP->east.x : rhP->west.x) ) / 2 / tlngP->edgeLength,
+			( (edgeN ? rhP->north.y : rhP->south.y)  +  (edgeE ? rhP->east.y : rhP->west.y) ) / 2 / tlngP->edgeLength,
 			pathId,  pathP->pathLength,
 			pathP->pathLength == 5 ? (pathP->pointy ? " pointy" : " round") : ""  // if 5 then should always be pointy
-		);
+		);  // sprintf()
 		stringClean(scratchString);
 		(*numCharsThisFileP) += fprintf(fp, "%s",scratchString);
 		(*numLinesThisFileP) ++;
@@ -323,7 +279,7 @@ void tiling_export_PaintArcsPS(
 			(*numCharsThisFileP) += fprintf(fp,
 				", pathId_ShortestOuter=%li of length %li",
 				pathP->pathId_ShortestOuter,   tlngP->path[ pathP->pathId_ShortestOuter ].pathLength
-			);
+			);  // fprintf()
 		(*numCharsThisFileP) += fprintf(fp, "\n");
 		(*numLinesThisFileP) ++;
 
@@ -363,10 +319,11 @@ void tiling_export_PaintArcsPS(
 			}  // Thin
 			sprintf(scratchString,
 				"%.9lf %.9lf R %.9lf %.9lf arc%s\n",
-				arcCentreThis.x, arcCentreThis.y,
+				arcCentreThis.x / tlngP->edgeLength,
+				arcCentreThis.y / tlngP->edgeLength,
 				angThisStart, angThisEnd,
 				edgeN == edgeE ? "" : "n"
-			);
+			);  // sprintf()
 			stringClean(scratchString);
 			(*numCharsThisFileP) += fprintf(fp, "%s",scratchString);
 			(*numLinesThisFileP) ++;
@@ -390,9 +347,9 @@ void tiling_export_PaintArcsPS(
 			if( ! foundNeighbour )
 			{
 				fprintf(stderr,
-					"tiling_export_PaintArcsPS(): !!! impossible failure to find neighbour, pathId=%li, rhId=%li, numNeighbours=%" PRIi8 " !!!\n",
-					pathId, rhId, rhP->numNeighbours
-				);
+					"tiling_export_PaintArcsPS(): !!! impossible failure to find neighbour, pathStatId=%li, pathId=%li, pathLength=%li, %s, rhId=%li, physique=%" PRIi8 " numNeighbours=%" PRIi8 " !!!\n",
+					pathP->pathStatId,  pathId,  pathP->pathLength,  pathP->pathClosed ? "closed" : "open",  rhId,  rhP->physique,  rhP->numNeighbours
+				);  // fprintf()
 				fflush(fp);
 				fclose(fp);
 				exit(EXIT_FAILURE);
@@ -403,12 +360,12 @@ void tiling_export_PaintArcsPS(
 
 		sprintf(scratchString,
 			"closepath  %.9lf %.9lf %.9lf %.9lf  %li  [ ",
-			xMin  -  tlngP->edgeLength / 2,
-			yMin  -  tlngP->edgeLength / 2,
-			xMax  +  tlngP->edgeLength / 2,
-			yMax  +  tlngP->edgeLength / 2,
+			(xMin  -  tlngP->edgeLength / 2) / tlngP->edgeLength,
+			(yMin  -  tlngP->edgeLength / 2) / tlngP->edgeLength,
+			(xMax  +  tlngP->edgeLength / 2) / tlngP->edgeLength,
+			(yMax  +  tlngP->edgeLength / 2) / tlngP->edgeLength,
 			pathId
-		);
+		);  // sprintf()
 		(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
 		pathId_goingOut = pathId;
 		do
@@ -444,10 +401,11 @@ void tiling_export_PaintArcsPS(
 		{
 			sprintf(scratchString,
 				"%.9lf %.9lf moveto  %.9lf %.9lf R %.9lf %.9lf arc",
-				(rhP->east.x + rhP->north.x) / 2,  (rhP->east.y + rhP->north.y) / 2,
-				rhP->east.x, rhP->east.y,
+				(rhP->east.x + rhP->north.x) / 2 / tlngP->edgeLength,
+				(rhP->east.y + rhP->north.y) / 2 / tlngP->edgeLength,
+				rhP->east.x / tlngP->edgeLength,   rhP->east.y / tlngP->edgeLength,
 				angThisStart,  angThisStart + (Fat == rhP->physique  ?  108  :  36 )
-			);
+			);  // sprintf()
 			stringClean(scratchString);
 			(*numCharsThisFileP) += fprintf(fp, "%s",scratchString);
 			either = true;
@@ -462,10 +420,11 @@ void tiling_export_PaintArcsPS(
 			sprintf(scratchString,
 				"%s%.9lf %.9lf moveto  %.9lf %.9lf R %.9lf %.9lf arc",
 				either ? "   " : "",
-				(rhP->west.x + rhP->south.x) / 2,  (rhP->west.y + rhP->south.y) / 2,
-				rhP->west.x, rhP->west.y,
+				(rhP->west.x + rhP->south.x) / 2 / tlngP->edgeLength,
+				(rhP->west.y + rhP->south.y) / 2 / tlngP->edgeLength,
+				rhP->west.x / tlngP->edgeLength,   rhP->west.y / tlngP->edgeLength,
 				angThisStart,  angThisStart + (Fat == rhP->physique  ?  108  :  36 )
-			);
+			);  // sprintf()
 			stringClean(scratchString);
 			(*numCharsThisFileP) += fprintf(fp, "%s",scratchString);
 			either = true;
@@ -479,6 +438,12 @@ void tiling_export_PaintArcsPS(
 	(*numCharsThisFileP) += fprintf(fp, "PaperMatrix setmatrix  StrokeMulti\n");
 	(*numLinesThisFileP) ++ ;
 
+	tiling_export_subroutines_PS(fp,  PS_rhomb,  numLinesThisFileP,  numCharsThisFileP);
+
+	(*numCharsThisFileP) += fprintf(fp, "\n\n/FontName /Helvetica def\n\n");
+	(*numLinesThisFileP) +=4;
+
+	tiling_export_Gridlines(fp,  tlngP,  PS_arcs,  numLinesThisFileP,  numCharsThisFileP);  // Code always present; whether or not active controlled by showGridlines()
 
 	sprintf(scratchString,
 		"\n"
@@ -490,7 +455,7 @@ void tiling_export_PaintArcsPS(
 		"count 0 gt {(+pstack) = pstack (-pstack) =} if\n"
 		"\n"
 		"{countdictstack 3 gt {8 {() =} repeat currentdict {exch == =} forall end} {exit} ifelse} bind loop  %% Final debugging\n"
-	);
+	);  // sprintf()
 	(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
 	(*numLinesThisFileP) += newlinesInString(scratchString);
 

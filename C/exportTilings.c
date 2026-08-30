@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // exportTilings.c, in PenroseC
 
@@ -64,7 +64,7 @@ void tilings_export(
 				tilingId,
 				numLinesThisFileP,
 				numCharsThisFileP
-			);
+			);  // tiling_export()
 			(*numCharsThisFileP) += fprintf(fp, "\n\n\n");
 			(*numLinesThisFileP) += 3;
 		}  // export Anything
@@ -79,7 +79,7 @@ void tilings_export(
 		(*numCharsThisFileP) += fprintf(fp,
 			"\n\n(After ) usertime usertimeStart sub 1000 div 12 string cvs Concatenate "
 			"( seconds execution, finishing interpretation of Tilings) Concatenate = flush\n"
-		);
+		);  // fprintf()
 		(*numCharsThisFileP) += fprintf(fp, "end  %% /Concatenate, /usertimeStart\n\n\n");
 		(*numCharsThisFileP) += fIndent(fp, indentDepth);
 		(*numCharsThisFileP) += fprintf(fp, "] def  %% /Tilings\n\n");

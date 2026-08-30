@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // windingNumber.c, in PenroseC
 
@@ -31,10 +31,10 @@ int point_winding_number(register double const x,  register double const y,  con
 	Rhombus *rhThisP;
 	int wn = 0 ;  // Winding number. Inside <==> wn!=0
 
-	if(x >= pathP_Outer->xMax
-	|| y >= pathP_Outer->yMax
-	|| x <= pathP_Outer->xMin
-	|| y <= pathP_Outer->yMin)
+	if(x <= tlngP->rhombi[ pathP_Outer->xMin_rhId ].centre.x
+	|| x >= tlngP->rhombi[ pathP_Outer->xMax_rhId ].centre.x
+	|| y <= tlngP->rhombi[ pathP_Outer->yMin_rhId ].centre.y
+	|| y >= tlngP->rhombi[ pathP_Outer->yMax_rhId ].centre.y)
 		return 0;
 
 	rhId_This = pathP_Outer->rhId_PathCentreClosest ;
@@ -75,10 +75,10 @@ int rhombus_winding_number(const Rhombus * const rhP,  const Path * const pathP_
 		return 0;
 
 	const double paddingThreshold = 0.9999 * tlngP->edgeLength;  // Mathematically exactly 1, but minus epsilon for machine-precision failures.
-	if(rhP->xMax > pathP_Outer->xMax - paddingThreshold
-	|| rhP->yMax > pathP_Outer->yMax - paddingThreshold
-	|| rhP->xMin < pathP_Outer->xMin + paddingThreshold
-	|| rhP->yMin < pathP_Outer->yMin + paddingThreshold)
+	if(rhP->xMin < tlngP->rhombi[ pathP_Outer->xMin_rhId ].xMin + paddingThreshold
+	|| rhP->xMax > tlngP->rhombi[ pathP_Outer->xMax_rhId ].xMax - paddingThreshold
+	|| rhP->yMin < tlngP->rhombi[ pathP_Outer->yMin_rhId ].yMin + paddingThreshold
+	|| rhP->yMax > tlngP->rhombi[ pathP_Outer->yMax_rhId ].yMax - paddingThreshold)
 		return 0;
 
 	return point_winding_number(
@@ -86,7 +86,7 @@ int rhombus_winding_number(const Rhombus * const rhP,  const Path * const pathP_
 		rhP->centre.y + (tlngP->edgeLength / 32),
 		pathP_Outer,
 		tlngP
-	);
+	);  // return point_winding_number()
 }  // rhombus_winding_number()
 
 
@@ -112,10 +112,10 @@ int path_winding_number(
 		return 0;  // Outside
 
 	const double paddingThreshold = 0.99 * tlngP->edgeLength;  // Mathematically exactly 1, but minus epsilon for machine-precision failures.
-	if( pathP_Inner->xMax > pathP_Outer->xMax - paddingThreshold
-	||  pathP_Inner->yMax > pathP_Outer->yMax - paddingThreshold
-	||  pathP_Inner->xMin < pathP_Outer->xMin + paddingThreshold
-	||  pathP_Inner->yMin < pathP_Outer->yMin + paddingThreshold)
+	if( tlngP->rhombi[ pathP_Inner->xMin_rhId ].xMin < tlngP->rhombi[ pathP_Outer->xMin_rhId ].xMin + paddingThreshold
+	||  tlngP->rhombi[ pathP_Inner->xMax_rhId ].xMax > tlngP->rhombi[ pathP_Outer->xMax_rhId ].xMax - paddingThreshold
+	||  tlngP->rhombi[ pathP_Inner->yMin_rhId ].yMin < tlngP->rhombi[ pathP_Outer->yMin_rhId ].yMin + paddingThreshold
+	||  tlngP->rhombi[ pathP_Inner->yMax_rhId ].yMax > tlngP->rhombi[ pathP_Outer->yMax_rhId ].yMax - paddingThreshold)
 		return 0;  // Outside
 
 	// Hence determination of insideness is non-trivial.
@@ -124,5 +124,5 @@ int path_winding_number(
 		pathP_Inner->centre.y + (tlngP->edgeLength / 32),
 		pathP_Outer,
 		tlngP
-	);
+	);  // return point_winding_number()
 }  // path_winding_number()

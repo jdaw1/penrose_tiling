@@ -1,27 +1,50 @@
 %!PS
 
-/DataAsOf (D:20260407212051) def
-/Licence (GNU General Public License, Version 3, 29 June 2007) def
-/URL (https://githubcom/jdaw1/penrose_tiling/) def
-/Author (Julian D A Wiseman of wwwjdawisemancom) def
 /TilingId 2 def
-/NumFats 32 def
-/NumThins 18 def
-/EdgeLength 1.23606797749979E+00 def
+/SeedType /Round_5 def
+/EdgeLength 1 def
+/AxisAligned true def
+/NumFats 65 def
+/NumThins 40 def
+/NumThins_0T4F 5 def
+/NumThins_1T3F 20 def
+/NumPathsClosed 7 def
+/NumPathsOpen 5 def
+/NumPathsStats 3 def
+/BoundingPathNumVertices 40 def
+/XMin -5.567581822 def
+/XMax 5.567581822 def
+/YMin -5.045084972 def
+/YMax 5.854101966 def
+/RadiusMax 5.854101966 def
+/RadiusShortOpen 5.854101966 def
+/DataAsOf (D:20260830000308) def
+/SecondsToStartExportFromStartFirstTiling 0.000245 def
+/SecondsToStartExportFromStartThisTiling 0.000245 def
+/InternalToC_EdgeLength 0.3819660112501052 def
+/Licence (GNU General Public License, Version 3, 29 June 2007) def
+/URL (https://github.com/jdaw1/penrose_tiling/) def
+/Author (Julian D. A. Wiseman of www.jdawiseman.com) def
+/WantedPostScriptCentreX 2.02028698 def
+/WantedPostScriptCentreY 0 def
+/WantedPostScriptHalfWidth 19.865298425 def
+/WantedPostScriptHalfHeight 28.606029732 def
+/WantedPostScriptAspect 1.44 def
+/wantedPostScriptNumRhombi 105 def
+/wantedPostScriptNumPaths 12 def
 
-/XMin -5.23606797749979 def
-/XMax 4 def
-/YMin -6.155367074350508 def
-/YMax 6.155367074350508 def
 
-/ToPaint_XMin -6 def  % User changeable
-/ToPaint_XMax +4 def
-/ToPaint_YMin -7 def
-/ToPaint_YMax +7 def
+% Next four user changeable, for zoom. Commented suggestions are:  original enclosing all tiles;  maximum elegant area,
+% enclosing the 1 closed path of length 15 and the 6 of length 5;  and for my kitchen.
+/ToPaint_XMin -6 def  % -6  or  -4.470906  or  -57.5  % Last column works with my kitchen, tilingId==9.
+/ToPaint_XMax  6 def  %  6  or   3.658813  or  -10.0
+/ToPaint_YMin -6 def  % -6  or  -3.701485  or  -53.0
+/ToPaint_YMax  6 def  %  6  or   4.563322  or   17.0
 
 
-/PageWidth  297 360 mul 127 div def  % A3, long side.  User alterable: for US Tabloid use "11 72 mul".
-/PageHeight 420 360 mul 127 div def  % A3, short side.  User alterable: for US Tabloid use "17 72 mul".
+
+/PageWidth  420 360 mul 127 div def  % A3, long side.  User alterable: for US Tabloid use "11 72 mul".
+/PageHeight 297 360 mul 127 div def  % A3, short side.  User alterable: for US Tabloid use "17 72 mul".
 /Margin 18 def  % 18pt = 0.25" = 6.35mm. Enlarge if the printer can't work so close to the edge. Used only for default value of scale.
 
 /Actual_XMin  XMin ToPaint_XMin  2 copy lt {exch} if pop  def
@@ -32,7 +55,12 @@
 	PageWidth  Margin 2 mul sub  Actual_XMax Actual_XMin sub  div  % Tight-fiting x.
 	PageHeight Margin 2 mul sub  Actual_YMax Actual_YMin sub  div  % Tight-fiting y.
 	2 copy gt {exch} if pop  % Lesser of them.
+	% pop 150  % For endpapers, on A3, with TilingId=9,  perhaps choose X -3.4 to 2.4,  Y -4 to 4,  then scaling of 150. But YMMV.
 def  % /ScaleFactor. User alterable. Could be of form "6 EdgeLength div", making an edge be 6pt on the paper.
+
+
+
+
 /FontName /Helvetica def  % /TrebuchetMS /GothamNarrow
 /FontSize EdgeLength ScaleFactor mul 0.3 mul def
 
@@ -45,13 +73,16 @@ Actual_XMax Actual_XMin add -2 div  Actual_YMax Actual_YMin add -2 div  translat
 /TileMatrix matrix currentmatrix def
 
 mark
-	/CreationDate (D:20260407212051)
+	/CreationDate (D:20260830000308)
 	/Title (Penrose tiling)
 	/Author (Julian D. A. Wiseman)
 	/Subject (http://github.com/jdaw1/penrose_tiling/)
 	/Keywords (Penrose tiling rhombi)
 	/Creator (C and PostScript coded by Julian D. A. Wiseman of www.jdawiseman.com/author.html)
 /DOCINFO pdfmark
+
+
+/ShowTileCounts false def
 
 % Functions taken from https://github.com/jdaw1/placemat/blob/main/PostScript/placemat.ps
 /ToString
@@ -92,6 +123,66 @@ mark
 	end
 } bind def  % /ConcatenateToMark
 
+
+
+
+% Computes the path of a glyph, with the charpath-style boolean flag, moving the currentpoint as if after a show.
+/GlyphPathMoveto
+{
+	2 dict begin
+	/bln exch def
+	/GlyphNameThis exch def
+	currentfont
+	currentfont length dict begin
+	currentfont {1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding [ 256 {/.notdef} repeat ] def
+	Encoding 97 GlyphNameThis put  % ASCII a = 97
+	currentdict
+	end
+	/TemporaryFont exch definefont pop
+	/TemporaryFont 1 selectfont
+	currentpoint exch (a) stringwidth pop add exch
+	(a) bln charpath % (a) has been redefined
+	moveto
+	setfont
+	/TemporaryFont undefinefont
+	end
+} bind def  % /GlyphPathMoveto
+
+% http://groups.google.com/g/comp.lang.postscript/c/hZmiLPonDl8  "Possible bug in Mac Distiller's charpath?", 16 Feb 2008
+% There is a current point.
+% CompoundString bool  CharPathGeneral  -
+/CharPathGeneral
+{
+	2 dict begin
+	/bln exch def
+	/param exch def
+	1 {
+		/param load xcheck {[ param ]     bln CharPathGeneral         exit} if  % executable
+		param type /arraytype  eq {param {bln CharPathGeneral} forall exit} if  % array
+		param type /stringtype eq {param  bln                charpath exit} if  % string
+		param type /nametype   eq {param  bln GlyphPathMoveto         exit} if  % glyph
+		(
+CharPathGeneral: type error. Continuing.) = param == (
+) =
+	} repeat  % 1
+	end
+} bind def  % /CharPathGeneral
+
+/StringWidthGeneral {gsave nulldevice 0 0 moveto true CharPathGeneral currentpoint pop grestore} bind def
+
+% FontName FontSize CompoundString  ShowOutlined  -
+/ShowOutlined
+{
+	3 dict begin
+	/CompoundString exch def  /FontSize exch def  /FontName exch def
+	FontName FontSize selectfont
+	CompoundString true CharPathGeneral
+	gsave FontSize 8 div setlinewidth 1 setgray 1 setlinejoin stroke grestore 0 setgray fill
+	end
+} bind def  % /ShowOutlined
+
+
 () =
 /NumRhombi NumFats NumThins add def[/TilingId /DataAsOf /NumFats /NumThins /NumRhombi /EdgeLength  /XMin /XMax /YMin /YMax  /ToPaint_XMin /ToPaint_XMax /ToPaint_YMin /ToPaint_YMax]
 {
@@ -104,14 +195,12 @@ mark   (PageHeight = ) PageHeight (pt = ) PageHeight 72 div (" = ) PageHeight 12
 mark (T, B, L, and R margins each = ) Margin (pt = ) Margin 72 div (" = ) Margin 127 mul 360 div (mm) ConcatenateToMark =
 mark (ScaleFactor = ) ScaleFactor ConcatenateToMark =
 mark (On paper, length of an edge is ) EdgeLength ScaleFactor mul (pt = ) 1 index 72 div (" = 1"/) 1 2 index div ( = ) 5 index 127 mul 360 div (mm = 1mm/) 1 2 index div ConcatenateToMark =
-mark (FontName = ) FontName (; FontSize = ) FontSize ConcatenateToMark =
 
 
 (\n\nPathStats:\n\nPathClosed\tPathLength\tNumPaths\tMaxNumThisFats\tMaxNumDeepFats\tMaxNumThisThins\tMaxNumDeepThins\tMaxNumThisFats_Num\tMaxNumDeepFats_Num\tMaxNumThisThins_Num\tMaxNumDeepThins_Num\tRadiusMinMin_EdgeLengths\tRadiusMaxMax_EdgeLengths\tWidthMax_EdgeLengths\tHeightMax_EdgeLengths) =
-(Closed\t-5\t2\t0\t0\t0\t0\t2\t2\t2\t2\t0.80901699\t0.80901699\t2.92705098\t3.07768354) =
-(Open\t8\t1) =
-(Open\t4\t2) =
-(Open\t3\t2) =
+(Closed\t15\t1\t5\t5\t5\t5\t1\t1\t1\t1\t2.020286980\t2.427050983\t6.155367074\t5.854101966) =
+(Closed\t-5\t6\t0\t0\t0\t0\t6\t6\t6\t6\t0.809016994\t0.809016994\t3.077683537\t2.927050983) =
+(Open\t4\t5) =
 
 flush
 
@@ -125,7 +214,7 @@ PaperMatrix setmatrix  EdgeLength 16 div ScaleFactor mul  setlinewidth
 % Most of its inner may be rewritten, e.g. for different decoration, or to aid debugging such as by show'ing RhId.
 /PaintByRhombus
 {
-	15 dict begin  % Populating this dictionary with values on stack.
+	17 dict begin  % Populating this dictionary with values on stack.
 	/IsFat exch def  /RhId exch def
 	IsFat {[/PathId /PathStatId /WithinPathNum /Pointy /PathLength /PathClosed] {exch def} forall} if  % Fats only
 	[/FilledType /NumNeighbours /AngDeg /NorthY /NorthX /EastY /EastX /SouthY /SouthX /WestY /WestX] {exch def} forall  % All rhombi
@@ -137,10 +226,17 @@ PaperMatrix setmatrix  EdgeLength 16 div ScaleFactor mul  setlinewidth
 		NorthY //Actual_YMax ge  EastY //Actual_YMax ge  SouthY //Actual_YMax ge  WestY //Actual_YMax ge  and and and {pop //false exit} if
 	} repeat  % 1
 	{
+		/CentreX NorthX SouthX add 2 div def  /CentreY NorthY SouthY add 2 div def
 		//TileMatrix setmatrix
-		% Code inside here is intended to be user alterable.
-		//true  % paint rhombi?
+		% Boolean: and for this bool example variations follow, the first slightly complicated, one second very simple.
+		% CentreX ToPaint_XMin 0.52 mul 0.48 ToPaint_XMax mul add le  CentreY ToPaint_YMin 0.54 mul 0.46 ToPaint_YMax mul add le  or  % If uncommented, replaces following line.
+		//true  % Paint rhombi? Perhaps comment out this line, then uncomment and edit previous line.
 		{
+			gsave
+			true   CentreX dup mul CentreY dup mul add RadiusShortOpen dup mul ge  and  % Boolean: fade the far-away rhombi? But not rendered correctly by Preview; use Reader.
+			{
+				[ currenttransfer   /exec cvx   1   /exch cvx   /sub cvx  0.4  /mul cvx   1   /exch cvx   /sub cvx ] cvx bind settransfer
+			} if  % Fade the far-away rhombi? But not rendered correctly by Preview; use Reader.
 			NorthX NorthY moveto  EastX EastY lineto  SouthX SouthY lineto  WestX WestY lineto  closepath
 			IsFat
 			{
@@ -150,10 +246,10 @@ PaperMatrix setmatrix  EdgeLength 16 div ScaleFactor mul  setlinewidth
 				gsave
 				//false
 				1 {  % repeat
-					% These colours use changeable. If not specified then not fill'd.
-					% Closed ==> 5 5 15 25 55 105 215 425 855 1705 3415 6825 13655 27305 54615 109225 218455 436905 873815 ... ([n-1] + 2*[n-2])
+					% These colours user changeable. If not specified then not fill'd.
+					% Closed ==> 5 5 15 25 55 105 215 425 855 1705 3415 6825 13655 27305 54615 109225 218455 436905 873815 1747625 3495255 6990505 ... ([n-1] + 2*[n-2])
 					PathLength    5 eq PathClosed and Pointy and {0.6 1   0.6 setrgbcolor pop //true exit} if  % Very light green
-					PathLength   15 eq PathClosed and  {0   0.3 0   setrgbcolor pop //true exit} if  % very dark green
+					PathLength   15 eq PathClosed and  {0   0.3 0   setrgbcolor pop //true exit} if  % Very dark green
 					PathLength   25 eq PathClosed and  {0   0   0.6 setrgbcolor pop //true exit} if  % Dark blue
 					PathLength   55 eq PathClosed and  {0   0   1   setrgbcolor pop //true exit} if  % Blue
 					PathLength  105 eq PathClosed and  {1   0.4 1   setrgbcolor pop //true exit} if  % Pink
@@ -182,6 +278,13 @@ PaperMatrix setmatrix  EdgeLength 16 div ScaleFactor mul  setlinewidth
 					gsave 1 setgray fill grestore
 					//PaperMatrix setmatrix  0 setgray  stroke
 				} if  % Last rhombus in Closed, Length=5, non-Pointy
+				ShowTileCounts
+				{
+					//TileMatrix setmatrix NorthX SouthX add 2 div  NorthY SouthY add 2 div  moveto
+					0 PaintedNumByType {exch /thin ne {add} {pop} ifelse} forall  10 string cvs  dup
+					//PaperMatrix setmatrix  stringwidth pop -2 div   FontSize -0.4 mul  rmoveto
+					true charpath gsave FontSize 8 div setlinewidth 1 setgray 1 setlinejoin stroke grestore 0 setgray fill
+				} if  % ShowTileCounts
 				% Code that shows text about each fat rhombus. Used in debugging. By default commented out.
 %				PathClosed not  pop true  % Choose: all, or only fats in open paths?
 %				{
@@ -193,6 +296,13 @@ PaperMatrix setmatrix  EdgeLength 16 div ScaleFactor mul  setlinewidth
 				//PaintedNumByType /thin 2 copy known {2 copy get 1 add} {1} ifelse put
 				gsave 0.8 setgray fill grestore
 				//PaperMatrix setmatrix  0 setgray  stroke
+				ShowTileCounts
+				{
+					//TileMatrix setmatrix NorthX SouthX add 2 div  NorthY SouthY add 2 div  moveto
+					//PaintedNumByType /thin get  10 string cvs  dup
+					//PaperMatrix setmatrix  stringwidth pop -2 div   FontSize -0.4 mul  rmoveto
+					true charpath gsave FontSize 8 div setlinewidth 1 setgray 1 setlinejoin stroke grestore 0 setgray fill
+				} if  % ShowTileCounts
 				% Code that highlights the north corners of thin rhombi. Used in debugging. By default commented out.
 %				gsave newpath //TileMatrix setmatrix  NorthX NorthY 2 copy  moveto
 %				EdgeLength 4 div  AngDeg 180 IsFat {36} {72} ifelse sub add  dup IsFat {72} {144} ifelse add  arc  closepath
@@ -202,6 +312,7 @@ PaperMatrix setmatrix  EdgeLength 16 div ScaleFactor mul  setlinewidth
 %				//TileMatrix setmatrix  NorthX SouthX add 2 div  NorthY SouthY add 2 div  moveto  0 setgray
 %				//PaperMatrix setmatrix mark RhId FilledType dup 0 gt {(,) exch} {pop} ifelse ConcatenateToMark dup stringwidth pop -2 div //FontSize -0.3 mul rmoveto show
 			} ifelse  % IsFat
+			grestore
 			newpath
 		} if  % painting rhombi
 		//false  % paint triangles?
@@ -237,95 +348,453 @@ PaperMatrix setmatrix  EdgeLength 16 div ScaleFactor mul  setlinewidth
 
 TileMatrix setmatrix
 % Bounding path
-3.618033989 -1.175570505 moveto
-4 0 lineto
-3.618033989 1.175570505 lineto
-2.618033989 1.902113033 lineto
-2.236067977 3.077683537 lineto
-1 3.077683537 lineto
-1.381966011 4.253254042 lineto
-0.381966011 4.97979657 lineto
-0 6.155367074 lineto
--1.236067977 6.155367074 lineto
--1.618033989 4.97979657 lineto
--2.618033989 4.253254042 lineto
--2.236067977 3.077683537 lineto
--3.472135955 3.077683537 lineto
--3.854101966 1.902113033 lineto
--4.854101966 1.175570505 lineto
--5.236067977 0 lineto
--4.854101966 -1.175570505 lineto
--3.854101966 -1.902113033 lineto
--3.472135955 -3.077683537 lineto
--2.236067977 -3.077683537 lineto
--2.618033989 -4.253254042 lineto
--1.618033989 -4.97979657 lineto
--1.236067977 -6.155367074 lineto
-0 -6.155367074 lineto
-0.381966011 -4.97979657 lineto
-1.381966011 -4.253254042 lineto
-1 -3.077683537 lineto
-2.236067977 -3.077683537 lineto
-2.618033989 -1.902113033 lineto closepath
-gsave 1 setgray fill grestore gsave 0.8 setgray 1 setlinejoin PaperMatrix setmatrix 3.84 setlinewidth stroke grestore newpath  % or, perhaps, zap with "newpath"
+5.567581822 1.809016994 moveto  % rhId=79, corner=south
+4.97979657 2.618033989 lineto  % 79e
+4.028740053 2.927050983 lineto  % 73s
+3.440954801 3.736067977 lineto  % 61e
+2.489898285 3.427050983 lineto  % 61n
+2.489898285 4.427050983 lineto  % 64w
+1.538841769 4.736067977 lineto  % 64s
+0.951056516 5.545084972 lineto  % 67e
+0 5.854101966 lineto  % 65s
+-0.951056516 5.545084972 lineto  % 65e
+-1.538841769 4.736067977 lineto  % 66s
+-2.489898285 4.427050983 lineto  % 60e
+-2.489898285 3.427050983 lineto  % 60n
+-3.440954801 3.736067977 lineto  % 57w
+-4.028740053 2.927050983 lineto  % 57s
+-4.97979657 2.618033989 lineto  % 72e
+-5.567581822 1.809016994 lineto  % 78s
+-5.567581822 0.809016994 lineto  % 78e
+-4.97979657 0 lineto  % 82s
+-4.97979657 -1 lineto  % 49e
+-4.028740053 -1.309016994 lineto  % 49n
+-4.616525306 -2.118033989 lineto  % 52w
+-4.028740053 -2.927050983 lineto  % 52s
+-4.028740053 -3.927050983 lineto  % 97e
+-3.440954801 -4.736067977 lineto  % 101s
+-2.489898285 -5.045084972 lineto  % 101e
+-1.538841769 -4.736067977 lineto  % 102s
+-0.587785252 -5.045084972 lineto  % 48e
+0 -4.236067977 lineto  % 48n
+0.587785252 -5.045084972 lineto  % 45w
+1.538841769 -4.736067977 lineto  % 45s
+2.489898285 -5.045084972 lineto  % 103e
+3.440954801 -4.736067977 lineto  % 104s
+4.028740053 -3.927050983 lineto  % 104e
+4.028740053 -2.927050983 lineto  % 100s
+4.616525306 -2.118033989 lineto  % 56e
+4.028740053 -1.309016994 lineto  % 56n
+4.97979657 -1 lineto  % 53w
+4.97979657 0 lineto  % 53s
+5.567581822 0.809016994 lineto  % 83e
+closepath
+gsave
+	PaperMatrix setmatrix
+	EdgeLength 0.3125 mul ScaleFactor mul setlinewidth
+	0.4 setgray
+	1 setlinejoin  % round, PLRM3 p673-4
+	1 setlinecap  % In GhostScript 10.06.0 the closepath seems not to work for tilingId>=6. Presumably long path length. This achieves optical equivalent.
+	stroke
+grestore
+1 setgray  fill
 
 
 % Formats for Thin and Fat rhombi:
 	% WestX WestY SouthX SouthY EastX EastY NorthX NorthY Angle /RhId false  PaintByRhombus  % ==> Thin
 	% WestX WestY SouthX SouthY EastX EastY NorthX NorthY Angle PathClosed PathLength Pointy WithinPathNum /PathStatId /PathId /RhId true  PaintByRhombus  % ==> Fat
 
-0 -6.155367074 0.381966011 -4.97979657 0 -3.804226065 -0.381966011 -4.97979657 180 3 0 49 false PaintByRhombus
-0 -3.804226065 -1 -3.077683537 -2.236067977 -3.077683537 -1.236067977 -3.804226065 252 4 0 48 false PaintByRhombus
--2.236067977 -3.077683537 -1 -3.077683537 0 -2.351141009 -1.236067977 -2.351141009 108 4 0 47 false PaintByRhombus
-1.381966011 -1.902113033 2.618033989 -1.902113033 3.618033989 -1.175570505 2.381966011 -1.175570505 108 3 0 46 false PaintByRhombus
--4.854101966 -1.175570505 -3.854101966 -1.902113033 -2.618033989 -1.902113033 -3.618033989 -1.175570505 72 3 0 45 false PaintByRhombus
-0 -2.351141009 0.381966011 -1.175570505 0 0 -0.381966011 -1.175570505 180 4 0 44 false PaintByRhombus
-0 0 0.381966011 -1.175570505 1.381966011 -1.902113033 1 -0.726542528 36 4 0 43 false PaintByRhombus
--2.618033989 -1.902113033 -1.618033989 -1.175570505 -1.236067977 0 -2.236067977 -0.726542528 144 4 0 42 false PaintByRhombus
-3.618033989 -1.175570505 4 0 3.618033989 1.175570505 3.236067977 0 180 2 5 41 false PaintByRhombus
--4.854101966 1.175570505 -5.236067977 0 -4.854101966 -1.175570505 -4.472135955 0 0 2 5 40 false PaintByRhombus
-1.381966011 1.902113033 0.381966011 1.175570505 0 0 1 0.726542528 -36 4 0 39 false PaintByRhombus
--1.236067977 0 -1.618033989 1.175570505 -2.618033989 1.902113033 -2.236067977 0.726542528 216 4 0 38 false PaintByRhombus
-0 0 0.381966011 1.175570505 0 2.351141009 -0.381966011 1.175570505 180 4 0 37 false PaintByRhombus
-3.618033989 1.175570505 2.618033989 1.902113033 1.381966011 1.902113033 2.381966011 1.175570505 252 3 0 36 false PaintByRhombus
--2.618033989 1.902113033 -3.854101966 1.902113033 -4.854101966 1.175570505 -3.618033989 1.175570505 -72 3 0 35 false PaintByRhombus
-0 2.351141009 -1 3.077683537 -2.236067977 3.077683537 -1.236067977 2.351141009 252 4 0 34 false PaintByRhombus
--2.236067977 3.077683537 -1 3.077683537 0 3.804226065 -1.236067977 3.804226065 108 4 0 33 false PaintByRhombus
-0 3.804226065 0.381966011 4.97979657 0 6.155367074 -0.381966011 4.97979657 180 3 0 32 false PaintByRhombus
--1.236067977 3.804226065 -1.618033989 4.97979657 -2.618033989 4.253254042 -2.236067977 3.077683537 252 2 0 false 3 false 2 3 6 31 true PaintByRhombus
--0.381966011 4.97979657 -1.618033989 4.97979657 -1.236067977 3.804226065 0 3.804226065 -36 4 0 false 3 false 1 3 6 30 true PaintByRhombus
--1.236067977 6.155367074 -1.618033989 4.97979657 -0.381966011 4.97979657 0 6.155367074 36 2 7 false 3 false 0 3 6 29 true PaintByRhombus
--0.381966011 -4.97979657 -1.618033989 -4.97979657 -1.236067977 -6.155367074 0 -6.155367074 -36 2 7 false 3 false 2 3 5 28 true PaintByRhombus
--1.236067977 -3.804226065 -1.618033989 -4.97979657 -0.381966011 -4.97979657 0 -3.804226065 36 4 0 false 3 false 1 3 5 27 true PaintByRhombus
--2.618033989 -4.253254042 -1.618033989 -4.97979657 -1.236067977 -3.804226065 -2.236067977 -3.077683537 108 2 0 false 3 false 0 3 5 26 true PaintByRhombus
-1.381966011 4.253254042 0.381966011 4.97979657 0 3.804226065 1 3.077683537 -72 2 0 false 4 false 3 2 4 25 true PaintByRhombus
-0 3.804226065 -1 3.077683537 0 2.351141009 1 3.077683537 0 4 0 false 4 false 2 2 4 24 true PaintByRhombus
-0 2.351141009 0.381966011 1.175570505 1.381966011 1.902113033 1 3.077683537 72 4 0 false 4 false 1 2 4 23 true PaintByRhombus
-1.381966011 1.902113033 2.618033989 1.902113033 2.236067977 3.077683537 1 3.077683537 144 2 0 false 4 false 0 2 4 22 true PaintByRhombus
-0 -3.804226065 0.381966011 -4.97979657 1.381966011 -4.253254042 1 -3.077683537 72 2 0 false 4 false 3 2 3 21 true PaintByRhombus
-0 -2.351141009 -1 -3.077683537 0 -3.804226065 1 -3.077683537 0 4 0 false 4 false 2 2 3 20 true PaintByRhombus
-1.381966011 -1.902113033 0.381966011 -1.175570505 0 -2.351141009 1 -3.077683537 -72 4 0 false 4 false 1 2 3 19 true PaintByRhombus
-2.236067977 -3.077683537 2.618033989 -1.902113033 1.381966011 -1.902113033 1 -3.077683537 216 2 0 false 4 false 0 2 3 18 true PaintByRhombus
--2.618033989 -1.902113033 -3.854101966 -1.902113033 -3.472135955 -3.077683537 -2.236067977 -3.077683537 -36 2 0 false 8 false 7 1 2 17 true PaintByRhombus
--1.236067977 -2.351141009 -1.618033989 -1.175570505 -2.618033989 -1.902113033 -2.236067977 -3.077683537 252 4 0 false 8 false 6 1 2 16 true PaintByRhombus
--0.381966011 -1.175570505 -1.618033989 -1.175570505 -1.236067977 -2.351141009 0 -2.351141009 -36 4 0 false 8 false 5 1 2 15 true PaintByRhombus
--1.236067977 0 -1.618033989 -1.175570505 -0.381966011 -1.175570505 0 0 36 4 0 false 8 false 4 1 2 14 true PaintByRhombus
--0.381966011 1.175570505 -1.618033989 1.175570505 -1.236067977 0 0 0 -36 4 0 false 8 false 3 1 2 13 true PaintByRhombus
--1.236067977 2.351141009 -1.618033989 1.175570505 -0.381966011 1.175570505 0 2.351141009 36 4 0 false 8 false 2 1 2 12 true PaintByRhombus
--2.618033989 1.902113033 -1.618033989 1.175570505 -1.236067977 2.351141009 -2.236067977 3.077683537 108 4 0 false 8 false 1 1 2 11 true PaintByRhombus
--3.472135955 3.077683537 -3.854101966 1.902113033 -2.618033989 1.902113033 -2.236067977 3.077683537 36 2 0 false 8 false 0 1 2 10 true PaintByRhombus
--4.472135955 0 -3.236067977 0 -3.618033989 1.175570505 -4.854101966 1.175570505 144 4 7 true 5 false 4 0 1 9 true PaintByRhombus
--3.618033989 -1.175570505 -3.236067977 0 -4.472135955 0 -4.854101966 -1.175570505 216 4 7 true 5 false 3 0 1 8 true PaintByRhombus
--2.236067977 -0.726542528 -3.236067977 0 -3.618033989 -1.175570505 -2.618033989 -1.902113033 -72 4 0 true 5 false 2 0 1 7 true PaintByRhombus
--2.236067977 0.726542528 -3.236067977 0 -2.236067977 -0.726542528 -1.236067977 0 -0 4 0 true 5 false 1 0 1 6 true PaintByRhombus
--3.618033989 1.175570505 -3.236067977 0 -2.236067977 0.726542528 -2.618033989 1.902113033 72 4 0 true 5 false 0 0 1 5 true PaintByRhombus
-1 0.726542528 2 0 2.381966011 1.175570505 1.381966011 1.902113033 108 4 0 true 5 false 4 0 0 4 true PaintByRhombus
-1 -0.726542528 2 0 1 0.726542528 0 0 180 4 0 true 5 false 3 0 0 3 true PaintByRhombus
-2.381966011 -1.175570505 2 0 1 -0.726542528 1.381966011 -1.902113033 252 4 0 true 5 false 2 0 0 2 true PaintByRhombus
-3.236067977 0 2 0 2.381966011 -1.175570505 3.618033989 -1.175570505 -36 4 7 true 5 false 1 0 0 1 true PaintByRhombus
-2.381966011 1.175570505 2 0 3.236067977 0 3.618033989 1.175570505 36 4 7 true 5 false 0 0 0 0 true PaintByRhombus
+0.951056516 5.545084972 0 5.854101966 -0.951056516 5.545084972 0 5.236067977 -90 2 5 65 false PaintByRhombus
+-0.951056516 5.545084972 -1.538841769 4.736067977 -1.538841769 3.736067977 -0.951056516 4.545084972 -18 3 0 66 false PaintByRhombus
+1.538841769 3.736067977 1.538841769 4.736067977 0.951056516 5.545084972 0.951056516 4.545084972 198 3 0 67 false PaintByRhombus
+-1.538841769 3.736067977 -0.951056516 2.927050983 0 2.618033989 -0.587785252 3.427050983 54 4 0 68 false PaintByRhombus
+0 2.618033989 0.951056516 2.927050983 1.538841769 3.736067977 0.587785252 3.427050983 126 4 0 69 false PaintByRhombus
+0 2.618033989 -0.951056516 2.927050983 -1.902113033 2.618033989 -0.951056516 2.309016994 -90 4 0 70 false PaintByRhombus
+1.902113033 2.618033989 0.951056516 2.927050983 0 2.618033989 0.951056516 2.309016994 -90 4 0 71 false PaintByRhombus
+-3.077683537 2.618033989 -4.028740053 2.927050983 -4.97979657 2.618033989 -4.028740053 2.309016994 -90 3 0 72 false PaintByRhombus
+4.97979657 2.618033989 4.028740053 2.927050983 3.077683537 2.618033989 4.028740053 2.309016994 -90 3 0 73 false PaintByRhombus
+-2.489898285 0.809016994 -2.489898285 1.809016994 -3.077683537 2.618033989 -3.077683537 1.618033989 198 4 0 74 false PaintByRhombus
+-1.902113033 2.618033989 -2.489898285 1.809016994 -2.489898285 0.809016994 -1.902113033 1.618033989 -18 4 0 75 false PaintByRhombus
+2.489898285 0.809016994 2.489898285 1.809016994 1.902113033 2.618033989 1.902113033 1.618033989 198 4 0 76 false PaintByRhombus
+3.077683537 2.618033989 2.489898285 1.809016994 2.489898285 0.809016994 3.077683537 1.618033989 -18 4 0 77 false PaintByRhombus
+-4.97979657 2.618033989 -5.567581822 1.809016994 -5.567581822 0.809016994 -4.97979657 1.618033989 -18 2 5 78 false PaintByRhombus
+5.567581822 0.809016994 5.567581822 1.809016994 4.97979657 2.618033989 4.97979657 1.618033989 198 2 5 79 false PaintByRhombus
+0 1.618033989 -0.951056516 1.309016994 -1.538841769 0.5 -0.587785252 0.809016994 -54 4 0 80 false PaintByRhombus
+1.538841769 0.5 0.951056516 1.309016994 0 1.618033989 0.587785252 0.809016994 234 4 0 81 false PaintByRhombus
+-5.567581822 0.809016994 -4.97979657 0 -4.028740053 -0.309016994 -4.616525306 0.5 54 3 0 82 false PaintByRhombus
+4.028740053 -0.309016994 4.97979657 0 5.567581822 0.809016994 4.616525306 0.5 126 3 0 83 false PaintByRhombus
+-4.028740053 -0.309016994 -3.077683537 0 -2.489898285 0.809016994 -3.440954801 0.5 126 4 0 84 false PaintByRhombus
+2.489898285 0.809016994 3.077683537 0 4.028740053 -0.309016994 3.440954801 0.5 54 4 0 85 false PaintByRhombus
+-2.489898285 0.809016994 -3.077683537 0 -3.077683537 -1 -2.489898285 -0.190983006 -18 4 0 86 false PaintByRhombus
+3.077683537 -1 3.077683537 0 2.489898285 0.809016994 2.489898285 -0.190983006 198 4 0 87 false PaintByRhombus
+-1.538841769 0.5 -1.538841769 -0.5 -0.951056516 -1.309016994 -0.951056516 -0.309016994 18 4 0 88 false PaintByRhombus
+0.951056516 -1.309016994 1.538841769 -0.5 1.538841769 0.5 0.951056516 -0.309016994 162 4 0 89 false PaintByRhombus
+-0.951056516 -1.309016994 0 -1.618033989 0.951056516 -1.309016994 0 -1 90 4 0 90 false PaintByRhombus
+-3.077683537 -1 -2.489898285 -1.809016994 -1.538841769 -2.118033989 -2.126627021 -1.309016994 54 4 0 91 false PaintByRhombus
+1.538841769 -2.118033989 2.489898285 -1.809016994 3.077683537 -1 2.126627021 -1.309016994 126 4 0 92 false PaintByRhombus
+-1.538841769 -2.118033989 -2.489898285 -1.809016994 -3.440954801 -2.118033989 -2.489898285 -2.427050983 -90 4 0 93 false PaintByRhombus
+3.440954801 -2.118033989 2.489898285 -1.809016994 1.538841769 -2.118033989 2.489898285 -2.427050983 -90 4 0 94 false PaintByRhombus
+-1.538841769 -2.118033989 -0.951056516 -2.927050983 0 -3.236067977 -0.587785252 -2.427050983 54 4 0 95 false PaintByRhombus
+0 -3.236067977 0.951056516 -2.927050983 1.538841769 -2.118033989 0.587785252 -2.427050983 126 4 0 96 false PaintByRhombus
+-3.440954801 -2.118033989 -4.028740053 -2.927050983 -4.028740053 -3.927050983 -3.440954801 -3.118033989 -18 3 0 97 false PaintByRhombus
+-0.951056516 -3.927050983 -0.951056516 -2.927050983 -1.538841769 -2.118033989 -1.538841769 -3.118033989 198 4 0 98 false PaintByRhombus
+1.538841769 -2.118033989 0.951056516 -2.927050983 0.951056516 -3.927050983 1.538841769 -3.118033989 -18 4 0 99 false PaintByRhombus
+4.028740053 -3.927050983 4.028740053 -2.927050983 3.440954801 -2.118033989 3.440954801 -3.118033989 198 3 0 100 false PaintByRhombus
+-4.028740053 -3.927050983 -3.440954801 -4.736067977 -2.489898285 -5.045084972 -3.077683537 -4.236067977 54 2 5 101 false PaintByRhombus
+-2.489898285 -5.045084972 -1.538841769 -4.736067977 -0.951056516 -3.927050983 -1.902113033 -4.236067977 126 3 0 102 false PaintByRhombus
+0.951056516 -3.927050983 1.538841769 -4.736067977 2.489898285 -5.045084972 1.902113033 -4.236067977 54 3 0 103 false PaintByRhombus
+2.489898285 -5.045084972 3.440954801 -4.736067977 4.028740053 -3.927050983 3.077683537 -4.236067977 126 2 5 104 false PaintByRhombus
+2.489898285 4.427050983 1.538841769 4.736067977 1.538841769 3.736067977 2.489898285 3.427050983 -54 2 0 false 4 false 3 2 11 64 true PaintByRhombus
+1.538841769 3.736067977 0.951056516 2.927050983 1.902113033 2.618033989 2.489898285 3.427050983 18 4 0 false 4 false 2 2 11 63 true PaintByRhombus
+1.902113033 2.618033989 2.489898285 1.809016994 3.077683537 2.618033989 2.489898285 3.427050983 90 4 0 false 4 false 1 2 11 62 true PaintByRhombus
+3.077683537 2.618033989 4.028740053 2.927050983 3.440954801 3.736067977 2.489898285 3.427050983 162 2 0 false 4 false 0 2 11 61 true PaintByRhombus
+-1.538841769 3.736067977 -1.538841769 4.736067977 -2.489898285 4.427050983 -2.489898285 3.427050983 234 2 0 false 4 false 3 2 10 60 true PaintByRhombus
+-1.902113033 2.618033989 -0.951056516 2.927050983 -1.538841769 3.736067977 -2.489898285 3.427050983 162 4 0 false 4 false 2 2 10 59 true PaintByRhombus
+-3.077683537 2.618033989 -2.489898285 1.809016994 -1.902113033 2.618033989 -2.489898285 3.427050983 90 4 0 false 4 false 1 2 10 58 true PaintByRhombus
+-3.440954801 3.736067977 -4.028740053 2.927050983 -3.077683537 2.618033989 -2.489898285 3.427050983 18 2 0 false 4 false 0 2 10 57 true PaintByRhombus
+3.440954801 -2.118033989 4.028740053 -2.927050983 4.616525306 -2.118033989 4.028740053 -1.309016994 90 2 0 false 4 false 3 2 9 56 true PaintByRhombus
+3.077683537 -1 2.489898285 -1.809016994 3.440954801 -2.118033989 4.028740053 -1.309016994 18 4 0 false 4 false 2 2 9 55 true PaintByRhombus
+4.028740053 -0.309016994 3.077683537 0 3.077683537 -1 4.028740053 -1.309016994 -54 4 0 false 4 false 1 2 9 54 true PaintByRhombus
+4.97979657 -1 4.97979657 0 4.028740053 -0.309016994 4.028740053 -1.309016994 234 2 0 false 4 false 0 2 9 53 true PaintByRhombus
+-4.616525306 -2.118033989 -4.028740053 -2.927050983 -3.440954801 -2.118033989 -4.028740053 -1.309016994 90 2 0 false 4 false 3 2 8 52 true PaintByRhombus
+-3.440954801 -2.118033989 -2.489898285 -1.809016994 -3.077683537 -1 -4.028740053 -1.309016994 162 4 0 false 4 false 2 2 8 51 true PaintByRhombus
+-3.077683537 -1 -3.077683537 0 -4.028740053 -0.309016994 -4.028740053 -1.309016994 234 4 0 false 4 false 1 2 8 50 true PaintByRhombus
+-4.028740053 -0.309016994 -4.97979657 0 -4.97979657 -1 -4.028740053 -1.309016994 -54 2 0 false 4 false 0 2 8 49 true PaintByRhombus
+-0.951056516 -3.927050983 -1.538841769 -4.736067977 -0.587785252 -5.045084972 0 -4.236067977 18 2 0 false 4 false 3 2 7 48 true PaintByRhombus
+0 -3.236067977 -0.951056516 -2.927050983 -0.951056516 -3.927050983 0 -4.236067977 -54 4 0 false 4 false 2 2 7 47 true PaintByRhombus
+0.951056516 -3.927050983 0.951056516 -2.927050983 0 -3.236067977 0 -4.236067977 234 4 0 false 4 false 1 2 7 46 true PaintByRhombus
+0.587785252 -5.045084972 1.538841769 -4.736067977 0.951056516 -3.927050983 0 -4.236067977 162 2 0 false 4 false 0 2 7 45 true PaintByRhombus
+-0.951056516 4.545084972 0 4.236067977 0 5.236067977 -0.951056516 5.545084972 126 4 7 true 5 false 4 1 6 44 true PaintByRhombus
+-0.587785252 3.427050983 0 4.236067977 -0.951056516 4.545084972 -1.538841769 3.736067977 198 4 0 true 5 false 3 1 6 43 true PaintByRhombus
+0.587785252 3.427050983 0 4.236067977 -0.587785252 3.427050983 0 2.618033989 -90 4 0 true 5 false 2 1 6 42 true PaintByRhombus
+0.951056516 4.545084972 0 4.236067977 0.587785252 3.427050983 1.538841769 3.736067977 -18 4 0 true 5 false 1 1 6 41 true PaintByRhombus
+0 5.236067977 0 4.236067977 0.951056516 4.545084972 0.951056516 5.545084972 54 4 7 true 5 false 0 1 6 40 true PaintByRhombus
+3.077683537 1.618033989 4.028740053 1.309016994 4.028740053 2.309016994 3.077683537 2.618033989 126 4 0 true 5 false 4 1 5 39 true PaintByRhombus
+3.440954801 0.5 4.028740053 1.309016994 3.077683537 1.618033989 2.489898285 0.809016994 198 4 0 true 5 false 3 1 5 38 true PaintByRhombus
+4.616525306 0.5 4.028740053 1.309016994 3.440954801 0.5 4.028740053 -0.309016994 -90 4 0 true 5 false 2 1 5 37 true PaintByRhombus
+4.97979657 1.618033989 4.028740053 1.309016994 4.616525306 0.5 5.567581822 0.809016994 -18 4 7 true 5 false 1 1 5 36 true PaintByRhombus
+4.028740053 2.309016994 4.028740053 1.309016994 4.97979657 1.618033989 4.97979657 2.618033989 54 4 7 true 5 false 0 1 5 35 true PaintByRhombus
+-4.97979657 1.618033989 -4.028740053 1.309016994 -4.028740053 2.309016994 -4.97979657 2.618033989 126 4 7 true 5 false 4 1 4 34 true PaintByRhombus
+-4.616525306 0.5 -4.028740053 1.309016994 -4.97979657 1.618033989 -5.567581822 0.809016994 198 4 7 true 5 false 3 1 4 33 true PaintByRhombus
+-3.440954801 0.5 -4.028740053 1.309016994 -4.616525306 0.5 -4.028740053 -0.309016994 -90 4 0 true 5 false 2 1 4 32 true PaintByRhombus
+-3.077683537 1.618033989 -4.028740053 1.309016994 -3.440954801 0.5 -2.489898285 0.809016994 -18 4 0 true 5 false 1 1 4 31 true PaintByRhombus
+-4.028740053 2.309016994 -4.028740053 1.309016994 -3.077683537 1.618033989 -3.077683537 2.618033989 54 4 0 true 5 false 0 1 4 30 true PaintByRhombus
+-0.951056516 -0.309016994 0 0 -0.587785252 0.809016994 -1.538841769 0.5 162 4 0 true 5 false 4 1 3 29 true PaintByRhombus
+0 -1 0 0 -0.951056516 -0.309016994 -0.951056516 -1.309016994 234 4 0 true 5 false 3 1 3 28 true PaintByRhombus
+0.951056516 -0.309016994 0 0 0 -1 0.951056516 -1.309016994 -54 4 0 true 5 false 2 1 3 27 true PaintByRhombus
+0.587785252 0.809016994 0 0 0.951056516 -0.309016994 1.538841769 0.5 18 4 0 true 5 false 1 1 3 26 true PaintByRhombus
+-0.587785252 0.809016994 0 0 0.587785252 0.809016994 0 1.618033989 90 4 0 true 5 false 0 1 3 25 true PaintByRhombus
+1.538841769 -3.118033989 2.489898285 -3.427050983 2.489898285 -2.427050983 1.538841769 -2.118033989 126 4 0 true 5 false 4 1 2 24 true PaintByRhombus
+1.902113033 -4.236067977 2.489898285 -3.427050983 1.538841769 -3.118033989 0.951056516 -3.927050983 198 4 0 true 5 false 3 1 2 23 true PaintByRhombus
+3.077683537 -4.236067977 2.489898285 -3.427050983 1.902113033 -4.236067977 2.489898285 -5.045084972 -90 4 7 true 5 false 2 1 2 22 true PaintByRhombus
+3.440954801 -3.118033989 2.489898285 -3.427050983 3.077683537 -4.236067977 4.028740053 -3.927050983 -18 4 7 true 5 false 1 1 2 21 true PaintByRhombus
+2.489898285 -2.427050983 2.489898285 -3.427050983 3.440954801 -3.118033989 3.440954801 -2.118033989 54 4 0 true 5 false 0 1 2 20 true PaintByRhombus
+-3.440954801 -3.118033989 -2.489898285 -3.427050983 -2.489898285 -2.427050983 -3.440954801 -2.118033989 126 4 0 true 5 false 4 1 1 19 true PaintByRhombus
+-3.077683537 -4.236067977 -2.489898285 -3.427050983 -3.440954801 -3.118033989 -4.028740053 -3.927050983 198 4 7 true 5 false 3 1 1 18 true PaintByRhombus
+-1.902113033 -4.236067977 -2.489898285 -3.427050983 -3.077683537 -4.236067977 -2.489898285 -5.045084972 -90 4 7 true 5 false 2 1 1 17 true PaintByRhombus
+-1.538841769 -3.118033989 -2.489898285 -3.427050983 -1.902113033 -4.236067977 -0.951056516 -3.927050983 -18 4 0 true 5 false 1 1 1 16 true PaintByRhombus
+-2.489898285 -2.427050983 -2.489898285 -3.427050983 -1.538841769 -3.118033989 -1.538841769 -2.118033989 54 4 0 true 5 false 0 1 1 15 true PaintByRhombus
+-0.951056516 2.309016994 -0.951056516 1.309016994 0 1.618033989 0 2.618033989 54 4 0 true 15 false 14 0 0 14 true PaintByRhombus
+-1.902113033 1.618033989 -0.951056516 1.309016994 -0.951056516 2.309016994 -1.902113033 2.618033989 126 4 0 true 15 false 13 0 0 13 true PaintByRhombus
+-1.538841769 0.5 -0.951056516 1.309016994 -1.902113033 1.618033989 -2.489898285 0.809016994 198 4 0 true 15 false 12 0 0 12 true PaintByRhombus
+-2.489898285 -0.190983006 -1.538841769 -0.5 -1.538841769 0.5 -2.489898285 0.809016994 126 4 0 true 15 false 11 0 0 11 true PaintByRhombus
+-2.126627021 -1.309016994 -1.538841769 -0.5 -2.489898285 -0.190983006 -3.077683537 -1 198 4 0 true 15 false 10 0 0 10 true PaintByRhombus
+-0.951056516 -1.309016994 -1.538841769 -0.5 -2.126627021 -1.309016994 -1.538841769 -2.118033989 -90 4 0 true 15 false 9 0 0 9 true PaintByRhombus
+-0.587785252 -2.427050983 0 -1.618033989 -0.951056516 -1.309016994 -1.538841769 -2.118033989 198 4 0 true 15 false 8 0 0 8 true PaintByRhombus
+0.587785252 -2.427050983 0 -1.618033989 -0.587785252 -2.427050983 0 -3.236067977 -90 4 0 true 15 false 7 0 0 7 true PaintByRhombus
+0.951056516 -1.309016994 0 -1.618033989 0.587785252 -2.427050983 1.538841769 -2.118033989 -18 4 0 true 15 false 6 0 0 6 true PaintByRhombus
+2.126627021 -1.309016994 1.538841769 -0.5 0.951056516 -1.309016994 1.538841769 -2.118033989 -90 4 0 true 15 false 5 0 0 5 true PaintByRhombus
+2.489898285 -0.190983006 1.538841769 -0.5 2.126627021 -1.309016994 3.077683537 -1 -18 4 0 true 15 false 4 0 0 4 true PaintByRhombus
+1.538841769 0.5 1.538841769 -0.5 2.489898285 -0.190983006 2.489898285 0.809016994 54 4 0 true 15 false 3 0 0 3 true PaintByRhombus
+1.902113033 1.618033989 0.951056516 1.309016994 1.538841769 0.5 2.489898285 0.809016994 -18 4 0 true 15 false 2 0 0 2 true PaintByRhombus
+0.951056516 2.309016994 0.951056516 1.309016994 1.902113033 1.618033989 1.902113033 2.618033989 54 4 0 true 15 false 1 0 0 1 true PaintByRhombus
+0 1.618033989 0.951056516 1.309016994 0.951056516 2.309016994 0 2.618033989 126 4 0 true 15 false 0 0 0 0 true PaintByRhombus
+false   SeedType /Round_5 eq and  RadiusShortOpen 0 gt and  % Boolean: paint circle excluding fats in short open paths
+{
+	TileMatrix setmatrix   0 30 330 {/ang exch def  0  0  RadiusShortOpen  ang  dup 30 add  arc} for  % 30 degree pieces for pointless accuracy.
+	PaperMatrix setmatrix  1 setlinejoin
+	gsave 3 setlinewidth 1 setgray stroke grestore
+	1 setlinewidth 0 setgray stroke
+} if  % circle bounding interesting well-populated rhombii
+
+
+false  % Boolean: paint gridlines?
+{
+	14 dict begin
+
+	/SizeX Actual_XMax Actual_XMin sub def
+	/SizeY Actual_YMax Actual_YMin sub def
+	/GridStepX
+	1 {
+		SizeX   16 le {   1 exit} if
+		SizeX   32 le {   2 exit} if
+		SizeX   80 le {   5 exit} if
+		SizeX  160 le {  10 exit} if
+		SizeX  320 le {  20 exit} if
+		SizeX  800 le {  50 exit} if
+		SizeX 1600 le { 100 exit} if
+		SizeX 3200 le { 500 exit} if
+		SizeX 8000 le {1000 exit} if
+		SixeX log 0.3 sub floor cvi 10 exch exp exit
+	} repeat def  % 1, /GridStepX
+	/GridStepY
+	1 {
+		SizeY   16 le {   1 exit} if
+		SizeY   32 le {   2 exit} if
+		SizeY   80 le {   5 exit} if
+		SizeY  160 le {  10 exit} if
+		SizeY  320 le {  20 exit} if
+		SizeY  800 le {  50 exit} if
+		SizeY 1600 le { 100 exit} if
+		SizeY 3200 le { 500 exit} if
+		SizeY 8000 le {1000 exit} if
+		SixeY log 0.3 sub floor cvi 10 exch exp exit
+	} repeat def  % 1, /GridStepY
+	/StartX  Actual_XMin GridStepX div ceiling cvi GridStepX mul  def
+	/StartY  Actual_YMin GridStepY div ceiling cvi GridStepY mul  def
+
+	//TileMatrix setmatrix
+
+	StartY  GridStepY  Actual_YMax
+	{
+		/GridVal exch def
+		Actual_XMin GridVal moveto  Actual_XMax GridVal lineto
+	} for  % GridVal, horizontal lines
+	StartX  GridStepX  Actual_XMax
+	{
+		/GridVal exch def
+		GridVal Actual_YMin moveto  GridVal Actual_YMax lineto
+	} for  % GridVal, vertical lines
+	matrix currentmatrix  PaperMatrix setmatrix
+	gsave 0.72 setlinewidth 1 setgray 1 setlinecap stroke grestore
+	0.24 setlinewidth 0 setgray 0 setlinecap stroke
+	setmatrix
+
+	/FontSize Actual_YMax Actual_YMin sub 60 div def
+	FontName FontSize selectfont
+	StartY  GridStepY  Actual_YMax
+	{
+		/GridVal exch def
+		Actual_XMax  GridVal FontSize 0.3 mul sub  moveto
+		FontName FontSize
+		GridVal 0 lt {[/minus GridVal abs 16 string cvs]} {GridVal 16 string cvs} ifelse
+		dup StringWidthGeneral neg 0 rmoveto  ShowOutlined
+	} for  % GridVal, y labels
+	StartX  GridStepX  Actual_XMax
+	{
+		/GridVal exch def
+		GridVal  Actual_YMin  moveto
+		FontName FontSize
+		GridVal 0 lt {[/minus GridVal abs 16 string cvs]} {GridVal 16 string cvs} ifelse
+		dup StringWidthGeneral -2 div 0 rmoveto  ShowOutlined
+	} for  % GridVal, x labels
+	end
+} if  % Paint gridlines?
+
+
+TilingId -9 eq  % Boolean: paint kitchen? Perhaps change "-9" to "9".
+{
+	4 dict begin
+
+	/mmTileEdge 150.6 def  % Tile edges must have matching lengths. This is that length, in millimetres, allowing for grouting.
+
+	% Going to do a translation, in TileSpace, in which a tile is of length EdgeLength = 1.
+	% Almost certainly, you want to translate to a point within ToPaint_XMin etc.
+	% This point is the origin, the zero point, for the drawing of the room.
+	% Suggestion: make it the point from which physical tiling will start, so the point of certain tile alignment,
+	% so allowing (small) changes in mmTileEdge to correctly adjust for mis-judgements of grouting thickness.
+	TileMatrix setmatrix  -11.3 -21.8 translate
+	EdgeLength mmTileEdge div dup scale  /KitchenMatrix matrix currentmatrix def
+
+	false  % Boolean: identify zero location (advice: use to assist choice of it, then disable).
+	{
+		2 dict begin
+		/FontSize 5 def
+		KitchenMatrix setmatrix   mmTileEdge EdgeLength div dup scale   matrix currentmatrix
+		[ 10000 6000 4000 3000 2000 1500 1000 600 400 300 200 150 100 60 40 30 20 15 10 6 4 3 2 1 0.01 ]
+		dup
+		{
+			/U_p exch def
+			U_p  Actual_XMax Actual_XMin sub  lt
+			U_p  Actual_YMax Actual_YMin sub  lt   or
+			{
+				/V_p 0.666666 U_p mul def  /U_n U_p neg def  /V_n V_p neg def  % U, V; positive, negative
+				U_p V_p moveto  U_p U_p  2 copy  V_p U_p  curveto
+				V_n U_p lineto  U_n U_p  2 copy  U_n V_p  curveto
+				U_n V_n lineto  U_n U_n  2 copy  V_n U_n  curveto
+				V_p U_n lineto  U_p U_n  2 copy  U_p V_n  curveto closepath
+			} if  % U_p <= page size
+		} forall  % U_p
+		PaperMatrix setmatrix gsave 1.44 setlinewidth 0.8 setgray stroke grestore 0.48 setlinewidth 0.2 setgray stroke
+		{  % forall with fixed array, again
+			/U exch def
+			U Actual_XMax Actual_XMin sub lt   U Actual_YMax Actual_YMin sub lt   or   U 0.5 gt  and
+			{
+				dup setmatrix  U neg U moveto
+				PaperMatrix setmatrix 0 FontSize -0.4 mul rmoveto
+				U 20 string cvs  FontName FontSize 3 -1 roll  ShowOutlined
+			} if  % U <= page size
+		} forall  % U
+		pop   end
+	} if  % Test zero location
+
+	% Room specified in the mm, per mmTileEdge.
+	% The starting 'moveto' should ideally be to a point near 0,0; i.e., near the place chosen the previous paragraph.
+	% Carefully measure room; carefully echo those measurements to this section. Start with a 'moveto', then better to use 'rlineto's.
+	/KitchenRoomPath
+	{
+		% in mm
+		    0      0  moveto
+		-3735      0  rlineto
+		    0   +320  rlineto
+		 -190      0  rlineto
+		    0   +305  rlineto
+		 +225      0  rlineto
+		    0  +5160  rlineto
+		-2590      0  rlineto
+		    0   -140  rlineto
+		 -355      0  rlineto
+		    0   -585  rlineto
+		 -237      0  rlineto
+		    0  -3587  rlineto
+		 +237      0  rlineto
+		    0  -1973  rlineto
+		 -250      0  rlineto
+		    0  -3370  rlineto
+		 +250      0  rlineto
+		    0   -845  rlineto
+		+6500      0  rlineto
+		    0   +475  rlineto
+		 +215      0  rlineto
+		    0  +3280  rlineto
+		  -70      0  rlineto
+		    0   +960  rlineto
+		closepath
+	} bind def  % /KitchenRoomPath
+
+	/KitchenFurniturePath
+	{
+		% in mm
+		-1380  -2050  moveto  % island
+		    0   -650  rlineto
+		-1000      0  rlineto
+		    0   -220  rlineto
+		-1600      0  rlineto
+		    0  +1090  rlineto
+		+1050      0  rlineto
+		    0   -220  rlineto
+		closepath
+
+		-2030      0  moveto  % cupboard
+		    0   -150  rlineto
+		-1070      0  rlineto
+		    0    150  rlineto
+
+		-6645	 -500  moveto  % fridge box
+		 +640      0  rlineto
+		    0   +760  rlineto
+		 -640      0  rlineto
+
+		-6645  -4180  moveto  % cabinets
+		 6715      0  rlineto
+	} bind def  % /KitchenFurniturePath
+
+	gsave
+	[
+		{3 setlinewidth  1 setgray  1 setlinejoin  0 setlinecap}  % setlinewidth in PaperMatrix, so in points
+		{1 setlinewidth  0 setgray  0 setlinejoin  1 setlinecap}
+	]
+	{
+		/KitchenFormatting exch def
+		[ {KitchenRoomPath} {KitchenFurniturePath} ]
+		{
+			KitchenMatrix setmatrix   exec
+			PaperMatrix setmatrix  KitchenFormatting  stroke
+		}
+		forall  % Paths
+	} forall  % Formatting
+	grestore
+	end
+} if  % Paint kitchen?
+
+
+false   % Boolean: label orientation, do or don't?
+{
+	1 dict begin
+	/FontSize 14 def
+
+	PaperMatrix setmatrix   FontName FontSize selectfont
+
+	FontName FontSize  [(Label at top: e.g., ) /quotedblleft (Garden) /quotedblright (.)]
+	PageWidth 2 div  PageHeight Margin FontSize add sub  moveto   dup StringWidthGeneral -2 div 0 rmoveto   ShowOutlined
+
+	FontName FontSize  [(Label at bottom: e.g., ) /quotedblleft (North) /quotedblright (.)]
+	PageWidth 2 div  Margin  moveto   dup StringWidthGeneral -2 div 0 rmoveto   ShowOutlined
+
+	FontName FontSize  [(Label at left: e.g., ) /quotedblleft (South) /quotedblright (.)]
+	gsave
+	Margin FontSize add  PageHeight 2 div translate 90 rotate
+	0 0 moveto   dup StringWidthGeneral -2 div 0 rmoveto   ShowOutlined
+	grestore
+
+	FontName FontSize  [(Label at right: e.g., ) /quotedblleft (Street) /quotedblright (.)]
+	gsave
+	PageWidth Margin FontSize add sub  PageHeight 2 div translate -90 rotate
+	0 0 moveto   dup StringWidthGeneral -2 div 0 rmoveto   ShowOutlined
+	grestore
+
+	end
+} if   % Show label orientations?
+
+
+false   % Boolean: decorative text, do or don't?
+{
+	7 dict begin
+	PaperMatrix setmatrix
+	/FontSize 16 def
+	/X 0.52 PageWidth  mul def  % User changeable.
+	/Y 0.96 PageHeight mul def  % User changeable.
+	/LineHeight  FontSize  1.3 mul def  % User changeable.
+
+	FontName FontSize selectfont   0 setgray
+	/indent  % by longer of these two strings
+		(Round 5)  StringWidthGeneral
+		(Pointy 5) StringWidthGeneral  2 copy lt {exch} if pop
+	def  % /indent
+
+	% In TextLines, each item is an array,
+	% each subarray containing strings, glyphs, or executables.
+	/TextLines [
+		[(Path colours:)]
+		[ {indent  (Round 5) StringWidthGeneral sub 0 rmoveto}  (Round 5 = white with circle;)]
+		[ {indent (Pointy 5) StringWidthGeneral sub 0 rmoveto} (Pointy 5 = pale green;)]
+		[ {indent       (15) StringWidthGeneral sub 0 rmoveto}       (15 = dark green;)]
+		[ {indent       (25) StringWidthGeneral sub 0 rmoveto}       (25 = dark blue;)]
+		[ {indent       (55) StringWidthGeneral sub 0 rmoveto}       (55 = bright blue;)]
+		[ {indent      (105) StringWidthGeneral sub 0 rmoveto}      (105 = pink;)]
+		[ {indent      (215) StringWidthGeneral sub 0 rmoveto}      (215 = maroon;)]
+		[ {indent      (425) StringWidthGeneral sub 0 rmoveto}      (425 = medium green;)]
+		[ {indent     (1705) StringWidthGeneral sub 0 rmoveto}     (1705 = orange;)]
+		[ {indent     (Open) StringWidthGeneral sub 0 rmoveto}     (Open = bright red.)]
+		[]
+		[(GitHub.com/jdaw1/penrose_tiling)]
+		[(has code, including for this page.)]
+		[]
+		[/emdash ( J. D. A. Wiseman, August 2026)]
+	] def  % /TextLines
+
+	0  1  TextLines length 1 sub
+	{
+		/lineNum exch def
+		X  Y lineNum  LineHeight mul sub  moveto
+		FontName   FontSize   TextLines lineNum get   ShowOutlined
+	} for  % lineNum
+	end
+} if  % Show decorative text?
+
 
 showpage
+
 
 mark  (\n\n\nNum rhombi painted:)
 (  thin=) PaintedNumByType /thin 2 copy known {get} {pop pop 0} ifelse

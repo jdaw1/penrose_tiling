@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // neighbours.c, in PenroseC
 
@@ -142,8 +142,8 @@ bool neighbours_error_true(ExportWhat const exprtWhat, ExportFormat const export
 
 void neighbours_populate(Tiling * const tlngP)
 {
-	RhombId      rhId1, rhId2;
-	double       xDiff, yDiff;
+	RhombId rhId1, rhId2;
+	double  xDiff, yDiff;
 
 	double const thresholdNeighbour = 0.9511 * tlngP->edgeLength;  // slightly bigger than Cos(18 degrees) = sqrt(10+2*sqrt(5))/4 ~= 0.951056516295
 	double const thresholdNeighbourSqrd = thresholdNeighbour * thresholdNeighbour;
@@ -196,7 +196,7 @@ void neighbours_populate(Tiling * const tlngP)
 						tlngP->tilingId,
 						rhId1,  tlngP->rhombi[rhId1].numNeighbours,  tlngP->rhombi[rhId1].neighbours[0].rhId,  tlngP->rhombi[rhId1].neighbours[1].rhId,  tlngP->rhombi[rhId1].neighbours[2].rhId,  tlngP->rhombi[rhId1].neighbours[3].rhId,  tlngP->rhombi[rhId1].centre.x,  tlngP->rhombi[rhId1].centre.y,
 						rhId2,  tlngP->rhombi[rhId2].numNeighbours,  tlngP->rhombi[rhId2].neighbours[0].rhId,  tlngP->rhombi[rhId2].neighbours[1].rhId,  tlngP->rhombi[rhId2].neighbours[2].rhId,  tlngP->rhombi[rhId2].neighbours[3].rhId,  tlngP->rhombi[rhId2].centre.x,  tlngP->rhombi[rhId2].centre.y
-					);
+					);  // fprintf()
 					fflush(stderr);
 					sprintf(scratchString, "%serror_neighbours_populate.tsv", tlngP->filePath);
 					fp = file_open(scratchString, "w", "neighbours_populate");
@@ -211,7 +211,7 @@ void neighbours_populate(Tiling * const tlngP)
 						tlngP->tilingId,
 						&numLinesThisFileP,
 						&numCharsThisFileP
-					);
+					);  // tiling_export()
 					fflush(fp);
 					fclose(fp);
 					exit(EXIT_FAILURE);

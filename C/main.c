@@ -1,22 +1,17 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // main.c, in PenroseC
 
 #include "penrose.h"
 
-// Hard-wired contraint to catch CPU-expensive mistyping. Likely limit for 160 GiB machine.
-// Approx. execution times: numTilings=8 ==> 1 second; 13 ==> 2 minutes; 17 ==> 6.5 hours; 19 might be 2 weeks.
-static int8_t const numTilings_Max = 17;
+// Hard-wired contraint to catch CPU-expensive mistyping. Limit sensible for 16 GiB machine.
+static int8_t const numTilings_Max = 15;
 
 char scratchString[scratchStringLength] ;  // Mostly used for post-processing of doubles: removal of trailing 0s and trailing decimal points. Size harmlessly generous: 6k would have been sufficient, the boundary need being the preamble in tiling_export_PaintRhombiPS.
 
 int main(void)
 {
 	/* Seed thin rhombus. No need to change. */
-	double const init_thin_xNorth = 0 ;
-	double const init_thin_xSouth = 2 ;
-	double const init_thin_yNorth = 0 ;
-	double const init_thin_ySouth = init_thin_yNorth;
 	int8_t numTilings;
 
 	// User-changeable constants above.
@@ -27,22 +22,24 @@ int main(void)
 	time_t prog_start;
 	struct tm *timeData;
 	char timeString[250], fileName[256], fileExtension[16];
+	long int pathStatNum,  numPathStatsClosed;
 
 	printf(
 		// https://stackoverflow.com/questions/15610053/correct-printf-format-specifier-for-size-t-zu-or-iu
-		"main(): sizeof(Physique)=%d;  sizeof(XY)=%d;  sizeof(Neighbour)=%d;  sizeof(Rhombus)=%d;  sizeof(Path)=%d;  sizeof(PathStats)=%d;  sizeof(Tiling)=%d\n\n",
-		(int)(sizeof(Physique)),  (int)(sizeof(XY)),  (int)(sizeof(Neighbour)),  (int)(sizeof(Rhombus)),  (int)(sizeof(Path)),  (int)(sizeof(PathStats)),  (int)(sizeof(Tiling))
-	);
+		"main(): "
+		"sizeof(Physique)=%zu;  sizeof(XY)=%zu;  sizeof(Neighbour)=%zu;  sizeof(Rhombus)=%zu;  sizeof(Path)=%zu;  sizeof(PathStats)=%zu;  sizeof(Tiling)=%zu\n\n",
+		sizeof( Physique),      sizeof(XY),      sizeof(Neighbour),      sizeof(Rhombus),      sizeof(Path),      sizeof(PathStats),      sizeof(Tiling)
+	);  // printf()
 
 	printf(
 		"\n\a\n"  // Bell sound! Doesn't work on my Mac -- maybe your system is better.
 		"What is to be the recursion depth = numTilings?\n"
-		"For testing choose in range 8 to 12.\n"
-		"By memory constraint on a 32GiB machine, maximum is 17, run time being, on author's computer, about 5 hours. Obviously, YMMV.\n"
+		"For testing choose in range 8 to 11.\n"
+		"By memory constraint on a 16GiB machine, maximum is 13, run time being, on author's computer, about 2.5 hours. Obviously, YMMV.\n"
 	);  fflush(stdout);
 	do
 	{
-		printf("Compile-time constraint: must be >=1 && <=%" PRIi8 ".\n", numTilings_Max);  fflush(stdout);
+		printf("Compile-time constraint: must be >=1 && <=%" PRIi8 ".\n", (int8_t)numTilings_Max);  fflush(stdout);
 		fscanf(stdin, "%" SCNi8, &numTilings);
 	}
 	while( numTilings < 1  ||  numTilings > numTilings_Max );
@@ -60,13 +57,7 @@ int main(void)
 
 	time(&prog_start);
 	timeData = localtime(&prog_start);
-	if( file_names_include_timeString() )
-		sprintf(timeString, "_%04d%02d%02d_%02d%02d%02d",
-			(1900 + timeData->tm_year),  (1 + timeData->tm_mon),  timeData->tm_mday,
-			timeData->tm_hour,  timeData->tm_min,  (int)(timeData->tm_sec)
-		);
-	else
-		sprintf(timeString, "");
+	file_names_timeString_set(timeString, timeData);
 
 	clock_t const timeBeginConstruction = clock();
 
@@ -84,10 +75,10 @@ int main(void)
 		tlngs[tilingId].numPathsClosed           = 0;
 		tlngs[tilingId].numPathsOpen             = 0;
 		tlngs[tilingId].numPathStats             = 0;
-		tlngs[tilingId].xMin                     = DBL_MAX /  2;
-		tlngs[tilingId].yMin                     = DBL_MAX /  2;
-		tlngs[tilingId].xMax                     = DBL_MAX / -2;
-		tlngs[tilingId].yMax                     = DBL_MAX / -2;
+		tlngs[tilingId].xMin_rhId                = (RhombId) 0;
+		tlngs[tilingId].xMax_rhId                = (RhombId) 0;
+		tlngs[tilingId].yMin_rhId                = (RhombId) 0;
+		tlngs[tilingId].yMax_rhId                = (RhombId) 0;
 		tlngs[tilingId].rhombi                   = NULL;
 		tlngs[tilingId].path                     = NULL;
 		tlngs[tilingId].pathStat                 = NULL;
@@ -106,18 +97,11 @@ int main(void)
 	{
 		if( tilingId == 0 )
 		{
-			tiling_initial(
-				&(tlngs[tilingId]),
-				init_thin_xNorth, init_thin_xSouth, init_thin_yNorth, init_thin_ySouth,
-				wantedPostScriptCentre(), wantedPostScriptAspect()
-			);
+			tlngs[tilingId].seedType = initial_Tiling_Layout();
+			tiling_initial( &(tlngs[tilingId]) );
 		}
 		else
-			tiling_descendant(
-				&(tlngs[tilingId]),
-				&(tlngs[tilingId - 1])
-			);
-
+			tiling_descendant( &(tlngs[tilingId]), &(tlngs[tilingId - 1]) );
 
 		PathStatId pathStatId;
 		long int longestPathClosed = 0, longestPathOpen = 0;
@@ -142,9 +126,11 @@ int main(void)
 		ExportFormat ef;
 		int ef_num;
 
-		// If ExportFormat acquires other possibilites, give attention to this, to the "3" in next line, and to the extension calculation.
-		const ExportFormat exportFormat[3] = {TSV, PS_data, JSON};
-		for( ef_num = 0  ;  ef_num < 3  ; ef_num++ )
+		// If ExportFormat acquires other possibilites, give attention to the next two lines, which define exportFormat[] and numExportFormats.
+		const ExportFormat exportFormat[] = {TSV, PS_data, JSON};
+		const int numExportFormats = 3;
+
+		for( ef_num = 0  ;  ef_num < numExportFormats  ; ef_num++ )
 		{
 			ef = exportFormat[ef_num];
 
@@ -165,7 +151,7 @@ int main(void)
 					"%sPenrose%s_Rhombi_%02" PRIi8 ".%s",
 					tlngs[tilingId].filePath,  timeString,  tilingId,
 					fileExtension_from_ExportFormat(fileExtension, ef)
-				);
+				);  // sprintf()
 				numLinesThisFile = 0;
 				fp = file_open(fileName, "w", "main");
 				tilings_export(
@@ -177,24 +163,49 @@ int main(void)
 					numTilings,
 					&numLinesThisFile,
 					&numCharsThisFile
-				);
+				);  // tilings_export()
 				fflush(fp); fclose(fp);
 				printf(
 					"main(): during tilingId=%" PRIi8 ", exported %lli chars %li lines, so %.1lf c/l, to %s\n",
-					tilingId,  numCharsThisFile,  numLinesThisFile,  (double)numCharsThisFile / (double)numLinesThisFile,  fileName
+					   tilingId,  numCharsThisFile,  numLinesThisFile,  numLinesThisFile > 0 ? (double)numCharsThisFile / (double)numLinesThisFile : 0,  fileName
 				);  fflush(stdout);
 			}  // If any to be output in this ExportFormat
 		}  // for( ef_num ... )
 
-		printf(
-			"main(): tilingId=%" PRIi8 " constructed and exported:\n"
-			"#Fats=%li; #Thins=%li; #PathsClosed=%li; #PathsOpen=%li; #PathStats=%li; LongestPathClosed=%li; #LongestPathOpen=%li;\n"
-			"total execution time = %.3lfs\n",
-			tilingId,  tlngs[tilingId].numFats,  tlngs[tilingId].numThins,  tlngs[tilingId].numPathsClosed,  tlngs[tilingId].numPathsOpen,  tlngs[tilingId].numPathStats,
-			longestPathClosed,  longestPathOpen,  ((double)clock() - timeBeginConstruction) / CLOCKS_PER_SEC
-		);  fflush(stdout);
+		numPathStatsClosed = 0;
+		for( pathStatNum = 0  ;  pathStatNum < tlngs[tilingId].numPathStats  ;  pathStatNum ++ )
+			if( tlngs[tilingId].pathStat[pathStatNum].pathClosed )
+				numPathStatsClosed ++;
 
-		printf("\n\n");  fflush(stdout);
+		fprintf(stdout,  "main(): tilingId=%" PRIi8 " constructed and exported:\n",  tilingId);
+		fprintf(stdout,
+			"tId=%" PRIi8 ": #Fats=%li; #Thins=%li; F+T=%li;"
+			"  #PathsClosed=%li; #PathsOpen=%li; C+O=%li;"
+			"  #PathStats=%li;  #PathStats(C)=%li;  #PathStats(O)=%li;"
+			"  LongestPathClosed=%li; #LongestPathOpen=%li;  boundingPathNumVertices=%lli.\n",
+			tilingId,  tlngs[tilingId].numFats,  tlngs[tilingId].numThins,  tlngs[tilingId].numFats + tlngs[tilingId].numThins,
+			tlngs[tilingId].numPathsClosed,  tlngs[tilingId].numPathsOpen,  tlngs[tilingId].numPathsClosed + tlngs[tilingId].numPathsOpen,
+			tlngs[tilingId].numPathStats,  numPathStatsClosed,  tlngs[tilingId].numPathStats - numPathStatsClosed,
+			longestPathClosed,  longestPathOpen,
+			tlngs[tilingId].boundingPathNumVertices
+		);  // fprintf()
+		fprintf(stdout,
+			"main(): tilingId=%" PRIi8 ", malloc()'s = %zu, this tiling simple total, so ignoring boundary and page alignments\n",
+			tilingId,  tlngs[tilingId].mallocsPersistentSumSimple
+		);  // fprintf()
+		fflush(stdout);
+		fprintf(stdout,
+			"tId=%" PRIi8 ": xMin = %0.6lf;  xMax = %0.6lf;  yMin = %0.6lf;  yMax = %0.6lf.\n", tilingId,
+			tlngs[tilingId].rhombi[ tlngs[tilingId].xMin_rhId ].xMin / tlngs[tilingId].edgeLength,
+			tlngs[tilingId].rhombi[ tlngs[tilingId].xMax_rhId ].xMax / tlngs[tilingId].edgeLength,
+			tlngs[tilingId].rhombi[ tlngs[tilingId].yMin_rhId ].yMin / tlngs[tilingId].edgeLength,
+			tlngs[tilingId].rhombi[ tlngs[tilingId].yMax_rhId ].yMax / tlngs[tilingId].edgeLength
+		);  // fprintf()
+		fprintf(stdout,
+			"Over all tilings with tilngId <= %" PRIi8 ", total execution time = %.3lfs\n\n\n",
+			tilingId,   ((double)clock() - timeBeginConstruction) / CLOCKS_PER_SEC
+		);  // fprintf()
+		fflush(stdout);
 	}  // for( tilingId ... )
 
 	printf("main(): about to tiling_empty().\n");  fflush(stdout);

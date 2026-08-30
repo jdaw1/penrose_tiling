@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // export_PaintArcsSVG.c, in PenroseC
 
@@ -17,60 +17,63 @@ void tiling_export_PaintArcsSVG(
 	bool edgeN, edgeE, edgeStartE, foundNeighbour, *arcdEast, *arcdWest, oddToOutSide, firstArc;
 	const Path    * pathP;
 	const Rhombus * rhP;
-	double x,  xMin,  xMax,  allMinX = tlngP->xMax,  allMaxX = tlngP->xMin,  boundaryAdjustment;
-	double y,  yMin,  yMax,  allMinY = tlngP->yMax,  allMaxY = tlngP->yMin;
+	double x,  xMin,  xMax,  allMinX,  allMaxX,  boundaryAdjustment;
+	double y,  yMin,  yMax,  allMinY,  allMaxY;
 	int8_t nghbrNum, nnn, physiqueCounter;
 	XY currentpoint;
 
 	const double displayWidth = svg_displayWidth(tlngP);
 	const double strokeWidth  = svg_strokeWidth( tlngP);
 
-	const double toPaint_xMin = svg_toPaint_xMin(tlngP);
-	const double toPaint_yMin = svg_toPaint_yMin(tlngP);
-	const double toPaint_xMax = svg_toPaint_xMax(tlngP);
-	const double toPaint_yMax = svg_toPaint_yMax(tlngP);
+	allMinX = tlngP->rhombi[ tlngP->xMax_rhId ].xMax;
+	allMaxX = tlngP->rhombi[ tlngP->xMin_rhId ].xMin;
+	allMinY = tlngP->rhombi[ tlngP->yMax_rhId ].yMax;
+	allMaxY = tlngP->rhombi[ tlngP->yMin_rhId ].yMin;
 
 	for( rhId = 0  ;  rhId < tlngP->numFats + tlngP->numThins  ;  rhId ++ )
 	{
 		rhP = &(tlngP->rhombi[rhId]);
-		x = (rhP->north.x + rhP->east.x) / 2;
-		y = (rhP->north.y + rhP->east.y) / 2;
-		if( allMaxX < x ) allMaxX = x;
-		if( allMinX > x ) allMinX = x;
-		if( allMaxY < y ) allMaxY = y;
-		if( allMinY > y ) allMinY = y;
+		if( rhP->numNeighbours < 4 )  // No need to test rhombi that are inside
+		{
+			x = (rhP->north.x + rhP->east.x) / 2;
+			y = (rhP->north.y + rhP->east.y) / 2;
+			if( allMaxX < x ) allMaxX = x;
+			if( allMinX > x ) allMinX = x;
+			if( allMaxY < y ) allMaxY = y;
+			if( allMinY > y ) allMinY = y;
 
-		x = (rhP->south.x + rhP->west.x) / 2;
-		y = (rhP->south.y + rhP->west.y) / 2;
-		if( allMaxX < x ) allMaxX = x;
-		if( allMinX > x ) allMinX = x;
-		if( allMaxY < y ) allMaxY = y;
-		if( allMinY > y ) allMinY = y;
+			x = (rhP->south.x + rhP->west.x) / 2;
+			y = (rhP->south.y + rhP->west.y) / 2;
+			if( allMaxX < x ) allMaxX = x;
+			if( allMinX > x ) allMinX = x;
+			if( allMaxY < y ) allMaxY = y;
+			if( allMinY > y ) allMinY = y;
 
-		x = (rhP->south.x + rhP->east.x) / 2;
-		y = (rhP->south.y + rhP->east.y) / 2;
-		if( allMaxX < x ) allMaxX = x;
-		if( allMinX > x ) allMinX = x;
-		if( allMaxY < y ) allMaxY = y;
-		if( allMinY > y ) allMinY = y;
+			x = (rhP->south.x + rhP->east.x) / 2;
+			y = (rhP->south.y + rhP->east.y) / 2;
+			if( allMaxX < x ) allMaxX = x;
+			if( allMinX > x ) allMinX = x;
+			if( allMaxY < y ) allMaxY = y;
+			if( allMinY > y ) allMinY = y;
 
-		x = (rhP->north.x + rhP->west.x) / 2;
-		y = (rhP->north.y + rhP->west.y) / 2;
-		if( allMaxX < x ) allMaxX = x;
-		if( allMinX > x ) allMinX = x;
-		if( allMaxY < y ) allMaxY = y;
-		if( allMinY > y ) allMinY = y;
+			x = (rhP->north.x + rhP->west.x) / 2;
+			y = (rhP->north.y + rhP->west.y) / 2;
+			if( allMaxX < x ) allMaxX = x;
+			if( allMinX > x ) allMinX = x;
+			if( allMaxY < y ) allMaxY = y;
+			if( allMinY > y ) allMinY = y;
+		}  // numNeighbours < 4
 	}  // for( rhId ... )
 
-	allMinX -= strokeWidth / 2;
-	allMinY -= strokeWidth / 2;
-	allMaxX += strokeWidth / 2;
-	allMaxY += strokeWidth / 2;
+	allMinX  -=  tlngP->edgeLength * strokeWidth / 2;
+	allMinY  -=  tlngP->edgeLength * strokeWidth / 2;
+	allMaxX  +=  tlngP->edgeLength * strokeWidth / 2;
+	allMaxY  +=  tlngP->edgeLength * strokeWidth / 2;
 
-	const double actual_xMin = ( (toPaint_xMin > allMinX)  ?  toPaint_xMin  :  allMinX );
-	const double actual_yMin = ( (toPaint_yMin > allMinY)  ?  toPaint_yMin  :  allMinY );
-	const double actual_xMax = ( (toPaint_xMax < allMaxX)  ?  toPaint_xMax  :  allMaxX );
-	const double actual_yMax = ( (toPaint_yMax < allMaxY)  ?  toPaint_yMax  :  allMaxY );
+	const double actual_xMin = max_2( svg_toPaint_xMin(tlngP) * tlngP->edgeLength,  allMinX );
+	const double actual_yMin = max_2( svg_toPaint_yMin(tlngP) * tlngP->edgeLength,  allMinY );
+	const double actual_xMax = min_2( svg_toPaint_xMax(tlngP) * tlngP->edgeLength,  allMaxX );
+	const double actual_yMax = min_2( svg_toPaint_yMax(tlngP) * tlngP->edgeLength,  allMaxY );
 
 	arcdEast = malloc( (tlngP->numFats + tlngP->numThins) * sizeof(bool) );  // Which arcs painted as part of closed path;
 	arcdWest = malloc( (tlngP->numFats + tlngP->numThins) * sizeof(bool) );  // remainder to be stroked individually.
@@ -83,29 +86,30 @@ void tiling_export_PaintArcsSVG(
 	}  // for( rhId ... )
 
 
-
 	// Output preamble
 
 	sprintf(scratchString,
-		"<svg width='%.9lf' height='%.9lf' viewBox='%.9lf %.9lf %.9lf %.9lf' preserveAspectRatio='xMidYMid meet' id='Penrose_Arcs_%02" PRIi8 "'",
+		"<svg width='%.4lf' height='%.4lf' viewBox='%.9lf %.9lf %.9lf %.9lf'",
 		displayWidth,
-		displayWidth * (strokeWidth + actual_yMax - actual_yMin) / (strokeWidth + actual_xMax - actual_xMin),
-		( actual_xMin)             ,
-		(-actual_yMax)             ,  // This applied before reflection, so needs -yMax.
-		(actual_xMax - actual_xMin),
-		(actual_yMax - actual_yMin),
-		tlngP->tilingId
-	);
+		displayWidth * (actual_yMax - actual_yMin) / (actual_xMax - actual_xMin),
+		( actual_xMin) / tlngP->edgeLength,
+		(-actual_yMax) / tlngP->edgeLength,  // This applied before reflection, so needs -yMax.
+		(actual_xMax - actual_xMin) / tlngP->edgeLength,
+		(actual_yMax - actual_yMin) / tlngP->edgeLength
+	);  // sprintf()
 	stringClean(scratchString);
-	(*numCharsThisFileP) += fprintf(fp, "%s xmlns='http://www.w3.org/2000/svg'>\n", scratchString);
+	(*numCharsThisFileP) += fprintf(fp,
+		"%s preserveAspectRatio='xMidYMid meet' id='Penrose_Arcs_%02" PRIi8 "' xmlns='http://www.w3.org/2000/svg'>\n",
+		scratchString,  tlngP->tilingId
+	);  // fprintf()
 	(*numLinesThisFileP) ++ ;
 
 	(*numCharsThisFileP) += fprintf(fp,
-		"<!-- TilingId = %" PRIi8 ";  NumFats = %li;  NumThins = %li;  ==> #tiles= %li;  NumPathsClosed = %li;  NumPathsOpen = %li;  BoundingPathNumVertices = %li -->\n"
+		"<!-- TilingId = %" PRIi8 ";  NumFats = %li;  NumThins = %li;  ==> #tiles= %li;  NumPathsClosed = %li;  NumPathsOpen = %li;  BoundingPathNumVertices = %lli -->\n"
 		"<!-- Licence = \"%s\"; URL = \"%s\"; Author = \"%s\""  "."  " -->\n",
-		tlngP->tilingId,  tlngP->numFats,  tlngP->numThins,  tlngP->numFats + tlngP->numThins,  tlngP->numPathsClosed,  tlngP->boundingPathNumVertices,  tlngP->numPathsOpen,
+		tlngP->tilingId,  tlngP->numFats,  tlngP->numThins,  tlngP->numFats + tlngP->numThins,  tlngP->numPathsClosed,  tlngP->numPathsOpen,  tlngP->boundingPathNumVertices,  
 		TextLicence, TextURL, TextAuthor  // Do not stringClean() these.
-	);
+	);  // fprintf()
 	(*numLinesThisFileP) += 2 ;
 	sprintf(scratchString, tlngP->edgeLength >= 0.1 ? "%.15lf" : "%.15E", tlngP->edgeLength);
 	stringClean(scratchString);
@@ -117,7 +121,7 @@ void tiling_export_PaintArcsSVG(
 		"\n"
 		"<g transform='scale(1,-1)'> <!-- PostScript and Excel positive y goes up the page, SVG it goes down. This reflection makes SVG behave as PostScript and Excel. -->\n"
 		"\n"
-	);
+	);  // sprintf()
 	(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
 	(*numLinesThisFileP) += newlinesInString(scratchString);
 
@@ -130,17 +134,23 @@ void tiling_export_PaintArcsSVG(
 			"<!-- But if manually editing so that path stroke'd, or fill'd dramatically, then slightly enlarge the viewBox. -->\n"
 			"<!-- Enlargement amount depends on whether vector-effect='non-scaling-stroke', on stroke-width, and slightly on stroke-linejoin. -->\n"
 			"<path fill='#FFF'  stroke='none' vector-effect='non-scaling-stroke' stroke-width='2px' stroke-linejoin='round'  d='\n"
-		);
+		);  // sprintf()
 		(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
 		(*numLinesThisFileP) += newlinesInString(scratchString);
-		tiling_export_PaintBoundary(fp,  SVG_arcs,  tlngP,  0,  numLinesThisFileP,  numCharsThisFileP);
+		tiling_export_PaintBoundary(
+			fp,
+			SVG_arcs,
+			1.0 / tlngP->edgeLength,
+			tlngP,
+			0,
+			numLinesThisFileP,
+			numCharsThisFileP
+		);  // tiling_export_PaintBoundary()
 		(*numCharsThisFileP) += fprintf(fp, "'/> <!-- Outside of tiling of rhombi. -->\n\n");
 		(*numLinesThisFileP) += 2;
 	}  // exportQ(boundingPath ...)
 
-	sprintf(scratchString,  tlngP->edgeLength / 2 >= 0.1 ? "%.15lf" : "%.15E",  tlngP->edgeLength / 2);
-	stringClean(scratchString);
-	(*numCharsThisFileP) += fprintf(fp, "<g transform='scale(%s)'> <!-- edgeLength/2, so that all arc radii are precisely 1, lessening file size -->\n\n", scratchString);
+	(*numCharsThisFileP) += fprintf(fp, "<g transform='scale(0.5)'> <!-- 1/2, so that all arc radii are precisely 1, lessening file size -->\n\n");
 	(*numLinesThisFileP) += 2 ;
 
 	sprintf(scratchString,
@@ -164,7 +174,7 @@ void tiling_export_PaintArcsSVG(
 
 			"\t.cBig   {fill: #FFF;}\n"
 		"</style>\n"
-	);
+	);  // sprintf()
 	(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
 	(*numLinesThisFileP) += newlinesInString(scratchString);
 
@@ -174,16 +184,16 @@ void tiling_export_PaintArcsSVG(
 	{
 		pathP = &(tlngP->path[pathId]);
 
-		if( pathP->pathClosedTypeNum < 2 )  // I.e., 5-round or open.
+		if( (! pathP->pathClosed)  ||  pathP->pathClosedTypeNum < 2 )  // open, or 5r. But 5 closed passes.
 			break ;
 
 		boundaryAdjustment  =  tlngP->edgeLength * ( 0 == pathP->pathClosedTypeNum % 2  ?  0.691  :  -0.49998 );  // 1.5 - cos(36), with a small machine-precision wobble.
-		if( (! pathP->pathVeryClosed)
-		||  pathP->xMax + boundaryAdjustment < actual_xMin
-		||  pathP->yMax + boundaryAdjustment < actual_yMin
-		||  pathP->xMin - boundaryAdjustment > actual_xMax
-		||  pathP->yMin - boundaryAdjustment > actual_yMax )
-			continue;
+		if( (! pathP->pathVeryClosed)  // Close to edge, such that arc might not be complete
+		||  tlngP->rhombi[ pathP->xMin_rhId ].xMin  -  boundaryAdjustment > actual_xMax
+		||  tlngP->rhombi[ pathP->xMax_rhId ].xMax  +  boundaryAdjustment < actual_xMin
+		||  tlngP->rhombi[ pathP->yMin_rhId ].yMin  -  boundaryAdjustment > actual_yMax
+		||  tlngP->rhombi[ pathP->yMax_rhId ].yMax  +  boundaryAdjustment < actual_yMin )
+			continue;  // pathId loop
 
 		if( 1 == pathP->pathClosedTypeNum % 2 )
 		{
@@ -192,7 +202,7 @@ void tiling_export_PaintArcsSVG(
 			edgeStartE = edgeE = (
 				pow(rhP->east.x - pathP->centre.x, 2) + pow(rhP->east.y - pathP->centre.y, 2) <=
 				pow(rhP->west.x - pathP->centre.x, 2) + pow(rhP->west.y - pathP->centre.y, 2)
-			);
+			);  // edgeStartE, edgeE
 		}  // 15, 55, 215, 855, 3415, 13655, 54615, 218455, 873815, ...
 		else
 		{
@@ -201,8 +211,8 @@ void tiling_export_PaintArcsSVG(
 			edgeStartE = edgeE = (
 				pow(rhP->east.x - pathP->centre.x, 2) + pow(rhP->east.y - pathP->centre.y, 2) >=
 				pow(rhP->west.x - pathP->centre.x, 2) + pow(rhP->west.y - pathP->centre.y, 2)
-			);
-		}  // 5p, 25, 105, 425, 1705, 6825, 27305, 109225, 436905, . ..
+			);  // edgeStartE, edgeE
+		}  // 5p, 25, 105, 425, 1705, 6825, 27305, 109225, 436905, ...
 		edgeN = false ;  // Arcs broadly follow south side, so always start south.
 		xMin = xMax = (edgeE ? rhP->east.x : rhP->west.x);
 		yMin = yMax = (edgeE ? rhP->east.y : rhP->west.y);
@@ -222,7 +232,8 @@ void tiling_export_PaintArcsSVG(
 			"\n<!-- pathId=%li, length=%li%s",
 			pathId,  pathP->pathLength,
 			(5 == pathP->pathLength) ? (pathP->pointy ? "p" : "r") : ""
-		);
+		);  // fprintf()
+		(*numLinesThisFileP) ++ ;
 		if( pathP->pathId_ShortestOuter >= 0 )
 			(*numCharsThisFileP) += fprintf(fp, ", ShortestOuter=%li", pathP->pathId_ShortestOuter);
 		if( pathP->pathId_LongestInner  >= 0 )
@@ -238,14 +249,14 @@ void tiling_export_PaintArcsSVG(
 					pathP->pathLength,
 					pathP->pathLength == 5 ? (pathP->pointy ? "p" : "r") : "",
 					oddToOutSide ? "o" : "e"
-				);
+				);  // fprintf()
 		else
 			(*numCharsThisFileP) += fprintf(fp, "<path class='cBig sf'");
 
 		sprintf(scratchString, " d='M %.9lf %.9lf\n",
 			( (edgeN ? rhP->north.x : rhP->south.x)  +  (edgeE ? rhP->east.x : rhP->west.x) ) / tlngP->edgeLength,
 			( (edgeN ? rhP->north.y : rhP->south.y)  +  (edgeE ? rhP->east.y : rhP->west.y) ) / tlngP->edgeLength
-		);
+		);  // sprintf()
 		stringClean(scratchString);
 		(*numCharsThisFileP) += fprintf(fp, "%s",scratchString);
 		(*numLinesThisFileP) ++ ;
@@ -278,7 +289,7 @@ void tiling_export_PaintArcsSVG(
 				edgeN == edgeE ? 1 : 0,
 				( (edgeN ? rhP->south.x : rhP->north.x) + (edgeE ? rhP->east.x : rhP->west.x) ) / tlngP->edgeLength,
 				( (edgeN ? rhP->south.y : rhP->north.y) + (edgeE ? rhP->east.y : rhP->west.y) ) / tlngP->edgeLength
-			);
+			);  // sprintf()
 			stringClean(scratchString);
 			(*numCharsThisFileP) += fprintf(fp, "%s\n",scratchString);
 			(*numLinesThisFileP) ++;
@@ -305,7 +316,7 @@ void tiling_export_PaintArcsSVG(
 				fprintf(stderr,
 					"tiling_export_PaintArcsPS(): !!! impossible failure to find neighbour, pathId=%li, rhId=%li, numNeighbours=%" PRIi8 " !!!\n",
 					pathId, rhId, rhP->numNeighbours
-				);
+				);  // fprintf()
 				fflush(stderr);
 				fflush(fp);
 				fclose(fp);
@@ -321,7 +332,7 @@ void tiling_export_PaintArcsSVG(
 			pathP->pathLength == 5 ? (pathP->pointy ? "p" : "r") : "",
 			oddToOutSide ? "o" : "e",
 			pathId
-		);
+		);  // fprintf()
 		(*numLinesThisFileP) ++;
 
 		fflush(fp);
@@ -335,7 +346,7 @@ void tiling_export_PaintArcsSVG(
 			"<!-- Arcs, not part of a closed loop, in %s. -->\n"
 			"<path class='sf' fill='none' d='\n",
 			0 == physiqueCounter ? "thins" : "fats"
-		);
+		);  // fprintf()
 		(*numLinesThisFileP) += 3 ;
 		for( rhId = 0  ;  rhId < tlngP->numFats + tlngP->numThins  ;  rhId ++ )
 		{
@@ -392,72 +403,19 @@ void tiling_export_PaintArcsSVG(
 		(*numCharsThisFileP) += fprintf(fp, 
 			"'/> <!-- End of stroking of loose ends not in a closed path that are in %s. -->\n",
 			0 == physiqueCounter ? "thins" : "fats"
-		);
+		);  // fprintf()
 		(*numLinesThisFileP) ++;
 	}  // for( physiqueCounter ... )
 
-	(*numCharsThisFileP) += fprintf(fp, "\n</g> <!-- scale(edgeLength/2) -->\n");
+	(*numCharsThisFileP) += fprintf(fp, "\n</g> <!-- scale(0.5) -->\n");
 	(*numLinesThisFileP) += 2 ;
 
-
-	(*numCharsThisFileP) += fprintf(fp, "\n<!-- If gridlines wanted, uncomment these. -->\n");
-	(*numLinesThisFileP) += 2 ;
-	short int gridVal, yLow, xLow, xSize, ySize;
-	xLow = (short int)floor(tlngP->xMin);  xSize = (short int)ceil(tlngP->xMax - xLow);
-	yLow = (short int)floor(tlngP->yMin);  ySize = (short int)ceil(tlngP->yMax - yLow);
-	bool isFirst;
-	(*numCharsThisFileP) += fprintf(fp,
-		"<!-- Gridlines, start, commented out \n"
-		"<path vector-effect='non-scaling-stroke' stroke-width='3px' stroke='#000' opacity='0.2' d='\n"
-	);
-	(*numLinesThisFileP) += 2 ;
-	isFirst = true;
-	for( gridVal = yLow  ;  gridVal <= tlngP->yMax  ;  gridVal++ )
-	{
-		(*numCharsThisFileP) += fprintf(fp, "%sM %hi %hi  h %hi",  isFirst ? "\t" : "   ",  xLow,  gridVal,  xSize);
-		isFirst = false;
-	}  // for( gridVal ... )
-	(*numCharsThisFileP) += fprintf(fp, "\n");
-	(*numLinesThisFileP) ++ ;
-	isFirst = true;
-	for( gridVal = (short int)floor(tlngP->xMin)  ;  gridVal <= tlngP->xMax  ;  gridVal++ )
-	{
-		(*numCharsThisFileP) += fprintf(fp, "%sM %hi %hi  v %hi",  isFirst ? "\t" : "   ",  gridVal,  yLow,  ySize);
-		isFirst = false;
-	}  // for( gridVal ... )
-	(*numCharsThisFileP) += fprintf(fp, "\n'/>\n<g font-size='0.2' paint-order='stroke fill' stroke-width='0.04' stroke='#FFF' stroke-linejoin='round' fill='#000' opacity='1' text-anchor='middle'>\n");
-	(*numLinesThisFileP) += 3 ;
-	(*numCharsThisFileP) += fprintf(fp,
-		"\t<g transform='translate(%hi,%hi)'><text text-anchor='start' alignment-baseline='baseline' transform='scale(1,-1)'>(%s%hi,%s%hi)</text></g>\n",
-		(short int)ceil(tlngP->xMin),
-		(short int)ceil(tlngP->yMin),
-		ceil(tlngP->xMin) < 0 ? "&#8722;" : "+",
-		(short int)fabs(ceil(tlngP->xMin)),
-		ceil(tlngP->yMin) < 0 ? "&#8722;" : "+",
-		(short int)fabs(ceil(tlngP->yMin))
-	);
-	(*numLinesThisFileP) ++ ;
-	(*numCharsThisFileP) += fprintf(fp,
-		"\t<g transform='translate(%hi,%hi)'><text text-anchor='end' alignment-baseline='hanging' transform='scale(1,-1)'>(%s%hi,%s%hi)</text></g>\n",
-		(short int)floor(tlngP->xMax),
-		(short int)floor(tlngP->yMax),
-		floor(tlngP->xMax) < 0 ? "&#8722;" : "+",
-		(short int)fabs(floor(tlngP->xMax)),
-		floor(tlngP->yMax) < 0 ? "&#8722;" : "+",
-		(short int)fabs(floor(tlngP->yMax))
-	);
-	(*numLinesThisFileP) ++ ;
-
-	(*numCharsThisFileP) += fprintf(fp,
-		"</g>\n"
-		"Gridlines, end, commented out -->\n\n"
-	);
-	(*numLinesThisFileP) += 3 ;
+	tiling_export_Gridlines(fp,  tlngP,  SVG_arcs,  numLinesThisFileP,  numCharsThisFileP);  // Code always present; whether or not active controlled by showGridlines()
 
 	(*numCharsThisFileP) += fprintf(fp,
 		"</g> <!-- scale(1,-1) -->\n"
 		"</svg>\n"
-	);
+	);  // fprintf()
 	(*numLinesThisFileP) += 2;
 
 	if( NULL != arcdEast ) {free(arcdEast);  arcdEast = NULL;}

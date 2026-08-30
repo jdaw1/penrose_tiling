@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // fillHoles.c, in PenroseC
 
@@ -171,7 +171,7 @@ static inline int8_t fillTypeA(Tiling * const tlngP, RhombId const rhId_A)
 		tlngP->rhombi[rhId_B].east.y  +  tlngP->rhombi[rhId_C].west.y  -  new_S_y,
 		new_S_x,
 		new_S_y
-	);
+	);  // rhombus_append()
 	if( rhId_new < 0 )
 		return 0;
 
@@ -297,7 +297,7 @@ static inline int8_t fillTypeB(Tiling * const tlngP, RhombId const rhId_Start)
 			tlngP->rhombi[rhIds[2]].south.y,
 			tlngP->rhombi[rhIds[3]].south.y
 		)
-	);
+	);  // rhombus_append()
 	if( rhId_new < 0 )
 		return 0;
 
@@ -412,7 +412,7 @@ static inline int8_t fillTypeC(Tiling * const tlngP, RhombId const rhId_Orig)
 		(OrigsNghbrTouchesE
 			? tlngP->rhombi[rhId_Orig].west.y + tlngP->rhombi[rhId_Next].east.y
 			: tlngP->rhombi[rhId_Orig].east.y + tlngP->rhombi[rhId_Next].west.y) - new_N_y
-	);
+	);  // rhombus_append()
 	if( rhId_new < 0 )
 		return 0;
 
@@ -480,7 +480,7 @@ static inline int8_t fillTypeD(Tiling * const tlngP, RhombId const rhId_Thin1)
 		new_north_y,
 		new_south_x,
 		new_south_y
-	);
+	);  // rhombus_append()
 	if( rhId_new < 0 )
 		return 0;
 	twoRhombi_Neighbourify(tlngP,  rhId_new,  rhId_Thin1);
@@ -592,7 +592,7 @@ static inline int8_t fillTypeE(Tiling * const tlngP, RhombId const rhId_Start)
 				new_y,
 				tlngP->rhombi[rhIds[fatNum]].north.x + tlngP->rhombi[rhIds[fatNumNext]].north.x - new_x,
 				tlngP->rhombi[rhIds[fatNum]].north.y + tlngP->rhombi[rhIds[fatNumNext]].north.y - new_y
-			);
+			);  // rhombus_append()
 			if( rhId_new >= 0 )
 			{
 				numInserted ++;
@@ -691,7 +691,7 @@ static inline int8_t fillTypeF(Tiling * const tlngP, RhombId const rhId_Start)
 		fprintf(stderr,
 			"fillTypeF(): !!! impossibility !!!  rhId_Start = %li;  rhId_Prev = %li;  rhId_This = %li;  rhId_Next = %li;  numThinsMatchingEast = %" PRIi8 ";  numThinsMatchingWest = %" PRIi8 ";  physiqueTotal = %hi  #####\n",
 			rhId_Start, rhId_Prev, rhId_This, rhId_Next, numThinsMatchingEast, numThinsMatchingWest, physiqueTotal
-		);
+		);  // fprintf()
 		fflush(stderr);
 		exit(EXIT_FAILURE);
 	}  // Two impossibilities
@@ -704,7 +704,7 @@ static inline int8_t fillTypeF(Tiling * const tlngP, RhombId const rhId_Start)
 		numThinsMatchingEast > numThinsMatchingWest  ?  tlngP->rhombi[rhId_Start].west.y  :  tlngP->rhombi[rhId_Start].east.y,
 		tlngP->rhombi[rhId_This].south.x,
 		tlngP->rhombi[rhId_This].south.y
-	);
+	);  // rhombus_append()
 	if( rhId_new < 0 )
 		return 0;
 
@@ -763,7 +763,7 @@ static inline int8_t fillTypeG(Tiling * const tlngP, RhombId const rhId_Orig)
 		(tlngP->rhombi[rhId_Orig].north.x + tlngP->rhombi[rhId_Orig].south.x) / 2,
 		(tlngP->rhombi[rhId_Orig].north.y + tlngP->rhombi[rhId_Orig].south.y) / 2,
 		rhId_Orig, rhId_E, rhId_W
-	);
+	);  // printf()
 */
 	double const new_x = tlngP->rhombi[rhId_Orig].north.x * GoldenRatioSquare  -  GoldenRatio * tlngP->rhombi[rhId_Orig].south.x;
 	double const new_y = tlngP->rhombi[rhId_Orig].north.y * GoldenRatioSquare  -  GoldenRatio * tlngP->rhombi[rhId_Orig].south.y;
@@ -778,7 +778,7 @@ static inline int8_t fillTypeG(Tiling * const tlngP, RhombId const rhId_Orig)
 			tlngP->rhombi[rhId_Orig].east.y,
 			new_x,
 			new_y
-		);
+		);  // rhombus_append()
 		if( rhId_E >= 0 )
 		{
 			numInserted ++;
@@ -798,7 +798,7 @@ static inline int8_t fillTypeG(Tiling * const tlngP, RhombId const rhId_Orig)
 			tlngP->rhombi[rhId_Orig].west.y,
 			new_x,
 			new_y
-		);
+		);  // rhombus_append()
 		if( rhId_W >= 0 )
 		{
 			numInserted ++;
@@ -937,10 +937,10 @@ void holesFill(Tiling * const tlngP)
 	} while(anyChanges);
 
 	printf(
-		"holesFill(): tilingId=%" PRIi8 ", extras = [ %li, %li, %li, %li, %li, %li, %li ]; #fats=%li; #thins=%li\n",
+		"holesFill(): tilingId=%" PRIi8 ", extras = [ %li, %li, %li, %li, %li, %li, %li ]; #Fats=%li; #Thins=%li; #Fats+#Thins=%li\n",
 		tlngP->tilingId,
 		numFilledTypeA,  numFilledTypeB,  numFilledTypeC,  numFilledTypeD,  numFilledTypeE,  numFilledTypeF,  numFilledTypeG,
-		tlngP->numFats,  tlngP->numThins
+		tlngP->numFats,  tlngP->numThins,  tlngP->numFats + tlngP->numThins
 	);  fflush(stdout);
 
 }  // holesFill()

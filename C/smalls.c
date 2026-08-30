@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, April 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // smalls.c, in PenroseC
 
@@ -52,17 +52,17 @@ extern bool points_diff_2(double const edgeLength, XY const xy0, XY const xy1)
 	return(
 		fabs(xy0.x - xy1.x) > threshold  ||
 		fabs(xy0.y - xy1.y) > threshold
-	);
+	);  // return()
 }  // points_diff_2()
 
 
 extern bool points_same_2(double const edgeLength, XY const xy0, XY const xy1)
 {
-	const double threshold = edgeLength / 16;
+	const double threshold = edgeLength / 256;
 	return(
 		fabs(xy0.x - xy1.x) <= threshold  &&
 		fabs(xy0.y - xy1.y) <= threshold
-	);
+	);  // return()
 }  // points_same_2()
 
 
@@ -76,7 +76,7 @@ extern bool points_diff_3(double const edgeLength, XY const xy0, XY const xy1, X
 		fabs(xy1.y - xy2.y) > threshold  ||
 		fabs(xy2.x - xy0.x) > threshold  ||
 		fabs(xy2.y - xy0.y) > threshold
-	);
+	);  // return()
 }  // points_diff_3()
 
 
@@ -90,7 +90,7 @@ extern bool points_same_3(double const edgeLength, XY const xy0, XY const xy1, X
 		fabs(xy1.y - xy2.y) <= threshold  &&
 		fabs(xy2.x - xy0.x) <= threshold  &&
 		fabs(xy2.y - xy0.y) <= threshold
-	);
+	);  // return()
 }  // points_same_3()
 
 
@@ -110,7 +110,7 @@ extern bool points_diff_4(double const edgeLength, XY const xy0, XY const xy1, X
 		fabs(xy0.y - xy2.y) > threshold  ||
 		fabs(xy1.x - xy3.x) > threshold  ||
 		fabs(xy1.y - xy3.y) > threshold
-	);
+	);  // return()
 }  // points_diff_4()
 
 
@@ -130,7 +130,7 @@ extern bool points_same_4(double const edgeLength, XY const xy0, XY const xy1, X
 		fabs(xy0.y - xy2.y) <= threshold  &&
 		fabs(xy1.x - xy3.x) <= threshold  &&
 		fabs(xy1.y - xy3.y) <= threshold
-	);
+	);  // return()
 }  // points_same_4()
 
 
@@ -186,15 +186,15 @@ bool collinear(XY const xy0, XY const xy1, XY const xy2, const Tiling * const tl
 	const double squareBase0 = (
 		(xy1.x - xy2.x) * (xy1.x - xy2.x)  +
 		(xy1.y - xy2.y) * (xy1.y - xy2.y)
-	);
+	);  // squareBase0
 	const double squareBase1 = (
 		(xy0.x - xy2.x) * (xy0.x - xy2.x)  +
 		(xy0.y - xy2.y) * (xy0.y - xy2.y)
-	);
+	);  // squareBase1
 	const double squareBase2 = (
 		(xy0.x - xy1.x) * (xy0.x - xy1.x)  +
 		(xy0.y - xy1.y) * (xy0.y - xy1.y)
-	);
+	);  // squareBase2
 	/*
 		TwiceArea <= Base * (EdgeLength / 64)  <==>
 		TwiceArea^2  <=  Base^2  *  EdgeLength^2 / 4096  <==>
@@ -205,7 +205,7 @@ bool collinear(XY const xy0, XY const xy1, XY const xy2, const Tiling * const tl
 		4096 * twiceArea * twiceArea  // Threshold is one sixty-fourth of edgeLength
 		<= max_2(max_2(squareBase0, squareBase1), squareBase2)
 		* tlngP->edgeLength * tlngP->edgeLength
-	);
+	);  // return()
 }  // collinear()
 
 
@@ -218,7 +218,7 @@ FILE * file_open(const char *filename,  const char *mode,  const char *errorStri
 		printf(
 			"\n\nError: fopen('%s', '%s') returned NULL; errorString being '%s'. Exiting.\n\n",
 			filename, mode, errorString
-		);
+		);  // printf()
 		exit(EXIT_FAILURE);
 	}
 	else
@@ -252,3 +252,29 @@ char * filename_new_extension(const char * const filenameOld,  char * strNew,  c
 	else
 		return NULL ;
 }  // filename_new_extension()
+
+
+
+char * seed_type_name(char * const seedTypeName,  const SeedType seed)
+{
+	switch(seed)  // Possibilities: oneThin, oneFat, round5
+	{
+	case oneThin:
+		sprintf(seedTypeName, "OneThin");
+		break;
+
+	case oneFat:
+		sprintf(seedTypeName, "OneFat");
+		break;
+
+	case round5:
+		sprintf(seedTypeName, "Round_5");
+		break;
+
+	default:
+		printf("seed_type_name(): unknown seed type. Ending.\n");
+		exit(EXIT_FAILURE);
+	}  // switch(seed)
+
+	return seedTypeName;
+}  // seed_type_name()

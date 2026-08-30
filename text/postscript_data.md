@@ -24,7 +24,6 @@ For example, arrays and data structures have a maximum length of 2<small><sup>16
 Nonetheless, the enum `ExportFormat` includes the value `PS_data`. 
 Initially, this was the primary format for PostScript. 
 But the development of `ExportFormat`s `PS_rhomb` and `PS_arcs` means that `PS_data` is heading for deprecation. 
-(New software, at point of release, has a feature described as &ldquo;heading for deprecation&rdquo;: cool, or dim-witted?)
 For `PS_data` the data is exported as arrays (in PostScript, <code>[&nbsp;&hellip;&nbsp;]</code>) of dictionaries (<code><<&nbsp;&hellip;&nbsp;>></code>), each of which is limited to at most 65,535 items. 
 
 So a &lsquo;wanted&rsquo; subset of rhombi is chosen. 
@@ -37,7 +36,7 @@ The `RhId` and `PathId` are renumbered, such that numbers point within the short
 ## A PostScript program ##
 
 This PostScript data is intended to be used by a PostScript program, and one might start with the supplied [example program](../postscript_pdf/Penrose_uses_data.ps). 
-Starting about about line 77 this defines a large array 
+Starting about about line 79 this defines a large array 
 
 ```PostScript
 /Tilings [
@@ -61,6 +60,6 @@ Even though the PostScript-data output is used less than it was, this is all goo
 
 ## Speed and size ##
 
-Generally, if working with PostScript, [Adobe&nbsp;Distiller](https://en.wikipedia.org/wiki/Adobe_Distiller) is superior to [Ghostscript](https://en.wikipedia.org/wiki/Ghostscript): quicker execution, smaller PDF size, even obscure parameters are completely ujderstood. 
-But this PostScript-data confounds Distiller, which can be much much slower than Ghostscript. 
+Generally, if working with PostScript, [Adobe&nbsp;Distiller](https://en.wikipedia.org/wiki/Adobe_Distiller) is superior to [Ghostscript](https://en.wikipedia.org/wiki/Ghostscript): quicker execution, smaller PDF size, even obscure parameters are completely understood. 
+But this PostScript&#8209;data confounds Distiller, which can be much much slower than Ghostscript. 
 However, the Distiller PDF sizes are still smaller than those output by Ghostscript.

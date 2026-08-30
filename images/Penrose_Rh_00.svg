@@ -1,60 +1,79 @@
-<svg width='960' height='1122.279301646' viewBox='-3.337195102 -3.178810661 5.438322226 6.357621323' preserveAspectRatio='xMidYMid meet' id='Penrose_Rhombi_00' xmlns='http://www.w3.org/2000/svg'>
-<!-- TilingId = 0;  NumFats = 2;  NumThins = 1;  ==> #tiles= 3;  NumPathsClosed = 0;  NumPathsOpen = 1;  BoundingPathNumVertices = 6 -->
+<svg width='960' height='1008.4204' viewBox='-1.570091769 -1.649283989 3.140183537 3.298567977' preserveAspectRatio='xMidYMid meet' id='Penrose_Rhombi_00' xmlns='http://www.w3.org/2000/svg'>
+<!-- TilingId = 0;  NumFats = 5;  NumThins = 5;  ==> #tiles= 10;  NumPathsClosed = 1;  NumPathsOpen = 0;  BoundingPathNumVertices = 10 -->
 <!-- Licence = "GNU General Public License, Version 3, 29 June 2007"; URL = "https://github.com/jdaw1/penrose_tiling/"; Author = "Julian D. A. Wiseman of www.jdawiseman.com". -->
-<!-- EdgeLength = 3.23606797749979; stroke-width defined to be EdgeLength / 16. If changing stroke-width, need to alter viewBox, for which it might help to know that, without line, and assuming inclusion of all the C-generated rhombi, values would be -3.236067977 -3.077683537 5.236067977 6.155367074. -->
+<!-- EdgeLength = 1; stroke-width defined to be EdgeLength / 16. If changing stroke-width, need to alter viewBox, for which it might help to know that, without line, and assuming inclusion of all the C-generated rhombi, values would be -1.5388 -1.618 3.0777 3.2361. -->
 <!-- Browser fail for large SVG? Bug report at https://issues.chromium.org/issues/390969197 -->
 <g transform='scale(1,-1)'> <!-- PostScript and Excel positive y goes up the page, SVG it goes down. This reflection makes SVG behave as the others. -->
-<!-- This path traces the outside of the rhombi, intended to be fill'able as a background colour. -->
-<!-- As all rhombi are filled, usually redundant. Indeed, usually omitted from SVG file. -->
-<!-- If stroke'd wide, then slightly enlarge the viewBox. -->
-<!-- Enlargement amount depends on whether vector-effect='non-scaling-stroke', on stroke-width, and slightly on stroke-linejoin. -->
-<path fill='#FFF'  stroke='none' vector-effect='non-scaling-stroke' stroke-width='2px' stroke-linejoin='round'  d='
-	M 1 -3.077683537
-	L 2 0
-	1 3.077683537
-	-2.236067977 3.077683537
-	-3.236067977 0
-	-2.236067977 -3.077683537
-Z'/> <!-- Outside of tiling of rhombi. -->
-
 
 <defs>
-	<path id='t' d='M 0 0   L -1 3.07768353717525   -2 0   -1 -3.07768353717525  Z'/> <!-- thin -->
-	<path id='f' d='M 0 0   L -2.61803398874989 1.90211303259031   -5.23606797749979 0   -2.61803398874989 -1.90211303259031  Z'/> <!-- fat (closed paths) -->
-	<path id='o' d='M 0 0   L -2.61803398874989 1.90211303259031   -5.23606797749979 0   -2.61803398874989 -1.90211303259031  Z'/> <!-- fat (open paths, separate for editability) -->
-	<!-- To locate holes, and some other debugging, replace previous line with:  <g id='o'><path d='M 0 0   L -2.61803398874989 1.90211303259031   -5.23606797749979 0   -2.61803398874989 -1.90211303259031  Z'/><circle stroke='#000' fill='#6F6' opacity='1' cx='-2.61803398874989' r='0.53934466291663'/></g>  -->
+	<g id='t'> <!-- thin -->
+		<path d='M 0 0   L -0.30901699437495 0.95105651629515   -0.61803398874989 0   -0.30901699437495 -0.95105651629515  Z'/> <!-- thin -->
+		<!-- <circle fill='#000' cx='-0.15' cy='0' r='0.0625'/> -->  <!-- north-corner circle, de-comment to show -->
+	</g> <!-- thin -->
+	<g id='f'>
+		<path d='M 0 0   L -0.80901699437495 0.58778525229247   -1.61803398874989 0   -0.80901699437495 -0.58778525229247  Z'/> <!-- fat (closed paths) -->
+		<!-- <circle fill='#3CC' stroke='#C00' stroke-width='0.0625' paint-order='stroke fill' cx='-0.3' cy='0' r='0.075'/> -->  <!-- north-corner circle, de-comment to show -->
+	</g> <!-- fat in closed path -->
+	<g id='o'>
+		<path d='M 0 0   L -0.80901699437495 0.58778525229247   -1.61803398874989 0   -0.80901699437495 -0.58778525229247  Z'/> <!-- fat in open path, for editability separated from fat-in-closed -->
+		<!-- <circle fill='#000' stroke='#FFF' stroke-width='0.0625' paint-order='stroke fill' cx='-0.3' cy='0' r='0.075'/> -->  <!-- north-corner circle, de-comment to show -->
+		<!-- <circle stroke='#000' fill='#6F6' opacity='1' cx='-0.809016994' r='0.1667'/> --> <!-- To locate holes, and some other debugging: de-comment to show. -->
+	</g> <!-- fat in open path -->
+	<g id='c5r'>
+		<g fill='#CCC' opacity='1'>  <!-- Thins: light grey -->
+			<use href='#t'  transform='translate(0.9511,0.309) rotate(198)'/>
+			<use href='#t'  transform='translate(0.5878,-0.809) rotate(126)'/>
+			<use href='#t'  transform='translate(-0.5878,-0.809) rotate(54)'/>
+			<use href='#t'  transform='translate(-0.9511,0.309) rotate(342)'/>
+			<use href='#t'  transform='translate(0,1) rotate(270)'/>
+		</g>  <!-- thins, fill='#CCC' -->
+		<g fill='#FFF' opacity='1'>  <!-- Fats, closed PathLength=5 round: white -->
+			<use href='#f'  transform='translate(0.9511,1.309) rotate(54)'/>
+			<use href='#f'  transform='translate(1.5388,-0.5) rotate(342)'/>
+			<use href='#f'  transform='translate(0,-1.618) rotate(270)'/>
+			<use href='#f'  transform='translate(-1.5388,-0.5) rotate(198)'/>
+			<use href='#f'  transform='translate(-0.9511,1.309) rotate(126)'/>
+		</g>  <!-- fill='#FFF' -->
+		<circle r='0.25' fill='#FFF' opacity='1'/>  <!-- circle inside round (so closed) 5 paths If not wanted, delete or comment this one line -->
+	</g>  <!-- id='c5r' -->
 </defs>
 
-<g stroke-width='0.202254249' stroke='#000' paint-order='fill stroke' stroke-linejoin='round' stroke-opacity='1'>  <!-- all rhombi -->
+<g stroke-width='0.0625' stroke='#000' paint-order='fill stroke' stroke-linejoin='round' stroke-opacity='1'>  <!-- all rhombi -->
 
 <g fill='#CCC' opacity='1'>  <!-- thins not otherwise inside a path. -->
-	<use href='#t'  transform='rotate(180)'/>
 </g>  <!-- thins not otherwise inside a path -->
 
 
 <!-- Paint open paths -->
 
-<g fill='#FFF' opacity='1'>  <!-- Fats, open PathLength=2: white -->
-	<use href='#o'  transform='translate(1,3.077683537) rotate(36)'/> <!-- 0 -->
-	<use href='#o'  transform='translate(1,-3.077683537) rotate(324)'/>
-</g>  <!-- Fats, open, PathLength=2 -->
-
 
 <!-- Paint closed paths not otherwise inside a larger path. Comment is pathId. -->
 
+	<use href='#c5r'/> <!-- 0 -->
+
+<!-- To show circle within which paths the few open paths are long, decomment next four lines. -->
+<!-- <g opacity='50%' fill='none'>
+	<circle stroke='#000' stroke-width='0.9' r='1.618033989'/>
+	<circle stroke='#FFF' stroke-width='0.3' r='1.618033989'/>
+</g> -->
+
 </g>  <!-- all rhombi, stroke -->
 
-<!-- If gridlines wanted, uncomment these. -->
-<!-- Gridlines, start, commented out 
-<path vector-effect='non-scaling-stroke' stroke-width='3px' stroke='#000' opacity='0.2' d='
-	M -4 -4  h 6   M -4 -3  h 6   M -4 -2  h 6   M -4 -1  h 6   M -4 0  h 6   M -4 1  h 6   M -4 2  h 6   M -4 3  h 6
-	M -4 -4  v 8   M -3 -4  v 8   M -2 -4  v 8   M -1 -4  v 8   M 0 -4  v 8   M 1 -4  v 8   M 2 -4  v 8
+<!-- To uncomment gridlines delete this line, and the line at end of this 'paragraph'.
+<path vector-effect='non-scaling-stroke' stroke-width='3px' stroke='#000' opacity='0.25' d='
+	M -1.53884 -1  h 3.07768   M -1.53884 0  h 3.07768   M -1.53884 1  h 3.07768
+	M -1 -1.61803  v 3.23607   M 0 -1.61803  v 3.23607   M 1 -1.61803  v 3.23607
 '/>
-<g font-size='0.2' paint-order='stroke fill' stroke-width='0.04' stroke='#FFF' stroke-linejoin='round' fill='#000' opacity='1' text-anchor='middle'>
-	<g transform='translate(-3,-3)'><text text-anchor='start' alignment-baseline='baseline' transform='scale(1,-1)'>(&#8722;3,&#8722;3)</text></g>
-	<g transform='translate(2,3)'><text text-anchor='end' alignment-baseline='hanging' transform='scale(1,-1)'>(+2,+3)</text></g>
+<g font-size='0.054' font-weight='bold' paint-order='stroke fill' stroke-width='0.009' stroke='#FFF' stroke-linejoin='round' fill='#000' opacity='1' text-anchor='middle'>
+	<g transform='translate(1.5388,-1)'><text text-anchor='end' alignment-baseline='central' transform='scale(1,-1)'>&#8722;1</text></g>
+	<g transform='translate(1.5388,0)'><text text-anchor='end' alignment-baseline='central' transform='scale(1,-1)'>0</text></g>
+	<g transform='translate(1.5388,1)'><text text-anchor='end' alignment-baseline='central' transform='scale(1,-1)'>1</text></g>
+	<g transform='translate(-1,-1.6180)'><text text-anchor='middle' alignment-baseline='text-bottom' transform='scale(1,-1)'>&#8722;1</text></g>
+	<g transform='translate(0,-1.6180)'><text text-anchor='middle' alignment-baseline='text-bottom' transform='scale(1,-1)'>0</text></g>
+	<g transform='translate(1,-1.6180)'><text text-anchor='middle' alignment-baseline='text-bottom' transform='scale(1,-1)'>1</text></g>
 </g>
-Gridlines, end, commented out -->
+To uncomment gridlines delete this line, and the line at start of this 'paragraph'. -->
+
 
 </g>  <!-- End of the global reflection -->
 </svg>

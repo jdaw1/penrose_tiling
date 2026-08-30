@@ -1,7 +1,7 @@
-<svg width='960' height='1357.047035649' viewBox='-2.837195102 -3.178810661 4.438322226 6.357621323' preserveAspectRatio='xMidYMid meet' id='Penrose_Arcs_00' xmlns='http://www.w3.org/2000/svg'>
-<!-- TilingId = 0;  NumFats = 2;  NumThins = 1;  ==> #tiles= 3;  NumPathsClosed = 0;  NumPathsOpen = 6;  BoundingPathNumVertices = 1 -->
+<svg width='960' height='913.9494' viewBox='-1.570091769 -1.494775492 3.140183537 2.989550983' preserveAspectRatio='xMidYMid meet' id='Penrose_Arcs_00' xmlns='http://www.w3.org/2000/svg'>
+<!-- TilingId = 0;  NumFats = 5;  NumThins = 5;  ==> #tiles= 10;  NumPathsClosed = 1;  NumPathsOpen = 0;  BoundingPathNumVertices = 10 -->
 <!-- Licence = "GNU General Public License, Version 3, 29 June 2007"; URL = "https://github.com/jdaw1/penrose_tiling/"; Author = "Julian D. A. Wiseman of www.jdawiseman.com". -->
-<!-- EdgeLength = 3.23606797749979 -->
+<!-- EdgeLength = 1 -->
 <!-- Browser fail for large SVG? Bug report at https://issues.chromium.org/issues/390969197 -->
 
 <g transform='scale(1,-1)'> <!-- PostScript and Excel positive y goes up the page, SVG it goes down. This reflection makes SVG behave as PostScript and Excel. -->
@@ -12,15 +12,19 @@
 <!-- But if manually editing so that path stroke'd, or fill'd dramatically, then slightly enlarge the viewBox. -->
 <!-- Enlargement amount depends on whether vector-effect='non-scaling-stroke', on stroke-width, and slightly on stroke-linejoin. -->
 <path fill='#FFF'  stroke='none' vector-effect='non-scaling-stroke' stroke-width='2px' stroke-linejoin='round'  d='
-	M 1 -3.077683537
-	L 2 0
-	1 3.077683537
-	-2.236067977 3.077683537
-	-3.236067977 0
-	-2.236067977 -3.077683537
+	M 1.538841769 -0.5
+	L 1.538841769 0.5
+	0.951056516 1.309016994
+	0 1.618033989
+	-0.951056516 1.309016994
+	-1.538841769 0.5
+	-1.538841769 -0.5
+	-0.951056516 -1.309016994
+	0 -1.618033989
+	0.951056516 -1.309016994
 Z'/> <!-- Outside of tiling of rhombi. -->
 
-<g transform='scale(1.618033988749895)'> <!-- edgeLength/2, so that all arc radii are precisely 1, lessening file size -->
+<g transform='scale(0.5)'> <!-- 1/2, so that all arc radii are precisely 1, lessening file size -->
 
 <style>
 	.sf {stroke: #000;  stroke-width: 0.1;  paint-order: fill stroke markers;} <!-- sf = stroke's formatting -->
@@ -43,31 +47,47 @@ Z'/> <!-- Outside of tiling of rhombi. -->
 
 <!-- Arcs, not part of a closed loop, in thins. -->
 <path class='sf' fill='none' d='
-	M 0.927050983 0.951056516 A 1 1 0 0 0 0.309016994 0.951056516
-	M 0.309016994 -0.951056516 A 1 1 0 0 0 0.927050983 -0.951056516
+	M -0.951056516 2.927050983 A 1 1 0 0 0 -0.951056516 2.309016994
+	M 0.951056516 2.309016994 A 1 1 0 0 0 0.951056516 2.927050983
+	M -3.077683537 0 A 1 1 0 0 0 -2.489898285 -0.190983006
+	M -1.902113033 1.618033989 A 1 1 0 0 0 -2.489898285 1.809016994
+	M 2.489898285 1.809016994 A 1 1 0 0 0 1.902113033 1.618033989
+	M 2.489898285 -0.190983006 A 1 1 0 0 0 3.077683537 0
+	M -0.951056516 -2.927050983 A 1 1 0 0 0 -0.587785252 -2.427050983
+	M -2.126627021 -1.309016994 A 1 1 0 0 0 -2.489898285 -1.809016994
+	M 2.489898285 -1.809016994 A 1 1 0 0 0 2.126627021 -1.309016994
+	M 0.587785252 -2.427050983 A 1 1 0 0 0 0.951056516 -2.927050983
 '/> <!-- End of stroking of loose ends not in a closed path that are in thins. -->
 
 <!-- Arcs, not part of a closed loop, in fats. -->
 <path class='sf' fill='none' d='
-	M -1.690983006 -0.951056516 A 1 1 0 0 0 -0.381966011 -1.902113033
-	M 0.309016994 -0.951056516 A 1 1 0 0 0 -1 0
-	A 1 1 0 0 0 0.309016994 0.951056516
-	M -0.381966011 1.902113033 A 1 1 0 0 0 -1.690983006 0.951056516
+	M 0.951056516 0.309016994 A 1 1 0 0 0 1.902113033 1.618033989
+	M 0.951056516 2.309016994 A 1 1 0 0 0 0 1
+	M 0.587785252 -0.809016994 A 1 1 0 0 0 2.126627021 -1.309016994
+	M 2.489898285 -0.190983006 A 1 1 0 0 0 0.951056516 0.309016994
+	M -0.587785252 -0.809016994 A 1 1 0 0 0 -0.587785252 -2.427050983
+	M 0.587785252 -2.427050983 A 1 1 0 0 0 0.587785252 -0.809016994
+	M -0.951056516 0.309016994 A 1 1 0 0 0 -2.489898285 -0.190983006
+	M -2.126627021 -1.309016994 A 1 1 0 0 0 -0.587785252 -0.809016994
+	M 0 1 A 1 1 0 0 0 -0.951056516 2.309016994
+	M -1.902113033 1.618033989 A 1 1 0 0 0 -0.951056516 0.309016994
 '/> <!-- End of stroking of loose ends not in a closed path that are in fats. -->
 
-</g> <!-- scale(edgeLength/2) -->
-
-<!-- If gridlines wanted, uncomment these. -->
-<!-- Gridlines, start, commented out 
-<path vector-effect='non-scaling-stroke' stroke-width='3px' stroke='#000' opacity='0.2' d='
-	M -4 -4  h 6   M -4 -3  h 6   M -4 -2  h 6   M -4 -1  h 6   M -4 0  h 6   M -4 1  h 6   M -4 2  h 6   M -4 3  h 6
-	M -4 -4  v 8   M -3 -4  v 8   M -2 -4  v 8   M -1 -4  v 8   M 0 -4  v 8   M 1 -4  v 8   M 2 -4  v 8
+</g> <!-- scale(0.5) -->
+<!-- To uncomment gridlines delete this line, and the line at end of this 'paragraph'.
+<path vector-effect='non-scaling-stroke' stroke-width='3px' stroke='#000' opacity='0.25' d='
+	M -1.53884 -1  h 3.07768   M -1.53884 0  h 3.07768   M -1.53884 1  h 3.07768
+	M -1 -1.61803  v 3.23607   M 0 -1.61803  v 3.23607   M 1 -1.61803  v 3.23607
 '/>
-<g font-size='0.2' paint-order='stroke fill' stroke-width='0.04' stroke='#FFF' stroke-linejoin='round' fill='#000' opacity='1' text-anchor='middle'>
-	<g transform='translate(-3,-3)'><text text-anchor='start' alignment-baseline='baseline' transform='scale(1,-1)'>(&#8722;3,&#8722;3)</text></g>
-	<g transform='translate(2,3)'><text text-anchor='end' alignment-baseline='hanging' transform='scale(1,-1)'>(+2,+3)</text></g>
+<g font-size='0.054' font-weight='bold' paint-order='stroke fill' stroke-width='0.009' stroke='#FFF' stroke-linejoin='round' fill='#000' opacity='1' text-anchor='middle'>
+	<g transform='translate(1.2888,-1)'><text text-anchor='end' alignment-baseline='central' transform='scale(1,-1)'>&#8722;1</text></g>
+	<g transform='translate(1.2888,0)'><text text-anchor='end' alignment-baseline='central' transform='scale(1,-1)'>0</text></g>
+	<g transform='translate(1.2888,1)'><text text-anchor='end' alignment-baseline='central' transform='scale(1,-1)'>1</text></g>
+	<g transform='translate(-1,-1.3680)'><text text-anchor='middle' alignment-baseline='text-bottom' transform='scale(1,-1)'>&#8722;1</text></g>
+	<g transform='translate(0,-1.3680)'><text text-anchor='middle' alignment-baseline='text-bottom' transform='scale(1,-1)'>0</text></g>
+	<g transform='translate(1,-1.3680)'><text text-anchor='middle' alignment-baseline='text-bottom' transform='scale(1,-1)'>1</text></g>
 </g>
-Gridlines, end, commented out -->
+To uncomment gridlines delete this line, and the line at start of this 'paragraph'. -->
 
 </g> <!-- scale(1,-1) -->
 </svg>

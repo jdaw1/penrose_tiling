@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, June 2025
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // paths.c, in PenroseC
 
@@ -52,7 +52,17 @@ inline static double rhWithinPathMoreSpecial(
 	const double distanceEpsilon
 )
 {
-	const double dist2New = pow(rhNewP->centre.x - pathP->centre.x,  2) + pow(rhNewP->centre.y - pathP->centre.y,  2) ;
+	const double dist2New= pow(rhNewP->centre.x - pathP->centre.x,  2)  +  pow(rhNewP->centre.y - pathP->centre.y,  2);
+/*
+	// Interacts badly with insideness code. So not used. ¬Not sure why not deleted -- perhaps cowardice.
+	const double dist2NewN = pow(rhNewP->north.x - pathP->centre.x,  2)  +  pow(rhNewP->north.y - pathP->centre.y,  2);
+	const double dist2NewS = pow(rhNewP->south.x - pathP->centre.x,  2)  +  pow(rhNewP->south.y - pathP->centre.y,  2);
+	const double dist2NewE = pow(rhNewP->east.x  - pathP->centre.x,  2)  +  pow(rhNewP->east.y  - pathP->centre.y,  2);
+	const double dist2NewW = pow(rhNewP->west.x  - pathP->centre.x,  2)  +  pow(rhNewP->west.y  - pathP->centre.y,  2);
+	const double dist2New  =  wantClosest ?
+		min_4(dist2NewN, dist2NewS, dist2NewE, dist2NewW) :
+		max_4(dist2NewN, dist2NewS, dist2NewE, dist2NewW) ;
+ */
 
 	if(rhNewP == rhOldP)
 		return dist2New;  // This special used to generate distance with initial setting.
@@ -121,13 +131,17 @@ void paths_populate(Tiling * const tlngP)
 	if( tlngP->path_NumMax > tlngP->numFats )
 		tlngP->path_NumMax = tlngP->numFats ;
 
-	tlngP->path = malloc( tlngP->path_NumMax  *  sizeof(Path) );
-	if( NULL == tlngP->path )
-	{
-		fprintf(stderr, "paths_populate(): !!! NULL == tlngP->path !!!\n");
-		fflush(stderr);
-		exit(EXIT_FAILURE);
-	}  // if( NULL == tlngP->path )
+	{  // scope mallocThis
+		size_t const mallocThis = tlngP->path_NumMax  *  sizeof(Path);
+		tlngP->path = malloc(mallocThis);
+		if( NULL == tlngP->path )
+		{
+			fprintf(stderr, "paths_populate(): !!! NULL == tlngP->path !!!\n");
+			fflush(stderr);
+			exit(EXIT_FAILURE);
+		}  // if( NULL == tlngP->path )
+		tlngP->mallocsPersistentSumSimple += mallocThis;
+	}  // scope mallocThis
 
 	for( rhId_PathStart = 0;  rhId_PathStart < tlngP->numFats + tlngP->numThins ; rhId_PathStart++ )
 		tlngP->rhombi[rhId_PathStart].pathId = -1 ;
@@ -200,10 +214,10 @@ know_rhIdPathStart_pathClosed:
 		rhThisP = &(tlngP->rhombi[ rhId_This ]) ;
 		thisPathSumX = 0;
 		thisPathSumY = 0;
-		pathThisP->xMax = rhThisP->xMax;  // This start value because -DBL_MAX is ugly.
-		pathThisP->yMax = rhThisP->yMax;
-		pathThisP->xMin = rhThisP->xMin;
-		pathThisP->yMin = rhThisP->yMin;
+		pathThisP->xMin_rhId  =  rhId_PathStart;
+		pathThisP->xMax_rhId  =  rhId_PathStart;
+		pathThisP->yMin_rhId  =  rhId_PathStart;
+		pathThisP->yMax_rhId  =  rhId_PathStart;
 		pathThisP->pathVeryClosed = pathThisP->pathClosed;
 		pathThisP->rhId_openPathEnd = -1;
 		while(true)
@@ -214,21 +228,21 @@ know_rhIdPathStart_pathClosed:
 
 			thisPathSumX += rhThisP->centre.x ;
 			thisPathSumY += rhThisP->centre.y ;
-			if(pathThisP->xMax < rhThisP->xMax)  pathThisP->xMax = rhThisP->xMax;
-			if(pathThisP->yMax < rhThisP->yMax)  pathThisP->yMax = rhThisP->yMax;
-			if(pathThisP->xMin > rhThisP->xMin)  pathThisP->xMin = rhThisP->xMin;
-			if(pathThisP->yMin > rhThisP->yMin)  pathThisP->yMin = rhThisP->yMin;
+			if(tlngP->rhombi[ pathThisP->xMin_rhId ].xMin > rhThisP->xMin)  pathThisP->xMin_rhId = rhId_This;
+			if(tlngP->rhombi[ pathThisP->xMax_rhId ].xMax < rhThisP->xMax)  pathThisP->xMax_rhId = rhId_This;
+			if(tlngP->rhombi[ pathThisP->yMin_rhId ].yMin > rhThisP->yMin)  pathThisP->yMin_rhId = rhId_This;
+			if(tlngP->rhombi[ pathThisP->yMax_rhId ].yMax < rhThisP->yMax)  pathThisP->yMax_rhId = rhId_This;
 
 			if( pathThisP->pathVeryClosed  &&  pathThisP->pathClosedTypeNum % 2 == 0 )
 			{
-				if( rhThisP->numNeighbours < 4 )
-					pathThisP->pathVeryClosed = false;
-				else
+				if( rhThisP->numNeighbours == 4 )
 				{
 					for( nghbrNum = 0  ;  nghbrNum < 4  ;  nghbrNum++ )  // rhThisP->numNeighbours must be 4
 						if( tlngP->rhombi[ rhThisP->neighbours[nghbrNum].rhId ].numNeighbours < 4 )
 							{pathThisP->pathVeryClosed = false;  break;}
 				}  // rhThisP->numNeighbours == 4
+				else
+					pathThisP->pathVeryClosed = false;
 			}  // pathVeryClosed
 
 			noNewNeighbours = true ;
@@ -270,22 +284,14 @@ know_pathLength:
 			pathRhPathRhombNumClosest = tlngP->rhombi[ rhId_This ].withinPathNum;
 			pathThisP->rhId_PathCentreClosest  = rhId_This;
 			pathThisP->rhId_PathCentreFurthest = rhId_This;
-			dist2Closest = rhWithinPathMoreSpecial(
+			dist2Closest = dist2Furthest = rhWithinPathMoreSpecial(
 				true,  // Want closest corner
 				pathThisP,
 				&(tlngP->rhombi[ rhId_This ]),
 				&(tlngP->rhombi[ rhId_This ]),
 				0,  // Irrelevant
 				distance2Epsilon, distanceEpsilon  // Irrelevant
-			);
-			dist2Furthest = rhWithinPathMoreSpecial(
-				false,  // Want furthest corner
-				pathThisP,
-				&(tlngP->rhombi[ rhId_This ]),
-				&(tlngP->rhombi[ rhId_This ]),
-				0,  // Irrelevant
-				distance2Epsilon, distanceEpsilon  // Irrelevant
-			);
+			);  // rhWithinPathMoreSpecial()
 
 			while(true)
 			{
@@ -299,7 +305,7 @@ know_pathLength:
 					&(tlngP->rhombi[ pathThisP->rhId_PathCentreClosest ]),
 					dist2Closest,
 					distance2Epsilon, distanceEpsilon
-				);
+				);  // rhWithinPathMoreSpecial()
 				if( dist2Temp >= 0 )
 				{
 					pathRhPathRhombNumClosest = rhThisP->withinPathNum ;
@@ -314,7 +320,7 @@ know_pathLength:
 					&(tlngP->rhombi[ pathThisP->rhId_PathCentreFurthest ]),
 					dist2Furthest,
 					distance2Epsilon, distanceEpsilon
-				);
+				);  // rhWithinPathMoreSpecial()
 				if( dist2Temp >= 0 )
 				{
 					pathThisP->rhId_PathCentreFurthest = rhId_This ;
@@ -344,7 +350,7 @@ know_pathLength:
 
 			// Rotate such that pathRhPathRhombNumClosest has pathRhombNum of 0.
 			// And, such that path goes clockwise, if necessary reflect.
-			long int * const pathListed = malloc( pathThisP->pathLength * sizeof(rhId_This) );
+			long int * const pathListed = malloc( pathThisP->pathLength * sizeof(RhombId) );
 			if( pathListed != NULL )
 			{
 				pathListed[0] = pathThisP->rhId_PathCentreClosest;
@@ -465,7 +471,7 @@ know_pathLength:
 		pathThisP->pointy = ( 5 == pathThisP->pathLength  &&  pathThisP->pathClosed  &&  points_same_2(tlngP->edgeLength, rhThisP->north, pathThisP->centre) ) ;
 
 		pathThisP->pathClosedTypeNum = pathClosedTypeNum(pathThisP->pathClosed,  pathThisP->pathLength,  pathThisP->pointy);
-	}  // rhId_This
+	}  // for( rhId_PathStart ... )
 
 	paths_sort(tlngP, &pathGt_ByClosedEtc);
 

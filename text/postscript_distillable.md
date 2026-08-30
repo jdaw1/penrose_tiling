@@ -29,7 +29,8 @@ Documentation pages:&nbsp;
 	<td><a href="../postscript_pdf/Penrose_Rh_07.ps">07</a></td>
 	<td><a href="../postscript_pdf/Penrose_Rh_08.ps">08</a></td>
 	<td><a href="../postscript_pdf/Penrose_Rh_09.ps">09</a></td>
-	<td><a href="../postscript_pdf/Penrose_Rh_10.ps">10</a></td>
+	<td></td>
+	<td></td>
 </tr><tr>
 	<th align="right">.pdf, Rhombi:</th>
 	<td><a href="../postscript_pdf/Penrose_Rh_00.pdf">00</a></td>
@@ -43,6 +44,7 @@ Documentation pages:&nbsp;
 	<td><a href="../postscript_pdf/Penrose_Rh_08.pdf">08</a></td>
 	<td><a href="../postscript_pdf/Penrose_Rh_09.pdf">09</a></td>
 	<td><a href="../postscript_pdf/Penrose_Rh_10.pdf">10</a></td>
+	<td><a href="../postscript_pdf/Penrose_Rh_11.pdf">11</a></td>
 </tr><tr>
 	<th align="right">.ps, Arcs:</th>
 	<td><a href="../postscript_pdf/Penrose_Arcs_00.ps">00</a></td>
@@ -54,8 +56,9 @@ Documentation pages:&nbsp;
 	<td><a href="../postscript_pdf/Penrose_Arcs_06.ps">06</a></td>
 	<td><a href="../postscript_pdf/Penrose_Arcs_07.ps">07</a></td>
 	<td><a href="../postscript_pdf/Penrose_Arcs_08.ps">08</a></td>
-	<td><a href="../postscript_pdf/Penrose_Arcs_09.ps">09</a></td>
-	<td><a href="../postscript_pdf/Penrose_Arcs_10.ps">10</a></td>
+	<td></td>
+	<td></td>
+	<td></td>
 </tr><tr>
 	<th align="right">.pdf, Arcs:</th>
 	<td><a href="../postscript_pdf/Penrose_Arcs_00.pdf">00</a></td>
@@ -69,6 +72,7 @@ Documentation pages:&nbsp;
 	<td><a href="../postscript_pdf/Penrose_Arcs_08.pdf">08</a></td>
 	<td><a href="../postscript_pdf/Penrose_Arcs_09.pdf">09</a></td>
 	<td><a href="../postscript_pdf/Penrose_Arcs_10.pdf">10</a></td>
+	<td></td>
 </tr>
 </table>
 
@@ -77,22 +81,22 @@ Endpapers, being a riff on an old-school [marbling](https://en.wikipedia.org/wik
 [Endpapers_215.pdf](../postscript_pdf/Endpapers_215.pdf); and the PostScript from which both generated (&plusmn;&nbsp;tiny variation) [Endpapers_215.ps](../postscript_pdf/Endpapers_215.ps).
 
 Also files making the map of my kitchen:
-[Kitchen_Rh_08.**ps**](../postscript_pdf/Kitchen_Rh_08.ps); and 
-[Kitchen_Rh_08.**pdf**](../postscript_pdf/Kitchen_Rh_08.pdf); and also
+[Kitchen_Rh_09.**ps**](../postscript_pdf/Kitchen_Rh_09.ps); and 
+[Kitchen_Rh_09.**pdf**](../postscript_pdf/Kitchen_Rh_09.pdf); and also
 [20230923_kitchen_tiles.**png**](../images/20230923_kitchen_tiles.png). 
 
 ## The PostScript Language ##
 
 PostScript ([wikipedia](http://en.wikipedia.org/wiki/PostScript), [Adobe&rsquo;s&nbsp;PostScript Language Reference 3<small><sup>rd</sup></small>&nbsp;edition](https://www.adobe.com/jp/print/postscript/pdfs/PLRM.pdf)) is an an early-1980s reverse-Polish stack-based weakly-typed printer-control language. 
 It is a delightful simple clean text-based user-alterable [Turing-complete](https://en.wikipedia.org/wiki/Turing_completeness) means of making [PDF](https://en.wikipedia.org/wiki/PDF)s. 
-But, even in the most flattering light, PostScript shows its age.
+But, even in the most flattering light, PostScript is showing its age.
 
 [This author](https://jdawiseman.com/author.html) is fond of PostScript, and has done much work in it. 
-(Indeed, I maintain and use a [splendid PostScript program](https://github.com/jdaw1/placemat/blob/main/README.md#readme) of a mere &asymp;&#8239;16k lines &mdash; perhaps it would be safest not to look.) 
+(Indeed, I maintain and use a [splendid PostScript program](https://github.com/jdaw1/placemat/blob/main/README.md#readme) of a mere &asymp;&#8239;16k lines.) 
 
 PostScript is a natural and relatively simple way to generate PDFs from a low-level language such as&nbsp;C: the&nbsp;C writes ASCII-text PostScript, which is then converted to PDF. 
 That conversion, that &lsquo;distillation&rsquo;, requires an application, likely to be either [Adobe&nbsp;Distiller](https://en.wikipedia.org/wiki/Adobe_Distiller) or [Ghostscript](https://en.wikipedia.org/wiki/Ghostscript) or an online route to Ghostscript such as [ps2pdf.org](https://www.ps2pdf.org/convert.htm). 
-For these purposes, any would be satisfactory (but Adobe is expensive).
+For these purposes, any would be satisfactor, except that Adobe is penny&#8209;wise pound&#8209;foolish expensive.
 
 
 ## PostScript Files ##
@@ -119,13 +123,13 @@ Both have:
 /PageHeight 420 360 mul 127 div def
 ```
 
-The `360 mul 127 div` converts millimetres to the units of PostScript, DTP points. 
-[ISO&nbsp;216 paper sizes](https://en.wikipedia.org/wiki/ISO_216):&nbsp; A4 is 297&#8239;mm&#8239;&times;&#8239;210&#8239;mm;&nbsp; 
+The `360 mul 127 div` converts millimetres to the units of PostScript, [DTP points](https://en.wikipedia.org/wiki/Point_(typography)). 
+A4 is an [ISO&nbsp;216 paper size](https://en.wikipedia.org/wiki/ISO_216), 297&#8239;mm&#8239;&times;&#8239;210&#8239;mm;&nbsp; 
 A3 is 420&#8239;mm&#8239;&times;&#8239;297&#8239;mm;&nbsp; 
 A2 is 594&#8239;mm&#8239;&times;&#8239;420&#8239;mm.&nbsp; 
 For the US size&nbsp;8&frac12;&Prime;&#8239;&times;&#8239;11&Prime; use <code>/PageWidth&nbsp;8.5&nbsp;72&nbsp;mul&nbsp;def</code> and <code>/PageHeight&nbsp;11&nbsp;72&nbsp;mul&nbsp;def</code> (&because;&nbsp;72&#8239;pt&nbsp;&equiv;&nbsp;1&Prime;), and likewise for other inch-specified page sizes.
 (*NB*: [1&nbsp;inch is defined](https://en.wikipedia.org/wiki/International_yard_and_pound) to be exactly 25.4&#8239;mm;&nbsp; 
-[1&nbsp;DTP&nbsp;point is defined](https://en.wikipedia.org/wiki/Point_(typography)) to be 1&frasl;72 of an inch;&nbsp; 
+1&nbsp;DTP&nbsp;point is defined to be 1&frasl;72 of an inch;&nbsp; 
 &Longleftrightarrow;&nbsp; 1&#8239;pt&nbsp;=&nbsp;127&frasl;360&#8239;mm&nbsp; 
 &Longleftrightarrow;&nbsp; 1&#8239;pt&nbsp;=&nbsp;0.35277&#773;&#8239;mm&nbsp; 
 &DoubleLongRightArrow;&nbsp; 1&#8239;mm&nbsp;&asymp;&nbsp;2.8346&#8239;pt.)
@@ -147,6 +151,10 @@ The rhombus code also has multiple sections of commented-out code that were used
 If useful to you, play and experiment. 
 (In PostScript comments begin with a `%`.) 
 
+It also has pieces of code wrapped in &ldquo;<code><i>Boolean</i>&nbsp;{&nbsp;&hellip;&nbsp;}&nbsp;if</code>&rdquo;, by default disabled with a `false`. 
+Generally, nearby coments explain. 
+If wanted, enable with `true`.
+
 Is the `stroke` to be a single line, as in the second diagram on the [SVG&nbsp;page](svg.md), or outer-and-inner lines, as in that page&rsquo;s top diagram? 
 To allow variations, `stroke`ing is done by the user-alterable routine `StrokeMulti`, which has a commented-out example.
 
@@ -157,22 +165,52 @@ When making such changes, it might be simplest to replace the current &ldquo;`se
 ## Kitchen ##
 
 The files 
-[Kitchen_Rh_08.**ps**](../postscript_pdf/Kitchen_Rh_08.ps) and 
-[Kitchen_Rh_08.**pdf**](../postscript_pdf/Kitchen_Rh_08.pdf) show the map of my kitchen.
+[Kitchen_Rh_09.**ps**](../postscript_pdf/Kitchen_Rh_09.ps) and 
+[Kitchen_Rh_09.**pdf**](../postscript_pdf/Kitchen_Rh_09.pdf) show the map of my kitchen.
 
-Obviously, for the particulars of your project, changes are needed.
+**For those tiling a non-huge space, this PostScript, appropriately amended, might be all that is needed from this repo.**
 
-Start by possibly changing `mmTileEdge`, which defaults to `152.5`, being 150mm of tile + 2.5mm grout. 
+Obviously, for the particulars of your project, changes are needed. 
+After each change re&#8209;distill: first&#8209;draft PostScript is often imperfect. 
+To facilitate reverting a step or few, frequently make a copy of your file (on macOS&nbsp;by&nbsp;&#8984;D).
 
-Next, in the PostScript file are two instances of the string &ldquo;Where on the map?&rdquo;. 
-Go to second instance, which is almost at the end of the file. 
-Just before this is are routines `KitchenRoomPath` and `KitchenFurniturePath`, specifying their shape in millimetres. 
-Adjust this template to your details. 
-But where on the map is your kitchen to be: which part of the tile pattern do you want? 
-Change the parameters of the `translate` near &ldquo;Where on the map?&rdquo;. 
+Find the string &ldquo;`Boolean: paint gridlines?`&rdquo;, and set the nearby Boolean to `true`.
 
-Back to the first instance of the string, at about line 17 of the file. 
-The `ToPaint_XMin`, `ToPaint_XMax`, `ToPaint_YMin`, and `ToPaint_YMax`: choose what is to be painted. 
-The `/ScaleFactor` should choose wisely given these, but you might want to change.
+Find `mmTileEdge`. 
+A few lines up is a Boolean condition. 
+If you are editing [my kitchen file](../postscript_pdf/Kitchen_Rh_09.ps), it will already be evaluating to `true`; if you are starting from [the PostScript output by the C](../postscript_pdf/Penrose_Rh_09.ps), it might be &ldquo;`TilingId -9 eq`&rdquo;, which needs to be changed to be true, either as &ldquo;`TilingId 9 eq`&rdquo; or just &ldquo;`true`&rdquo;. 
 
-Indeed, for those tiling a non-huge space, this PostScript or its SVG equivalents, appropriately amended, might be all that is needed from this repo.
+How big are your tiles? 
+That is, how long are their edges? 
+Set `mmTileEdge`.
+
+The room shape needs to be specified, in `KitchenRoomPath`. 
+This can be detailed, accurately tracing around every boxed&#8209;in pipe and other minor feature. 
+At the start, keep it simple: make it the broad outline of the room, so likely 4 to 8 lines. 
+Also configure the esentials of `KitchenFurniturePath`, perhaps the major cabinetry that will hide parts of the floor.
+
+There is a command resembling `TileMatrix setmatrix  -11.3 -21.8 translate`: change this to position your room on the tiling. 
+Aesthetic suggestion: include within the room a long path, either part of a very long path, or the whole of a closed path, so that its length can contrast with the many shorter closed paths that will be present. 
+
+For the moment, keep `ToPaint_XMin` etc very wide, perhaps at their original values.
+
+Then, several laps of amendments:
+* change `ToPaint_XMin` etc to zoom in, proceeding gradually;
+* tinker with the _x_ and _y_ values of the `translate`;
+* more precisely specify `KitchenRoomPath` and `KitchenFurniturePath`.
+
+Repeatedly re-distill, to check that code is working and the design aesthetics are improving.
+
+There is comment in the code, worth heeding:
+
+> Going to do a translation, in `TileSpace`, in which a tile is of length `EdgeLength` = 1. Almost certainly, you want to translate to a point within `ToPaint_XMin` etc. This point is the origin, the zero point, for the drawing of the room. Suggestion: make it the point from which physical tiling will start, so the point of certain tile alignment, so allowing (small) changes in mmTileEdge to correctly adjust for mis-judgements of grouting thickness.
+
+Do re-tinker. 
+Do come back the following day to review. 
+Do show to the spouse, for approval. 
+When it&rsquo;s final good, return to the string &ldquo;`Boolean: paint gridlines?`&rdquo;, and revert to `false`. 
+
+It is all somewhat fiddly. 
+But it can be done, even by a non-programmer, and is likely to take only a few hours. 
+
+Finally: do check your room measurements! Do not get these wrong.
