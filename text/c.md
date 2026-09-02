@@ -85,23 +85,23 @@ From one loop to the next the number of tiles grows, approximately, by a factor 
 The table below shows the numbers of fat and thin tiles in each tiling. 
 
 
-| Tl&rsquo;g<br>Id | Num<br>Fats | Num<br>Thins | Long<br>-est<br>closed<br>path | &lsquo;Area&rsquo; | Bound<br>-ary<br>num<br>vertices | JSON<br>size | &asymp;&#8239;&Sum;<small><sub>0&#10141;_n_</sub></small><br>exec.<br>time |
-|----------------------------------------:|-----------:|-----------:|-----------------:|--------------:|-------:|----------------:|--------------:|
-| [&numsp;0](../images/Penrose_Rh_00.svg) |          5 |          5 | 5&lsquo;r&rsquo; |               |     10 |   5.9&#8239;KiB |               |
-| [&numsp;1](../images/Penrose_Rh_01.svg) |         20 |         10 | 5&lsquo;p&rsquo; |               |     20 |  21.0&#8239;KiB |               |
-| [&numsp;2](../images/Penrose_Rh_02.svg) |         65 |         40 |               15 |               |     40 |  69.5&#8239;KiB |               |
-| [&numsp;3](../images/Penrose_Rh_03.svg) |        190 |        110 |               25 |      184      |     70 |   203&#8239;KiB |               |
-| [&numsp;4](../images/Penrose_Rh_04.svg) |        530 |        320 |               55 |      444      |    120 |   581&#8239;KiB |               |
-| [&numsp;5](../images/Penrose_Rh_05.svg) |      1,440 |        870 |              105 |     1303      |    200 | 1,613&#8239;KiB |               |
-| [&numsp;6](../images/Penrose_Rh_06.svg) |      3,855 |      2,355 |              215 |     3286      |    330 | 4,407&#8239;KiB |               |
-| [&numsp;7](../images/Penrose_Rh_07.svg) |     10,230 |      6,270 |              425 |     9&#8239;k |    540 |  11.6&#8239;MiB |               |
-| [&numsp;8](../images/Penrose_Rh_08.svg) |     27,005 |     16,610 |              855 |    23&#8239;k |    880 |  31.1&#8239;MiB |               |
-| [&numsp;9](../images/Penrose_Rh_09.svg) |     71,060 |     43,780 |            1,705 |    62&#8239;k |  1,430 |  83.1&#8239;MiB |   4&#8239;s   |
-|       [10](../images/Penrose_Rh_10.svg) |    186,620 |    115,120 |            3,415 |   162&#8239;k |  2,320 |   222&#8239;MiB |  11&#8239;s   |
-|       [11](../images/Penrose_Rh_11.svg) |    489,520 |    302,180 |            6,825 |   427&#8239;k |  3,760 |   588&#8239;MiB |  26&#8239;s   |
-|        12                               |  1,283,105 |    792,425 |           13,655 | 1,116&#8239;k |  6,090 | 1,560&#8239;MiB |  89&#8239;s   |
-|        13                               |  3,361,680 |  2,076,690 |           27,305 |   2.9&#8239;M |  9,860 | 4,126&#8239;MiB |   4&#8239;min |
-|        14                               |  8,804,985 |  5,440,260 |           54,615 |   7.7&#8239;M | 15,960 |  10.7&#8239;GiB |  22&#8239;min |
+| Tl&rsquo;g<br>Id | Num<br>Fats | Num<br>Thins | Long<br>-est<br>closed<br>path | &lsquo;Area&rsquo; | Bound<br>-ary<br>num<br>vertices | &Sum;`malloc()`<br>this<br>Tl&rsquo;g |JSON<br>size | &asymp;&#8239;&Sum;<small><sub>0&#10141;_n_</sub></small><br>exec.<br>time |
+|----------------------------------------:|-----------:|-----------:|-----------------:|--------------:|-------:|----------------:|----------------:|--------------:|
+| [&numsp;0](../images/Penrose_Rh_00.svg) |          5 |          5 | 5&lsquo;r&rsquo; |               |     10 |   8.8&#8239;KiB |   5.9&#8239;KiB |               |
+| [&numsp;1](../images/Penrose_Rh_01.svg) |         20 |         10 | 5&lsquo;p&rsquo; |               |     20 |  37.3&#8239;KiB |  21.0&#8239;KiB |               |
+| [&numsp;2](../images/Penrose_Rh_02.svg) |         65 |         40 |               15 |               |     40 |  74.7&#8239;KiB |  69.5&#8239;KiB |               |
+| [&numsp;3](../images/Penrose_Rh_03.svg) |        190 |        110 |               25 |      184      |     70 |   182&#8239;KiB |   203&#8239;KiB |               |
+| [&numsp;4](../images/Penrose_Rh_04.svg) |        530 |        320 |               55 |      444      |    120 |   390&#8239;KiB |   581&#8239;KiB |               |
+| [&numsp;5](../images/Penrose_Rh_05.svg) |      1,440 |        870 |              105 |     1303      |    200 |   899&#8239;KiB | 1,613&#8239;KiB |               |
+| [&numsp;6](../images/Penrose_Rh_06.svg) |      3,855 |      2,355 |              215 |     3286      |    330 | 2,220&#8239;KiB | 4,407&#8239;KiB |               |
+| [&numsp;7](../images/Penrose_Rh_07.svg) |     10,230 |      6,270 |              425 |     9&#8239;k |    540 | 5,700&#8239;KiB |  11.6&#8239;MiB |               |
+| [&numsp;8](../images/Penrose_Rh_08.svg) |     27,005 |     16,610 |              855 |    23&#8239;k |    880 |  14.5&#8239;MiB |  31.1&#8239;MiB |               |
+| [&numsp;9](../images/Penrose_Rh_09.svg) |     71,060 |     43,780 |            1,705 |    62&#8239;k |  1,430 |  37.7&#8239;MiB |  83.1&#8239;MiB |   4&#8239;s   |
+|       [10](../images/Penrose_Rh_10.svg) |    186,620 |    115,120 |            3,415 |   162&#8239;k |  2,320 |    99&#8239;MiB |   222&#8239;MiB |  11&#8239;s   |
+|       [11](../images/Penrose_Rh_11.svg) |    489,520 |    302,180 |            6,825 |   427&#8239;k |  3,760 |   258&#8239;MiB |   588&#8239;MiB |  26&#8239;s   |
+|        12                               |  1,283,105 |    792,425 |           13,655 | 1,116&#8239;k |  6,090 |   676&#8239;MiB | 1,560&#8239;MiB |  89&#8239;s   |
+|        13                               |  3,361,680 |  2,076,690 |           27,305 |   2.9&#8239;M |  9,860 | 1,705&#8239;MiB | 4,126&#8239;MiB |   4&#8239;min |
+|        14                               |  8,804,985 |  5,440,260 |           54,615 |   7.7&#8239;M | 15,960 | 4,343&#8239;MiB |  10.7&#8239;GiB |  22&#8239;min |
 
 
 ### &lsquo;Area&rsquo; ###
@@ -125,9 +125,12 @@ The quoted execution times are from a ten-core &lap;4.4&#8239;GHz Apple&nbsp;M4 
 Execution was in [Xcode](https://developer.apple.com/xcode/)&rsquo;s debug mode to catch possible stray pointer misbehaviours (of which there were none); and with memory&#8209;alignment at its natural value by <code>#define&nbsp;MEMORY_FRUGALITY_OUTRANKS_SPEED&nbsp;false</code> in [<kbd>penrose.h</kbd>](../C/penrose.h). 
 Obviously, your execution times might be very different.
 
+Calls are made to `malloc()`, for `.rhombi`, `.path`, and `.pathStat`. 
+The simple total of these three `malloc()`s, for each iteration (i.e., not cumulative sum, ignoring temporary memory assignments, and ignoring alignment and page boundary trickery), is in the &ldquo;&Sum;`malloc()`&rdquo; column, which grows by &asymp;&#8239;&phi;&sup2; per iteration.
+
 For `15`, memory needed exceeded the available 16&#8239;GiB, so the OS started paging memory: execution was cancelled after 12 hours. 
 Hence a deeper recursion needs more memory. 
-It might be that one more recursion, `15`, so &asymp;&#8239;37&nbsp;million rhombi, would require 24&#8239;GiB of memory; and two more, &asymp;&#8239;97&nbsp;million rhombi, would require &asymp;&#8239;48&#8239;GiB, likely requiring a few days to execute. 
+It might be that one more recursion, `15`, so &asymp;&#8239;37&nbsp;million rhombi, would require 32&#8239;GiB of memory; and two more, &asymp;&#8239;97&nbsp;million rhombi, would require &asymp;&#8239;64&#8239;GiB, likely requiring a few days to execute. 
 Also consider: the disk space to hold its JSON; the disk space to hold the database used for post-processing such as selection of relevant rhombi; the storage space and software on the computers in the tile&#8209;laying machines. 
 And it could fairly be asked whether your physical area _really_ needs many more millions of tiles (likely answer:&nbsp;no).
 
