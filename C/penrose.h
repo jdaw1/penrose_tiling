@@ -86,6 +86,7 @@ __attribute__ ((__packed__))
 typedef  long  int  RhombId   ;
 typedef  long  int  PathId    ;
 typedef  long  int  PathStatId;
+typedef  int8_t     PathRank;
 typedef  int8_t     TilingId  ;
 
 typedef struct  // Neighbour

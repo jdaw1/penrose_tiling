@@ -88,8 +88,8 @@ The table below shows the numbers of fat and thin tiles in each tiling.
 | Tl&rsquo;g<br>Id | Num<br>Fats | Num<br>Thins | Long<br>-est<br>closed<br>path | &lsquo;Area&rsquo; | Bound<br>-ary<br>num<br>vertices | JSON<br>size | &asymp;&#8239;&Sum;<small><sub>0&#10141;_n_</sub></small><br>exec.<br>time |
 |----------------------------------------:|-----------:|-----------:|-----------------:|--------------:|-------:|----------------:|--------------:|
 | [&numsp;0](../images/Penrose_Rh_00.svg) |          5 |          5 | 5&lsquo;r&rsquo; |               |     10 |   5.9&#8239;KiB |               |
-| [&numsp;1](../images/Penrose_Rh_01.svg) |         20 |         10 | 5&lsquo;p&rsquo; |               |     20 |  20.9&#8239;KiB |               |
-| [&numsp;2](../images/Penrose_Rh_02.svg) |         65 |         40 |               15 |               |     40 |  69.4&#8239;KiB |               |
+| [&numsp;1](../images/Penrose_Rh_01.svg) |         20 |         10 | 5&lsquo;p&rsquo; |               |     20 |  21.0&#8239;KiB |               |
+| [&numsp;2](../images/Penrose_Rh_02.svg) |         65 |         40 |               15 |               |     40 |  69.5&#8239;KiB |               |
 | [&numsp;3](../images/Penrose_Rh_03.svg) |        190 |        110 |               25 |      184      |     70 |   203&#8239;KiB |               |
 | [&numsp;4](../images/Penrose_Rh_04.svg) |        530 |        320 |               55 |      444      |    120 |   581&#8239;KiB |               |
 | [&numsp;5](../images/Penrose_Rh_05.svg) |      1,440 |        870 |              105 |     1303      |    200 | 1,613&#8239;KiB |               |
@@ -99,7 +99,7 @@ The table below shows the numbers of fat and thin tiles in each tiling.
 | [&numsp;9](../images/Penrose_Rh_09.svg) |     71,060 |     43,780 |            1,705 |    62&#8239;k |  1,430 |  83.1&#8239;MiB |   4&#8239;s   |
 |       [10](../images/Penrose_Rh_10.svg) |    186,620 |    115,120 |            3,415 |   162&#8239;k |  2,320 |   222&#8239;MiB |  11&#8239;s   |
 |       [11](../images/Penrose_Rh_11.svg) |    489,520 |    302,180 |            6,825 |   427&#8239;k |  3,760 |   588&#8239;MiB |  26&#8239;s   |
-|        12                               |  1,283,105 |    792,425 |           13,655 | 1,116&#8239;k |  6,090 | 1,560&#8239;MiB |  90&#8239;s   |
+|        12                               |  1,283,105 |    792,425 |           13,655 | 1,116&#8239;k |  6,090 | 1,560&#8239;MiB |  89&#8239;s   |
 |        13                               |  3,361,680 |  2,076,690 |           27,305 |   2.9&#8239;M |  9,860 | 4,126&#8239;MiB |   4&#8239;min |
 |        14                               |  8,804,985 |  5,440,260 |           54,615 |   7.7&#8239;M | 15,960 |  10.7&#8239;GiB |  22&#8239;min |
 

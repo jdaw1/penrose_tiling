@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // exportPathStats.c, in PenroseC
 
@@ -58,7 +58,9 @@ void pathStat_export(
 
 				if( pathStatP -> pathClosed )
 				{
-					(*numCharsThisFileP) += fprintf(fp, "  /NumPaths %li  /MaxNumThisFats %li  /MaxNumDeepFats %li  /MaxNumThisThins %li  /MaxNumDeepThins %li",
+					(*numCharsThisFileP) += fprintf(fp,
+						"  /Rank %" PRIi8 "  /NumPaths %li  /MaxNumThisFats %li  /MaxNumDeepFats %li  /MaxNumThisThins %li  /MaxNumDeepThins %li",
+						pathStatP->pathClosedTypeNum,
 						pathStatP->numPaths,
 						pathStatP->insideThis_MaxNumFats,
 						pathStatP->insideDeep_MaxNumFats,
@@ -144,7 +146,9 @@ void pathStat_export(
 			);  // fprintf()
 			if( 5 == pathStatP->pathLength  &&  pathStatP->pathClosed )
 				(*numCharsThisFileP) += fprintf(fp, ", \"Pointy\":%s",  pathStatP->pointy ? "true" : "false");
-			(*numCharsThisFileP) += fprintf(fp, ", \"NumPaths\":%li, \"MaxNumThisFats\":%li, \"MaxNumDeepFats\":%li, \"MaxNumThisThins\":%li, \"MaxNumDeepThins\":%li",
+			(*numCharsThisFileP) += fprintf(fp,
+				", \"Rank\":%" PRIi8 ", , \"NumPaths\":%li, \"MaxNumThisFats\":%li, \"MaxNumDeepFats\":%li, \"MaxNumThisThins\":%li, \"MaxNumDeepThins\":%li",
+				pathStatP->pathClosedTypeNum,
 				pathStatP->numPaths,
 				pathStatP->insideThis_MaxNumFats,
 				pathStatP->insideDeep_MaxNumFats,
@@ -233,11 +237,11 @@ void pathStat_export(
 				// No data, just headers. Header code here to be near to the data-outputting code.
 				// These strings are intended to be unique range names for creation and use within Excel (Formula > Defined Names > Create from Selection).
 				(*numCharsThisFileP) += fprintf(fp,
-					"PthStat_%02" PRIi8 ".TilingId"  "\tPthStat_%02" PRIi8 ".PathStatId"  "\tPthStat_%02" PRIi8 ".PathClosed"  "\tPthStat_%02" PRIi8 ".PathLength"  "\tPthStat_%02" PRIi8 ".Pointy"
+					"PthStat_%02" PRIi8 ".TilingId"  "\tPthStat_%02" PRIi8 ".PathStatId"  "\tPthStat_%02" PRIi8 ".PathClosed"  "\tPthStat_%02" PRIi8 ".PathLength"  "\tPthStat_%02" PRIi8 ".Pointy"  "\tPthStat_%02" PRIi8 ".Rank"
 					"\tPthStat_%02" PRIi8 ".NumPaths"  "\tPthStat_%02" PRIi8 ".MaxNumThisFats"  "\tPthStat_%02" PRIi8 ".MaxNumThisThins"  "\tPthStat_%02" PRIi8 ".MaxNumDeepFats"  "\tPthStat_%02" PRIi8 ".MaxNumDeepThins"
 					"\tPthStat_%02" PRIi8 ".WidthMax"  "\tPthStat_%02" PRIi8 ".HeightMax"  "\tPthStat_%02" PRIi8 ".RadiusMin"  "\tPthStat_%02" PRIi8 ".RadiusMax"
 					"\tPthStat_%02" PRIi8 ".InteriorsConsistent",
-					tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,
+					tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,
 					tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,
 					tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,
 					tlngP->tilingId
@@ -245,12 +249,13 @@ void pathStat_export(
 			}  // if( NULL == pathStatP )
 			else
 			{
-				(*numCharsThisFileP) += fprintf(fp, "%" PRIi8  "\t%li"  "\t%s"  "\t%li"  "\t%s"  "\t%li",
+				(*numCharsThisFileP) += fprintf(fp, "%" PRIi8  "\t%li"  "\t%s"  "\t%li"  "\t%s"  "\t%" PRIi8  "\t%li",
 					tlngP->tilingId,
 					pathStatP->pathStatId,
 					pathStatP->pathClosed ? "TRUE" : "FALSE",
 					pathStatP->pathLength,
 					( pathStatP->pathClosed  &&  5==pathStatP->pathLength ) ? (pathStatP->pointy?"TRUE":"FALSE") : "#N/A",  // #N/A as Excel awkward about CountIfs() blanks.
+					pathStatP->pathClosedTypeNum,
 					pathStatP->numPaths
 				);  // fprintf()
 

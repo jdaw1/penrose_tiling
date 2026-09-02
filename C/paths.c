@@ -92,7 +92,10 @@ int8_t pathClosedTypeNum(bool pathClosed, long int pathLength, bool pointy)
 		if( 5 == pathLength )
 			return( pointy ? 2 : 1 );
 		else
-			return round(log2(0.6 * pathLength));  // 15-->9-->3.1699-->3;  25-->15-->3.90689-->4;  55-->33-->5.04439-->5;  105-->63-->5.977-->6;  215-->129-->7.0112-->7;  425-->255-->7.994-->8;  855-->513-->9.0028-->9
+		{
+			// Excel: = Let(pthLngth,...,   Log(pthLngth * 3/5  +  2 - Mod(pthLngth,4)) / Log(2) )
+			return (PathRank)round(log2( pathLength*3/5  +  2  -  (pathLength % 4) ));
+		}
 	}  // Closed
 	else
 		return -1;  // Open
