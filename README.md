@@ -32,6 +32,7 @@ Documentation pages:&nbsp;
 &bull;&nbsp;[PostScript&nbsp;output&nbsp;(data)](text/postscript_data.md);&nbsp; 
 &bull;&nbsp;[Physical&nbsp;tiling](text/physical_tiling.md).
 
+---
 
 <div align="center">
 
