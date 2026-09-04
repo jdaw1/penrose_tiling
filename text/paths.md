@@ -79,7 +79,7 @@ In it:
 | Limit&nbsp;&#8784; | 2<small><sup>*n*</sup></small>&nbsp;&times;&nbsp;5&frasl;3<br>&#8784;&ThinSpace;3.97&times;<br>&ThinSpace;(&radic;*thin*)<small><sup>ln(2)/ln(&phi;)</sup></small><br>&asymp;&nbsp;2.81&ThinSpace;&times;<br>(&radic;*fat*)<small><sup>ln(2)/ln(&phi;)</sup></small> | *fat*&nbsp;=<br>&phi;<small><sup>2*n*</sup></small>&nbsp;(7&radic;5&nbsp;&minus;&nbsp;5)/22 | *thin*&ThinSpace;=<br>&phi;<small><sup>2*n*</sup></small>&nbsp;(10&nbsp;&minus;&nbsp;3&radic;5)/11 | &NotExists; | &phi;<small><sup>*n*&minus;3</sup></small> | &phi;<small><sup>*n*&minus;1</sup></small> |
 
 
-Observe that the length of a long path varies as the square root of its area (which is a linear measure) to the power of ln(2)&#8239;/&#8239;ln(&phi;)&nbsp;&asymp;&nbsp;1.44042. 
+Observe that the length of a long path varies as the square root of its area (which is a linear measure) to the power of [ln(2)](https://en.wikipedia.org/wiki/Natural_logarithm_of_2)&#8239;/&#8239;ln([&phi;](https://en.wikipedia.org/wiki/Golden_ratio))&nbsp;&asymp;&nbsp;1.44042. 
 That is, long paths are approximately 1.44 dimensional. 
 (Technicality: trivially, ln(2)&#8239;/&#8239;ln(&phi;)&nbsp;&NotElement;&nbsp;[&Qopf;](https://en.wikipedia.org/wiki/Rational_number), and hence is [transcendental](https://en.wikipedia.org/wiki/Transcendental_number) by the [Gelfond–Schneider theorem](https://en.wikipedia.org/wiki/Gelfond%E2%80%93Schneider_theorem#mwNQ).) 
 
