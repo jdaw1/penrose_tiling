@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // neighbours.c, in PenroseC
 
@@ -120,7 +120,6 @@ void twoRhombi_Neighbourify(Tiling * const tlngP,  RhombId const rhId_A,  RhombI
 	nghbrP->rhId           = rhId_B;
 	nghbrP->physique       = rhP_B->physique;
 	nghbrP->nghbrsNghbrNum = rhP_B->numNeighbours;
-	nghbrP->pathId         = -1;
 	nghbrP->withinPathNum  = -1;
 
 	nghbrP = &(rhP_B->neighbours[ rhP_B->numNeighbours ]);
@@ -129,7 +128,6 @@ void twoRhombi_Neighbourify(Tiling * const tlngP,  RhombId const rhId_A,  RhombI
 	nghbrP->rhId           = rhId_A;
 	nghbrP->physique       = rhP_A->physique;
 	nghbrP->nghbrsNghbrNum = rhP_A->numNeighbours;
-	nghbrP->pathId         = -1;
 	nghbrP->withinPathNum  = -1;
 
 	(rhP_A->numNeighbours) ++;

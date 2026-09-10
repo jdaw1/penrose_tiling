@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // sortRhombi.c, in PenroseC
 
@@ -31,36 +31,6 @@ int rhombiGt_ByPath(
 		break;  // Entirely redundant.
 	}  // switch(rhP0->physique)
 }  // rhombiGt_ByPath()
-
-
-int neighbourGt(Neighbour const * const nP0,  Neighbour const * const nP1)
-{
-	if( nP0->physique != nP1->physique )
-		return ( Fat == nP1->physique ? +1 : -1 ) ;
-
-	switch( nP0->physique )
-	{
-	case Fat:  // ==> both Fat
-		if(nP0->pathId == nP1->pathId)
-		{
-			if( nP1->withinPathNum == 0 )  return +1 ;
-			if( nP0->withinPathNum == 0 )  return -1 ;
-			return( nP0->withinPathNum < nP1->withinPathNum ? +1 : -1 );
-		}
-		else
-		{
-			// Two Fat neighbours of a Thin; cannot be two Fat neighbours of a Fat.
-			return( nP0->pathId > nP1->pathId ? +1 : -1 );  // cannot be equal
-		}
-		break;  // Entirely redundant.
-
-	case Thin:  // ==> both Thin
-		if( nP0->rhId < nP1->rhId )  return +1 ;
-		if( nP0->rhId > nP1->rhId )  return -1 ;
-		return 0 ;
-		break;  // Entirely redundant.
-	}  // switch( rhP0->physique )
-}  // neighbourGt()
 
 
 void rhombi_sort(

@@ -247,7 +247,7 @@ bool rhombus_keep(
 }  // rhombus_keep
 
 
-void file_names_timeString_set(char * const timeString, const struct tm * const timeData)
+void file_names_timeString_set(char * const timeString,  const struct tm * const timeData)
 {
 	// My compiler, Xcode 26.2 (17C52), does not warn about this, I think rightly.
 	// But your compiler might compile-time evaluate, then grumble that some code is never reached.

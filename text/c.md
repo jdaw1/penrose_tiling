@@ -85,23 +85,24 @@ From one loop to the next the number of tiles grows, approximately, by a factor 
 The table below shows the numbers of fat and thin tiles in each tiling. 
 
 
-| Tl&rsquo;g<br>Id | Num<br>Fats | Num<br>Thins | Long<br>-est<br>closed<br>path | &lsquo;Area&rsquo; | Bound<br>-ary<br>num<br>vertices | &Sum;`malloc()`<br>this<br>Tl&rsquo;g |JSON<br>size | &asymp;&#8239;&Sum;<small><sub>0&#10141;_n_</sub></small><br>exec.<br>time |
+| Tl&rsquo;g<br>Id | Num<br>Fats | Num<br>Thins | Long<br>-est<br>closed<br>path | &lsquo;Area&rsquo; | Bound<br>-ary<br>num<br>vertices | &Sum;<br>`malloc()`<br>this<br>Tl&rsquo;g |JSON<br>size | &asymp;&#8239;&Sum;<small><sub>0&#10141;_n_</sub></small><br>exec.<br>time |
 |----------------------------------------:|-----------:|-----------:|-----------------:|--------------:|-------:|----------------:|----------------:|--------------:|
-| [&numsp;0](../images/Penrose_Rh_00.svg) |          5 |          5 | 5&lsquo;r&rsquo; |               |     10 |   8.8&#8239;KiB |   5.9&#8239;KiB |               |
-| [&numsp;1](../images/Penrose_Rh_01.svg) |         20 |         10 | 5&lsquo;p&rsquo; |               |     20 |  37.3&#8239;KiB |  21.0&#8239;KiB |               |
-| [&numsp;2](../images/Penrose_Rh_02.svg) |         65 |         40 |               15 |               |     40 |  74.7&#8239;KiB |  69.5&#8239;KiB |               |
-| [&numsp;3](../images/Penrose_Rh_03.svg) |        190 |        110 |               25 |      184      |     70 |   182&#8239;KiB |   203&#8239;KiB |               |
-| [&numsp;4](../images/Penrose_Rh_04.svg) |        530 |        320 |               55 |      444      |    120 |   390&#8239;KiB |   581&#8239;KiB |               |
-| [&numsp;5](../images/Penrose_Rh_05.svg) |      1,440 |        870 |              105 |     1303      |    200 |   899&#8239;KiB | 1,613&#8239;KiB |               |
-| [&numsp;6](../images/Penrose_Rh_06.svg) |      3,855 |      2,355 |              215 |     3286      |    330 | 2,220&#8239;KiB | 4,407&#8239;KiB |               |
-| [&numsp;7](../images/Penrose_Rh_07.svg) |     10,230 |      6,270 |              425 |     9&#8239;k |    540 | 5,700&#8239;KiB |  11.6&#8239;MiB |               |
-| [&numsp;8](../images/Penrose_Rh_08.svg) |     27,005 |     16,610 |              855 |    23&#8239;k |    880 |  14.5&#8239;MiB |  31.1&#8239;MiB |               |
-| [&numsp;9](../images/Penrose_Rh_09.svg) |     71,060 |     43,780 |            1,705 |    62&#8239;k |  1,430 |  37.7&#8239;MiB |  83.1&#8239;MiB |   4&#8239;s   |
-|       [10](../images/Penrose_Rh_10.svg) |    186,620 |    115,120 |            3,415 |   162&#8239;k |  2,320 |    99&#8239;MiB |   222&#8239;MiB |  11&#8239;s   |
-|       [11](../images/Penrose_Rh_11.svg) |    489,520 |    302,180 |            6,825 |   427&#8239;k |  3,760 |   258&#8239;MiB |   588&#8239;MiB |  26&#8239;s   |
-|        12                               |  1,283,105 |    792,425 |           13,655 | 1,116&#8239;k |  6,090 |   676&#8239;MiB | 1,560&#8239;MiB |  89&#8239;s   |
-|        13                               |  3,361,680 |  2,076,690 |           27,305 |   2.9&#8239;M |  9,860 | 1,705&#8239;MiB | 4,126&#8239;MiB |   4&#8239;min |
-|        14                               |  8,804,985 |  5,440,260 |           54,615 |   7.7&#8239;M | 15,960 | 4,343&#8239;MiB |  10.7&#8239;GiB |  22&#8239;min |
+| [&numsp;0](../images/Penrose_Rh_00.svg) |          5 |          5 | 5&lsquo;r&rsquo; |               |     10 |   8.1&#8239;KiB |   5.9&#8239;KiB |               |
+| [&numsp;1](../images/Penrose_Rh_01.svg) |         20 |         10 | 5&lsquo;p&rsquo; |               |     20 |  33.8&#8239;KiB |  21.0&#8239;KiB |               |
+| [&numsp;2](../images/Penrose_Rh_02.svg) |         65 |         40 |               15 |               |     40 |  68.4&#8239;KiB |  69.5&#8239;KiB |               |
+| [&numsp;3](../images/Penrose_Rh_03.svg) |        190 |        110 |               25 |      184      |     70 |   164&#8239;KiB |   203&#8239;KiB |               |
+| [&numsp;4](../images/Penrose_Rh_04.svg) |        530 |        320 |               55 |      444      |    120 |   352&#8239;KiB |   581&#8239;KiB |               |
+| [&numsp;5](../images/Penrose_Rh_05.svg) |      1,440 |        870 |              105 |     1303      |    200 |   809&#8239;KiB | 1,613&#8239;KiB |               |
+| [&numsp;6](../images/Penrose_Rh_06.svg) |      3,855 |      2,355 |              215 |     3286      |    330 | 1,995&#8239;KiB | 4,407&#8239;KiB |               |
+| [&numsp;7](../images/Penrose_Rh_07.svg) |     10,230 |      6,270 |              425 |     9&#8239;k |    540 | 5,118&#8239;KiB |  11.6&#8239;MiB |               |
+| [&numsp;8](../images/Penrose_Rh_08.svg) |     27,005 |     16,610 |              855 |    23&#8239;k |    880 |  13.0&#8239;MiB |  31.1&#8239;MiB |               |
+| [&numsp;9](../images/Penrose_Rh_09.svg) |     71,060 |     43,780 |            1,705 |    62&#8239;k |  1,430 |  33.9&#8239;MiB |  83.1&#8239;MiB |   4&#8239;s   |
+|       [10](../images/Penrose_Rh_10.svg) |    186,620 |    115,120 |            3,415 |   162&#8239;k |  2,320 |    89&#8239;MiB |   222&#8239;MiB |  12&#8239;s   |
+|       [11](../images/Penrose_Rh_11.svg) |    489,520 |    302,180 |            6,825 |   427&#8239;k |  3,760 |   232&#8239;MiB |   588&#8239;MiB |  28&#8239;s   |
+|        12                               |  1,283,105 |    792,425 |           13,655 |   1.1&#8239;M |  6,090 |   606&#8239;MiB | 1,560&#8239;MiB |   2&#8239;min |
+|        13                               |  3,361,680 |  2,076,690 |           27,305 |   2.9&#8239;M |  9,860 | 1,529&#8239;MiB | 4,126&#8239;MiB |   5&#8239;min |
+|        14                               |  8,804,985 |  5,440,260 |           54,615 |   7.7&#8239;M | 15,960 | 3,895&#8239;MiB |  10.7&#8239;GiB |  23&#8239;min |
+|        15                               | 23,058,210 | 14,248,290 |          109,225 |    20&#8239;M | 25,830 |   9.9&#8239;GiB |  28.3&#8239;GiB |  98&#8239;min |
 
 
 ### &lsquo;Area&rsquo; ###
@@ -128,25 +129,27 @@ Obviously, your execution times might be very different.
 Calls are made to `malloc()`, for `.rhombi`, `.path`, and `.pathStat`. 
 The simple total of these three `malloc()`s, for each iteration (i.e., not cumulative sum, ignoring temporary memory assignments, and ignoring alignment and page boundary trickery), is in the &ldquo;&Sum;`malloc()`&rdquo; column, which grows by &asymp;&#8239;&phi;&sup2; per iteration.
 
-For `15`, memory needed exceeded the available 16&#8239;GiB, so the OS started paging memory: execution was cancelled after 12 hours. 
-Hence a deeper recursion needs more memory. 
-It might be that one more recursion, `15`, so &asymp;&#8239;37&nbsp;million rhombi, would require 32&#8239;GiB of memory; and two more, &asymp;&#8239;97&nbsp;million rhombi, would require &asymp;&#8239;64&#8239;GiB, likely requiring a few days to execute. 
-Also consider: the disk space to hold its JSON; the disk space to hold the database used for post-processing such as selection of relevant rhombi; the storage space and software on the computers in the tile&#8209;laying machines. 
+For `15`, memory needed was slightly more than the whole of the 16&#8239;GiB (ignoring page boundaries &Sum;`malloc()`&nbsp;&asymp;&nbsp;16.11&#8239;GiB, so there must have been some memory paging). 
+Hence was done with no other applications running, not even Xcode itself. 
+A deeper recursion needs more memory. 
+It might be that one more recursion, `16`, so &asymp;&#8239;60.3&nbsp;million rhombi, would require 48&#8239;GiB of memory; and another, &asymp;&#8239;97.7&nbsp;million rhombi, would require &asymp;&#8239;128&#8239;GiB, likely requiring days to execute. 
+Also consider: the storage needed to hold the JSON; the size of database used for post-processing such as selection of relevant rhombi; and indeed the capacity of the computers in the tile&#8209;laying machines. 
 And it could fairly be asked whether your physical area _really_ needs many more millions of tiles (likely answer:&nbsp;no).
 
 For more than 2.1&#8239;bn rhombi, so many square kilometres, there would be a need to enlarge some types from 
 <code>long&nbsp;int</code> (&le;&nbsp;2<small><sup>31</sup></small>&#8239;&minus;&#8239;1) to 
 [<code>long&nbsp;long&nbsp;int</code>](https://en.cppreference.com/w/c/language/arithmetic_types.html#Integer_types) 
-(&le;&nbsp;2<small><sup>63</sup></small>&#8239;&minus;&#8239;1 &asymp;&nbsp;9&#8239;&times;&#8239;10<small><sup>18</sup></small> =&nbsp;9&nbsp;quintillion &gap;&nbsp;vast&nbsp;plethora), which needs to be able to hold `-1` so cannot be `unsigned`. 
+(&le;&nbsp;2<small><sup>63</sup></small>&#8239;&minus;&#8239;1 &asymp;&nbsp;9&#8239;&times;&#8239;10<small><sup>18</sup></small> =&nbsp;9&nbsp;quintillion &gap;&nbsp;vast&nbsp;plethora), which needs to be able to hold `-1` so cannot be ~~`unsigned`~~. 
 This would require changing some format strings passed to `fprintf()` and variants, &ldquo;`%li`&rdquo; becoming &ldquo;`%lli`&rdquo;. 
 If this is necessary, perhaps also improve the floating-point precision by replacing `double` with 
 [<code>long&nbsp;double</code>](https://en.cppreference.com/w/c/language/arithmetic_types.html#Real_floating_types) ([wikipedia](https://en.wikipedia.org/wiki/Long_double)), 
 which would necessitate further changes to format strings. 
 In [<kbd>main.c</kbd>](../C/main.c) is 
-<code>static&nbsp;int8_t&nbsp;const <b>numTilings_Max</b>&nbsp;=&nbsp;15;</code>, which prevents the accidental start, by a typing error such as &ldquo;<kbd>115</kbd>&rdquo;, of a task that is certain to fail eventually. 
+<code>static&nbsp;int8_t&nbsp;const <b>numTilings_Max</b>&nbsp;=&nbsp;16;</code>, which prevents the accidental start, by a typing error such as &ldquo;<kbd>116</kbd>&rdquo;, of a task that is certain to fail eventually. 
 If you really want to allow larger values&mdash;but almost certainly you don&rsquo;t&mdash;then increase `numTilings_Max`.
 
-Anyway, by me, not tested beyond the table above, the largest of which has 14,245,245 rhombi.
+Anyway, by me, not tested beyond the table above, the largest of which has 37,306,500 rhombi. 
+For a tile edge of 50cm&nbsp;&asymp;&nbsp;19.7&Prime; this would have a colourable area &asymp;&nbsp;5&#8239;km&sup2;&nbsp;&asymp;&nbsp;1240&#8239;acres.
 
 
 ## Code workings ##
@@ -207,7 +210,9 @@ And there are other positions for which holes or gaps have a unique completion, 
 * Which is the smallest enclosing path?  But the level of the question varies.  
     - Open paths cannot have an enclosing path.
     - Closed paths can, though not all do. So for fat rhombi, enclosing-path is at the level of the path.
-    - But for thin rhombi, it is at the level of the rhombus. For thin rhombi, find a touching fat, and either the thin is immediately inside that fat&rsquo;s path, or the answer is the same as for that fat&rsquo;s path.
+    - But for thin rhombi, it is at the level of the rhombus. 
+        For thin rhombi, find a touching fat, and either the thin is immediately inside that fat&rsquo;s path, or the answer is the same as for that fat&rsquo;s path. 
+        Indeed, it is faster than that: every thin either touches the outside &Longleftrightarrow; fewer than four neighbours; or touches a closed path of length 5; or touches a thin of which one of these is true.
 
     Insideness is computed in [<kbd>insideness.c</kbd>](../C/insideness.c), which makes much use of [<kbd>windingNumber.c</kbd>](../C/windingNumber.c). 
     Because there are many candidate enclosing paths to be tested, this is potentially slow.
@@ -222,12 +227,12 @@ And there are other positions for which holes or gaps have a unique completion, 
 
 * Arrays needs sorting, requiring renumbering of pointers into into them. Already mentioned are `rhombi_sort()` in [<kbd>sortRhombi.c</kbd>](../C/sortRhombi.c); also `paths_sort()` in [<kbd>sortPaths.c</kbd>](../C/sortPaths.c); and `pathStats_sort()` in [<kbd>sortPathStats.c</kbd>](../C/sortPathStats.c).
 
-* PostScript ([wikipedia](http://en.wikipedia.org/wiki/PostScript), [Adobe&rsquo;s&nbsp;PostScript Language Reference 3<small><sup>rd</sup></small>&nbsp;edition](https://www.adobe.com/jp/print/postscript/pdfs/PLRM.pdf)) is an an early-1980s printer-control language. 
-    It is a delightful simple clean text-based user-alterable [Turing-complete](https://en.wikipedia.org/wiki/Turing_completeness) means of making [PDF](https://en.wikipedia.org/wiki/PDF)s. 
-    It is also an early-1980s printer-control language that is really showing its age. 
-    Nurse&mdash;please, my stick! 
-    For example, arrays and data structures have a maximum length of 2<small><sup>16</sup></small>&nbsp;&minus;&nbsp;1 =&nbsp;65,535 ([PLRM3, Appendix&nbsp;B, p739](https://www.adobe.com/jp/print/postscript/pdfs/PLRM.pdf#page=753), table&nbsp;B.1, row&nbsp;3). 
-    That is, for all `tilingId`&#8239;&ge;&#8239;9, it is not possible to output all the data in a PostScript object. 
+* PostScript (start at [wikipedia](http://en.wikipedia.org/wiki/PostScript), detail in [Adobe&rsquo;s&nbsp;PostScript Language Reference 3<small><sup>rd</sup></small>&nbsp;edition](https://www.adobe.com/jp/print/postscript/pdfs/PLRM.pdf)) is an an early&#8209;1980s printer&#8209;control language. 
+    It is a delightful simple clean text&#8209;based user&#8209;alterable [Turing&#8209;complete](https://en.wikipedia.org/wiki/Turing_completeness) means of making [PDF](https://en.wikipedia.org/wiki/PDF)s. 
+    It is also an early&#8209;1980s printer&#8209;control language that is really showing its age. 
+    Nurse, please, my stick! 
+    For example, arrays and data structures have a maximum length of 2<small><sup>16</sup></small>&nbsp;&minus;&nbsp;1 =&nbsp;65,535 ([PLRM3,&nbsp;Appendix&nbsp;B,&nbsp;p739](https://www.adobe.com/jp/print/postscript/pdfs/PLRM.pdf#page=753), table&nbsp;B.1, row&nbsp;3). 
+    That is, for all `tilingId`&#8239;&ge;&#8239;9, it is not possible to output all the data in a PostScript array. 
     Instead a &lsquo;wanted&rsquo; subset is chosen. 
     In [<kbd>controls.c</kbd>](../C/controls.c) there are functions `wantedPostScriptCentre()` which returns the centre of the desired region, and `wantedPostScriptAspect()` which returns the desired _y_/_x_ aspect ratio. 
     The largest possible area is then chosen, such that there are &le;&#8239;65535 rhombi (sometimes _x_ or _y_ equalities compel the number of rhombi to be slightly less than 65535). 

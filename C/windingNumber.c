@@ -71,6 +71,9 @@ int point_winding_number(register double const x,  register double const y,  con
 // 0 means rhP outside pathP_Outer; positive means inside, path going clockwise; negative means inside, path going widdershins.
 int rhombus_winding_number(const Rhombus * const rhP,  const Path * const pathP_Outer,  const Tiling * const tlngP)
 {
+	// Next line used in testing.
+	// printf("!!! rhombus_winding_number() ought never to be invoked. With tId=%" PRIi8 "\n", tlngP->tilingId);
+
 	if( pathP_Outer->pathLength < 15  ||  !pathP_Outer->pathClosed )
 		return 0;
 

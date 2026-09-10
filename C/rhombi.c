@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // rhombi.c, in PenroseC
 
@@ -57,7 +57,6 @@ RhombId rhombus_append(
 	for( nghbrNum = 0  ;  nghbrNum < 4  ;  nghbrNum ++ )
 	{
 		rhP->neighbours[nghbrNum].rhId           = -1;  // I.e., invalid
-		rhP->neighbours[nghbrNum].pathId         = -1;  // I.e., invalid
 		rhP->neighbours[nghbrNum].withinPathNum  = -1;  // I.e., invalid
 		rhP->neighbours[nghbrNum].nghbrsNghbrNum = -1;  // I.e., invalid
 	}  // for( nghbrNum ... )

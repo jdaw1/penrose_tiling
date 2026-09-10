@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // propertyVerifying.c, in PenroseC
 
@@ -94,6 +94,85 @@ hypothesis_fat_north_south:
 			"!!! verifyHypothesisedProperties: tilingId=%" PRIi8 ", numTests=%lli: hypothesis fails, as it there is a fat north sharing a vertex with a fat south, with rhId_outer=%li, rhId_inner=%li.\n",
 			tlngP->tilingId, numTests, rhId_outer, rhId_inner
 		);  // printf()
+*/
+
+
+/*
+	// Belief: for every thin, at least one of the following:
+	// -- touches outside <==> fewer than four neighbours;
+	// -- neighbours a fat in a closed path of length five;
+	// -- neighbours another thin of which one of these is so.
+	
+	RhombId rh1Id;
+	Rhombus * rh1P, * rh2P;
+	Path * pathP;
+	long int numTouchOutside = 0, numTouchClosed5 = 0, numTouchThinThatOutside = 0, numTouchThinThatClosed5 = 0;
+	long int numOthers = tlngP->numThins;
+	int8_t  nghbrNum;
+
+	for( rh1Id = 0  ;  rh1Id < tlngP->numFats + tlngP->numThins  ;  rh1Id ++ )
+	{
+		rh1P = &(tlngP->rhombi[rh1Id]);
+		if( Thin == rh1P->physique )
+		{
+			rh2P = NULL;
+			if( rh1P->numNeighbours < 4 )
+			{
+				numTouchOutside ++;
+				numOthers --;
+				goto thisThin1_done;
+			}
+			for( nghbrNum = 0  ;  nghbrNum < rh1P->numNeighbours  ;  nghbrNum++ )
+			{
+				if( Fat == rh1P->neighbours[nghbrNum].physique )
+				{
+					// Fat
+					pathP = &(tlngP->path[ tlngP->rhombi[ rh1P->neighbours[nghbrNum].rhId ].pathId ]);
+					if( pathP->pathClosed  &&  5 == pathP->pathLength )
+					{
+						numTouchClosed5 ++ ;
+						numOthers --;
+						goto thisThin1_done;
+					}  // closed, 5
+				}  // Fat
+				else
+					rh2P = &(tlngP->rhombi[ rh1P->neighbours[nghbrNum].rhId ]);  // Thin
+			}  // for( nghbrNum ... )
+			
+			if( NULL != rh2P )
+			{
+				if( rh2P->numNeighbours < 4 )
+				{
+					numTouchThinThatOutside ++;
+					numOthers --;
+					goto thisThin1_done;
+				}
+				for( nghbrNum = 0  ;  nghbrNum < rh2P->numNeighbours  ;  nghbrNum++ )
+				{
+					if( Fat == rh2P->neighbours[nghbrNum].physique )
+					{
+						pathP = &(tlngP->path[ tlngP->rhombi[ rh2P->neighbours[nghbrNum].rhId ].pathId ]);
+						if( pathP->pathClosed  &&  5 == pathP->pathLength )
+						{
+							numTouchThinThatClosed5 ++ ;
+							numOthers --;
+							goto thisThin1_done;
+						}  // closed, 5
+					}  // Fat
+				}  // for( nghbrNum ... )
+			}
+			
+			thisThin1_done:
+			;  // Needed in C99, not in C23.
+		}  // Thin
+	}  // for( rh1Id ... )
+	printf(
+		"verifyHypothesisedProperties(): tId=%02" PRIi8 ";  numTouchOutside = %li;  numTouchClosed5 = %li;  numTouchThinThatOutside = %li;  numTouchThinThatClosed5 = %li;  numOthers = %li",
+		tlngP->tilingId, numTouchOutside, numTouchClosed5, numTouchThinThatOutside, numTouchThinThatClosed5, numOthers
+	);  // printf()
+	if( numTouchThinThatClosed5 > 0 )
+		printf(";  t.C.5 / T.T.T.C.5 = %0.5lf", ((double)numTouchClosed5) / ((double)numTouchThinThatClosed5) );
+	printf("\n");
 */
 
 

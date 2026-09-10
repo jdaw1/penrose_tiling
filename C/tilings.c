@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // tilings.c, in PenroseC
 
@@ -199,13 +199,6 @@ void tiling_descendant(
 
 	tlngDescendantP->populated = true;
 
-	timeBeginPart = clock();
-	verifyHypothesisedProperties(tlngDescendantP);
-	printf("tiling_descendant(): tilingId=%" PRIi8 ", %.3lfs for verifyHypothesisedProperties()\n",
-		tlngDescendantP->tilingId,
-		((double)clock() - timeBeginPart) / CLOCKS_PER_SEC
-	);  fflush(stdout);
-
 	// Simple checks: start
 	RhombId    rhId;
 	PathId     pathId;
@@ -227,6 +220,13 @@ void tiling_descendant(
 			tlngDescendantP->tilingId, tlngDescendantP->numFats, numFats_rhombi, numFats_paths, numFats_pathsStats
 		);  fflush(stderr);
 	// Simple checks: end
+
+	timeBeginPart = clock();
+	verifyHypothesisedProperties(tlngDescendantP);
+	printf("tiling_descendant(): tilingId=%" PRIi8 ", %.3lfs for verifyHypothesisedProperties()\n",
+		tlngDescendantP->tilingId,
+		((double)clock() - timeBeginPart) / CLOCKS_PER_SEC
+	);  fflush(stdout);
 
 	tlngDescendantP->SecondsToStartExportFromStartThisTiling = ((double)clock() - timeBeginThisTiling) / CLOCKS_PER_SEC;
 	tlngDescendantP->SecondsToStartExportFromStartFirstTiling
@@ -396,6 +396,8 @@ void tiling_initial(Tiling * const tlngP)
 	wanted_populate(tlngP);
 
 	tlngP->populated = true;
+
+	verifyHypothesisedProperties(tlngP);
 
 	tlngP->SecondsToStartExportFromStartThisTiling = ((double)clock() - timeBeginThisTiling) / CLOCKS_PER_SEC;
 	tlngP->SecondsToStartExportFromStartFirstTiling

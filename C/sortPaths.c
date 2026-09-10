@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // sortPaths.c, in PenroseC
 
@@ -27,7 +27,6 @@ void paths_sort(Tiling * const tlngP,  int orderedFn(const Path * const, const P
 	PathId     pathId, *pathIdsNew;
 	PathStatId pathStatId;
 	RhombId    rhId_This;
-	int8_t     nghbrNum;
 
 	for( pathId = 0  ;  pathId < tlngP->numPathsClosed + tlngP->numPathsOpen  ;  pathId++ )
 		tlngP->path[pathId].pathId = pathId;
@@ -57,9 +56,6 @@ void paths_sort(Tiling * const tlngP,  int orderedFn(const Path * const, const P
 			if( tlngP->rhombi[rhId_This].pathId_ShortestOuter >= 0 )
 				tlngP->rhombi[rhId_This].pathId_ShortestOuter = pathIdsNew[ tlngP->rhombi[rhId_This].pathId_ShortestOuter ];
 		}  // Thin
-		for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombi[rhId_This].numNeighbours  ;  nghbrNum++ )
-			if( tlngP->rhombi[rhId_This].neighbours[nghbrNum].pathId >= 0 )
-				tlngP->rhombi[rhId_This].neighbours[nghbrNum].pathId = pathIdsNew[ tlngP->rhombi[rhId_This].neighbours[nghbrNum].pathId ];
 	}  // for( rhId_This ... )
 
 	for( pathId = 0  ;  pathId < tlngP->numPathsClosed + tlngP->numPathsOpen  ;  pathId++ )

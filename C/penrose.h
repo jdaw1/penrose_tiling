@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // penrose.h, in PenroseC
 
@@ -95,7 +95,6 @@ __attribute__ ((__packed__))
 #endif  // MEMORY_FRUGALITY_OUTRANKS_SPEED
 {  // Neighbour
 	RhombId   rhId;
-	PathId    pathId;
 	long int  withinPathNum ;  // Counting within a path: 0, 1, ..., pathLength - 1.
 	Physique  physique;
 	int8_t    nghbrsNghbrNum;  // Neighbour's Neighbour Num, Abbreviated to NNN in output: I am the neighbour[NNN] of my neighbour. Fussy to use int8_t, but saves 4 bytes per rhombus, > 1%.

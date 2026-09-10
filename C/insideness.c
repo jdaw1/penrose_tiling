@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // insideness.c, in PenroseC
 
@@ -48,6 +48,73 @@ static inline PathId PathByY(
 }  // PathByY()
 
 
+PathId thin_touchingPath(
+	Tiling const * const tlngP,
+	RhombId const rhId
+)
+{
+	RhombId rhThisId,  rhOtherId;
+	long int pathLength_Shortest = LONG_MAX;
+	PathId  pathId,  pathBestId;
+	int8_t whichThin, nghbrNum;  // 0 is rhId; 1 is a thin touching rhId.
+	Neighbour *nghbrP;
+
+	rhOtherId = -1;
+	pathBestId = -1;
+
+	// For every thin, at least one of the following:
+	// -- touches outside <==> fewer than four neighbours;
+	// -- neighbours a fat in a closed path of length five;
+	// -- neighbours another thin of which one of these is so.
+
+	// We'll be a little more general, in case of weirdness.
+	// Inspect adjacent paths, both of original thin, and of the at-most-one thin neighbour.
+	// If there is an open path then thin outside.
+	// Otherwise find shortest closed such path (ought to be a 5).
+	// Then test using that, which should be fast.
+	// Hence rhombus_winding_number() ought to be unnecessary, except in weird cases.
+
+	for( whichThin = 0  ;  whichThin < 2  ;  whichThin ++ )
+	{
+		if( 0 == whichThin)
+			rhThisId = rhId;  // orginal rhombus
+		else
+		{
+			if( rhOtherId >= 0 )
+				rhThisId = rhOtherId;  // thin neighbour
+			else
+				return pathBestId;  // no thin neighbour
+		}
+
+		// An internal thin adjacent to a hole would have fewer than four neighbours. Hence cannot restrict to four-neighbour case.
+		for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombi[rhThisId].numNeighbours  ;  nghbrNum ++ )
+		{
+			nghbrP = &(tlngP->rhombi[rhThisId].neighbours[nghbrNum]);
+			if( Fat == nghbrP->physique )
+			{
+				pathId = tlngP->rhombi[ nghbrP->rhId ].pathId ;
+
+				if( tlngP->path[pathId].pathClosed )
+				{
+					// Thin touching closed path
+					if( pathLength_Shortest > tlngP->path[pathId].pathLength )
+					{
+						pathLength_Shortest = tlngP->path[pathId].pathLength;
+						pathBestId = pathId;
+					}  // new best neighbour
+				}
+				else  // Touching an open path, so thin thombus has no enclosing path
+					return -1;
+			}  // Fat neighbour
+			else
+				rhOtherId = nghbrP->rhId;  // Thin has at most one thin neighbour, so at most once per nghbrNum loop.
+		}  // for( nghbrNum ... )
+	}  // for( whichThin ... )
+
+	return pathBestId;
+}  // thin_touchingPath()
+
+
 void insideness_populate(Tiling * const tlngP)
 {
 	RhombId rhId;
@@ -56,9 +123,8 @@ void insideness_populate(Tiling * const tlngP)
 	PathIdRange *pathIdRange;
 	long int const pathIdRangeNum_NumMax = 32;  // Enough for max path length of 7bn, containing 18.6tr tiles, enough to cover the whole UK.
 	PathId   pathIdRange_Id, pathLoopStart, pathLoopEnd;
-	long int pathIdRangeNum_Num, pathLength_Shortest;
-	int8_t   innerPCTN, diffsPCTN, nghbrNum, nghbrNum_best;
-	Neighbour *nghbrP;
+	long int pathIdRangeNum_Num;
+	int8_t   innerPCTN, diffsPCTN;
 
 	if( tlngP->numPathsClosed == 0 )
 		return ;
@@ -201,59 +267,36 @@ this_path_done: ;
 	{
 		if( Thin == tlngP->rhombi[rhId].physique )
 		{
-			tlngP->rhombi[rhId].pathId_ShortestOuter = -1;
+			const PathId pathId_touch = thin_touchingPath(tlngP,  rhId);
 
-			nghbrNum_best = -1;
-			pathLength_Shortest = LONG_MAX;
-
-			// An internal thin adjacent to a hole would have fewer than four neighbours. Hence cannot restrict to four-neighbour case.
-			for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombi[rhId].numNeighbours  ;  nghbrNum ++ )
+			if( pathId_touch >= 0  &&  tlngP->path[pathId_touch].pathClosed )
 			{
-				nghbrP = &(tlngP->rhombi[rhId].neighbours[nghbrNum]);
-				if( Fat == nghbrP->physique )
+				if(
+					5 == tlngP->path[pathId_touch].pathLength  ||  // Must be outside a 5.
+					0 == rhombus_winding_number(&(tlngP->rhombi[rhId]),  &(tlngP->path[pathId_touch]),  tlngP)  // Outside
+				)
 				{
-					pathThisId = tlngP->rhombi[ nghbrP->rhId ].pathId ;
-					if( ! tlngP->path[pathThisId].pathClosed )
-					{
-						nghbrNum_best = -1;  // Already set, ....pathId_ShortestOuter = -1;
-						break;  // for( nghbrNum ... )
-					}
-					if( pathThisId >= 0 )  // Should be redundant
-					{
-						if( pathLength_Shortest > tlngP->path[pathThisId].pathLength  )
-						{
-							pathLength_Shortest = tlngP->path[pathThisId].pathLength;
-							nghbrNum_best = nghbrNum;
-						}  // new best neighbour
-					}  // if( pathThisId >= 0 )
-				}  // Fat neighbour
-			}  // for( nghbrNum ... )
+					// Not inside pathId_touch; instead sibling of pathId_touch.
+					tlngP->rhombi[rhId].pathId_ShortestOuter = tlngP->path[pathId_touch].pathId_ShortestOuter;
+				}
+				else  // Inside
+					tlngP->rhombi[rhId].pathId_ShortestOuter = pathId_touch;
 
-			if( nghbrNum_best >= 0 )
-			{
-				pathThisId = tlngP->rhombi[ tlngP->rhombi[rhId].neighbours[nghbrNum_best].rhId ].pathId ;
-				if( pathThisId >= 0  &&  tlngP->path[pathThisId].pathClosed )
+				if( tlngP->rhombi[rhId].pathId_ShortestOuter >= 0 )  // Might have been sibling of orphan.
 				{
-					if( 
-						5 == pathLength_Shortest  ||  // Must be outside a 5.
-						0 == rhombus_winding_number(&(tlngP->rhombi[rhId]),  &(tlngP->path[pathThisId]),  tlngP)  // Outside
-					)
-						pathThisId = tlngP->path[pathThisId].pathId_ShortestOuter;  // Not inside pathThisId; instead inside whatever contains pathThisId.
+					pathThisP = &(tlngP->path[ tlngP->rhombi[rhId].pathId_ShortestOuter ]);
 
-					if( pathThisId >= 0 )  // Could be adjacent to a path that is outside everything. Redundant if previous test, outsideness, was false.
-					{
-						pathThisP = &(tlngP->path[pathThisId]);
-						tlngP->rhombi[rhId].pathId_ShortestOuter = pathThisId;
-						pathThisP->insideThis_NumThins ++;
-						pathThisP->insideDeep_NumThins ++;
+					pathThisP->insideThis_NumThins ++;
+					pathThisP->insideDeep_NumThins ++;
 
-						if( pathThisP->rhId_ThinWithin_First > rhId )   {pathThisP->rhId_ThinWithin_First = rhId;}
-						if( pathThisP->rhId_ThinWithin_Last  < rhId )   {pathThisP->rhId_ThinWithin_Last  = rhId;}
-					}  // pathThisId >= 0
-				}  // Closed
-			}  // nghbrNum_best >= 0
+					if( pathThisP->rhId_ThinWithin_First > rhId )   {pathThisP->rhId_ThinWithin_First = rhId;}
+					if( pathThisP->rhId_ThinWithin_Last  < rhId )   {pathThisP->rhId_ThinWithin_Last  = rhId;}
+				}  // ...pathId_ShortestOuter >= 0
+			}  // pathBestId >= 0  &&  Closed
+			else  // Touches nothing or touches open
+				tlngP->rhombi[rhId].pathId_ShortestOuter = -1;
 
-		}  // Thin rhombus
+		}  // Thin
 	}  // for( rhId ... )
 
 	// Populate ...Deep...

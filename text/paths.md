@@ -57,23 +57,24 @@ In it:
 * &phi;<small><sup>&minus;2</sup></small>&nbsp; =&nbsp;&nbsp;&frac12;(3&nbsp;&minus;&nbsp;&radic;5)&nbsp; =&nbsp;&nbsp;2&nbsp;&minus;&nbsp;&phi; &asymp;&nbsp;0.381966.
 
 
-| *n*&nbsp;=<br>Rank |   Length | Num<br>Interior<br>Fats | Num<br>Interior<br>Thins | Outward<br>direction | Radius<br>Min<br>&divide;Edge | Radius<br>Max<br>&divide;Edge |
-|----:|---------:|--------:|--------:|------:|-------:|-------:|
-|   1 |  Round 5 |       0 |       0 | North |   0.81 |   0.81 |
-|   2 | Pointy 5 |       0 |       0 | South |   0.81 |   0.81 |
-|   3 |       15 |       5 |       5 | North |   2.02 |   2.43 |
-|   4 |       25 |       5 |      10 | South |   1.81 |   3.31 |
-|   5 |       55 |      45 |      40 | North |   3.61 |   6.66 |
-|   6 |      105 |      80 |      85 | South |   4.43 |  10.14 |
-|   7 |      215 |     350 |     270 | North |   7.83 |  17.75 |
-|   8 |      425 |     760 |     620 | South |  11.28 |  28.07 |
-|   9 |      855 |   2,565 |   1,805 | North |  18.91 |  46.79 |
-|  10 |    1,705 |   6,085 |   4,370 | South |  29.23 |  75.05 |
-|  11 |    3,415 |  18,245 |  12,160 | North |  47.94 | 122.80 |
-|  12 |    6,825 |  45,240 |  30,405 | South |  76.20 | 198.04 |
-|  13 |   13,655 | 127,710 |  82,470 | North | 123.96 | 321.81 |
-|  14 |   27,305 | 324,240 | 210,180 | South | 199.20 | 520.04 |
-|  15 |   54,615 | 885,965 | 561,725 | North | 322.96 | 842.81 |
+| *n*&nbsp;=<br>Path<br>Rank |   Length | Num<br>Interior<br>Fats | Num<br>Interior<br>Thins | Outward<br>direction | Radius<br>Min<br>&divide;Edge | Radius<br>Max<br>&divide;Edge |
+|----:|---------:|----------:|----------:|------:|-------:|--------:|
+|   1 |  Round 5 |         0 |         0 | North |   0.81 |    0.81 |
+|   2 | Pointy 5 |         0 |         0 | South |   0.81 |    0.81 |
+|   3 |       15 |         5 |         5 | North |   2.02 |    2.43 |
+|   4 |       25 |         5 |        10 | South |   1.81 |    3.31 |
+|   5 |       55 |        45 |        40 | North |   3.61 |    6.66 |
+|   6 |      105 |        80 |        85 | South |   4.43 |   10.14 |
+|   7 |      215 |       350 |       270 | North |   7.83 |   17.75 |
+|   8 |      425 |       760 |       620 | South |  11.28 |   28.07 |
+|   9 |      855 |     2,565 |     1,805 | North |  18.91 |   46.79 |
+|  10 |    1,705 |     6,085 |     4,370 | South |  29.23 |   75.05 |
+|  11 |    3,415 |    18,245 |    12,160 | North |  47.94 |  122.80 |
+|  12 |    6,825 |    45,240 |    30,405 | South |  76.20 |  198.04 |
+|  13 |   13,655 |   127,710 |    82,470 | North | 123.96 |  321.81 |
+|  14 |   27,305 |   324,240 |   210,180 | South | 199.20 |  520.04 |
+|  15 |   54,615 |   885,965 |   561,725 | North | 322.96 |  842.81 |
+|  16 |  109,225 | 2,279,045 | 1,447,690 | South | 521.19 | 1363.04 |
 | Recursion | [*n*&minus;1]<br>+2&nbsp;&times;&nbsp;[*n*&minus;2]<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp; | 2&nbsp;&times;&nbsp;[*n*&minus;1]<br>+6&nbsp;&times;&nbsp;[*n*&minus;2]<br>&minus;9&nbsp;&times;&nbsp;[*n*&minus;3]<br>&minus;8&nbsp;&times;&nbsp;[*n*&minus;4]<br>+4&nbsp;&times;&nbsp;[*n*&minus;5]<br>+&nbsp;5 | [*n*&minus;1]<br>+5&nbsp;&times;&nbsp;[*n*&minus;2]<br>&minus;3&nbsp;&times;&nbsp;[*n*&minus;3]<br>&nbsp;<br>&nbsp;<br>&nbsp; | +180&deg; | ? | ? |
 | Formula | (2<small><sup>*n*</sup></small>&nbsp;&minus;&nbsp;(&minus;1)<small><sup>*n*</sup></small>)&nbsp;&times;&nbsp;5&frasl;3 | &phi;<small><sup>2*n*</sup></small>&nbsp;(7&radic;5&nbsp;&minus;&nbsp;5)/22<br>&minus;&nbsp;&phi;<small><sup>&minus;2*n*</sup></small>&nbsp;(7&radic;5&nbsp;+&nbsp;5)/22<br>&minus;&nbsp;(&minus;2)<small><sup>*n*</sup></small>&nbsp;&times;&nbsp;25&frasl;66<br>+&nbsp;5&frasl;6<br>&minus;&nbsp;2<small><sup>*n*</sup></small>&nbsp;&times;&nbsp;5&frasl;6<br>+&nbsp;(&minus;1)<small><sup>*n*</sup></small>&nbsp;&times;&nbsp;5&frasl;6 | &phi;<small><sup>2*n*</sup></small>&nbsp;(10&ThinSpace;&minus;&ThinSpace;3&radic;5)/11<br>+&nbsp;&phi;<small><sup>&minus;2*n*</sup></small>&nbsp;(10&ThinSpace;+&ThinSpace;3&radic;5)/11<br>&minus;&nbsp;(&minus;2)<small><sup>*n*</sup></small>&nbsp;&times;&nbsp;5&frasl;33<br>&minus;&nbsp;5&frasl;3<br>&nbsp;<br>&nbsp; | Odd&DoubleLongRightArrow;N<br>Even&DoubleLongRightArrow;S | ? | ? |
 | Limit&nbsp;&#8784; | 2<small><sup>*n*</sup></small>&nbsp;&times;&nbsp;5&frasl;3<br>&#8784;&ThinSpace;3.97&times;<br>&ThinSpace;(&radic;*thin*)<small><sup>ln(2)/ln(&phi;)</sup></small><br>&asymp;&nbsp;2.81&ThinSpace;&times;<br>(&radic;*fat*)<small><sup>ln(2)/ln(&phi;)</sup></small> | *fat*&nbsp;=<br>&phi;<small><sup>2*n*</sup></small>&nbsp;(7&radic;5&nbsp;&minus;&nbsp;5)/22 | *thin*&ThinSpace;=<br>&phi;<small><sup>2*n*</sup></small>&nbsp;(10&nbsp;&minus;&nbsp;3&radic;5)/11 | &NotExists; | &phi;<small><sup>*n*&minus;3</sup></small> | &phi;<small><sup>*n*&minus;1</sup></small> |
