@@ -114,7 +114,8 @@ That is, within this circle, colour consistently all rhombi in open paths, and i
 The area is denominated in units of square tile edges. 
 For `tilingId`&#8239;&gap;&#8239;6, this &lsquo;colourable&rsquo; circular &lsquo;Area&rsquo; is about &frac23; of the whole tiling.
 
-The average tile area, in edge lengths squared, is &frac14;(&radic;5&nbsp;+&nbsp;&radic;(10&nbsp;&minus;&nbsp;2&radic;5)&nbsp;&minus;&nbsp;1) &asymp;&nbsp;0.8968 &asymp;&nbsp;1&#8239;/&#8239;1.1151.
+The average tile area, in edge lengths squared, is &frac14;(&radic;5&nbsp;+&nbsp;&radic;(10&nbsp;&minus;&nbsp;2&radic;5)&nbsp;&minus;&nbsp;1) &asymp;&nbsp;0.8968, 
+the reciprocal of which is 1&nbsp;+&nbsp;&radic;(10&#8239;&minus;&#8239;2&radic;5)&nbsp;&minus;&nbsp;&radic;5 &asymp;&nbsp;1.1151.
 [My kitchen](../images/20230923_kitchen_tiles.png) uses tile edges of length 150mm, so there are approximately 1.1151&#8239;&divide;&#8239;0.15&sup2; &asymp;&nbsp;49.6 tiles per square metre.
 
 Tiling of a substantial outdoor space might use tiles of edge length 500mm&#8239;&asymp;&#8239;19.7&Prime;, so the physical colourable area in m&sup2; would be the quoted &asymp;&nbsp;&lsquo;Area&rsquo;,&nbsp;&divide;&#8239;4. 
