@@ -98,7 +98,8 @@ If it is not very false, then for a random fat tile, the average of the length o
 
 ## Git markdown bug ##
 
-Bug, [Git markdown: frasl works outside tables, not inside](https://github.com/orgs/community/discussions/206814): fractions work outside tables (5&frasl;3, 25&frasl;66, 5&frasl;6, 5&frasl;33), but not inside:
+Bug, [Git markdown: frasl works outside tables, not inside](https://github.com/orgs/community/discussions/206814). 
+Observe that fractions work outside tables (5&frasl;3, 25&frasl;66, 5&frasl;6, 5&frasl;33), but not inside:
 
 <div align="center">
 
