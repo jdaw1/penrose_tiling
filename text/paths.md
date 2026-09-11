@@ -91,3 +91,24 @@ The observed data is consistent with, in a suffiently large tiling, the number o
 A proof or disproof would be welcomed. 
 If this is precisely true, then the average of the lengths of paths tends to 5&nbsp;+&nbsp;2&radic;5 &asymp;&nbsp;9.472. 
 If it is not very false, then for a random fat tile, the average of the length of the path containing it is unbounded.
+
+---
+
+---
+
+## Git markdown bug ##
+
+Bug, [Git markdown: frasl works outside tables, not inside](https://github.com/orgs/community/discussions/206814): fractions work outside tables (5&frasl;3, 25&frasl;66, 5&frasl;6, 5&frasl;33), but not inside:
+
+<div align="center">
+
+|     Code      |   Result    |
+|:-------------:|:-----------:|
+|  `5&frasl;3`  |  5&frasl;3  |
+| `25&frasl;66` | 25&frasl;66 |
+|  `5&frasl;6`  |  5&frasl;6  |
+|  `5&frasl;33` |  5&frasl;33 |
+
+</div>
+
+Hopefully, one day this comment will be removed.
