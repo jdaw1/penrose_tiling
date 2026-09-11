@@ -108,15 +108,15 @@ The table below shows the numbers of fat and thin tiles in each tiling.
 ### &lsquo;Area&rsquo; ###
 
 The &lsquo;Area&rsquo; quoted in the table is not quite of the whole tiling. 
-Near the edges of a tiling paths are self-evidently incomplete, their length indeterminate, frustrating a tiling with paths coloured by lengh. 
+Near the edges of a tiling paths are self-evidently incomplete, their length indeterminate, frustrating a tiling with paths coloured by length. 
 So the quoted &lsquo;area&rsquo; is of a circle not containing any open paths of length shorter than the longest open path(s). 
 That is, within this circle, colour consistently all rhombi in open paths, and it will be and seem consistent. 
 The area is denominated in units of square tile edges. 
 For `tilingId`&#8239;&gap;&#8239;6, this &lsquo;colourable&rsquo; circular &lsquo;Area&rsquo; is about &frac23; of the whole tiling.
 
 The average tile area, in edge lengths squared, is &frac14;(&radic;5&nbsp;+&nbsp;&radic;(10&nbsp;&minus;&nbsp;2&radic;5)&nbsp;&minus;&nbsp;1) &asymp;&nbsp;0.8968 &asymp;&nbsp;1&#8239;/&#8239;1.1151.
+[My kitchen](../images/20230923_kitchen_tiles.png) uses tile edges of length 150mm, so there are approximately 1.1151&#8239;&divide;&#8239;0.15&sup2; &asymp;&nbsp;49.6 tiles per square metre.
 
-[My kitchen](../images/20230923_kitchen_tiles.png) uses tile edges of length 150mm, so to convert area in m&sup2; to tile count multiply by 1.1151&#8239;&divide;&#8239;0.15&sup2; &asymp;&nbsp;49.6. 
 Tiling of a substantial outdoor space might use tiles of edge length 500mm&#8239;&asymp;&#8239;19.7&Prime;, so the colourable m&sup2; &asymp;&nbsp;&lsquo;Area&rsquo;&#8239;&divide;&#8239;4. 
 The tilings have pentagonal symmetry: if it were desired to emphasise aperiodicity by using an asymmetric subset, then the usable part would be much smaller. 
 
@@ -124,7 +124,7 @@ The tilings have pentagonal symmetry: if it were desired to emphasise aperiodici
 ### Speed and limits ###
 
 The quoted execution times are from a ten-core &lap;4.4&#8239;GHz Apple&nbsp;M4 Mac&nbsp;mini with 16&#8239;GiB of memory. 
-Execution was in [Xcode](https://developer.apple.com/xcode/)&rsquo;s debug mode to catch possible stray pointer misbehaviours (of which there were none); and with memory&#8209;alignment at its natural value by <code>#define&nbsp;MEMORY_FRUGALITY_OUTRANKS_SPEED&nbsp;false</code> in [<kbd>penrose.h</kbd>](../C/penrose.h). 
+Execution had been in [Xcode](https://developer.apple.com/xcode/)&rsquo;s debug mode to catch possible stray pointer misbehaviours (of which there were none); and with memory&#8209;alignment at its natural value by <code>#define&nbsp;MEMORY_FRUGALITY_OUTRANKS_SPEED&nbsp;false</code> in [<kbd>penrose.h</kbd>](../C/penrose.h), except when computing the largest tiling.
 Obviously, your execution times might be very different.
 
 Calls are made to `malloc()`, for `.rhombi`, `.path`, and `.pathStat`. 
