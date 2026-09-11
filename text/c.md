@@ -125,7 +125,7 @@ The tilings have pentagonal symmetry: if it were desired to emphasise aperiodici
 ### Speed and limits ###
 
 The quoted execution times are from a ten-core &lap;4.4&#8239;GHz Apple&nbsp;M4 Mac&nbsp;mini with 16&#8239;GiB of memory. 
-Execution had been in [Xcode](https://developer.apple.com/xcode/)&rsquo;s debug mode to catch possible stray pointer misbehaviours (of which there were none); and with memory&#8209;alignment at its natural value by <code>#define&nbsp;MEMORY_FRUGALITY_OUTRANKS_SPEED&nbsp;false</code> in [<kbd>penrose.h</kbd>](../C/penrose.h), except when computing the largest tiling.
+Except when computing the largest tiling, execution had been in [Xcode](https://developer.apple.com/xcode/)&rsquo;s debug mode to catch possible stray pointer misbehaviours (of which there were none); and with memory&#8209;alignment at its natural value by <code>#define&nbsp;MEMORY_FRUGALITY_OUTRANKS_SPEED&nbsp;false</code> in [<kbd>penrose.h</kbd>](../C/penrose.h). 
 Obviously, your execution times might be very different.
 
 Calls are made to `malloc()`, for `.rhombi`, `.path`, and `.pathStat`. 
@@ -162,7 +162,7 @@ The following is an overview, but only an overview, of the workings of the code.
 
 There is a single header file, [<kbd>penrose.h</kbd>](../C/penrose.h), which:
 * `#include`s multiple library headers;
-* declares and defines various `static double const`, 
+* declares and defines various `static double const`; 
 * declares types, both simple aliases, `enum`s, and `struct`s;
 * declares all functions accessed outside the file in which defined.
 
