@@ -66,7 +66,8 @@ and the dull darkish red is a long open path.
 
 And the optical uniformity has disappeared: at all scales there is structure, interesting and playful and curious structure.
 
-Long paths are, in technical a sense that is precisely definable, [ln](https://en.wikipedia.org/wiki/Natural_logarithm)(2)&#8239;/&#8239;ln([&phi;](https://en.wikipedia.org/wiki/Golden_ratio))&nbsp;&asymp;&nbsp;1.44 [dimensional](https://en.wikipedia.org/wiki/Fractal_dimension). 
+Long paths are, in technical a sense that is precisely definable, 
+[ln(2)](https://en.wikipedia.org/wiki/Natural_logarithm_of_2)&#8239;/&#8239;[ln](https://en.wikipedia.org/wiki/Natural_logarithm)([&phi;](https://en.wikipedia.org/wiki/Golden_ratio))&nbsp;&asymp;&nbsp;1.44042 [dimensional](https://en.wikipedia.org/wiki/Fractal_dimension). 
 This number is, in effect, a measure of their wiggliness. 
 It is an aesthetically pleasing dimension: definitely bigger than boring 1; definitely smaller than conventional 2; puzzlingly between.
 

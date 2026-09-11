@@ -18,13 +18,14 @@ Documentation pages:&nbsp;
 My hope is that somewhere somebody makes a big Penrose tiling, in which paths are coloured by length. 
 Paths are interesting to me, more interesting than tiles. 
 This page describes observed properties of paths. 
+
 Much of this observed data, in the table and elsewhere on this page, seems not to have been said elsewhere. 
 But much of what is said is here is observation, rather than proof. 
-So: if anything said here is wrong, please raise an issue explaining what&rsquo;s wrong. 
-And: if anything said here has been said by others before, please raise an issue with links to sources, and appropriate acknowledgements will be added.
+Please, with proof or disproof or claim of prior art, raise an issue with appropriate content or links. 
+Appropriate acknowledgement, if necessary with corrections, would happen.
 
 Each fat tiles has two fat neighbours. 
-So fat tiles form paths.
+Hence fat tiles form paths.
 
 Tiles are orientated. 
 That is, for each fat tile, one of its acute 72&deg; corners is &lsquo;north&rsquo;, with east-south-west clockwise from north. 
@@ -80,12 +81,13 @@ In it:
 | Limit&nbsp;&#8784; | 2<small><sup>*n*</sup></small>&nbsp;&times;&nbsp;5&frasl;3<br>&#8784;&ThinSpace;3.97&times;<br>&ThinSpace;(&radic;*thin*)<small><sup>ln(2)/ln(&phi;)</sup></small><br>&asymp;&nbsp;2.81&ThinSpace;&times;<br>(&radic;*fat*)<small><sup>ln(2)/ln(&phi;)</sup></small> | *fat*&nbsp;=<br>&phi;<small><sup>2*n*</sup></small>&nbsp;(7&radic;5&nbsp;&minus;&nbsp;5)/22 | *thin*&ThinSpace;=<br>&phi;<small><sup>2*n*</sup></small>&nbsp;(10&nbsp;&minus;&nbsp;3&radic;5)/11 | &NotExists; | &phi;<small><sup>*n*&minus;3</sup></small> | &phi;<small><sup>*n*&minus;1</sup></small> |
 
 
-Observe that the length of a long path varies as the square root of its area (which is a linear measure) to the power of [ln(2)](https://en.wikipedia.org/wiki/Natural_logarithm_of_2)&#8239;/&#8239;ln([&phi;](https://en.wikipedia.org/wiki/Golden_ratio))&nbsp;&asymp;&nbsp;1.44042. 
+Observe that the length of a long path varies as the square root of its area (which is a linear measure) to the power of [ln(2)](https://en.wikipedia.org/wiki/Natural_logarithm_of_2)&#8239;/&#8239;[ln](https://en.wikipedia.org/wiki/Natural_logarithm)([&phi;](https://en.wikipedia.org/wiki/Golden_ratio))&nbsp;&asymp;&nbsp;1.44042. 
 That is, long paths are approximately 1.44 dimensional. 
-(Technicality: trivially, ln(2)&#8239;/&#8239;ln(&phi;)&nbsp;&NotElement;&nbsp;[&Qopf;](https://en.wikipedia.org/wiki/Rational_number), and hence is [transcendental](https://en.wikipedia.org/wiki/Transcendental_number) by the [Gelfond–Schneider theorem](https://en.wikipedia.org/wiki/Gelfond%E2%80%93Schneider_theorem#mwNQ).) 
+(Technicality: trivially, ln(2)&#8239;/&#8239;ln(&phi;)&nbsp;&NotElement;&nbsp;[&Qopf;](https://en.wikipedia.org/wiki/Rational_number), and hence is [transcendental](https://en.wikipedia.org/wiki/Transcendental_number) by the [Gelfond&#8209;Schneider theorem](https://en.wikipedia.org/wiki/Gelfond%E2%80%93Schneider_theorem#mwNQ).) 
 
 The observed data is consistent with, in a suffiently large tiling, the number of closed paths of each length being [geometrically distributed](http://en.wikipedia.org/wiki/Geometric_distribution), with decay 
-&frac12;(3&nbsp;&minus;&nbsp;&radic;5) &asymp;&nbsp;0.381966. 
+2&#8239;&minus;&#8239;&phi; 
+=&nbsp;&frac12;(3&#8239;&minus;&#8239;&radic;5) &asymp;&nbsp;0.381966. 
 A proof or disproof would be welcomed. 
 If this is precisely true, then the average of the lengths of paths tends to 5&nbsp;+&nbsp;2&radic;5 &asymp;&nbsp;9.472. 
 If it is not very false, then for a random fat tile, the average of the length of the path containing it is unbounded.

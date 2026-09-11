@@ -114,9 +114,10 @@ That is, within this circle, colour consistently all rhombi in open paths, and i
 The area is denominated in units of square tile edges. 
 For `tilingId`&#8239;&gap;&#8239;6, this &lsquo;colourable&rsquo; circular &lsquo;Area&rsquo; is about &frac23; of the whole tiling.
 
-[My kitchen](../images/20230923_kitchen_tiles.png) uses tile edges of length 150mm: to convert square tile edges to metres squared, assuming this tile size, divided by &asymp;&#8239;49.6, 
-as the average tile area is &frac14;(&radic;5&nbsp;+&nbsp;&radic;(10&nbsp;&minus;&nbsp;2&radic;5)&nbsp;&minus;&nbsp;1) &asymp;&nbsp;0.8968  &asymp;&nbsp;1/1.1151. 
-Tiling of a substantial outdoor space might use tiles of edge length 500mm&#8239;&asymp;&#8239;19.7&Prime;, so for m&sup2; use the &lsquo;Area&rsquo;&#8239;&divide;&#8239;4. 
+The average tile area, in edge lengths squared, is &frac14;(&radic;5&nbsp;+&nbsp;&radic;(10&nbsp;&minus;&nbsp;2&radic;5)&nbsp;&minus;&nbsp;1) &asymp;&nbsp;0.8968 &asymp;&nbsp;1&#8239;/&#8239;1.1151.
+
+[My kitchen](../images/20230923_kitchen_tiles.png) uses tile edges of length 150mm, so to convert area in m&sup2; to tile count multiply by 1.1151&#8239;&divide;&#8239;0.15&sup2; &asymp;&nbsp;49.6. 
+Tiling of a substantial outdoor space might use tiles of edge length 500mm&#8239;&asymp;&#8239;19.7&Prime;, so the colourable m&sup2; &asymp;&nbsp;&lsquo;Area&rsquo;&#8239;&divide;&#8239;4. 
 The tilings have pentagonal symmetry: if it were desired to emphasise aperiodicity by using an asymmetric subset, then the usable part would be much smaller. 
 
 
@@ -129,12 +130,12 @@ Obviously, your execution times might be very different.
 Calls are made to `malloc()`, for `.rhombi`, `.path`, and `.pathStat`. 
 The simple total of these three `malloc()`s, for each iteration (i.e., not cumulative sum, ignoring temporary memory assignments, and ignoring alignment and page boundary trickery), is in the &ldquo;&Sum;`malloc()`&rdquo; column, which grows by &asymp;&#8239;&phi;&sup2; per iteration.
 
-For `15`, memory needed was slightly more than the whole of the 16&#8239;GiB (ignoring page boundaries &Sum;`malloc()`&nbsp;&asymp;&nbsp;16.11&#8239;GiB, so there must have been some memory paging). 
-Hence was done with no other applications running, not even Xcode itself. 
-A deeper recursion needs more memory. 
-It might be that one more recursion, `16`, so &asymp;&#8239;60.3&nbsp;million rhombi, would require 48&#8239;GiB of memory; and another, &asymp;&#8239;97.7&nbsp;million rhombi, would require &asymp;&#8239;128&#8239;GiB, likely requiring days to execute. 
+For `15`, memory needed was slightly more than the whole of my machine&rsquo;s 16&#8239;GiB: ignoring page boundaries &Sum;`malloc()`&nbsp;&asymp;&nbsp;16.11&#8239;GiB, so there must have been some memory swapping. 
+Hence was executed with no other applications running. 
+A deeper recursion would need more memory. 
+It might be that one more recursion, `16`, so &asymp;&#8239;60.3&nbsp;million rhombi, would require 48&#8239;GiB of memory; and another beyond that, &asymp;&#8239;97.7&nbsp;million rhombi, would require &asymp;&#8239;128&#8239;GiB and perhaps some days to execute. 
 Also consider: the storage needed to hold the JSON; the size of database used for post-processing such as selection of relevant rhombi; and indeed the capacity of the computers in the tile&#8209;laying machines. 
-And it could fairly be asked whether your physical area _really_ needs many more millions of tiles (likely answer:&nbsp;no).
+And it could fairly be asked whether your physical area _really_ needs many more tens of millions of tiles (likely answer:&nbsp;no).
 
 For more than 2.1&#8239;bn rhombi, so many square kilometres, there would be a need to enlarge some types from 
 <code>long&nbsp;int</code> (&le;&nbsp;2<small><sup>31</sup></small>&#8239;&minus;&#8239;1) to 
@@ -149,7 +150,7 @@ In [<kbd>main.c</kbd>](../C/main.c) is
 If you really want to allow larger values&mdash;but almost certainly you don&rsquo;t&mdash;then increase `numTilings_Max`.
 
 Anyway, by me, not tested beyond the table above, the largest of which has 37,306,500 rhombi. 
-For a tile edge of 50cm&nbsp;&asymp;&nbsp;19.7&Prime; this would have a colourable area &asymp;&nbsp;5&#8239;km&sup2;&nbsp;&asymp;&nbsp;1240&#8239;acres.
+With a tile edge of 500mm&nbsp;&asymp;&nbsp;19.7&Prime; this would have a colourable area &asymp;&nbsp;5&#8239;km&sup2;&nbsp;&asymp;&nbsp;1240&#8239;acres.
 
 
 ## Code workings ##
