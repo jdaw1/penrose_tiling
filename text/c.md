@@ -110,10 +110,10 @@ The table below shows the numbers of fat and thin tiles in each tiling.
 The &lsquo;Area&rsquo; quoted in the table is not quite of the whole tiling. 
 Near the edges of a tiling paths are self-evidently incomplete, their length indeterminate, frustrating a tiling with paths coloured by length. 
 So the quoted &lsquo;area&rsquo; is of a circle not containing any open paths of length shorter than the longest open path(s). 
-That is, withint hat area, every path is either closed, or open of a single unique length. 
+That is, within that area, every path is either closed, or open of a single unique length. 
 So, within this circle, colour consistently all rhombi in open paths, and it will be and seem consistent. 
 The area is denominated in units of square tile edges. 
-For `tilingId`&#8239;&gap;&#8239;6, this circular &lsquo;colourable&rsquo; &lsquo;Area&rsquo; is about &frac23; of the whole tiling.
+For `tilingId`&#8239;&gap;&#8239;6, this circular &lsquo;colourable&rsquo; &lsquo;Area&rsquo; is about &frac23; of the whole tiling, and the whole pentagonal tiling has area about 0.69&nbsp;&times;&nbsp;that of the its bounding box.
 
 The average tile area, in edge lengths squared, is &frac14;(&radic;5&nbsp;+&nbsp;&radic;(10&nbsp;&minus;&nbsp;2&radic;5)&nbsp;&minus;&nbsp;1) &asymp;&nbsp;0.8968, 
 the reciprocal of which is 1&nbsp;+&nbsp;&radic;(10&#8239;&minus;&#8239;2&radic;5)&nbsp;&minus;&nbsp;&radic;5 &asymp;&nbsp;1.1151.
