@@ -28,11 +28,11 @@ So, even though this is not &ldquo;critical infrastructure&rdquo;, be careful.
 Run this code only in your compiler&rsquo;s debug mode, as that will block pointer mischief. 
 Yes, it will execute slower, but execution is a once-off to generate data: pay the slower to gain the full paranoia.
 
-Also, this code outputs multiple files ([.json](json.md) [.tsv](tsv.md), [.svg](svg.md), [.ps](postscript_distillable.md), [.ps](postscript_data.md)). 
+Also, this code outputs multiple files ([.json](json.md), [.tsv](tsv.md), [.svg](svg.md), [.ps](postscript_distillable.md), [.ps](postscript_data.md)). 
 Allow writing only to the chosen output directory `filePath_staticConst[]`; block all other writing; block all file reading.
 
 I know that this code is not naughty, and I believe that it is not careless. 
-But it&rsquo;s 9.9k lines of&nbsp;C, so you cannot easily know whether I truthfully know or believe these. 
+But it&rsquo;s 10120 lines of&nbsp;C, so you cannot easily know whether I truthfully know or believe these. 
 (But your AI might know: do ask it.) 
 If executing this downloaded C, indeed any downloaded C, you should be paranoid, meaning execute only in your compiler&rsquo;s debug mode, with file access restricted as in the previous&nbsp;&para;.
 
@@ -61,6 +61,10 @@ This is done by <code>execute_SVG_PostProcessing(&hellip;)</code> and <code>exec
 By default, these call Chrome and GhostScript, in my computer&rsquo;s location of these applications. 
 These calls are made by the <code>system(&hellip;)</code> command, which could in theory do anything, so check that your (and indeed, my) invocations are safe. 
 Or, to have them do nothing, replace both of these <code>execute_&hellip;</code> routines with a do&#8209;nothing `{return;}`.
+
+    Observe that there are multiple lines labelled &ldquo;<code>Placeholder&nbsp;condition</code>&rdquo;, which are <code>tlngP->tilingId&nbsp;<=&nbsp;-1</code>. 
+    These auto-evaluate to `false`, or <code>&hellip;&nbsp;>=&nbsp;-1</code> to `true`, the seemingly needless test being to suppress a compiler warning.
+    Obviously, alter as necessary <code><=</code>&nbsp;&longleftrightarrow;&nbsp;<code>>=</code>.
 
 The optional customisations are also within the [<kbd>controls.c</kbd>](../C/controls.c) file.
 
