@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // smalls_SVG.c, in PenroseC
 
@@ -58,13 +58,21 @@ char * svgTransform(char * const str,  int const numDecimalPlaces,  double const
 
 
 // A is 'long' string; B is 'short' string.
-void exportColourSVG(char * const strA,  char * const strB,  bool * const isWhiteP,  const Physique ph,  const bool pathClosed,  const long int pathLength,  const bool pointy)
+void exportColourSVG(
+	char * const strA,
+	char * const strB,
+	bool * const isWhiteP,
+	bool   const isFat,
+	const bool pathClosed,
+	const long int pathLength,
+	const bool pointy
+)
 {
 	strA[0] = 0;  // default
 	strB[0] = 0;  // default
 	*isWhiteP = false;  // default
 
-	if( Thin == ph )
+	if( ! isFat )
 	{
 		sprintf(strB, "#CCC");
 		sprintf(strA, "fill='%s' opacity='1'>  <!-- Thins: light grey -->", strB);

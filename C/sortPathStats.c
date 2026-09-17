@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // pathStats.c, in PenroseC
 
@@ -38,7 +38,7 @@ void pathStats_sort(Tiling * const tlngP)
 
 	qsort( tlngP->pathStat,  tlngP->numPathStats,  sizeof (tlngP->pathStat[0]),  (int(*)(const void * const,const void * const)) &PathStatsGt );
 
-	pathStatIdsNew = malloc( tlngP->numPathStats  *  sizeof(pathStatId) );
+	pathStatIdsNew = malloc( (size_t)tlngP->numPathStats  *  (size_t)sizeof(pathStatId) );
 	if( pathStatIdsNew == NULL )
 	{
 		fprintf(stderr, "Error in pathStats_sort: malloc(...) == NULL;  tlngP->numPathStats = %li;  sizeof(PathStatId) = %li.", tlngP->numPathStats, sizeof(PathStatId) );

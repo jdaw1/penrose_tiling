@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // tiling_simple_tests.c, in PenroseC
 
@@ -30,7 +30,7 @@ bool tiling_simple_tests(const Tiling * const tlngP)
 	for( rhId = 0  ;  rhId < tlngP->numFats + tlngP->numThins  ;  rhId++ )
 	{
 		rhP = &(tlngP->rhombi[rhId]);
-		if( Fat == rhP->physique )
+		if( rhP->isFat )
 		{
 			if( fabs( (rhP->east.x - rhP->north.x)*(rhP->west.x - rhP->north.x) + (rhP->east.y - rhP->north.y)*(rhP->west.y - rhP->north.y) - Cos72 ) > 0.000000001 )
 				{problem=true;  fprintf(stderr, "!!! Error !!! tiling_simple_tests(): fat rhId=%li, north angle not 72 degrees.\n", rhId);}

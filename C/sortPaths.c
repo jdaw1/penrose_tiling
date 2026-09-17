@@ -33,7 +33,7 @@ void paths_sort(Tiling * const tlngP,  int orderedFn(const Path * const, const P
 
 	qsort( tlngP->path,  tlngP->numPathsClosed + tlngP->numPathsOpen,  sizeof (tlngP->path[0]),  (int(*)(const void * const,const void * const)) orderedFn );
 
-	pathIdsNew = malloc( (tlngP->numPathsClosed + tlngP->numPathsOpen)  *  sizeof(PathId) );
+	pathIdsNew = malloc( ((size_t)tlngP->numPathsClosed + (size_t)tlngP->numPathsOpen)  *  (size_t)sizeof(PathId) );
 	if( pathIdsNew == NULL )
 	{
 		fprintf(stderr,
@@ -49,7 +49,7 @@ void paths_sort(Tiling * const tlngP,  int orderedFn(const Path * const, const P
 
 	for( rhId_This = 0  ;  rhId_This < tlngP->numFats + tlngP->numThins  ;  rhId_This++ )
 	{
-		if( Fat == tlngP->rhombi[rhId_This].physique )
+		if( tlngP->rhombi[rhId_This].isFat )
 			tlngP->rhombi[rhId_This].pathId = pathIdsNew[ tlngP->rhombi[rhId_This].pathId ] ;
 		else
 		{

@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // exportRh.c, in PenroseC
 
@@ -30,13 +30,14 @@ void rhombus_export(
 		if( NULL == rhP )
 			break;  // from PS  (inside rhombus_export, NULL == rhP, which should happen only for TSV)
 
+		(*numCharsThisFileP) += fprintf(fp,
+			"<< /RhId %li  /IsFat %s  /WantedPS %s",
+			tlngP->wantedPostScriptRhombNum[ rhP->rhId ],  rhP->isFat ? "true" : "false",
+			(rhP->wantedPostScript?"true":"false")
+		);
 		sprintf(scratchString,
-			"<< /RhId %li"
-			"  /WantedPS %s  /Physique %i"
-			"  /Xn %.9lf  /Yn %.9lf  /Xs %.9lf  /Ys %.9lf  /Xe %.9lf  /Ye %.9lf  /Xw %.9lf  /Yw %.9lf  /AngDeg %.10lf"
-			"  /Neighbours [ ",
-			tlngP->wantedPostScriptRhombNum[ rhP->rhId ],
-			(rhP->wantedPostScript?"true":"false"),  rhP->physique,
+			"  /Xn %.9lf  /Yn %.9lf  /Xs %.9lf  /Ys %.9lf"
+			"  /Xe %.9lf  /Ye %.9lf  /Xw %.9lf  /Yw %.9lf  /AngDeg %.9lf",
 			rhP->north.x / tlngP->edgeLength,
 			rhP->north.y / tlngP->edgeLength,
 			rhP->south.x / tlngP->edgeLength,
@@ -48,7 +49,7 @@ void rhombus_export(
 			rhP->angleDegrees  // In PostScript all angles are in degrees (e.g.: sin, cos, atan, rotate, sethalftone, setscreen, setcolorscreen, ItalicAngle).
 		);  // sprintf()
 		stringClean(scratchString);
-		(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
+		(*numCharsThisFileP) += fprintf(fp, "%s  /Neighbours [ ", scratchString);
 
 		for(nghbrNum = 0  ;  nghbrNum < rhP->numNeighbours ;  nghbrNum++)
 		{
@@ -61,7 +62,7 @@ void rhombus_export(
 		}
 		(*numCharsThisFileP) += fprintf(fp, "] ");
 
-		if( Fat == rhP->physique )
+		if( rhP->isFat )
 		{
 			(*numCharsThisFileP) += fprintf(fp,
 				" /PathId %li  /PathRhombNum %li ",
@@ -90,11 +91,11 @@ void rhombus_export(
 			break;  // from JSON  (inside rhombus_export, NULL == rhP, which should happen only for TSV)
 
 		sprintf(scratchString,
-			"{ \"RhId\":%li, \"WantedPS\":%s, \"Physique\":%i"
-			", \"Xn\":%.9lf, \"Yn\":%.9lf, \"Xs\":%.9lf, \"Ys\":%.9lf, \"Xe\":%.9lf, \"Ye\":%.9lf, \"Xw\":%.9lf, \"Yw\":%.9lf, \"AngleDeg\":%.10lf",
+			"{ \"RhId\":%li, \"IsFat\":%s, \"WantedPS\":%s"
+			", \"Xn\":%.9lf, \"Yn\":%.9lf, \"Xs\":%.9lf, \"Ys\":%.9lf, \"Xe\":%.9lf, \"Ye\":%.9lf, \"Xw\":%.9lf, \"Yw\":%.9lf, \"AngleDeg\":%.9lf",
 			rhP->rhId,
+			rhP->isFat ? "true" : "false",
 			rhP->wantedPostScript ? "true" : "false",
-			rhP->physique,
 			rhP->north.x / tlngP->edgeLength,
 			rhP->north.y / tlngP->edgeLength,
 			rhP->south.x / tlngP->edgeLength,
@@ -103,7 +104,7 @@ void rhombus_export(
 			rhP->east.y  / tlngP->edgeLength,
 			rhP->west.x  / tlngP->edgeLength,
 			rhP->west.y  / tlngP->edgeLength,
-			rhP->angleDegrees  // Angles seem to be wrong by about +- 1 * 10^-12; so printing to 10d.p. seems to work.
+			rhP->angleDegrees  // Angles seem to be wrong by about +- 10^-12; so printing to 9d.p. likely safe.
 		);  // sprintf()
 		stringClean(scratchString);
 		(*numCharsThisFileP) += fprintf(fp, "%s,  \"Neighbours\":[", scratchString);
@@ -118,7 +119,7 @@ void rhombus_export(
 			);  // fprintf()
 		(*numCharsThisFileP) += fprintf(fp, "]");
 
-		if( Fat == rhP->physique )
+		if( rhP->isFat )
 		{
 			// Path
 			(*numCharsThisFileP) += fprintf(fp, ",  \"PathId\":%li,  \"WithinPathNum\":%li", rhP->pathId, rhP->withinPathNum);
@@ -145,39 +146,43 @@ void rhombus_export(
 			// No data, just headers. Header code here to be near to the data-outputting code.
 			// These strings are intended to be unique range names for creation and use within Excel (Formula > Defined Names > Create from Selection).
 			(*numCharsThisFileP) += fprintf(fp,
-				"Rh_%02" PRIi8 ".TilingId"  "\tRh_%02" PRIi8 ".RhId"  "\tRh_%02" PRIi8 ".Wantedness_PostScript"
-				"\tRh_%02" PRIi8 ".Physique"    "\tRh_%02" PRIi8 ".FilledType"
-				"\tRh_%02" PRIi8 ".Xn"  "\tRh_%02" PRIi8 ".Yn"  "\tRh_%02" PRIi8 ".Xs"  "\tRh_%02" PRIi8 ".Ys"      "\tRh_%02" PRIi8 ".Xe"  "\tRh_%02" PRIi8 ".Ye"  "\tRh_%02" PRIi8 ".Xw"  "\tRh_%02" PRIi8 ".Yw"
+				"Rh_%02" PRIi8 ".TilingId"  "\tRh_%02" PRIi8 ".RhId"  "\tRh_%02" PRIi8 ".IsFat"
+				"\tRh_%02" PRIi8 ".Wantedness_PostScript"    "\tRh_%02" PRIi8 ".FilledType"
+				"\tRh_%02" PRIi8 ".Xn"  "\tRh_%02" PRIi8 ".Yn"
+				"\tRh_%02" PRIi8 ".Xs"  "\tRh_%02" PRIi8 ".Ys"
+				"\tRh_%02" PRIi8 ".Xe"  "\tRh_%02" PRIi8 ".Ye"
+				"\tRh_%02" PRIi8 ".Xw"  "\tRh_%02" PRIi8 ".Yw"
 				"\tRh_%02" PRIi8 ".AngleDeg"  "\tRh_%02" PRIi8 ".NumNeighbours"
 				"\tRh_%02" PRIi8 ".NeighbourEdge_0"  "\tRh_%02" PRIi8 ".NeighbourEdge_1"          "\tRh_%02" PRIi8 ".NeighbourEdge_2"  "\tRh_%02" PRIi8 ".NeighbourEdge_3"
 				"\tRh_%02" PRIi8 ".NeighbourNum_0"   "\tRh_%02" PRIi8 ".NeighbourNum_1"           "\tRh_%02" PRIi8 ".NeighbourNum_2"   "\tRh_%02" PRIi8 ".NeighbourNum_3"
 				"\tRh_%02" PRIi8 ".NNN_0"            "\tRh_%02" PRIi8 ".NNN_1"                    "\tRh_%02" PRIi8 ".NNN_2"            "\tRh_%02" PRIi8 ".NNN_3"
 				"\tRh_%02" PRIi8 ".PathId"           "\tRh_%02" PRIi8 ".WithinPathNum"    "\tRh_%02" PRIi8 ".EdgeClosestToPathCentre"  "\tRh_%02" PRIi8 ".PathId_ShortestOuter",
-				tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,
-				tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,
-				tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,
-				tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,
-				tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,
-				tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId
+				tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,  // TilingId, RhId, IsFat
+				tlngP->tilingId, tlngP->tilingId,  // Wantedness_PostScript, FilledType
+				tlngP->tilingId, tlngP->tilingId,  // North
+				tlngP->tilingId, tlngP->tilingId,  // South
+				tlngP->tilingId, tlngP->tilingId,  // East
+				tlngP->tilingId, tlngP->tilingId,  // West
+				tlngP->tilingId, tlngP->tilingId,  // Ang, NN
+				tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,  // Edges
+				tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,  // NeighbourNum
+				tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,  // NNN
+				tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId   // PathId, WithinPathNum, EdgeClosestToPathCentre, PathId_ShortestOuter
 			);  // fprintf()
 			break;  // from TSV  (inside rhombus_export, NULL == rhP )
 		}  // if( NULL == rhP )
 		{
 			sprintf(scratchString,
 				"%" PRIi8  "\t%li"  "\t%s"
-				"\t%i"  "\t%" PRIi8
+				"\t%s"  "\t%" PRIi8
 				"\t%.9lf"  "\t%.9lf"  "\t%.9lf"  "\t%.9lf"  "\t%.9lf"  "\t%.9lf"  "\t%.9lf"  "\t%.9lf"
-				"\t%.10lf"  "\t%i",
-				tlngP->tilingId,  rhP->rhId,  rhP->wantedPostScript ? "TRUE" : "FALSE",
-				rhP->physique,  rhP->filledType,
-				rhP->north.x / tlngP->edgeLength,
-				rhP->north.y / tlngP->edgeLength,
-				rhP->south.x / tlngP->edgeLength,
-				rhP->south.y / tlngP->edgeLength,
-				rhP->east.x  / tlngP->edgeLength,
-				rhP->east.y  / tlngP->edgeLength,
-				rhP->west.x  / tlngP->edgeLength,
-				rhP->west.y  / tlngP->edgeLength,
+				"\t%.9lf"  "\t%i",
+				tlngP->tilingId,  rhP->rhId,  rhP->isFat ? "TRUE" : "FALSE",
+				rhP->wantedPostScript ? "TRUE" : "FALSE",  rhP->filledType,
+				rhP->north.x / tlngP->edgeLength,  rhP->north.y / tlngP->edgeLength,
+				rhP->south.x / tlngP->edgeLength,  rhP->south.y / tlngP->edgeLength,
+				rhP->east.x  / tlngP->edgeLength,  rhP->east.y  / tlngP->edgeLength,
+				rhP->west.x  / tlngP->edgeLength,  rhP->west.y  / tlngP->edgeLength,
 				rhP->angleDegrees,  rhP->numNeighbours
 			);  // sprintf()
 			stringClean(scratchString);
@@ -210,7 +215,7 @@ void rhombus_export(
 					(*numCharsThisFileP) += fprintf(fp, "\t#N/A");
 			}
 
-			if( Fat == rhP->physique )
+			if( rhP->isFat )
 			{
 				(*numCharsThisFileP) += fprintf(fp, "\t%li\t%li", rhP->pathId, rhP->withinPathNum);
 				if( rhP->pathId >= 0 )

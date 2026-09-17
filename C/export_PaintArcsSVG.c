@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // export_PaintArcsSVG.c, in PenroseC
 
@@ -352,7 +352,7 @@ void tiling_export_PaintArcsSVG(
 		{
 			rhP = &(tlngP->rhombi[rhId]);
 
-			if(  ( (Thin == rhP->physique) != (0 == physiqueCounter) )
+			if(  ( rhP->isFat == (0 == physiqueCounter) )
 			||  rhP->xMax < actual_xMin
 			||  rhP->yMax < actual_yMin
 			||  rhP->xMin > actual_xMax

@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // exportPath.c, in PenroseC
 
@@ -44,7 +44,11 @@ void path_export(
 		);  // fprintf()
 		if( 5 == pathP->pathLength  &&  pathP->pathClosed )
 			(*numCharsThisFileP) += fprintf(fp, "  /Pointy %s", pathP->pointy?"true":"false");
-		(*numCharsThisFileP) += fprintf(fp,  "  /PathStatId %li",  pathP->pathStatId);
+		(*numCharsThisFileP) += fprintf(fp,
+			"  /Rank %" PRIi8 "  /PathStatId %hi",
+			pathClosedTypeNum(pathP->pathClosed,  pathP->pathLength,  pathP->pointy),
+			pathP->pathStatId
+		);
 		if( pathP->pathClosed )
 			(*numCharsThisFileP) += fprintf(fp, "  /VeryClosed %s", pathP->pathVeryClosed?"true":"false");
 		(*numCharsThisFileP) += fprintf(fp, "\n");
@@ -183,7 +187,11 @@ void path_export(
 		);  // fprintf()
 		if( pathP->pathClosed  &&  5 == pathP->pathLength )
 			(*numCharsThisFileP) += fprintf(fp, ",  \"Pointy\":%s", pathP->pointy?"true":"false");
-		(*numCharsThisFileP) += fprintf(fp,  ",  \"PathStatId\":%li",  pathP->pathStatId);
+		(*numCharsThisFileP) += fprintf(fp,
+			",  \"Rank\":%" PRIi8,
+			pathClosedTypeNum(pathP->pathClosed,  pathP->pathLength,  pathP->pointy)
+		);
+		(*numCharsThisFileP) += fprintf(fp,  ",  \"PathStatId\":%hi",  pathP->pathStatId);
 		if( pathP->pathClosed)
 			(*numCharsThisFileP) += fprintf(fp,  ",  \"VeryClosed\":%s",  pathP->pathVeryClosed?"true":"false");
 		(*numCharsThisFileP) += fprintf(fp,  ",  \"WantedPostScript\":%s",  pathP->wantedPostScript?"true":"false");
@@ -248,14 +256,14 @@ void path_export(
 			// No data, just headers. Header code here to be near to the data-outputting code.
 			// These strings are intended to be unique range names for creation and use within Excel (Formula > Defined Names > Create from Selection).
 			(*numCharsThisFileP) += fprintf(fp, "\n"
-				"Pth_%02" PRIi8 ".TilingId"  "\tPth_%02" PRIi8 ".PathId"  "\tPth_%02" PRIi8 ".Closed"  "\tPth_%02" PRIi8 ".Length"  "\tPth_%02" PRIi8 ".Pointy"
+				"Pth_%02" PRIi8 ".TilingId"  "\tPth_%02" PRIi8 ".PathId"  "\tPth_%02" PRIi8 ".Closed"  "\tPth_%02" PRIi8 ".Length"  "\tPth_%02" PRIi8 ".Pointy"  "\tPth_%02" PRIi8 ".Rank"
 				"\tPth_%02" PRIi8 ".PathStatId"  "\tPth_%02" PRIi8 ".VeryClosed"  "\tPth_%02" PRIi8 ".WantedPS"
 				"\tPth_%02" PRIi8 ".MinX"  "\tPth_%02" PRIi8 ".MaxX"  "\tPth_%02" PRIi8 ".MinY"  "\tPth_%02" PRIi8 ".MaxY"
 				"\tPth_%02" PRIi8 ".RhOpenPathEnd"  // Only if open; beyond here only if closed
 				"\tPth_%02" PRIi8 ".RhPathStart"  "\tPth_%02" PRIi8 ".RhPathCentreFurthest"  "\tPth_%02" PRIi8 ".RhThinWithin_First"   "\tPth_%02" PRIi8 ".RhThinWithin_Last"  "\tPth_%02" PRIi8 ".PathId_ShortestOuter"
 				"\tPth_%02" PRIi8 ".Orient"  "\tPth_%02" PRIi8 ".CentreX"  "\tPth_%02" PRIi8 ".CentreY"  "\tPth_%02" PRIi8 ".RadiusMin"  "\tPth_%02" PRIi8 ".RadiusMax"
 				"\tPth_%02" PRIi8 ".InsideThis_NumFats"  "\tPth_%02" PRIi8 ".InsideThis_NumThins"  "\tPth_%02" PRIi8 ".InsideDeep_NumFats"  "\tPth_%02" PRIi8 ".InsideDeep_NumThins",
-				tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,  // TilingId ...
+				tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,  // TilingId ...
 				tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,  // PathStatId
 				tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,  // MinX
 				tlngP->tilingId,  // RhOpenPathEnd
@@ -267,9 +275,14 @@ void path_export(
 			break ;  // from TSV  (inside path_export, NULL == pathP)
 		}  // if( NULL == pathP )
 
-		(*numCharsThisFileP) += fprintf(fp, "%" PRIi8  "\t%li"  "\t%s"  "\t%li"  "\t%s"  "\t%li"  "\t%s"  "\t%s",
+		(*numCharsThisFileP) += fprintf(fp,
+			"%" PRIi8  "\t%li"  "\t%s"  "\t%li"  // tilingId, pathId, pathClosed, pathLength
+			"\t%s"  // pointy
+			"\t%" PRIi8  // pathClosedTypeNum()
+			"\t%hi"  "\t%s"  "\t%s",  // pathStatId, pathVeryClosed, wantedPostScript
 			tlngP->tilingId,  pathP->pathId,  pathP->pathClosed?"TRUE":"FALSE",  pathP->pathLength,
 			( (5 == pathP->pathLength  &&  pathP->pathClosed) ? (pathP->pointy?"TRUE":"FALSE") : "#N/A" ),  // #N/A as Excel awkward about CountIfs() blanks.
+			pathClosedTypeNum(pathP->pathClosed,  pathP->pathLength,  pathP->pointy),
 			pathP->pathStatId,  pathP->pathClosed && pathP->pathVeryClosed ? "TRUE" : "FALSE",  pathP->wantedPostScript ? "TRUE" : "FALSE"
 		);  // fprintf()
 

@@ -5,11 +5,11 @@
 #include "penrose.h"
 
 RhombId rhombus_append(
-	Tiling * const tlngP,  Physique const physique,  int8_t filledType,
+	Tiling * const tlngP,  bool const isFat,  int8_t filledType,
 	double const xNorth,  double const yNorth,  double const xSouth,  double const ySouth
 )
 {
-	if (! rhombus_keep(tlngP,  physique,  xNorth,  yNorth,  xSouth,  ySouth) )
+	if (! rhombus_keep(tlngP,  isFat,  xNorth,  yNorth,  xSouth,  ySouth) )
 		return -1;
 
 	RhombId const rhId = tlngP->numFats + tlngP->numThins ;
@@ -27,7 +27,7 @@ RhombId rhombus_append(
 
 	Rhombus * const rhP = &(tlngP->rhombi[rhId]) ;
 	rhP->rhId       = rhId;
-	rhP->physique   = physique;
+	rhP->isFat      = isFat;
 	rhP->filledType = filledType;
 	rhP->north.x    = xNorth;
 	rhP->north.y    = yNorth;
@@ -41,7 +41,7 @@ RhombId rhombus_append(
 	while(rhP->angleDegrees <  -90)  {rhP->angleDegrees += 360;}
 	while(rhP->angleDegrees >= 270)  {rhP->angleDegrees -= 360;}
 
-	double const otherDiagonalFactor = (Fat == physique  ?  HalfRoot5Minus2Sqrt5  :  HalfRoot5Plus2Sqrt5);  // 0.36327 or 1.5388
+	double const otherDiagonalFactor = (isFat  ?  HalfRoot5Minus2Sqrt5  :  HalfRoot5Plus2Sqrt5);  // 0.36327 or 1.5388
 
 	rhP->east.x  +=  ( (yNorth - ySouth)  *  otherDiagonalFactor );
 	rhP->west.x  -=  ( (yNorth - ySouth)  *  otherDiagonalFactor );
@@ -65,7 +65,7 @@ RhombId rhombus_append(
 	rhP->pathId_ShortestOuter = -1;  // I.e., invalid
 	rhP->wantedPostScript = false;
 
-	if( Fat == physique)
+	if( isFat )
 		tlngP->numFats ++ ;
 	else
 		tlngP->numThins ++ ;
@@ -79,13 +79,13 @@ void rhombus_append_descendants(Tiling *tlngP, Rhombus* rhP)
 	double const xNorthMinusSouth = rhP->north.x - rhP->south.x;
 	double const yNorthMinusSouth = rhP->north.y - rhP->south.y;
 
-	if(Fat == rhP->physique)
+	if(rhP->isFat)
 	{
 		// Fat
 
 		rhombus_append(
 			tlngP,
-			Fat,
+			true,  // isFat
 			0,  // not filled hole
 			rhP->south.x * GoldenRatioReciprocal  +  rhP->north.x * Half3MinusSqrt5,
 			rhP->south.y * GoldenRatioReciprocal  +  rhP->north.y * Half3MinusSqrt5,
@@ -95,7 +95,7 @@ void rhombus_append_descendants(Tiling *tlngP, Rhombus* rhP)
 
 		rhombus_append(
 			tlngP,
-			Fat,
+			true,  // isFat
 			0,  // not filled hole
 			rhP->south.x,
 			rhP->south.y,
@@ -105,7 +105,7 @@ void rhombus_append_descendants(Tiling *tlngP, Rhombus* rhP)
 
 		rhombus_append(
 			tlngP,
-			Fat,
+			true,  // isFat
 			0,  // not filled hole
 			rhP->south.x,
 			rhP->south.y,
@@ -115,7 +115,7 @@ void rhombus_append_descendants(Tiling *tlngP, Rhombus* rhP)
 
 		rhombus_append(
 			tlngP,
-			Thin,
+			false,  // !isFat, so Thin,
 			0,  // not filled hole
 			rhP->north.x * Quarter5MinusSqrt5  +  rhP->south.x * Cos72  -  yNorthMinusSouth * QuarterRoot50Minus22Sqrt5,
 			rhP->north.y * Quarter5MinusSqrt5  +  rhP->south.y * Cos72  +  xNorthMinusSouth * QuarterRoot50Minus22Sqrt5,
@@ -125,7 +125,7 @@ void rhombus_append_descendants(Tiling *tlngP, Rhombus* rhP)
 
 		rhombus_append(
 			tlngP,
-			Thin,
+			false,  // !isFat, so Thin,
 			0,  // not filled hole
 			rhP->north.x * Quarter5MinusSqrt5  +  rhP->south.x * Cos72  +  yNorthMinusSouth * QuarterRoot50Minus22Sqrt5,
 			rhP->north.y * Quarter5MinusSqrt5  +  rhP->south.y * Cos72  -  xNorthMinusSouth * QuarterRoot50Minus22Sqrt5,
@@ -140,7 +140,7 @@ void rhombus_append_descendants(Tiling *tlngP, Rhombus* rhP)
 
 		rhombus_append(
 			tlngP,
-			Fat,
+			true,  // isFat
 			0,  // not filled hole
 			rhP->south.x,
 			rhP->south.y,
@@ -150,7 +150,7 @@ void rhombus_append_descendants(Tiling *tlngP, Rhombus* rhP)
 
 		rhombus_append(
 			tlngP,
-			Fat,
+			true,  // isFat
 			0,  // not filled hole
 			rhP->south.x,
 			rhP->south.y,
@@ -160,7 +160,7 @@ void rhombus_append_descendants(Tiling *tlngP, Rhombus* rhP)
 
 		rhombus_append(
 			tlngP,
-			Thin,
+			false,  // !isFat, so Thin,
 			0,  // not filled hole
 			rhP->north.x * Cos36  +  rhP->south.x * Quarter3MinusSqrt5  -  yNorthMinusSouth * Sin36,
 			rhP->north.y * Cos36  +  rhP->south.y * Quarter3MinusSqrt5  +  xNorthMinusSouth * Sin36,
@@ -170,7 +170,7 @@ void rhombus_append_descendants(Tiling *tlngP, Rhombus* rhP)
 
 		rhombus_append(
 			tlngP,
-			Thin,
+			false,  // !isFat, so Thin,
 			0,  // not filled hole
 			rhP->north.x * Cos36  +  rhP->south.x * Quarter3MinusSqrt5  +  yNorthMinusSouth * Sin36,
 			rhP->north.y * Cos36  +  rhP->south.y * Quarter3MinusSqrt5  -  xNorthMinusSouth * Sin36,

@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // radii_populate.c, in PenroseC
 
@@ -28,7 +28,7 @@ void radii_populate(Tiling * const tlngP)
 	for( rhId = 0  ;  rhId < tlngP->numFats + tlngP->numThins  ;  rhId++ )
 	{
 		rhP = &(tlngP->rhombi[rhId]);
-		if( Fat == rhP->physique )
+		if( rhP->isFat )
 		{
 			pathP = &(tlngP->path[ rhP->pathId ]);
 			if( (! pathP->pathClosed)  &&  pathP->pathLength < openPathLengthThreshold )  // Open, shorter than longest

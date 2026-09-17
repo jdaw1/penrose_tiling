@@ -139,7 +139,7 @@ void pathStat_export(
 			multiLine = ( pathStatP->numPaths > Paths_MaxPerLine / 2 );  // Divide by two as already much on line.
 			(*numCharsThisFileP) += fIndent(fp, 2 + indentDepth);
 			(*numCharsThisFileP) += fprintf(fp,
-				"{ \"PathStatId\":%li, \"PathClosed\":%s, \"PathLength\":%li",
+				"{ \"PathStatId\":%hi, \"PathClosed\":%s, \"PathLength\":%li",
 				pathStatP->pathStatId,
 				pathStatP->pathClosed ? "true" : "false",
 				pathStatP->pathLength
@@ -147,7 +147,7 @@ void pathStat_export(
 			if( 5 == pathStatP->pathLength  &&  pathStatP->pathClosed )
 				(*numCharsThisFileP) += fprintf(fp, ", \"Pointy\":%s",  pathStatP->pointy ? "true" : "false");
 			(*numCharsThisFileP) += fprintf(fp,
-				", \"Rank\":%" PRIi8 ", , \"NumPaths\":%li, \"MaxNumThisFats\":%li, \"MaxNumDeepFats\":%li, \"MaxNumThisThins\":%li, \"MaxNumDeepThins\":%li",
+				", \"Rank\":%" PRIi8 ", \"NumPaths\":%li, \"MaxNumThisFats\":%li, \"MaxNumDeepFats\":%li, \"MaxNumThisThins\":%li, \"MaxNumDeepThins\":%li",
 				pathStatP->pathClosedTypeNum,
 				pathStatP->numPaths,
 				pathStatP->insideThis_MaxNumFats,
@@ -249,7 +249,7 @@ void pathStat_export(
 			}  // if( NULL == pathStatP )
 			else
 			{
-				(*numCharsThisFileP) += fprintf(fp, "%" PRIi8  "\t%li"  "\t%s"  "\t%li"  "\t%s"  "\t%" PRIi8  "\t%li",
+				(*numCharsThisFileP) += fprintf(fp, "%" PRIi8  "\t%hi"  "\t%s"  "\t%li"  "\t%s"  "\t%" PRIi8  "\t%li",
 					tlngP->tilingId,
 					pathStatP->pathStatId,
 					pathStatP->pathClosed ? "TRUE" : "FALSE",

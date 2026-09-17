@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // export_PaintRhSVG.c, in PenroseC
 
@@ -188,7 +188,7 @@ void tiling_export_PaintRhombiSVG(
 
 			if( pathOuterP->pathClosed   &&  (pathOuterP->pathLength > 15  ||  (pathOuterP->pathLength == 5  &&  ! pathOuterP->pointy)) )
 			{
-				exportColourSVG(gStr,  colourStr,  &isWhite,  Thin,  false,  0,  false);
+				exportColourSVG(gStr,  colourStr,  &isWhite,  false,  false,  0,  false);
 				(*numCharsThisFileP) += fprintf(fp,  "\t\t<g %s\n",  gStr);
 				(*numLinesThisFileP) ++ ;
 
@@ -231,13 +231,13 @@ void tiling_export_PaintRhombiSVG(
 					for( rhId = pathOuterP->rhId_ThinWithin_First  ;  rhId <= pathOuterP->rhId_ThinWithin_Last  ;  rhId ++ )
 					{
 						rhP = &(tlngP->rhombi[rhId]);
-						if( Thin == rhP->physique  &&   pathStatP->examplePathId == rhP->pathId_ShortestOuter )
+						if( (! rhP->isFat)  &&   pathStatP->examplePathId == rhP->pathId_ShortestOuter )
 						{
 							thinGood = true;
 							for( nghbrNum = 0  ;  nghbrNum < rhP->numNeighbours  ;  nghbrNum ++ )
 							{
 								nghbrP = &(rhP->neighbours[nghbrNum]);
-								if( Fat == nghbrP->physique  &&  nghbrP->touchesN )
+								if( nghbrP->isFat  &&  nghbrP->touchesN )
 								{
 									pathP = &(tlngP->path[ tlngP->rhombi[ nghbrP->rhId ].pathId ]);
 									if( 5 == pathP->pathLength  &&  pathP->pathClosed  &&  ! pathP->pointy )
@@ -294,7 +294,7 @@ void tiling_export_PaintRhombiSVG(
 
 			// Output defs: outer path of fats
 
-			exportColourSVG(gStr,  colourStr,  &isWhite,  Fat,  pathStatP->pathClosed,  pathStatP->pathLength,  pathStatP->pointy);
+			exportColourSVG(gStr,  colourStr,  &isWhite,  true,  pathStatP->pathClosed,  pathStatP->pathLength,  pathStatP->pointy);
 			(*numCharsThisFileP) += fprintf(fp,  "\t\t<g %s\n",  gStr);
 			(*numLinesThisFileP) ++ ;
 
@@ -368,7 +368,7 @@ void tiling_export_PaintRhombiSVG(
 	for( rhId = tlngP->numFats + tlngP->numThins - 1  ;  rhId >= 0  ;  rhId -- )
 	{
 		rhP = &(tlngP->rhombi[rhId]);
-		if( Thin == rhP->physique
+		if( (! rhP->isFat)
 		&&  rhP->pathId_ShortestOuter < 0
 		&&  rhP->xMax >= actual_xMin
 		&&  rhP->yMax >= actual_yMin
@@ -379,7 +379,7 @@ void tiling_export_PaintRhombiSVG(
 			for( nghbrNum = 0  ;  nghbrNum < rhP->numNeighbours  ;  nghbrNum ++ )
 			{
 				nghbrP = &(rhP->neighbours[nghbrNum]);
-				if( nghbrP->touchesN  &&  Fat == nghbrP->physique )
+				if( nghbrP->touchesN  &&  nghbrP->isFat )
 				{
 					pathP = &(tlngP->path[ tlngP->rhombi[ nghbrP->rhId ].pathId ]);
 					if( 5 == pathP->pathLength  &&  pathP->pathClosed  &&  ! pathP->pointy )
@@ -440,7 +440,7 @@ void tiling_export_PaintRhombiSVG(
 							if( ! anyThisPathStatId )
 							{
 								anyThisPathStatId = true;
-								exportColourSVG(gStr,  colourStr,  &isWhite,  Fat,  pathStatP->pathClosed,  pathStatP->pathLength,  pathStatP->pointy);
+								exportColourSVG(gStr,  colourStr,  &isWhite,  true,  pathStatP->pathClosed,  pathStatP->pathLength,  pathStatP->pointy);
 								(*numCharsThisFileP) += fprintf(fp, "<g %s\n", gStr);  // This is why outer pathStatId loop.
 								(*numLinesThisFileP) ++ ;
 

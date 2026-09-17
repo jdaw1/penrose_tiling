@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // export_PaintArcsPS.c, in PenroseC
 
@@ -41,8 +41,8 @@ void tiling_export_PaintArcsPS(
 	const double toPaint_xMax = postScript_toPaint_xMax(tlngP);
 	const double toPaint_yMax = postScript_toPaint_yMax(tlngP);
 
-	arcdEast = malloc( (tlngP->numFats + tlngP->numThins) * sizeof(bool) );
-	arcdWest = malloc( (tlngP->numFats + tlngP->numThins) * sizeof(bool) );
+	arcdEast = malloc( ((size_t)tlngP->numFats + (size_t)tlngP->numThins) * (size_t)sizeof(bool) );
+	arcdWest = malloc( ((size_t)tlngP->numFats + (size_t)tlngP->numThins) * (size_t)sizeof(bool) );
 	if( NULL == arcdEast ) fprintf(stderr, "tiling_export_PaintArcsPS(): !!! NULL == arcdEast, with tilingId=%" PRIi8 ". Continuing, with slight misbehaviour. !!!\n", tlngP->tilingId);
 	if( NULL == arcdWest ) fprintf(stderr, "tiling_export_PaintArcsPS(): !!! NULL == arcdWest, with tilingId=%" PRIi8 ". Continuing, with slight misbehaviour. !!!\n", tlngP->tilingId);
 	for( rhId = 0  ;  rhId < tlngP->numFats + tlngP->numThins  ;  rhId ++ )
@@ -303,7 +303,7 @@ void tiling_export_PaintArcsPS(
 			}
 
 			arcCentreThis = (edgeE ? rhP->east : rhP->west);
-			if(72 == rhP->physique)
+			if(rhP->isFat)
 			{
 				angThisStart = rhP->angleDegrees  +  ( edgeN ? (edgeE ? 36: -36) : (edgeE ? 144 : 216) );  // Fat
 				if( angThisStart >   180 ) angThisStart -= 360;
@@ -347,8 +347,8 @@ void tiling_export_PaintArcsPS(
 			if( ! foundNeighbour )
 			{
 				fprintf(stderr,
-					"tiling_export_PaintArcsPS(): !!! impossible failure to find neighbour, pathStatId=%li, pathId=%li, pathLength=%li, %s, rhId=%li, physique=%" PRIi8 " numNeighbours=%" PRIi8 " !!!\n",
-					pathP->pathStatId,  pathId,  pathP->pathLength,  pathP->pathClosed ? "closed" : "open",  rhId,  rhP->physique,  rhP->numNeighbours
+					"tiling_export_PaintArcsPS(): !!! impossible failure to find neighbour, pathStatId=%hi, pathId=%li, pathLength=%li, %s, rhId=%li, physique=%s, numNeighbours=%" PRIi8 " !!!\n",
+					pathP->pathStatId,  pathId,  pathP->pathLength,  pathP->pathClosed ? "closed" : "open",  rhId,  rhP->isFat ? "fat" : "thin",  rhP->numNeighbours
 				);  // fprintf()
 				fflush(fp);
 				fclose(fp);
@@ -391,7 +391,7 @@ void tiling_export_PaintArcsPS(
 			continue;
 
 		either = false;
-		angThisStart = rhP->angleDegrees  +  (Fat == rhP->physique  ?   36  :  72 );
+		angThisStart = rhP->angleDegrees  +  (rhP->isFat  ?   36  :  72 );
 		if(angThisStart >= 180) angThisStart -= 360;
 		if( (NULL == arcdEast  ||  (! arcdEast[rhId]))
 		&& rhP->east.x  +  tlngP->edgeLength / 2  >  toPaint_xMin
@@ -404,7 +404,7 @@ void tiling_export_PaintArcsPS(
 				(rhP->east.x + rhP->north.x) / 2 / tlngP->edgeLength,
 				(rhP->east.y + rhP->north.y) / 2 / tlngP->edgeLength,
 				rhP->east.x / tlngP->edgeLength,   rhP->east.y / tlngP->edgeLength,
-				angThisStart,  angThisStart + (Fat == rhP->physique  ?  108  :  36 )
+				angThisStart,  angThisStart + (rhP->isFat  ?  108  :  36 )
 			);  // sprintf()
 			stringClean(scratchString);
 			(*numCharsThisFileP) += fprintf(fp, "%s",scratchString);
@@ -423,7 +423,7 @@ void tiling_export_PaintArcsPS(
 				(rhP->west.x + rhP->south.x) / 2 / tlngP->edgeLength,
 				(rhP->west.y + rhP->south.y) / 2 / tlngP->edgeLength,
 				rhP->west.x / tlngP->edgeLength,   rhP->west.y / tlngP->edgeLength,
-				angThisStart,  angThisStart + (Fat == rhP->physique  ?  108  :  36 )
+				angThisStart,  angThisStart + (rhP->isFat  ?  108  :  36 )
 			);  // sprintf()
 			stringClean(scratchString);
 			(*numCharsThisFileP) += fprintf(fp, "%s",scratchString);

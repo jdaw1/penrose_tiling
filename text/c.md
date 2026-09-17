@@ -87,22 +87,22 @@ The table below shows the numbers of fat and thin tiles in each tiling.
 
 | Tl&rsquo;g<br>Id | Num<br>Fats | Num<br>Thins | Long<br>-est<br>closed<br>path | &lsquo;Area&rsquo; | Bound<br>-ary<br>num<br>vertices | &Sum;<br>`malloc()`<br>this<br>Tl&rsquo;g |JSON<br>size | &asymp;&#8239;&Sum;<small><sub>0&#10141;_n_</sub></small><br>exec.<br>time |
 |----------------------------------------:|-----------:|-----------:|-----------------:|--------------:|-------:|----------------:|----------------:|--------------:|
-| [&numsp;0](../images/Penrose_Rh_00.svg) |          5 |          5 | 5&lsquo;r&rsquo; |               |     10 |   8.1&#8239;KiB |   5.9&#8239;KiB |               |
-| [&numsp;1](../images/Penrose_Rh_01.svg) |         20 |         10 | 5&lsquo;p&rsquo; |               |     20 |  33.8&#8239;KiB |  21.0&#8239;KiB |               |
-| [&numsp;2](../images/Penrose_Rh_02.svg) |         65 |         40 |               15 |               |     40 |  68.4&#8239;KiB |  69.5&#8239;KiB |               |
-| [&numsp;3](../images/Penrose_Rh_03.svg) |        190 |        110 |               25 |      184      |     70 |   164&#8239;KiB |   203&#8239;KiB |               |
-| [&numsp;4](../images/Penrose_Rh_04.svg) |        530 |        320 |               55 |      444      |    120 |   352&#8239;KiB |   581&#8239;KiB |               |
-| [&numsp;5](../images/Penrose_Rh_05.svg) |      1,440 |        870 |              105 |     1303      |    200 |   809&#8239;KiB | 1,613&#8239;KiB |               |
-| [&numsp;6](../images/Penrose_Rh_06.svg) |      3,855 |      2,355 |              215 |     3286      |    330 | 1,995&#8239;KiB | 4,407&#8239;KiB |               |
-| [&numsp;7](../images/Penrose_Rh_07.svg) |     10,230 |      6,270 |              425 |     9&#8239;k |    540 | 5,118&#8239;KiB |  11.6&#8239;MiB |               |
-| [&numsp;8](../images/Penrose_Rh_08.svg) |     27,005 |     16,610 |              855 |    23&#8239;k |    880 |  13.0&#8239;MiB |  31.1&#8239;MiB |               |
-| [&numsp;9](../images/Penrose_Rh_09.svg) |     71,060 |     43,780 |            1,705 |    62&#8239;k |  1,430 |  33.9&#8239;MiB |  83.1&#8239;MiB |   4&#8239;s   |
-|       [10](../images/Penrose_Rh_10.svg) |    186,620 |    115,120 |            3,415 |   162&#8239;k |  2,320 |    89&#8239;MiB |   222&#8239;MiB |  12&#8239;s   |
-|       [11](../images/Penrose_Rh_11.svg) |    489,520 |    302,180 |            6,825 |   427&#8239;k |  3,760 |   232&#8239;MiB |   588&#8239;MiB |  28&#8239;s   |
-|        12                               |  1,283,105 |    792,425 |           13,655 |   1.1&#8239;M |  6,090 |   606&#8239;MiB | 1,560&#8239;MiB |   2&#8239;min |
-|        13                               |  3,361,680 |  2,076,690 |           27,305 |   2.9&#8239;M |  9,860 | 1,529&#8239;MiB | 4,126&#8239;MiB |   5&#8239;min |
-|        14                               |  8,804,985 |  5,440,260 |           54,615 |   7.7&#8239;M | 15,960 | 3,895&#8239;MiB |  10.7&#8239;GiB |  23&#8239;min |
-|        15                               | 23,058,210 | 14,248,290 |          109,225 |    20&#8239;M | 25,830 |   9.9&#8239;GiB |  28.3&#8239;GiB |  98&#8239;min |
+| [&numsp;0](../images/Penrose_Rh_00.svg) |          5 |          5 | 5&lsquo;r&rsquo; |               |     10 |   7.1&#8239;KiB |   6.2&#8239;KiB |               |
+| [&numsp;1](../images/Penrose_Rh_01.svg) |         20 |         10 | 5&lsquo;p&rsquo; |               |     20 |  31.7&#8239;KiB |  21.5&#8239;KiB |               |
+| [&numsp;2](../images/Penrose_Rh_02.svg) |         65 |         40 |               15 |               |     40 |  64.3&#8239;KiB |  70.4&#8239;KiB |               |
+| [&numsp;3](../images/Penrose_Rh_03.svg) |        190 |        110 |               25 |      184      |     70 |   157&#8239;KiB |   205&#8239;KiB |               |
+| [&numsp;4](../images/Penrose_Rh_04.svg) |        530 |        320 |               55 |      444      |    120 |   338&#8239;KiB |   583&#8239;KiB |               |
+| [&numsp;5](../images/Penrose_Rh_05.svg) |      1,440 |        870 |              105 |     1303      |    200 |   776&#8239;KiB | 1,616&#8239;KiB |               |
+| [&numsp;6](../images/Penrose_Rh_06.svg) |      3,855 |      2,355 |              215 |     3286      |    330 | 1,912&#8239;KiB | 4,411&#8239;KiB |               |
+| [&numsp;7](../images/Penrose_Rh_07.svg) |     10,230 |      6,270 |              425 |     9&#8239;k |    540 | 4,911&#8239;KiB |  11.6&#8239;MiB |               |
+| [&numsp;8](../images/Penrose_Rh_08.svg) |     27,005 |     16,610 |              855 |    23&#8239;k |    880 |  12.5&#8239;MiB |  31.1&#8239;MiB |   1&#8239;s   |
+| [&numsp;9](../images/Penrose_Rh_09.svg) |     71,060 |     43,780 |            1,705 |    62&#8239;k |  1,430 |  32.6&#8239;MiB |  83.1&#8239;MiB |   4&#8239;s   |
+|       [10](../images/Penrose_Rh_10.svg) |    186,620 |    115,120 |            3,415 |   162&#8239;k |  2,320 |    85&#8239;MiB |   222&#8239;MiB |  10&#8239;s   |
+|       [11](../images/Penrose_Rh_11.svg) |    489,520 |    302,180 |            6,825 |   427&#8239;k |  3,760 |   224&#8239;MiB |   588&#8239;MiB |  27&#8239;s   |
+|        12                               |  1,283,105 |    792,425 |           13,655 |   1.1&#8239;M |  6,090 |   586&#8239;MiB | 1,560&#8239;MiB |  95&#8239;s   |
+|        13                               |  3,361,680 |  2,076,690 |           27,305 |   2.9&#8239;M |  9,860 | 1,480&#8239;MiB | 4,127&#8239;MiB | 4.2&#8239;min |
+|        14                               |  8,804,985 |  5,440,260 |           54,615 |   7.7&#8239;M | 15,960 | 3,771&#8239;MiB |  10.7&#8239;GiB |  22&#8239;min |
+|        15                               | 23,058,210 | 14,248,290 |          109,225 |    20&#8239;M | 25,830 |   9.5&#8239;GiB |  28.3&#8239;GiB | 101&#8239;min |
 
 
 ### &lsquo;Area&rsquo; ###
@@ -110,9 +110,10 @@ The table below shows the numbers of fat and thin tiles in each tiling.
 The &lsquo;Area&rsquo; quoted in the table is not quite of the whole tiling. 
 Near the edges of a tiling paths are self-evidently incomplete, their length indeterminate, frustrating a tiling with paths coloured by length. 
 So the quoted &lsquo;area&rsquo; is of a circle not containing any open paths of length shorter than the longest open path(s). 
-That is, within this circle, colour consistently all rhombi in open paths, and it will be and seem consistent. 
+That is, withint hat area, every path is either closed, or open of a single unique length. 
+So, within this circle, colour consistently all rhombi in open paths, and it will be and seem consistent. 
 The area is denominated in units of square tile edges. 
-For `tilingId`&#8239;&gap;&#8239;6, this &lsquo;colourable&rsquo; circular &lsquo;Area&rsquo; is about &frac23; of the whole tiling.
+For `tilingId`&#8239;&gap;&#8239;6, this circular &lsquo;colourable&rsquo; &lsquo;Area&rsquo; is about &frac23; of the whole tiling.
 
 The average tile area, in edge lengths squared, is &frac14;(&radic;5&nbsp;+&nbsp;&radic;(10&nbsp;&minus;&nbsp;2&radic;5)&nbsp;&minus;&nbsp;1) &asymp;&nbsp;0.8968, 
 the reciprocal of which is 1&nbsp;+&nbsp;&radic;(10&#8239;&minus;&#8239;2&radic;5)&nbsp;&minus;&nbsp;&radic;5 &asymp;&nbsp;1.1151.

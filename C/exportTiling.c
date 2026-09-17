@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // exportTiling.c, in PenroseC
 
@@ -35,7 +35,7 @@ void tiling_export(
 		break;  // Not applicable here.
 
 	case PS_data:
-		tlngP->wantedPostScriptRhombNum = malloc(sizeof(struct RhombId *) * (tlngP->numFats + tlngP->numThins) );
+		tlngP->wantedPostScriptRhombNum = malloc( (size_t)sizeof(struct RhombId *) * ((size_t)tlngP->numFats + (size_t)tlngP->numThins) );
 		if( tlngP->wantedPostScriptRhombNum == NULL )
 		{
 			fprintf(stderr,
@@ -47,7 +47,7 @@ void tiling_export(
 			exit(EXIT_FAILURE) ;
 		}  // tlngP->wantedPostScriptRhombNum == NULL
 	   
-		tlngP->wantedPostScriptPathNum = malloc( (tlngP->numPathsClosed + tlngP->numPathsOpen)  *  sizeof(struct RhombId *) );
+		tlngP->wantedPostScriptPathNum = malloc( ((size_t)tlngP->numPathsClosed + (size_t)tlngP->numPathsOpen)  *  (size_t)sizeof(struct RhombId *) );
 		if( tlngP->wantedPostScriptPathNum == NULL )
 		{
 			fprintf(stderr,
@@ -99,6 +99,7 @@ void tiling_export(
 		(*numLinesThisFileP) ++ ;
 			
 		seed_type_name(tempStr,  tlngP->seedType);
+		(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
 		(*numCharsThisFileP) += fprintf(fp,
 			"/NumFats %li   /NumThins %li   /BoundingPathNumVertices %lli  /EdgeLength 1  /AxisAligned %s  /SeedType /%s\n",
 			tlngP->numFats,  tlngP->numThins,  tlngP->boundingPathNumVertices,  tlngP->axisAligned ? "true" : "false",  tempStr
@@ -135,6 +136,15 @@ void tiling_export(
 		(*numCharsThisFileP) += fprintf(fp,
 			"/wantedPostScriptNumRhombi %li   /wantedPostScriptNumPaths %li  %% [ WhollyOutside RhombOutPathIn RhombPartlyIn RhombWhollyIn ]\n",
 			tlngP->wantedPostScriptNumRhombi,  tlngP->wantedPostScriptNumPaths
+		);  // fprintf()
+		(*numLinesThisFileP) ++;
+
+		(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
+		(*numCharsThisFileP) += fprintf(fp,
+			"/InternalToC_NumForWhichMallocd_Rhombi %li   /InternalToC_NumForWhichMallocd_Paths %li   /InternalToC_NumForWhichMallocd_PathStats %hi"
+			"   /InternalToC_sizeof_Rhombus %zu   /InternalToC_sizeof_Path %zu   /InternalToC_sizeof_PathStats %zu   /PersistentSumSimple_malloc %zu\n",
+			tlngP->rhombi_NumMax,  tlngP->path_NumMax,  tlngP->pathStats_NumMax,
+			sizeof(Rhombus),  sizeof(Path),  sizeof(PathStats),  tlngP->mallocsPersistentSumSimple
 		);  // fprintf()
 		(*numLinesThisFileP) ++;
 
@@ -330,11 +340,11 @@ void tiling_export(
 		sprintf(scratchString,
 			"\"DataAsOf\":\"%04d-%02d-%02dT%02d:%02d:%02d\""   // Time local, not necessarily UTC, hence no trailing Z.
 			",   \"SecondsToStartExportFromStartFirstTiling\":%0.6lf,   \"SecondsToStartExportFromStartThisTiling\":%0.6lf,   \"InternalToC_EdgeLength\":%.16E"
-			",   \"FileTimeString\":\"%s\",   \"PersistentSumSimple_malloc\":%zu,\n",
+			",   \"FileTimeString\":\"%s\",\n",
 			(1900 + tlngP->timeData->tm_year),  (1 + tlngP->timeData->tm_mon),  tlngP->timeData->tm_mday,
 			tlngP->timeData->tm_hour,  tlngP->timeData->tm_min,  tlngP->timeData->tm_sec,
 			tlngP->SecondsToStartExportFromStartFirstTiling,  tlngP->SecondsToStartExportFromStartThisTiling,   tlngP->edgeLength,
-			tlngP->timeString,  tlngP->mallocsPersistentSumSimple
+			tlngP->timeString
 		);  // sprintf()
 		(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
 		(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
@@ -361,6 +371,17 @@ void tiling_export(
 		stringClean(scratchString);
 		(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
 		(*numCharsThisFileP) += fprintf(fp, "%s", scratchString);
+		(*numLinesThisFileP) ++;
+
+		(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
+		(*numCharsThisFileP) += fprintf(fp,
+			"\"InternalToC_NumForWhichMallocd_Rhombi\":%li,   \"InternalToC_NumForWhichMallocd_Paths\":%li,   \"InternalToC_NumForWhichMallocd_PathStats\":%hi,"
+			"   \"InternalToC_sizeof_Rhombus\":%zu,   \"InternalToC_sizeof_Path\":%zu,   \"InternalToC_sizeof_PathStats\":%zu,"
+			"   \"PersistentSumSimple_malloc\":%zu,\n",
+			tlngP->rhombi_NumMax,  tlngP->path_NumMax,  tlngP->pathStats_NumMax,
+			sizeof(Rhombus),  sizeof(Path),  sizeof(PathStats),
+			tlngP->mallocsPersistentSumSimple
+		);  // fprintf()
 		(*numLinesThisFileP) ++;
 
 		if( exportQ(pathStats, exportFormat, tlngP, *numLinesThisFileP) )
@@ -463,10 +484,12 @@ void tiling_export(
 			"\tT_%02" PRIi8 ".MinX_rhId"      "\tT_%02" PRIi8 ".MaxX_rhId"    "\tT_%02" PRIi8 ".MinY_rhId"      "\tT_%02" PRIi8 ".MaxY_rhId"
 			"\tT_%02" PRIi8 ".MinX"           "\tT_%02" PRIi8 ".MaxX"         "\tT_%02" PRIi8 ".MinY"           "\tT_%02" PRIi8 ".MaxY"      "\tT_%02" PRIi8 ".RadiusMax"      "\tT_%02" PRIi8 ".RadiusShortOpen"
 			"\tT_%02" PRIi8 ".DataAsOf"                "\tT_%02" PRIi8 ".SecondsToStartExportFromStartFirstTiling" "\tT_%02" PRIi8 ".SecondsToStartExportFromStartThisTiling" "\tT_%02" PRIi8 ".FileTimeString"
-			"\tT_%02" PRIi8 ".PersistentSumSimple_malloc"
 			"\tT_%02" PRIi8 ".InternalToC_EdgeLength"  "\tT_%02" PRIi8 ".Licence"                    "\tT_%02" PRIi8 ".URL"                        "\tT_%02" PRIi8 ".Author"
 			"\tT_%02" PRIi8 ".WantedPostScriptCentreX" "\tT_%02" PRIi8 ".WantedPostScriptCentreY"    "\tT_%02" PRIi8 ".WantedPostScriptHalfWidth"  "\tT_%02" PRIi8 ".WantedPostScriptHalfHeight"
 			"\tT_%02" PRIi8 ".WantedPostScriptAspect"  "\tT_%02" PRIi8 ".WantedPostScriptNumRhombi"  "\tT_%02" PRIi8 ".WantedPostScriptNumPaths"
+			"\tT_%02" PRIi8 ".InternalToC_NumForWhichMallocd_Rhombi"  "\tT_%02" PRIi8 ".InternalToC_NumForWhichMallocd_Paths"  "\tT_%02" PRIi8 ".InternalToC_NumForWhichMallocd_PathStats"
+			"\tT_%02" PRIi8 ".InternalToC_sizeof_Rhombus"  "\tT_%02" PRIi8 ".InternalToC_sizeof_Path"  "\tT_%02" PRIi8 ".InternalToC_sizeof_PathStats"
+			"\tT_%02" PRIi8 ".PersistentSumSimple_malloc"
 			"\n",
 			tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,
 			tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,
@@ -474,10 +497,12 @@ void tiling_export(
 			tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,
 			tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,
 			tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,
-			tlngP->tilingId,
 			tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,
 			tlngP->tilingId, tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,
-			tlngP->tilingId, tlngP->tilingId, tlngP->tilingId
+			tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,
+			tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,
+			tlngP->tilingId, tlngP->tilingId, tlngP->tilingId,
+			tlngP->tilingId
 		);  // fprintf()
 		(*numLinesThisFileP) ++;
 
@@ -511,12 +536,10 @@ void tiling_export(
 		(*numCharsThisFileP) += fprintf(fp,
 			"\t%04d-%02d-%02dT%02d:%02d:%02d"
 			"\t%0.6lf"  "\t%0.6lf"   "\t%s"
-			"\t%zu"
 			"\t%.16E"   "\t%s"    "\t%s"    "\t%s",
 			(1900 + tlngP->timeData->tm_year),  (1 + tlngP->timeData->tm_mon),  tlngP->timeData->tm_mday,
 			tlngP->timeData->tm_hour,  tlngP->timeData->tm_min,  (int)(tlngP->timeData->tm_sec),
 			tlngP->SecondsToStartExportFromStartFirstTiling,  tlngP->SecondsToStartExportFromStartThisTiling,  tlngP->timeString,
-			tlngP->mallocsPersistentSumSimple,
 			tlngP->edgeLength,  TextLicence,  TextURL,  TextAuthor
 		);  // fprintf()
 
@@ -530,7 +553,13 @@ void tiling_export(
 			tlngP->wantedPostScriptAspect,  tlngP->wantedPostScriptNumRhombi,  tlngP->wantedPostScriptNumPaths
 		);  // sprintf()
 		stringClean(scratchString);
-		(*numCharsThisFileP) += fprintf(fp, "%s\n\n", scratchString);
+		(*numCharsThisFileP) += fprintf(fp,
+			"%s"   "\t%li"   "\t%li"   "\t%hi"   "\t%zu"   "\t%zu"   "\t%zu"   "\t%zu",
+			scratchString,  tlngP->rhombi_NumMax,  tlngP->path_NumMax,  tlngP->pathStats_NumMax,
+			sizeof(Rhombus),  sizeof(Path),  sizeof(PathStats),  tlngP->mallocsPersistentSumSimple
+		);  // fprintf()
+
+		(*numCharsThisFileP) += fprintf(fp, "\n\n");
 		(*numLinesThisFileP) += 2;
 
 		if( tlngP->numPathStats > 0  &&  exportQ(pathStats, exportFormat, tlngP, *numLinesThisFileP) )
@@ -607,7 +636,7 @@ void tiling_export(
 
 		// One more than longest row, for ease of navigation within Excel.
 		int i;
-		for( i = 0  ;  i < 40  ;  i++ )
+		for( i = 0  ;  i < 46  ;  i++ )
 			(*numCharsThisFileP) += fprintf(fp,
 				"%s# End tilingId=%02" PRIi8 " #",
 				i>0?"\t":"",   tlngP->tilingId

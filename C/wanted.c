@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // wanted.c, in PenroseC
 
@@ -40,7 +40,7 @@ long int rhombi_count_wanted(Tiling * const tlngP,  double const halfWidth,  boo
 			if( assignWantedness )
 			{
 				rhP->wantedPostScript = true;
-				if( Fat == rhP->physique  &&  rhP->pathId >= 0 )  // second condition should be redundant
+				if( rhP->isFat  &&  rhP->pathId >= 0 )  // second condition should be redundant
 					tlngP->path[rhP->pathId].wantedPostScript = true;
 			} // if( assignWantedness )
 		}  // in bounds

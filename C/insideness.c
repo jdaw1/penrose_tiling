@@ -90,7 +90,7 @@ PathId thin_touchingPath(
 		for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombi[rhThisId].numNeighbours  ;  nghbrNum ++ )
 		{
 			nghbrP = &(tlngP->rhombi[rhThisId].neighbours[nghbrNum]);
-			if( Fat == nghbrP->physique )
+			if( nghbrP->isFat )
 			{
 				pathId = tlngP->rhombi[ nghbrP->rhId ].pathId ;
 
@@ -129,7 +129,7 @@ void insideness_populate(Tiling * const tlngP)
 	if( tlngP->numPathsClosed == 0 )
 		return ;
 
-	pathIdRange = malloc( pathIdRangeNum_NumMax  *  sizeof(PathIdRange) );
+	pathIdRange = malloc( (size_t)pathIdRangeNum_NumMax  *  (size_t)sizeof(PathIdRange) );
 	if( NULL == pathIdRange )
 	{
 		fprintf(stderr, "insideness_populate(): !!! NULL == pathIdRange !!!\n");
@@ -265,7 +265,7 @@ this_path_done: ;
 	// Best fat neighbour to check is one with shortest path, because rhombus_winding_number() will be fastest.
 	for( rhId = 0;  rhId < tlngP->numFats + tlngP->numThins;  rhId++ )
 	{
-		if( Thin == tlngP->rhombi[rhId].physique )
+		if( ! tlngP->rhombi[rhId].isFat )
 		{
 			const PathId pathId_touch = thin_touchingPath(tlngP,  rhId);
 

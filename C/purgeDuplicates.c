@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // purgeDuplicates.c, in PenroseC
 
@@ -51,14 +51,19 @@ void rhombi_purgeDuplicates(Tiling * const tlngP)
 				tlngP->rhombi[numUniques] = tlngP->rhombi[rhId1] ;
 			numUniques++;
 		} else {
-			if( Fat == tlngP->rhombi[rhId1].physique )
+			if( tlngP->rhombi[rhId1].isFat )
 				(tlngP->numFats)--;
 			else
 				(tlngP->numThins)--;
 		}
 	}  // for rhId1
 
-	printf("after numUniques=%li\n", numUniques);  fflush(stdout);
+	printf("after numUniques=%li", numUniques);
+	if( numUniques >= 250000 )
+		printf("~=%.1lfm", (double)numUniques / 1000000.0);
+	if( numUniques >= 250000000 )
+		printf("~=%.1lfb", (double)numUniques / 1000000000.0);
+	printf("\n");  fflush(stdout);
 
 	// Renumber remaining rhombi
 	for (rhId1 = 0  ;  rhId1 < tlngP->numFats + tlngP->numThins  ;  rhId1 ++)

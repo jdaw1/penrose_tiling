@@ -9,27 +9,25 @@ int rhombiGt_ByPath(
 	Rhombus const * const rhP1
 )
 {
-	if( rhP0->physique != rhP1->physique )
-		return ( Fat == rhP0->physique ? -1 : +1 );  // Fats first.
+	if( rhP0->isFat != rhP1->isFat )
+		return ( rhP0->isFat ? -1 : +1 );  // Fats first.
 
-	switch(rhP0->physique)
+	if( rhP0->isFat )
 	{
-	case Fat:
 		if( rhP0->pathId      > rhP1->pathId      )  return +1;  //  Earlier path ==> earlier rhombus
 		if( rhP0->pathId      < rhP1->pathId      )  return -1;  //  Later path ==> later rhombus
 		if( rhP0->withinPathNum > rhP1->withinPathNum ) return +1;  // If in same path, earlier in path ==> earlier in array
 		if( rhP0->withinPathNum < rhP1->withinPathNum ) return -1;  // If in same path, later in path ==> later in array
 		return 0;  // rhP0 == rhP1
-		break;  // Entirely redundant.
-
-	case Thin:
+	}
+	else
+	{
 		if( rhP0->centre.y < rhP1->centre.y )  return +1 ;  // Higher thin rhombus Ys earlier
 		if( rhP0->centre.y > rhP1->centre.y )  return -1 ;  // Lower thin rhombus Ys later
 		if( rhP0->centre.x > rhP1->centre.x )  return +1 ;  // Left thin rhombus earlier
 		if( rhP0->centre.x < rhP1->centre.x )  return -1 ;  // Right thin rhombus later
 		return 0;  // rhP0 == rhP1
-		break;  // Entirely redundant.
-	}  // switch(rhP0->physique)
+	}  // isFat
 }  // rhombiGt_ByPath()
 
 
@@ -59,7 +57,7 @@ void rhombi_sort(
 
 	if( alsoRenumber )
 	{
-		rhombIdsNew = malloc( numRhombi  *  sizeof(RhombId) );
+		rhombIdsNew = malloc( (size_t)numRhombi  *  (size_t)sizeof(RhombId) );
 		if( rhombIdsNew == NULL )
 		{
 			fprintf(stderr, "Error in rhombi_sort: malloc(...) == NULL;  numRhombi = %li;  sizeof(RhombId) = %li.", numRhombi, sizeof(RhombId) );
@@ -99,7 +97,7 @@ void rhombi_sort(
 			rhP->rhId = rhId ;
 			for( nghbrNum = 0  ;  nghbrNum < rhP->numNeighbours  ;  nghbrNum++ )
 				rhP->neighbours[nghbrNum].rhId = rhombIdsNew[ rhP->neighbours[nghbrNum].rhId ] ;
-			if( Thin == rhP->physique  &&  rhP->pathId_ShortestOuter >= 0 )
+			if( (! rhP->isFat)  &&  rhP->pathId_ShortestOuter >= 0 )
 			{
 				pathP = &(tlngP->path[ rhP->pathId_ShortestOuter ]);
 				if( pathP->rhId_ThinWithin_First > rhId )  {pathP->rhId_ThinWithin_First = rhId;}

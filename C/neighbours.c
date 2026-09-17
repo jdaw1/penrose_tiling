@@ -118,7 +118,7 @@ void twoRhombi_Neighbourify(Tiling * const tlngP,  RhombId const rhId_A,  RhombI
 	nghbrP->touchesN       = edge_A_N;
 	nghbrP->touchesE       = edge_A_E;
 	nghbrP->rhId           = rhId_B;
-	nghbrP->physique       = rhP_B->physique;
+	nghbrP->isFat          = rhP_B->isFat;
 	nghbrP->nghbrsNghbrNum = rhP_B->numNeighbours;
 	nghbrP->withinPathNum  = -1;
 
@@ -126,7 +126,7 @@ void twoRhombi_Neighbourify(Tiling * const tlngP,  RhombId const rhId_A,  RhombI
 	nghbrP->touchesN       = edge_B_N;
 	nghbrP->touchesE       = edge_B_E;
 	nghbrP->rhId           = rhId_A;
-	nghbrP->physique       = rhP_A->physique;
+	nghbrP->isFat          = rhP_A->isFat;
 	nghbrP->nghbrsNghbrNum = rhP_A->numNeighbours;
 	nghbrP->withinPathNum  = -1;
 

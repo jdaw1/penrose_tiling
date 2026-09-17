@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // fillHoles.c, in PenroseC
 
@@ -65,7 +65,7 @@ static inline int8_t fillTypeA(Tiling * const tlngP, RhombId const rhId_A)
 	int8_t    nghbrNum;
 	Neighbour *nghbrP;
 
-	if( Thin != tlngP->rhombi[rhId_A].physique  ||  tlngP->rhombi[rhId_A].numNeighbours < 2 )  // Required qualities
+	if( tlngP->rhombi[rhId_A].isFat  ||  tlngP->rhombi[rhId_A].numNeighbours < 2 )  // Required qualities
 		return 0;
 
 	for( nghbrNum = 0  ;  nghbrNum < tlngP->rhombi[rhId_A].numNeighbours  ;  nghbrNum ++ )
@@ -74,7 +74,7 @@ static inline int8_t fillTypeA(Tiling * const tlngP, RhombId const rhId_A)
 		if( ! nghbrP->touchesN )
 		{
 			// South
-			if( Fat != nghbrP->physique )
+			if( ! nghbrP->isFat )
 				return 0;
 			if( nghbrP->touchesE )
 				rhId_B = nghbrP->rhId;  // A's SE edge
@@ -95,7 +95,7 @@ static inline int8_t fillTypeA(Tiling * const tlngP, RhombId const rhId_A)
 			if( nghbrP->touchesE )  // North-east
 			{
 				rhId_D = nghbrP->rhId;
-				if( tlngP->rhombi[rhId_D].physique != Thin
+				if( tlngP->rhombi[rhId_D].isFat
 				||  tlngP->rhombi[rhId_D].neighbours[ nghbrP->nghbrsNghbrNum ].rhId     != rhId_B
 				||  tlngP->rhombi[rhId_D].neighbours[ nghbrP->nghbrsNghbrNum ].touchesN != true
 				||  tlngP->rhombi[rhId_D].neighbours[ nghbrP->nghbrsNghbrNum ].touchesE != true )
@@ -104,7 +104,7 @@ static inline int8_t fillTypeA(Tiling * const tlngP, RhombId const rhId_A)
 			else
 			{
 				// North-west
-				if( Fat != nghbrP->physique )
+				if( ! nghbrP->isFat )
 					return 0;
 			}  // North-west
 		}  // North
@@ -129,14 +129,14 @@ static inline int8_t fillTypeA(Tiling * const tlngP, RhombId const rhId_A)
 		{
 			if( nghbrP->touchesE )  // North-east
 			{
-				if( Fat != nghbrP->physique )
+				if( ! nghbrP->isFat )
 					return 0;
 			}  // North-east
 			else
 			{
 				// North-west
 				rhId_E = nghbrP->rhId;
-				if( tlngP->rhombi[rhId_E].physique != Thin
+				if( tlngP->rhombi[rhId_E].isFat
 				||  tlngP->rhombi[rhId_E].neighbours[ nghbrP->nghbrsNghbrNum ].rhId     != rhId_C
 				||  tlngP->rhombi[rhId_E].neighbours[ nghbrP->nghbrsNghbrNum ].touchesN != true
 				||  tlngP->rhombi[rhId_E].neighbours[ nghbrP->nghbrsNghbrNum ].touchesE != false )
@@ -165,7 +165,7 @@ static inline int8_t fillTypeA(Tiling * const tlngP, RhombId const rhId_A)
 
 	RhombId const rhId_new = rhombus_append(
 		tlngP,
-		Fat,
+		true,
 		'A' + 1 - 'A',  // filledType
 		tlngP->rhombi[rhId_B].east.x  +  tlngP->rhombi[rhId_C].west.x  -  new_S_x,
 		tlngP->rhombi[rhId_B].east.y  +  tlngP->rhombi[rhId_C].west.y  -  new_S_y,
@@ -201,7 +201,7 @@ static inline int8_t fillTypeB(Tiling * const tlngP, RhombId const rhId_Start)
 	rhIds[0] = rhId_Start;  rhIds[1] = -1;  rhIds[2] = -1;  rhIds[3] = -1;
 	for( fatNum = 0  ;  fatNum < 4  ;  fatNum ++ )
 	{
-		if( Fat != tlngP->rhombi[rhIds[fatNum]].physique )
+		if( ! tlngP->rhombi[rhIds[fatNum]].isFat )
 			return 0;
 		if( tlngP->rhombi[rhIds[fatNum]].numNeighbours != (fatNum == 1 || fatNum == 2  ?  4  :  3) )
 			return 0;
@@ -213,7 +213,7 @@ static inline int8_t fillTypeB(Tiling * const tlngP, RhombId const rhId_Start)
 			if( nghbrP->touchesN )
 			{
 				// North
-				if( Fat == nghbrP->physique )  // Must touch thin
+				if( nghbrP->isFat )  // Must touch thin
 					return 0;
 
 				// North, thin
@@ -244,7 +244,7 @@ static inline int8_t fillTypeB(Tiling * const tlngP, RhombId const rhId_Start)
 			else
 			{
 				// S
-				if( Fat != nghbrP->physique )  // Must touch fat
+				if( ! nghbrP->isFat )  // Must touch fat
 					return 0;
 				if( nghbrP->touchesE )
 				{
@@ -281,7 +281,7 @@ static inline int8_t fillTypeB(Tiling * const tlngP, RhombId const rhId_Start)
 
 	RhombId const rhId_new = rhombus_append(
 		tlngP,
-		Fat,
+		true,
 		'B' + 1 - 'A',  // filledType
 		avg_2( tlngP->rhombi[thin_0].east.x,  tlngP->rhombi[thin_3].west.x ),
 		avg_2( tlngP->rhombi[thin_0].east.y,  tlngP->rhombi[thin_3].west.y ),
@@ -318,7 +318,7 @@ static inline int8_t fillTypeC(Tiling * const tlngP, RhombId const rhId_Orig)
 	// But what is its other neighbour. Must walk anti-clockwise around original's north vertex, traversing either all fats, or two fats and two thins, to each end.
 	// End is neighbour of new.
 
-	if( Fat != tlngP->rhombi[rhId_Orig].physique  ||  tlngP->rhombi[rhId_Orig].numNeighbours != 3 )  // Required qualities
+	if( (! tlngP->rhombi[rhId_Orig].isFat)  ||  tlngP->rhombi[rhId_Orig].numNeighbours != 3 )  // Required qualities
 		return 0;
 
 	int8_t nghbrNum, numThins = 0;
@@ -332,7 +332,7 @@ static inline int8_t fillTypeC(Tiling * const tlngP, RhombId const rhId_Orig)
 		if( nghbrP->touchesN )
 		{
 			// North
-			if( Fat == nghbrP->physique )
+			if( nghbrP->isFat )
 			{
 				if( rhId_Next >= 0 )  // This is second fat, which is disallowed
 					return 0;
@@ -345,7 +345,7 @@ static inline int8_t fillTypeC(Tiling * const tlngP, RhombId const rhId_Orig)
 		else
 		{
 			// South
-			if( Thin == nghbrP->physique )
+			if( ! nghbrP->isFat )
 				numThins ++;
 			else
 				return 0;  // Southerly fats disallowed.
@@ -359,7 +359,7 @@ static inline int8_t fillTypeC(Tiling * const tlngP, RhombId const rhId_Orig)
 	bool foundNext;
 	XY const xyOrigNorth = tlngP->rhombi[rhId_Orig].north;
 
-	for( totalAngle = 0  ;  totalAngle < 144  ;  totalAngle += tlngP->rhombi[rhId_This].physique )
+	for( totalAngle = 0  ;  totalAngle < 144  ;  totalAngle += (tlngP->rhombi[rhId_This].isFat ? 72 : 36) )
 	{
 		rhId_Prev = rhId_This;
 		rhId_This = rhId_Next;
@@ -371,7 +371,7 @@ static inline int8_t fillTypeC(Tiling * const tlngP, RhombId const rhId_Orig)
 			rhId_Next = nghbrP->rhId;
 			if( rhId_Next == rhId_Prev )
 				continue;  // next nghbrNum
-			if( nghbrP->physique == Fat )
+			if( nghbrP->isFat )
 			{
 				if( points_same_2(tlngP->edgeLength,  xyOrigNorth,  tlngP->rhombi[rhId_Next].north) )
 				{
@@ -394,7 +394,7 @@ static inline int8_t fillTypeC(Tiling * const tlngP, RhombId const rhId_Orig)
 			return 0;
 	}  // for( totalAngle ... )
 
-	if( Fat != tlngP->rhombi[rhId_Next].physique  ||  totalAngle != 144 )  // Required qualities
+	if( (! tlngP->rhombi[rhId_Next].isFat)  ||  totalAngle != 144 )  // Required qualities
 		return 0;
 
 	double const new_N_x = avg_2( tlngP->rhombi[rhId_Orig].north.x,  tlngP->rhombi[rhId_Next].north.x);  // Better precision might use all five points.
@@ -402,7 +402,7 @@ static inline int8_t fillTypeC(Tiling * const tlngP, RhombId const rhId_Orig)
 
 	RhombId const rhId_new = rhombus_append(
 		tlngP,
-		Fat,
+		true,
 		'C' + 1 - 'A',  // filledType
 		new_N_x,
 		new_N_y,
@@ -432,7 +432,7 @@ static inline int8_t fillTypeD(Tiling * const tlngP, RhombId const rhId_Thin1)
 	// If missing, insert.
 	// But subsequent neighbourification is difficult, so instead whole tiling reneighbourified.
 
-	if( Thin != tlngP->rhombi[rhId_Thin1].physique  ||  tlngP->rhombi[rhId_Thin1].numNeighbours == 4 )
+	if( tlngP->rhombi[rhId_Thin1].isFat  ||  tlngP->rhombi[rhId_Thin1].numNeighbours == 4 )
 		return 0;
 
 	int8_t nghbrNum;
@@ -446,7 +446,7 @@ static inline int8_t fillTypeD(Tiling * const tlngP, RhombId const rhId_Thin1)
 		if( ! nghbrP->touchesN )
 		{
 			// South
-			if( Thin == nghbrP->physique )
+			if( ! nghbrP->isFat )
 			{
 				rhId_Thin2 = nghbrP->rhId;
 				touch1East = nghbrP->touchesE;
@@ -474,7 +474,7 @@ static inline int8_t fillTypeD(Tiling * const tlngP, RhombId const rhId_Thin1)
 
 	RhombId const rhId_new = rhombus_append(
 		tlngP,
-		Fat,
+		true,
 		'D' + 1 - 'A',  // filledType
 		new_north_x,
 		new_north_y,
@@ -498,7 +498,7 @@ static inline int8_t fillTypeE(Tiling * const tlngP, RhombId const rhId_Start)
 	// Should be surrounded by 5 thins, fat NE touching thin NE, and fat NW touching thin NW.
 	// But subsequent neighbourification is difficult, so instead whole tiling reneighbourified.
 
-	if( Fat != tlngP->rhombi[rhId_Start].physique
+	if( (! tlngP->rhombi[rhId_Start].isFat)
 	||  tlngP->rhombi[rhId_Start].numNeighbours <= 1
 	||  tlngP->rhombi[rhId_Start].north.x <= tlngP->rhombi[rhId_Start].south.x
 	||  tlngP->rhombi[rhId_Start].north.y <= tlngP->rhombi[rhId_Start].south.y )  // Orientation constraint prevents repeating same loop multiple times
@@ -514,7 +514,7 @@ static inline int8_t fillTypeE(Tiling * const tlngP, RhombId const rhId_Start)
 	for( fatNum = 0  ;  fatNum < 5  ;  fatNum ++ )
 	{
 		if( rhIds[fatNum] < 0
-		||  Fat != tlngP->rhombi[rhIds[fatNum]].physique
+		||  (! tlngP->rhombi[rhIds[fatNum]].isFat)
 		||  tlngP->rhombi[rhIds[fatNum]].numNeighbours <= 1
 		||  ( fatNum > 0  &&  points_diff_2(tlngP->edgeLength, tlngP->rhombi[rhId_Start].south, tlngP->rhombi[rhIds[fatNum]].south) )  )
 			return 0;
@@ -529,7 +529,7 @@ static inline int8_t fillTypeE(Tiling * const tlngP, RhombId const rhId_Start)
 			if( nghbrP->touchesN )
 			{
 				// North
-				if( Fat == nghbrP->physique )  // Cannot neighbour fat
+				if( nghbrP->isFat )  // Cannot neighbour fat
 					return 0;
 
 				// North, thin
@@ -541,7 +541,7 @@ static inline int8_t fillTypeE(Tiling * const tlngP, RhombId const rhId_Start)
 			else
 			{
 				// South
-				if( Fat != nghbrP->physique )  // Must touch fat
+				if( ! nghbrP->isFat )  // Must touch fat
 					return 0;
 
 				if( nghbrP->touchesE )
@@ -586,7 +586,7 @@ static inline int8_t fillTypeE(Tiling * const tlngP, RhombId const rhId_Start)
 			new_y = avg_2( tlngP->rhombi[rhIds[fatNum]].east.y,  tlngP->rhombi[rhIds[fatNumNext]].west.y );
 			RhombId const rhId_new = rhombus_append(
 				tlngP,
-				Thin,
+				false,
 				'E' + 1 - 'A',  // filledType
 				new_x,
 				new_y,
@@ -622,7 +622,7 @@ static inline int8_t fillTypeF(Tiling * const tlngP, RhombId const rhId_Start)
 	// New thin has the east or west matching original north according to which is one fewer.
 	// But subsequent neighbourification is difficult, so instead whole tiling reneighbourified.
 
-	if( Fat != tlngP->rhombi[rhId_Start].physique  ||  tlngP->rhombi[rhId_Start].numNeighbours == 4 )
+	if( (! tlngP->rhombi[rhId_Start].isFat)  ||  tlngP->rhombi[rhId_Start].numNeighbours == 4 )
 		return 0;
 
 	XY const origNorth = tlngP->rhombi[rhId_Start].north;
@@ -637,7 +637,7 @@ static inline int8_t fillTypeF(Tiling * const tlngP, RhombId const rhId_Start)
 		rhId_Prev = rhId_This;
 		rhId_This = rhId_Next;
 
-		physiqueTotal += tlngP->rhombi[rhId_This].physique;
+		physiqueTotal += (tlngP->rhombi[rhId_This].isFat ? 72 : 36);
 		if( physiqueTotal > 324 )
 			return 0;
 
@@ -648,7 +648,7 @@ static inline int8_t fillTypeF(Tiling * const tlngP, RhombId const rhId_Start)
 			rhId_Next = nghbrP->rhId;
 			if( rhId_Next != rhId_Prev)
 			{
-				if( Fat == tlngP->rhombi[rhId_Next].physique )
+				if( tlngP->rhombi[rhId_Next].isFat )
 				{
 					// Fat
 					if( points_same_2(tlngP->edgeLength, origNorth, tlngP->rhombi[rhId_Next].north) )
@@ -686,7 +686,7 @@ static inline int8_t fillTypeF(Tiling * const tlngP, RhombId const rhId_Start)
 
 	}  // while( true )
 
-	if( 1 != abs(numThinsMatchingEast - numThinsMatchingWest)  ||  Thin != tlngP->rhombi[rhId_This].physique )
+	if( 1 != abs(numThinsMatchingEast - numThinsMatchingWest)  ||  tlngP->rhombi[rhId_This].isFat )
 	{
 		fprintf(stderr,
 			"fillTypeF(): !!! impossibility !!!  rhId_Start = %li;  rhId_Prev = %li;  rhId_This = %li;  rhId_Next = %li;  numThinsMatchingEast = %" PRIi8 ";  numThinsMatchingWest = %" PRIi8 ";  physiqueTotal = %hi  #####\n",
@@ -698,7 +698,7 @@ static inline int8_t fillTypeF(Tiling * const tlngP, RhombId const rhId_Start)
 
 	RhombId const rhId_new = rhombus_append(
 		tlngP,
-		Thin,
+		false,
 		'F' + 1 - 'A',  // filledType
 		numThinsMatchingEast > numThinsMatchingWest  ?  tlngP->rhombi[rhId_Start].west.x  :  tlngP->rhombi[rhId_Start].east.x,
 		numThinsMatchingEast > numThinsMatchingWest  ?  tlngP->rhombi[rhId_Start].west.y  :  tlngP->rhombi[rhId_Start].east.y,
@@ -723,7 +723,7 @@ static inline int8_t fillTypeG(Tiling * const tlngP, RhombId const rhId_Orig)
 	// For every thin, both north edges touch fats that touch each other. Fats' norths touch thin; fats' souths share a vertex.
 	// But subsequent neighbourification is difficult, so instead whole tiling reneighbourified.
 
-	if( Thin != tlngP->rhombi[rhId_Orig].physique  ||  tlngP->rhombi[rhId_Orig].numNeighbours == 4 )  // Required qualities
+	if( tlngP->rhombi[rhId_Orig].isFat  ||  tlngP->rhombi[rhId_Orig].numNeighbours == 4 )  // Required qualities
 		return 0;
 
 	int8_t nghbrNum;
@@ -736,7 +736,7 @@ static inline int8_t fillTypeG(Tiling * const tlngP, RhombId const rhId_Orig)
 		nghbrP = &(tlngP->rhombi[rhId_Orig].neighbours[nghbrNum]);
 		if( nghbrP->touchesN )
 		{
-			if( Fat == nghbrP->physique )
+			if( nghbrP->isFat )
 			{
 				if( nghbrP->touchesE )
 					rhId_E = nghbrP->rhId;
@@ -772,7 +772,7 @@ static inline int8_t fillTypeG(Tiling * const tlngP, RhombId const rhId_Orig)
 	{
 		rhId_E = rhombus_append(
 			tlngP,
-			Fat,
+			true,
 			'G' + 1 - 'A',  // filledType
 			tlngP->rhombi[rhId_Orig].east.x,
 			tlngP->rhombi[rhId_Orig].east.y,
@@ -792,7 +792,7 @@ static inline int8_t fillTypeG(Tiling * const tlngP, RhombId const rhId_Orig)
 	{
 		rhId_W = rhombus_append(
 			tlngP,
-			Fat,
+			true,
 			'G' + 1 - 'A',  // filledType
 			tlngP->rhombi[rhId_Orig].west.x,
 			tlngP->rhombi[rhId_Orig].west.y,
@@ -937,10 +937,16 @@ void holesFill(Tiling * const tlngP)
 	} while(anyChanges);
 
 	printf(
-		"holesFill(): tilingId=%" PRIi8 ", extras = [ %li, %li, %li, %li, %li, %li, %li ]; #Fats=%li; #Thins=%li; #Fats+#Thins=%li\n",
+		"holesFill(): tilingId=%" PRIi8 ", extras = [ %li, %li, %li, %li, %li, %li, %li ]; #Fats=%li; #Thins=%li; #Fats+#Thins=%li",
 		tlngP->tilingId,
 		numFilledTypeA,  numFilledTypeB,  numFilledTypeC,  numFilledTypeD,  numFilledTypeE,  numFilledTypeF,  numFilledTypeG,
 		tlngP->numFats,  tlngP->numThins,  tlngP->numFats + tlngP->numThins
-	);  fflush(stdout);
+	);
+	if( tlngP->numFats + tlngP->numThins >= 250000 )
+		printf("~=%.1lfm", ((double)tlngP->numFats + (double)tlngP->numThins) / 1000000.0);
+	if( tlngP->numFats + tlngP->numThins >= 250000000 )
+		printf("~=%.1lfb", ((double)tlngP->numFats + (double)tlngP->numThins) / 1000000000.0);
+	printf("\n");
+	fflush(stdout);
 
 }  // holesFill()

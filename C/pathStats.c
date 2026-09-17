@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // pathStats.c, in PenroseC
 
@@ -15,20 +15,24 @@ void pathStats_populate(Tiling * const tlngP)
 	bool            pathTypeFound;
 	Path          * pathP;
 
-	tlngP->numPathStats = 0;
+	tlngP->pathStats_NumMax = (PathStatId)(1
+		+ min_2(ceil(log2(1 + tlngP->numPathsClosed) * 8),  tlngP->numPathsClosed)  // 0 --> 0, 27 --> 27, 28 --> 27, 29 --> 28, 30 --> 28, 31 --> 28, 32 --> 28, 46 --> 31, 66 --> 34,
+		+ min_2(ceil(log2(1 + tlngP->numPathsOpen  ) * 8),  tlngP->numPathsOpen  )  // 94 --> 37, 133 --> 40, 189 --> 42, 268 --> 45, 380 --> 48, 538 --> 51, 761 --> 54, 1077 --> 56
+	);
 
-	tlngP->pathStats_NumMax = 1  +  2 * ( tlngP->numFats > 0  ?  (long int)ceil(pow(1 + tlngP->numFats, 0.6))  :  0 );
 	{  // scope mallocThis
-		size_t const mallocThis = tlngP->pathStats_NumMax  *  sizeof(PathStats);
+		size_t const mallocThis = (size_t)tlngP->pathStats_NumMax  *  (size_t)sizeof(PathStats);
 		tlngP->pathStat = malloc(mallocThis);
 		if(NULL == tlngP->pathStat)
 		{
-			fprintf(stderr, "pathStats_populate: malloc() failed with tilingId=%" PRIi8 ", pathStats_NumMax=%li\n", tlngP->tilingId, tlngP->pathStats_NumMax);
+			fprintf(stderr, "pathStats_populate: malloc() failed with tilingId=%" PRIi8 ", pathStats_NumMax=%hi\n", tlngP->tilingId, tlngP->pathStats_NumMax);
 			fflush(stderr);
 			exit( EXIT_FAILURE );
 		}  // NULL == tlngP->pathStat
 		tlngP->mallocsPersistentSumSimple += mallocThis;
 	}  // scope mallocThis
+
+	tlngP->numPathStats = 0;
 
 	for( pathStatId = 0  ;  pathStatId < tlngP->pathStats_NumMax  ;  pathStatId++ )
 	{
@@ -115,7 +119,7 @@ void pathStats_populate(Tiling * const tlngP)
 			pathStatId = tlngP->numPathStats;
 			if( pathStatId >= tlngP->pathStats_NumMax )
 			{
-				fprintf(stderr, "pathStats_populate(): !!! pathStatId >= pathStats_NumMax=%li; tilingId=%" PRIi8 "\n", tlngP->pathStats_NumMax, tlngP->tilingId);
+				fprintf(stderr, "pathStats_populate(): !!! pathStatId >= pathStats_NumMax=%hi; tilingId=%" PRIi8 "\n", tlngP->pathStats_NumMax, tlngP->tilingId);
 				fflush(stderr);
 				exit(EXIT_FAILURE);
 			}  // pathStatId >= tlngP->pathStats_NumMax

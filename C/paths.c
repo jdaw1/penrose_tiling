@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // paths.c, in PenroseC
 
@@ -11,14 +11,14 @@ RhombId NextInPath_RhId(const Rhombus * const rhombi,  const Rhombus * const rhT
 	RhombId rhId_Next;
 	const Rhombus * rhNextP;
 
-	if( rhThisP->physique != Fat )
+	if( ! rhThisP->isFat )
 		return(-1);
 
 	for( nghbrNum = 0  ;  nghbrNum < rhThisP->numNeighbours  ;  nghbrNum++ )
 	{
 		rhId_Next = rhThisP->neighbours[nghbrNum].rhId;
 		rhNextP = &(rhombi[rhId_Next]);
-		if( rhNextP->physique != Fat )
+		if( ! rhNextP->isFat )
 			continue;
 
 		if( direction )
@@ -84,22 +84,30 @@ inline static double rhWithinPathMoreSpecial(
 
 
 
-int8_t pathClosedTypeNum(bool pathClosed, long int pathLength, bool pointy)
+// int8_t has a maximum value of 127.
+// ClosedTypeNum == 127  ==> path length of 2.8 * 10^38, containing almost 9.48 * 10^52 tiles.
+// Mass of universe ~= 2 * 10^53 kg, and gathering ~= 0.01% of this (concrete, edge 150mm, 5mm thick, YMMV) could not be done quickly.
+// ==> 127 is sufficient.
+int8_t pathClosedTypeNum(const bool pathClosed, const long int pathLength, const bool pointy)
 {
-	// int8_t will accomodate answer for paths of any relevant length.
 	if( pathClosed )
 	{
 		if( 5 == pathLength )
-			return( pointy ? 2 : 1 );
+			return(
+				pointy ?
+				(int8_t)2 :
+				(int8_t)1
+			);
 		else
 		{
 			// Excel: = Let(pthLngth,...,   Log(pthLngth * 3/5  +  2 - Mod(pthLngth,4)) / Log(2) )
-			return (PathRank)round(log2( pathLength*3/5  +  2  -  (pathLength % 4) ));
+			return (int8_t)round(log2( pathLength*3/5  +  2  -  (pathLength % 4) ));
 		}
 	}  // Closed
 	else
 		return -1;  // Open
 }  // pathClosedTypeNum()
+
 
 
 void paths_populate(Tiling * const tlngP)
@@ -135,7 +143,7 @@ void paths_populate(Tiling * const tlngP)
 		tlngP->path_NumMax = tlngP->numFats ;
 
 	{  // scope mallocThis
-		size_t const mallocThis = tlngP->path_NumMax  *  sizeof(Path);
+		size_t const mallocThis = (size_t)tlngP->path_NumMax  *  (size_t)sizeof(Path);
 		tlngP->path = malloc(mallocThis);
 		if( NULL == tlngP->path )
 		{
@@ -151,7 +159,7 @@ void paths_populate(Tiling * const tlngP)
 
 	for( rhId_PathStart = 0;  rhId_PathStart < tlngP->numFats + tlngP->numThins ; rhId_PathStart++ )
 	{
-		if( Fat != tlngP->rhombi[rhId_PathStart].physique
+		if( (! tlngP->rhombi[rhId_PathStart].isFat)
 		||  tlngP->rhombi[rhId_PathStart].pathId >= 0 )  // rhId_PathStart already has path assigned
 			continue;
 
@@ -188,7 +196,7 @@ void paths_populate(Tiling * const tlngP)
 			for( nghbrNum = 0  ;  nghbrNum < rhThisP->numNeighbours  ;  nghbrNum++ )
 			{
 				rhId_Next = rhThisP->neighbours[nghbrNum].rhId ;
-				if( rhId_Next >= 0  &&  rhId_Next != rhId_Prev  &&  Fat == tlngP->rhombi[rhId_Next].physique )
+				if( rhId_Next >= 0  &&  rhId_Next != rhId_Prev  &&  tlngP->rhombi[rhId_Next].isFat )
 				{
 					if(rhId_Next == rhId_PathStart)
 						{pathThisP->pathClosed = true;  rhId_PathStart_Better = rhId_PathStart;  goto know_rhIdPathStart_pathClosed;}  // goto used as a multi-loop break.
@@ -252,7 +260,7 @@ know_rhIdPathStart_pathClosed:
 			for( nghbrNum = 0  ;  nghbrNum < rhThisP->numNeighbours  ;  nghbrNum++ )
 			{
 				rhId_Next = rhThisP->neighbours[nghbrNum].rhId ;
-				if( Fat == rhThisP->neighbours[nghbrNum].physique  &&  rhId_Next != rhId_Prev )
+				if( rhThisP->neighbours[nghbrNum].isFat  &&  rhId_Next != rhId_Prev )
 				{
 					if(rhId_Next == rhId_PathStart_Better)
 						goto know_pathLength;  // goto used as a multi-loop break.
@@ -353,7 +361,7 @@ know_pathLength:
 
 			// Rotate such that pathRhPathRhombNumClosest has pathRhombNum of 0.
 			// And, such that path goes clockwise, if necessary reflect.
-			long int * const pathListed = malloc( pathThisP->pathLength * sizeof(RhombId) );
+			long int * const pathListed = malloc( (size_t)pathThisP->pathLength * (size_t)sizeof(RhombId) );
 			if( pathListed != NULL )
 			{
 				pathListed[0] = pathThisP->rhId_PathCentreClosest;

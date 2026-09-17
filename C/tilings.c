@@ -69,7 +69,7 @@ void tiling_descendant(
 	}  // Temporary scope
 
 	{  // scope mallocThis
-		size_t const mallocThis = tlngDescendantP->rhombi_NumMax  *  sizeof(Rhombus);
+		size_t const mallocThis = (size_t)tlngDescendantP->rhombi_NumMax  *  (size_t)sizeof(Rhombus);
 		tlngDescendantP->rhombi = malloc(mallocThis);
 		if( NULL == tlngDescendantP->rhombi )
 		{
@@ -206,7 +206,7 @@ void tiling_descendant(
 	long int numFats_rhombi, numFats_paths, numFats_pathsStats;
 	numFats_rhombi = 0;
 	for( rhId = 0  ;  rhId < tlngDescendantP->numFats + tlngDescendantP->numThins  ;  rhId ++ )
-		if( Fat == tlngDescendantP->rhombi[rhId].physique )
+		if( tlngDescendantP->rhombi[rhId].isFat )
 			numFats_rhombi++;
 	numFats_paths = 0;
 	for( pathId = 0  ;  pathId < tlngDescendantP->numPathsClosed + tlngDescendantP->numPathsOpen  ;  pathId ++ )
@@ -234,11 +234,14 @@ void tiling_descendant(
 		+ (timeBeginThisTiling - timeBeginFirstTiling) / CLOCKS_PER_SEC;
 
 	printf("tiling_descendant(): tilingId=%" PRIi8 ", numFats=%li, numThins=%li, numPathsClosed=%li, numPathsOpen=%li, numPathStats=%li"
-		", execution time ~= %.3lf seconds; all tilings' time = %.3lfs. (Both excl. this t's disk-writing time.)\n",
+		", execution time ~= %.3lf seconds; all tilings' time = %.3lfs ~= %.3lf mins ~= %.3lf hr ~= %.3lf days. (Both excl. this t's disk-writing time.)\n",
 		tlngDescendantP->tilingId, tlngDescendantP->numFats, tlngDescendantP->numThins,
 		tlngDescendantP->numPathsClosed, tlngDescendantP->numPathsOpen, tlngDescendantP->numPathStats,
 		tlngDescendantP->SecondsToStartExportFromStartThisTiling,
-		tlngDescendantP->SecondsToStartExportFromStartFirstTiling
+		tlngDescendantP->SecondsToStartExportFromStartFirstTiling,
+		tlngDescendantP->SecondsToStartExportFromStartFirstTiling / 60.0,
+		tlngDescendantP->SecondsToStartExportFromStartFirstTiling / 60.0 / 60.0,
+		tlngDescendantP->SecondsToStartExportFromStartFirstTiling / 60.0 / 60.0 / 24.0
 	);  fflush(stdout);
 
 	export_soloTiling(tlngDescendantP);
@@ -286,7 +289,7 @@ void tiling_initial(Tiling * const tlngP)
 	tlngP->radiusShortOpen = -1;
 
 	{  // scope mallocThis
-		size_t const mallocThis = tlngP->rhombi_NumMax  *  sizeof(Rhombus);
+		size_t const mallocThis = (size_t)tlngP->rhombi_NumMax  *  (size_t)sizeof(Rhombus);
 		tlngP->rhombi = malloc(mallocThis);
 		if( NULL == tlngP->rhombi )
 		{
@@ -305,7 +308,7 @@ void tiling_initial(Tiling * const tlngP)
 		xN = xS = 0;
 		yS =  tlngP->edgeLength == 1.0  ?  Cos72  :  Cos72 * tlngP->edgeLength;
 		yN = -yS;
-		rhId_new = rhombus_append(tlngP,  Thin,  false,  xN, yN, xS, yS);  // false ==> not filled hole
+		rhId_new = rhombus_append(tlngP,  false,  false,  xN, yN, xS, yS);  // false ==> not filled hole
 		if( rhId_new < 0 ) {fprintf(stderr, "!!! Error in tiling_initial(): rhombus_append() failed, oneThin. !!!\n");  exit(EXIT_FAILURE);}
 		break;
 
@@ -313,7 +316,7 @@ void tiling_initial(Tiling * const tlngP)
 		xS =  tlngP->edgeLength == 1.0  ?  Cos36  :  Cos36 * tlngP->edgeLength;
 		xN = -xS;
 		yN = yS = 0;
-		rhId_new = rhombus_append(tlngP,  Fat,  false,  xN, yN, xS, yS);  // false ==> not filled hole
+		rhId_new = rhombus_append(tlngP,  true ,  false,  xN, yN, xS, yS);  // false ==> not filled hole
 		if( rhId_new < 0 ) {fprintf(stderr, "!!! Error in tiling_initial(): rhombus_append() failed, oneFat. !!!\n");  exit(EXIT_FAILURE);}
 		break;
 
@@ -323,21 +326,21 @@ void tiling_initial(Tiling * const tlngP)
 			
 		xN = 0;
 		yN = -GoldenRatio;
-		rhId_new = rhombus_append(tlngP,  Fat,  0,  xN, yN, xS, yS);  // 0 ==> not filled hole
+		rhId_new = rhombus_append(tlngP,  true ,  0,  xN, yN, xS, yS);  // 0 ==> not filled hole
 		if( rhId_new < 0 ) {fprintf(stderr, "!!! Error in tiling_initial(): rhombus_append() failed, round5, 0. !!!\n");  exit(EXIT_FAILURE);}
 
 		yN = -0.5 * tlngP->edgeLength;
 		xN = 1.5388417685876267012851452880184549120033510717688962135195781251874316442475454592272968608335527 * tlngP->edgeLength;  // 2 Cos[36 Degree] * Cos[18 Degree]
-		rhId_new = rhombus_append(tlngP,  Fat,  0,  xN, yN, xS, yS);  // false ==> not filled hole
+		rhId_new = rhombus_append(tlngP,  true ,  0,  xN, yN, xS, yS);  // false ==> not filled hole
 		if( rhId_new < 0 ) {fprintf(stderr, "!!! Error in tiling_initial(): rhombus_append() failed, round5, 1. !!!\n");  exit(EXIT_FAILURE);}
-		rhId_new = rhombus_append(tlngP,  Fat,  0, -xN, yN, xS, yS);  // 0 ==> not filled hole
+		rhId_new = rhombus_append(tlngP,  true ,  0, -xN, yN, xS, yS);  // 0 ==> not filled hole
 		if( rhId_new < 0 ) {fprintf(stderr, "!!! Error in tiling_initial(): rhombus_append() failed, round5, 2. !!!\n");  exit(EXIT_FAILURE);}
 
 		xN = Cos18 * tlngP->edgeLength;
 		yN = 1.30901699437494742410229341718281905886015458990288143106772431135263023140945122485360360209470 * tlngP->edgeLength;  // 2 Cos[36 Degree] * Cos[36 Degree]
-		rhId_new = rhombus_append(tlngP,  Fat,  0,  xN, yN, xS, yS);  // 0 ==> not filled hole
+		rhId_new = rhombus_append(tlngP,  true ,  0,  xN, yN, xS, yS);  // 0 ==> not filled hole
 		if( rhId_new < 0 ) {fprintf(stderr, "!!! Error in tiling_initial(): rhombus_append() failed, round5, 3. !!!\n");  exit(EXIT_FAILURE);}
-		rhId_new = rhombus_append(tlngP,  Fat,  0, -xN, yN, xS, yS);  // 0 ==> not filled hole
+		rhId_new = rhombus_append(tlngP,  true ,  0, -xN, yN, xS, yS);  // 0 ==> not filled hole
 		if( rhId_new < 0 ) {fprintf(stderr, "!!! Error in tiling_initial(): rhombus_append() failed, round5, 4. !!!\n");  exit(EXIT_FAILURE);}
 
 		break;

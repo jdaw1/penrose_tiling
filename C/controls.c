@@ -25,7 +25,7 @@ void execute_SVG_PostProcessing(
 	ExportFormat const ef
 )
 {
-	if( tlngP->tilingId >= -1 )  // Placeholder condition, as an explicit constant causes a compiler warning.
+	if( tlngP->tilingId <= -1 )  // Placeholder condition, as an explicit constant causes a compiler warning.
 	{
 		extern char scratchString[];
 
@@ -52,7 +52,7 @@ void execute_PostScript_PostProcessing(
 )
 {
 	if(
-		tlngP->tilingId >= -1  // Placeholder condition
+		tlngP->tilingId <= -1  // Placeholder condition
 		&&  (ef == PS_rhomb || ef == PS_arcs)
 		&&  tlngP->numFats + tlngP->numThins <= 393216  // 3 * 2^17
 	)
@@ -236,7 +236,7 @@ double wantedPostScriptAspect(Tiling const * const tlngP)
 }  // wantedPostScriptAspect()
 
 bool rhombus_keep(
-	const Tiling * const tlngP,  Physique const physique,
+	const Tiling * const tlngP,  bool const isFat,
 	double const xNorth,  double const yNorth,  double const xSouth,  double const ySouth
 )
 {

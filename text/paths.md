@@ -57,6 +57,7 @@ In it:
 * &phi;<small><sup>&minus;1</sup></small>&nbsp; =&nbsp;&nbsp;&frac12;(&radic;5&nbsp;&minus;&nbsp;1)&nbsp; =&nbsp;&nbsp;&phi;&nbsp;&minus;&nbsp;1 &asymp;&nbsp;0.618;
 * &phi;<small><sup>&minus;2</sup></small>&nbsp; =&nbsp;&nbsp;&frac12;(3&nbsp;&minus;&nbsp;&radic;5)&nbsp; =&nbsp;&nbsp;2&nbsp;&minus;&nbsp;&phi; &asymp;&nbsp;0.381966.
 
+<a name="paths_table"></a>
 
 | *n*&nbsp;=<br>Path<br>Rank |   Length | Num<br>Interior<br>Fats | Num<br>Interior<br>Thins | Outward<br>direction | Radius<br>Min<br>&divide;Edge | Radius<br>Max<br>&divide;Edge |
 |----:|---------:|----------:|----------:|------:|-------:|--------:|

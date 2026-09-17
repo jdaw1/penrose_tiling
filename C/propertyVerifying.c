@@ -27,7 +27,7 @@ void verifyHypothesisedProperties(Tiling const * const tlngP)
 	for( rhId_outer = 0  ;  rhId_outer < tlngP->numFats + tlngP->numThins  ;  rhId_outer ++ )
 	{
 		rhOuterP = tlngP->rhombi + rhId_outer;
-		if( Thin == rhOuterP->physique )
+		if( ! rhOuterP->isFat )
 		{
 			for( rhId_inner = 0  ;  rhId_inner < tlngP->numFats + tlngP->numThins  ;  rhId_inner ++ )
 			{
@@ -66,12 +66,12 @@ hypothesis = true;
 	for( rhId_outer = 0  ;  rhId_outer < tlngP->numFats + tlngP->numThins  ;  rhId_outer ++ )
 	{
 		rhOuterP = tlngP->rhombi + rhId_outer;
-		if( Fat == rhOuterP->physique )
+		if( rhOuterP->isFat )
 		{
 			for( rhId_inner = 0  ;  rhId_inner < rhId_outer  ;  rhId_inner ++ )
 			{
 				rhInnerP = tlngP->rhombi + rhId_inner;
-				if( Fat == rhInnerP->physique )
+				if( rhInnerP->isFat )
 				{
 					numTests ++;
 					if(
@@ -113,7 +113,7 @@ hypothesis_fat_north_south:
 	for( rh1Id = 0  ;  rh1Id < tlngP->numFats + tlngP->numThins  ;  rh1Id ++ )
 	{
 		rh1P = &(tlngP->rhombi[rh1Id]);
-		if( Thin == rh1P->physique )
+		if( ! rh1P->isFat )
 		{
 			rh2P = NULL;
 			if( rh1P->numNeighbours < 4 )
@@ -124,7 +124,7 @@ hypothesis_fat_north_south:
 			}
 			for( nghbrNum = 0  ;  nghbrNum < rh1P->numNeighbours  ;  nghbrNum++ )
 			{
-				if( Fat == rh1P->neighbours[nghbrNum].physique )
+				if( rh1P->neighbours[nghbrNum].isFat )
 				{
 					// Fat
 					pathP = &(tlngP->path[ tlngP->rhombi[ rh1P->neighbours[nghbrNum].rhId ].pathId ]);
@@ -149,7 +149,7 @@ hypothesis_fat_north_south:
 				}
 				for( nghbrNum = 0  ;  nghbrNum < rh2P->numNeighbours  ;  nghbrNum++ )
 				{
-					if( Fat == rh2P->neighbours[nghbrNum].physique )
+					if( rh2P->neighbours[nghbrNum].isFat )
 					{
 						pathP = &(tlngP->path[ tlngP->rhombi[ rh2P->neighbours[nghbrNum].rhId ].pathId ]);
 						if( pathP->pathClosed  &&  5 == pathP->pathLength )

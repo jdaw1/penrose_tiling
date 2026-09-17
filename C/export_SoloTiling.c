@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // export_SoloTiling.c, in PenroseC
 
@@ -31,8 +31,9 @@ void export_soloTiling(Tiling * const tlngP)
 		tiling_export_PaintRhombiSVG(fp, tlngP, &numLinesThisFile, &numCharsThisFile);
 		fflush(fp); fclose(fp);
 		printf(
-			"export_soloTiling(): tilingId=%" PRIi8 ", exported %lli chars %li lines, so %.1lf c/l, to %s\n",
-			tlngP->tilingId,  numCharsThisFile,  numLinesThisFile,  (double)numCharsThisFile / (double)numLinesThisFile, fileName
+			"export_soloTiling(): tilingId=%" PRIi8 ", exported %lli chars ~= %.3lf KiB ~= %.3lf MiB ~= %.3lf GiB, %li lines, so %.1lf c/l, to %s\n",
+			tlngP->tilingId,  numCharsThisFile,  numCharsThisFile / 1024.0,  numCharsThisFile / 1024.0 / 1024.0,  numCharsThisFile / 1024.0 / 1024.0 / 1024.0,
+			numLinesThisFile,  (double)numCharsThisFile / (double)numLinesThisFile, fileName
 		);  fflush(stdout);
 
 		execute_SVG_PostProcessing(tlngP, numLinesThisFile, numCharsThisFile, fileName, ef);
@@ -52,8 +53,9 @@ void export_soloTiling(Tiling * const tlngP)
 		tiling_export_PaintArcsSVG(fp, tlngP, &numLinesThisFile, &numCharsThisFile);
 		fflush(fp); fclose(fp);
 		printf(
-			"export_soloTiling(): tilingId=%" PRIi8 ", exported %lli chars %li lines, so %.1lf c/l, to %s\n",
-			tlngP->tilingId,  numCharsThisFile,  numLinesThisFile,  (double)numCharsThisFile / (double)numLinesThisFile, fileName
+			"export_soloTiling(): tilingId=%" PRIi8 ", exported %lli chars ~= %.3lf KiB ~= %.3lf MiB ~= %.3lf GiB, %li lines, so %.1lf c/l, to %s\n",
+			tlngP->tilingId,  numCharsThisFile,  numCharsThisFile / 1024.0,  numCharsThisFile / 1024.0 / 1024.0,  numCharsThisFile / 1024.0 / 1024.0 / 1024.0,
+			numLinesThisFile,  (double)numCharsThisFile / (double)numLinesThisFile, fileName
 		);  fflush(stdout);
 
 		execute_SVG_PostProcessing(tlngP, numLinesThisFile, numCharsThisFile, fileName, ef);
@@ -76,8 +78,9 @@ void export_soloTiling(Tiling * const tlngP)
 		tiling_export_PaintRhombiPS(fp, tlngP, &numLinesThisFile, &numCharsThisFile, false);
 		fflush(fp); fclose(fp);
 		printf(
-			"export_soloTiling(): tilingId=%" PRIi8 ", exported %lli chars %li lines, so %.1lf c/l, to %s\n",
-			tlngP->tilingId,  numCharsThisFile,  numLinesThisFile,  (double)numCharsThisFile / (double)numLinesThisFile, fileName
+			"export_soloTiling(): tilingId=%" PRIi8 ", exported %lli chars ~= %.3lf KiB ~= %.3lf MiB ~= %.3lf GiB, %li lines, so %.1lf c/l, to %s\n",
+			tlngP->tilingId,  numCharsThisFile,  numCharsThisFile / 1024.0,  numCharsThisFile / 1024.0 / 1024.0,  numCharsThisFile / 1024.0 / 1024.0 / 1024.0,
+			numLinesThisFile,  (double)numCharsThisFile / (double)numLinesThisFile, fileName
 		);  fflush(stdout);
 
 		execute_PostScript_PostProcessing(tlngP, numLinesThisFile, numCharsThisFile, fileName, ef);
@@ -97,8 +100,9 @@ void export_soloTiling(Tiling * const tlngP)
 		tiling_export_PaintArcsPS(fp, tlngP, &numLinesThisFile, &numCharsThisFile);
 		fflush(fp); fclose(fp);
 		printf(
-			"export_soloTiling(): tilingId=%" PRIi8 ", exported %lli chars %li lines, so %.1lf c/l, to %s\n",
-			tlngP->tilingId,  numCharsThisFile,  numLinesThisFile,  (double)numCharsThisFile / (double)numLinesThisFile, fileName
+			"export_soloTiling(): tilingId=%" PRIi8 ", exported %lli chars ~= %.3lf KiB ~= %.3lf MiB ~= %.3lf GiB, %li lines, so %.1lf c/l, to %s\n",
+			tlngP->tilingId,  numCharsThisFile,  numCharsThisFile / 1024.0,  numCharsThisFile / 1024.0 / 1024.0,  numCharsThisFile / 1024.0 / 1024.0 / 1024.0,
+			numLinesThisFile,  (double)numCharsThisFile / (double)numLinesThisFile, fileName
 		);  fflush(stdout);
 
 		execute_PostScript_PostProcessing(tlngP, numLinesThisFile, numCharsThisFile, fileName, ef);

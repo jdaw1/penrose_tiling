@@ -65,16 +65,6 @@ typedef enum  // ExportFormat
 	// But, not caught by the compiler, will be a need to add new section(s) to main(), within which search for "exportFormat = ".
 } ExportFormat;
 
-typedef enum  // Physique
-#if MEMORY_FRUGALITY_OUTRANKS_SPEED
-__attribute__ ((__packed__))
-#endif  // MEMORY_FRUGALITY_OUTRANKS_SPEED
-{  // Physique
-	Thin = 36,  // Rhombus with angles, in degrees, 36 144 36 144, area = Sin[36 deg] * edge^2 ~= 0.587785252292 * edge^2
-	Fat  = 72   // Rhombus with angles, in degrees, 72 108 72 108, area = Sin[72 deg] * edge^2 ~= 0.951056516295 * edge^2, so GoldenRatio * Thin
-} Physique;
-
-
 
 
 typedef struct  // XY
@@ -85,8 +75,7 @@ __attribute__ ((__packed__))
 
 typedef  long  int  RhombId   ;
 typedef  long  int  PathId    ;
-typedef  long  int  PathStatId;
-typedef  int8_t     PathRank;
+typedef  short int  PathStatId;
 typedef  int8_t     TilingId  ;
 
 typedef struct  // Neighbour
@@ -96,8 +85,8 @@ __attribute__ ((__packed__))
 {  // Neighbour
 	RhombId   rhId;
 	long int  withinPathNum ;  // Counting within a path: 0, 1, ..., pathLength - 1.
-	Physique  physique;
 	int8_t    nghbrsNghbrNum;  // Neighbour's Neighbour Num, Abbreviated to NNN in output: I am the neighbour[NNN] of my neighbour. Fussy to use int8_t, but saves 4 bytes per rhombus, > 1%.
+	bool      isFat;
 	bool      touchesN;
 	bool      touchesE;
 } Neighbour;
@@ -109,6 +98,8 @@ typedef struct  // Rhombus
 __attribute__ ((__packed__))
 #endif  // MEMORY_FRUGALITY_OUTRANKS_SPEED
 {  // Rhombus
+	Neighbour  neighbours[4];
+
 	XY         north;  // Orientation local to rhombus.  because meaningful points, these are XY struct.
 	XY         south;
 	XY         east;
@@ -125,14 +116,13 @@ __attribute__ ((__packed__))
 	RhombId    rhId;
 
 	PathId     pathId;
-	long int   withinPathNum;
 	PathId     pathId_ShortestOuter;  // Thins only, as Fats done at level of Path.
+	long int   withinPathNum;
 
-	Neighbour  neighbours[4];
 	int8_t     numNeighbours;
-
-	Physique   physique;
 	int8_t     filledType;
+
+	bool       isFat;
 
 	bool       closerPathCentreN;
 	bool       closerPathCentreE;
@@ -146,10 +136,13 @@ typedef struct  // Path
 __attribute__ ((__packed__))
 #endif  // MEMORY_FRUGALITY_OUTRANKS_SPEED
 {  // Path
+	XY          centre;  // This an XY struct because this a meaningful point; not true of extremal corners.
+	double      orientationDegrees;  // Allows SVG to <def> one closed path of each length, and then to <use ... transform='... rotate(orientationDegrees - orientationDegreesTemplate)'/>
+	double      radiusMin;  // To innermost corner of any of the rhombi.
+	double      radiusMax;  // To outermost corner of any of the rhombi.
+
 	PathId      pathId;
 	long int    pathLength;
-	double      orientationDegrees;  // Allows SVG to <def> one closed path of each length, and then to <use ... transform='... rotate(orientationDegrees - orientationDegreesTemplate)'/>
-	PathStatId  pathStatId;
 
 	RhombId     rhId_PathCentreClosest;   // Rhombus with corner closest to path's centre, so used as path's starting rhombus with withinPathNum == 0
 	RhombId     rhId_PathCentreFurthest;  // Rhombus with corner furthest from path's centre.
@@ -157,14 +150,10 @@ __attribute__ ((__packed__))
 	RhombId     rhId_ThinWithin_First;
 	RhombId     rhId_ThinWithin_Last;
 
-	XY          centre;  // This an XY struct because this a meaningful point; not true of extremal corners.
 	RhombId     xMin_rhId;  // Pointer to rhombus, rather than double, because user might want centre, might want extreme.
 	RhombId     xMax_rhId;
 	RhombId     yMin_rhId;
 	RhombId     yMax_rhId;
-
-	double      radiusMin;  // To innermost corner of any of the rhombi.
-	double      radiusMax;  // To outermost corner of any of the rhombi.
 
 	long int    insideThis_NumFats ;
 	long int    insideDeep_NumFats ;
@@ -174,10 +163,12 @@ __attribute__ ((__packed__))
 	PathId      pathId_ShortestOuter;  // Closed paths only. The smallest enclosing path.
 	PathId      pathId_LongestInner ;  // Closed paths only. The unique largest enclosed path. This has same centre, and Inner.Length = (Outer.Length +- 5) / 4.
 
+	PathStatId  pathStatId;
+
+	int8_t      pathClosedTypeNum;  // -1=open; 1=5r, 2=5p, 3=15, 4=25, 5=55, ...
 	bool        pathClosed;
 	bool        pathVeryClosed;  // All neighbouring tiles have four neightbours. I.e., far from outside of whole tiling.
 	bool        pointy;  // If pathClosed && 5==pathLength then: true ==> ten neighbouring thins in a pointy star; false ==> five neighbouring thins lying flat to it.
-	int8_t      pathClosedTypeNum;  // -1=open; 1=5r, 2=5p, 3=15, 4=25, 5=55, ...
 	bool        wantedPostScript;  // <==> any of its fats are wanted
 } Path;
 
@@ -187,7 +178,10 @@ typedef struct  // PathStats
 __attribute__ ((__packed__))
 #endif  // MEMORY_FRUGALITY_OUTRANKS_SPEED
 {  // PathStats
-	PathStatId pathStatId;
+	double     radiusMin;  // To innermost middle rhombus.
+	double     radiusMax;  // To outermost middle rhombus.
+	double     widthMax;
+	double     heightMax;
 	long int   pathLength;
 	long int   numPaths;
 	PathId     examplePathId ;
@@ -199,13 +193,10 @@ __attribute__ ((__packed__))
 	long int   insideDeep_MaxNumFats_Num ;
 	long int   insideThis_MaxNumThins_Num;
 	long int   insideDeep_MaxNumThins_Num;
-	double     radiusMin;  // To innermost middle rhombus.
-	double     radiusMax;  // To outermost middle rhombus.
-	double     widthMax;
-	double     heightMax;
+	PathStatId pathStatId;
+	int8_t     pathClosedTypeNum;
 	bool       pathClosed;
 	bool       pointy;  // If pathClosed && 5==pathLength then: true ==> ten neighbouring thins in a pointy star; false ==> five neighbouring thins lying flat to it.
-	int8_t     pathClosedTypeNum;
 } PathStats;
 
 
@@ -246,7 +237,7 @@ typedef struct  // Tiling, never packed because <=20 of them, yet frequent acces
 	long int   numPathsOpen;
 	bool       anyPathsVeryClosed;
 
-	long int   pathStats_NumMax;
+	PathStatId pathStats_NumMax;
 	PathStats  * pathStat;
 	long int   numPathStats;
 
@@ -284,7 +275,7 @@ extern bool points_same_4(double const edgeLength, XY const xy0, XY const xy1, X
 
 RhombId rhombus_append(
 	Tiling  * const tlngP,  // Parent tiling
-	Physique  const physique,
+	bool      const isFat,
 	int8_t    const filledType,
 	double    const xNorth,
 	double    const yNorth,
@@ -292,7 +283,7 @@ RhombId rhombus_append(
 	double    const ySouth
 );  // rhombus_append()
 bool rhombus_keep(
-	const Tiling * const tlngP,  Physique const physique,
+	const Tiling * const tlngP,  bool const isFat,
 	double const xNorth,  double const yNorth,  double const xSouth,  double const ySouth
 );
 
@@ -351,7 +342,7 @@ int  pathGt_ByClosedEtc(Path      const * const pathP0,  Path      const * const
 
 int  path_winding_number(const Path * const pathP_Inner,  const Path * const pathP_Outer,  const Tiling * const tlngP);
 int  point_winding_number(register double const x,  register double const y,  const Path * const pathP_Outer,  const Tiling * const tlngP);
-int8_t pathClosedTypeNum(bool pathClosed, long int pathLength, bool pointy);
+int8_t pathClosedTypeNum(const bool pathClosed, const long int pathLength, const bool pointy);
 void paths_populate(Tiling * const tlngP);
 bool collinear(XY const xy0, XY const xy1, XY const xy2, const Tiling * const tlngP);
 
@@ -498,7 +489,7 @@ void exportColourSVG(
 	char   * const strA,
 	char   * const strB,
 	bool   * const isWhiteP,
-	Physique const ph,
+	bool     const isFat,
 	bool     const pathClosed,
 	long int const pathLength,
 	bool     const pointy

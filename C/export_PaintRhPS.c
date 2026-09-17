@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // export_PaintRhPS.c, in PenroseC
 
@@ -308,7 +308,7 @@ void tiling_export_PaintRhombiPS(
 	for( rhId_This = 0  ;  rhId_This < tlngP->numFats + tlngP->numThins  ;  rhId_This ++ )
 	{
 		rhThisP = &(tlngP->rhombi[rhId_This]);
-		if( Thin == rhThisP->physique
+		if( (! rhThisP->isFat)
 		&&  rhThisP->xMax > toPaint_xMin
 		&&  rhThisP->xMin < toPaint_xMax
 		&&  rhThisP->yMax > toPaint_yMin
@@ -348,7 +348,7 @@ void tiling_export_PaintRhombiPS(
 		for( rhId_This = tlngP->numFats + tlngP->numThins - 1 ;  rhId_This >= 0  ;  rhId_This -- )
 		{
 			rhThisP = &(tlngP->rhombi[rhId_This]);
-			if( Fat == rhThisP->physique )
+			if( rhThisP->isFat )
 			{
 				pathP = &(tlngP->path[ rhThisP->pathId ]);  // Known to be fat
 				if( pathStatP->pathClosed == pathP->pathClosed
@@ -373,7 +373,7 @@ void tiling_export_PaintRhombiPS(
 					);  // sprintf()
 					stringClean(scratchString);
 					(*numCharsThisFileP) += fprintf(fp,
-						"%s %" PRIi8 " %" PRIi8 " %s %li %s %li %li %li %li true PaintByRhombus\n",
+						"%s %" PRIi8 " %" PRIi8 " %s %li %s %li %hi %li %li true PaintByRhombus\n",
 						scratchString,
 						rhThisP->numNeighbours,   rhThisP->filledType,
 						deBugMode ? "true" : (pathP->pathClosed ? "true" : "false"),
