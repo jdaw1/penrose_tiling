@@ -132,7 +132,8 @@ Obviously, your execution times might be very different.
 Calls are made to `malloc()`, for `.rhombi`, `.path`, and `.pathStat`. 
 The simple total of these three `malloc()`s, for each iteration (i.e., not cumulative sum, ignoring temporary memory assignments, and ignoring alignment and page boundary trickery), is in the &ldquo;&Sum;`malloc()`&rdquo; column, which grows by &asymp;&#8239;&phi;&sup2; per iteration.
 
-For `15`, memory needed was slightly more than the whole of my machine&rsquo;s 16&#8239;GiB: ignoring page boundaries &Sum;`malloc()`&nbsp;&asymp;&nbsp;16.11&#8239;GiB, so there must have been some memory swapping. 
+For `15`, memory needed was 15.5968&#8239;GiB (ignoring alignment, page boundaries, etc); machine only 16&#8239;GiB; and, likely, OS needed more than the difference. 
+So there might have been some memory swapping. 
 Hence was executed with no other applications running. 
 A deeper recursion would need more memory. 
 It might be that one more recursion, `16`, so &asymp;&#8239;60.3&nbsp;million rhombi, would require 48&#8239;GiB of memory; and another beyond that, &asymp;&#8239;97.7&nbsp;million rhombi, would require &asymp;&#8239;128&#8239;GiB and perhaps some days to execute. 
