@@ -117,7 +117,7 @@ So the quoted &lsquo;area&rsquo; is of a circle not containing any open paths of
 That is, within that area, every path is either closed, or open of a single unique length. 
 So, within this circle, colour consistently all rhombi in open paths, and it will be and seem consistent. 
 The area is denominated in units of square tile edges. 
-For `tilingId`&#8239;&gap;&#8239;6, this circular &lsquo;colourable&rsquo; &lsquo;Area&rsquo; is about &frac23; of the whole tiling, and the whole pentagonal tiling has area, as a proportion that of its bounding box, &asymp;&nbsp;&frac14;(5&nbsp;&minus;&nbsp;&radic;5)&nbsp;&asymp;&nbsp;0.69.
+For `tilingId`&#8239;&gap;&#8239;6, this &lsquo;colourable&rsquo; circular &lsquo;Area&rsquo; is about &frac23; of the whole tiling, and the whole pentagonal tiling has area, as a proportion of its bounding box, &asymp;&nbsp;&frac14;(5&nbsp;&minus;&nbsp;&radic;5)&nbsp;&asymp;&nbsp;0.69.
 
 The average tile area, in edge lengths squared, is &frac14;(&radic;5&nbsp;+&nbsp;&radic;(10&nbsp;&minus;&nbsp;2&radic;5)&nbsp;&minus;&nbsp;1) &asymp;&nbsp;0.8968, 
 the reciprocal of which is 1&nbsp;+&nbsp;&radic;(10&#8239;&minus;&#8239;2&radic;5)&nbsp;&minus;&nbsp;&radic;5 &asymp;&nbsp;1.1151.

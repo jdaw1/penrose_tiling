@@ -40,7 +40,7 @@ Hence it is the best format for being absorbed by another system.
     - integers `MinX_rhId`, `MaxX_rhId`, `MinY_rhId`, `MaxY_rhId`, being the Ids of the extremal rhombi;
     - numbers `MinX`, `MaxX`, `MinY`, `MaxY` (which for some purposes could need to be adjusted by half of a line width);
     - numbers `RadiusMax` being the distance of the point furthest from (0,0), and `RadiusShortOpen` being the largest radius that has paths that are either closed, or of length equal to the longest open path;
-    - integer `PersistentSumSimple_malloc` as an approximation to the C&rsquo;s memory usage, being the plain sum of this tiling&rsquo;s `malloc()` for `.rhombi`, `.path`, and `.pathStat`. I.e., not cumulative sum, ignoring temporary memory assignments, and ignoring alignment and page boundary trickery.
+    - integers `InternalToC_sizeof_Rhombus`, `InternalToC_sizeof_Path`, `InternalToC_sizeof_PathStats`, `InternalToC_NumForWhichMallocd_Rhombi`, `InternalToC_NumForWhichMallocd_Paths`, `InternalToC_NumForWhichMallocd_PathStats`, and  `PersistentSumSimple_malloc`. The first three are `sizeof()` for `.rhombi`, `.path`, and `.pathStat`. The next three are how many of these are allocated. The last is a sum-product, being as an approximation to the C&rsquo;s memory usage, the plain sum of this tiling&rsquo;s `malloc()`. I.e., not cumulative sum, ignoring temporary memory assignments, and ignoring alignment and page boundary trickery;
     - C execution times `SecondsToStartExportFromStartFirstTiling` and `SecondsToStartExportFromStartThisTiling`;
     - numbers relating the output chosen for the PostScript-as-data format, because of its 65535 limit; 
     - array `Rhombi` (described below);

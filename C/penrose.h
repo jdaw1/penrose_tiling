@@ -13,7 +13,7 @@
 #include <string.h>
 
 // What is your binding constraint: memory or speed?
-// Value of true saves almost 10% of memory usage: sizeof(Rhombus) being 270 instead of 296.
+// Value of true saves 7% of memory usage: sizeof(Rhombus) being 238 instead of 256.
 // But value of false seems to be faster execution by a factor of ~= 1.4.
 // Breaking alignment conventions might, depending on machine and compiler, cause crashes: if so, set to false.
 #define MEMORY_FRUGALITY_OUTRANKS_SPEED false
