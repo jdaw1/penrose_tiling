@@ -24,6 +24,7 @@ int main(void)
 	char timeString[250], fileName[256], fileExtension[16];
 	long int pathStatNum,  numPathStatsClosed;
 	double totalTimeSeconds;
+	size_t sumsummallocs = 0;
 
 	printf(
 		// https://stackoverflow.com/questions/15610053/correct-printf-format-specifier-for-size-t-zu-or-iu
@@ -202,14 +203,31 @@ int main(void)
 			"main(): tId=%02" PRIi8 ", malloc()'s = %zu",
 			tilingId,  tlngs[tilingId].mallocsPersistentSumSimple
 		);  // fprintf()
-		if( tlngs[tilingId].mallocsPersistentSumSimple > 256 )
+		if( tlngs[tilingId].mallocsPersistentSumSimple > (size_t)256 )
 			fprintf(stdout, " ~= %.1lfKiB", (double)tlngs[tilingId].mallocsPersistentSumSimple / 1024.0);
-		if( tlngs[tilingId].mallocsPersistentSumSimple > 256 * 1024 )
+		if( tlngs[tilingId].mallocsPersistentSumSimple > (size_t)256 * (size_t)1024 )
 			fprintf(stdout, " ~= %.1lfMiB", (double)tlngs[tilingId].mallocsPersistentSumSimple / 1024.0 / 1024.0);
-		if( tlngs[tilingId].mallocsPersistentSumSimple > 256 * 1024 * 1024 )
+		if( tlngs[tilingId].mallocsPersistentSumSimple > (size_t)256 * (size_t)1024 * (size_t)1024 )
 			fprintf(stdout, " ~= %.1lfGiB", (double)tlngs[tilingId].mallocsPersistentSumSimple / 1024.0 / 1024.0 / 1024.0);
 		fprintf(stdout, ", being this tiling's simple total, ignoring boundary and page alignments\n");
 		fflush(stdout);
+
+		sumsummallocs += tlngs[tilingId].mallocsPersistentSumSimple;
+		fprintf(stdout,
+			"main(): tId=%02" PRIi8 ", Sum Sum malloc()'s = %zu",
+			tilingId,  sumsummallocs
+		);  // fprintf()
+		if( sumsummallocs > (size_t)256 )
+			fprintf(stdout, " ~= %.1lfKiB", (double)sumsummallocs / 1024.0);
+		if( sumsummallocs > (size_t)256 * (size_t)1024 )
+			fprintf(stdout, " ~= %.1lfMiB", (double)sumsummallocs / 1024.0 / 1024.0);
+		if( sumsummallocs > (size_t)256 * (size_t)1024 * (size_t)1024 )
+			fprintf(stdout, " ~= %.1lfGiB", (double)sumsummallocs / 1024.0 / 1024.0 / 1024.0);
+		if( sumsummallocs > (size_t)256 * (size_t)1024 * (size_t)1024 * (size_t)1024 )
+			fprintf(stdout, " ~= %.1lfTiB", (double)sumsummallocs / 1024.0 / 1024.0 / 1024.0 / 1024.0);
+		fprintf(stdout, ", ignoring boundary and page alignments\n");
+		fflush(stdout);
+
 		fprintf(stdout,
 			"tId=%02" PRIi8 ": xMin = %0.6lf;  xMax = %0.6lf;  yMin = %0.6lf;  yMax = %0.6lf.\n", tilingId,
 			tlngs[tilingId].rhombi[ tlngs[tilingId].xMin_rhId ].xMin / tlngs[tilingId].edgeLength,
