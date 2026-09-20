@@ -25,14 +25,14 @@ Indeed, since 17<small><sup>th</sup></small>&nbsp;January 2025 the US Government
 > **1)** The development of new product lines for use in service of critical infrastructure or NCFs in a memory-unsafe language (e.g., C or C++) where readily available alternative memory-safe languages could be used is dangerous and significantly elevates risk to national security, national economic security, and national public health and safety.
 
 So, even though this is not &ldquo;critical infrastructure&rdquo;, be careful. 
-Run this code only in your compiler&rsquo;s debug mode, as that will block pointer mischief. 
+Run [this code](../../../tree/main/C/) only in your compiler&rsquo;s debug mode, as that will block pointer mischief. 
 Yes, it will execute slower, but execution is a once-off to generate data: pay the slower to gain the full paranoia.
 
 Also, this code outputs multiple files ([.json](json.md), [.tsv](tsv.md), [.svg](svg.md), [.ps](postscript_distillable.md), [.ps](postscript_data.md)). 
 Allow writing only to the chosen output directory `filePath_staticConst[]`; block all other writing; block all file reading.
 
 I know that this code is not naughty, and I believe that it is not careless. 
-But it&rsquo;s 10120 lines of&nbsp;C, so you cannot easily know whether I truthfully know or believe these. 
+But it&rsquo;s 10k lines of&nbsp;C, so you cannot easily know whether I know or truthfully believe these. 
 (But your AI might know: do ask it.) 
 If executing this downloaded C, indeed any downloaded C, you should be paranoid, meaning execute only in your compiler&rsquo;s debug mode, with file access restricted as in the previous&nbsp;&para;.
 
