@@ -58,11 +58,17 @@ void rhombi_purgeDuplicates(Tiling * const tlngP)
 		}
 	}  // for rhId1
 
-	printf("after numUniques=%li", numUniques);
+	printf("after numUniques = %li", numUniques);
 	if( numUniques >= 250000 )
-		printf("~=%.1lfm", (double)numUniques / 1000000.0);
+		printf(" ~= %.1lfm", (double)numUniques / 1000000.0);
 	if( numUniques >= 250000000 )
-		printf("~=%.1lfb", (double)numUniques / 1000000000.0);
+		printf(" ~= %.1lfb", (double)numUniques / 1000000000.0);
+	if( tlngP->rhombi_NumMax >= 10 )
+		printf(
+			" ~= rhNumMax*%.*lf",
+			(int)min_2(max_2(floor(log10(tlngP->rhombi_NumMax) - 1),1),7),
+			(double)numUniques / (double)tlngP->rhombi_NumMax
+		);  // printf()
 	printf("\n");  fflush(stdout);
 
 	// Renumber remaining rhombi
