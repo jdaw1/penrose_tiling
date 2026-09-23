@@ -25,26 +25,24 @@ Indeed, since 17<small><sup>th</sup></small>&nbsp;January 2025 the US Government
 > **1)** The development of new product lines for use in service of critical infrastructure or NCFs in a memory-unsafe language (e.g., C or C++) where readily available alternative memory-safe languages could be used is dangerous and significantly elevates risk to national security, national economic security, and national public health and safety.
 
 So, even though this is not &ldquo;critical infrastructure&rdquo;, be careful. 
-Run [this code](../../../tree/main/C/) only in your compiler&rsquo;s debug mode, as that will block pointer mischief. 
+Run [this code](../C/) only in your compiler&rsquo;s debug mode, as that will block pointer mischief. 
 Yes, it will execute slower, but execution is a once-off to generate data: pay the slower to gain the full paranoia.
 
 Also, this code outputs multiple files ([.json](json.md), [.tsv](tsv.md), [.svg](svg.md), [.ps](postscript_distillable.md), [.ps](postscript_data.md)). 
 Allow writing only to the chosen output directory `filePath_staticConst[]`; block all other writing; block all file reading.
 
 I know that this code is not naughty, and I believe that it is not careless. 
-But it&rsquo;s 10k lines of&nbsp;C, so you cannot easily know whether I know or truthfully believe these. 
-(But your AI might know: do ask it.) 
+But it&rsquo;s &asymp;&#8239;10k lines of&nbsp;C, so you cannot easily know whether it is safe, nor even whether my claim of believed safety is honest. 
+(But do ask your AI.) 
 If executing this downloaded C, indeed any downloaded C, you should be paranoid, meaning execute only in your compiler&rsquo;s debug mode, with file access restricted as in the previous&nbsp;&para;.
 
-Language version: this 
-[C](https://en.wikipedia.org/wiki/C_(programming_language)) code uses 
-inline comments [`//`](https://en.cppreference.com/w/c/comment.html), types 
-[`bool`](https://en.cppreference.com/w/c/language/arithmetic_types.html#Boolean_type), 
+[C](https://en.wikipedia.org/wiki/C_(programming_language)) language version: [this code](../C/) needs &ge;&nbsp;[C99](https://en.wikipedia.org/wiki/C99), as it uses 
+inline comments [`//`](https://en.cppreference.com/w/c/comment.html), 
+types [`bool`](https://en.cppreference.com/w/c/language/arithmetic_types.html#Boolean_type), 
 [`int8_t`](https://en.cppreference.com/w/c/types/integer.html#Types) and 
 [<code>long&nbsp;long&nbsp;int</code>](https://en.cppreference.com/w/c/language/arithmetic_types.html#Integer_types), and 
 [inline struct initialisation](https://en.cppreference.com/w/c/language/struct_initialization.html). 
-Hence this code needs &ge;&nbsp;[C99](https://en.wikipedia.org/wiki/C99). 
-This C&nbsp;code is not valid 
+It is not valid 
 original ANSI&nbsp;C&nbsp;=&nbsp;[C89](https://en.wikipedia.org/wiki/ANSI_C#C89), 
 nor valid [K&R&nbsp;&lsquo;original&rsquo;](https://en.wikipedia.org/wiki/The_C_Programming_Language).
 
@@ -56,15 +54,15 @@ The C code cannot quite be executed directly out of the box: a few trivial custo
 * **Most important**: to what directory should output go, as used by <code>fopen(&hellip;, "w")</code>? 
 This is in `filePath_staticConst[]` and almost certainly you should change this.
 
+* Observe that there are multiple lines labelled &ldquo;<code>Placeholder&nbsp;condition</code>&rdquo;, which are <code>tlngP->tilingId&nbsp;<=&nbsp;-1</code>. 
+These auto-evaluate to `false`, or <code>&hellip;&nbsp;>=&nbsp;-1</code> to `true`, the seemingly needless test being to suppress a compiler warning.
+Obviously, as necessary switch &ldquo;<code><=</code>&rdquo;&nbsp;&LeftRightArrow;&nbsp;&ldquo;<code>>=</code>&rdquo;.
+
 * After an SVG or a distillable PostScript file is finished, should an application be called to display it or distill it? 
 This is done by <code>execute_SVG_PostProcessing(&hellip;)</code> and <code>execute_PostScript_PostProcessing(&hellip;)</code>. 
 By default, these call Chrome and GhostScript, in my computer&rsquo;s location of these applications. 
 These calls are made by the <code>system(&hellip;)</code> command, which could in theory do anything, so check that your (and indeed, my) invocations are safe. 
 Or, to have them do nothing, replace both of these <code>execute_&hellip;</code> routines with a do&#8209;nothing `{return;}`.
-
-    Observe that there are multiple lines labelled &ldquo;<code>Placeholder&nbsp;condition</code>&rdquo;, which are <code>tlngP->tilingId&nbsp;<=&nbsp;-1</code>. 
-    These auto-evaluate to `false`, or <code>&hellip;&nbsp;>=&nbsp;-1</code> to `true`, the seemingly needless test being to suppress a compiler warning.
-    Obviously, alter as necessary <code><=</code>&nbsp;&longleftrightarrow;&nbsp;<code>>=</code>.
 
 The optional customisations are also within the [<kbd>controls.c</kbd>](../C/controls.c) file.
 
@@ -90,23 +88,23 @@ The table below shows the numbers of fat and thin tiles in each tiling.
 
 
 | Tl&rsquo;g<br>Id | Num<br>Fats | Num<br>Thins | Long<br>-est<br>closed<br>path | &lsquo;Area&rsquo; | Bound<br>-ary<br>num<br>vertices | &Sum;<br>`malloc()`<br>this<br>Tl&rsquo;g |JSON<br>size | &asymp;&#8239;&Sum;<small><sub>0&#10141;_n_</sub></small><br>exec.<br>time |
-|----------------------------------------:|-----------:|-----------:|-----------------:|--------------:|-------:|----------------:|----------------:|--------------:|
-| [&numsp;0](../images/Penrose_Rh_00.svg) |          5 |          5 | 5&lsquo;r&rsquo; |               |     10 |   7.1&#8239;KiB |   6.2&#8239;KiB |               |
-| [&numsp;1](../images/Penrose_Rh_01.svg) |         20 |         10 | 5&lsquo;p&rsquo; |               |     20 |  31.7&#8239;KiB |  21.5&#8239;KiB |               |
-| [&numsp;2](../images/Penrose_Rh_02.svg) |         65 |         40 |               15 |               |     40 |  64.3&#8239;KiB |  70.4&#8239;KiB |               |
-| [&numsp;3](../images/Penrose_Rh_03.svg) |        190 |        110 |               25 |      184      |     70 |   157&#8239;KiB |   205&#8239;KiB |               |
-| [&numsp;4](../images/Penrose_Rh_04.svg) |        530 |        320 |               55 |      444      |    120 |   338&#8239;KiB |   583&#8239;KiB |               |
-| [&numsp;5](../images/Penrose_Rh_05.svg) |      1,440 |        870 |              105 |     1303      |    200 |   776&#8239;KiB | 1,616&#8239;KiB |               |
-| [&numsp;6](../images/Penrose_Rh_06.svg) |      3,855 |      2,355 |              215 |     3286      |    330 | 1,912&#8239;KiB | 4,411&#8239;KiB |               |
-| [&numsp;7](../images/Penrose_Rh_07.svg) |     10,230 |      6,270 |              425 |     9&#8239;k |    540 | 4,911&#8239;KiB |  11.6&#8239;MiB |               |
-| [&numsp;8](../images/Penrose_Rh_08.svg) |     27,005 |     16,610 |              855 |    23&#8239;k |    880 |  12.5&#8239;MiB |  31.1&#8239;MiB |   1&#8239;s   |
-| [&numsp;9](../images/Penrose_Rh_09.svg) |     71,060 |     43,780 |            1,705 |    62&#8239;k |  1,430 |  32.6&#8239;MiB |  83.1&#8239;MiB |   4&#8239;s   |
-|       [10](../images/Penrose_Rh_10.svg) |    186,620 |    115,120 |            3,415 |   162&#8239;k |  2,320 |    85&#8239;MiB |   222&#8239;MiB |  10&#8239;s   |
-|       [11](../images/Penrose_Rh_11.svg) |    489,520 |    302,180 |            6,825 |   427&#8239;k |  3,760 |   224&#8239;MiB |   588&#8239;MiB |  27&#8239;s   |
-|        12                               |  1,283,105 |    792,425 |           13,655 |   1.1&#8239;M |  6,090 |   586&#8239;MiB | 1,560&#8239;MiB |  95&#8239;s   |
-|        13                               |  3,361,680 |  2,076,690 |           27,305 |   2.9&#8239;M |  9,860 | 1,480&#8239;MiB | 4,127&#8239;MiB | 4.2&#8239;min |
-|        14                               |  8,804,985 |  5,440,260 |           54,615 |   7.7&#8239;M | 15,960 | 3,771&#8239;MiB |  10.7&#8239;GiB |  22&#8239;min |
-|        15                               | 23,058,210 | 14,248,290 |          109,225 |    20&#8239;M | 25,830 |   9.5&#8239;GiB |  28.3&#8239;GiB | 101&#8239;min |
+|----------------------------------------:|-----------:|-----------:|-----------------:|------------:|-------:|----------------:|----------------:|--------------:|
+| [&numsp;0](../images/Penrose_Rh_00.svg) |          5 |          5 | 5&lsquo;r&rsquo; |    |     10 |   7.1&#8239;KiB |   6.2&#8239;KiB |               |
+| [&numsp;1](../images/Penrose_Rh_01.svg) |         20 |         10 | 5&lsquo;p&rsquo; |    |     20 |  31.7&#8239;KiB |  21.5&#8239;KiB |               |
+| [&numsp;2](../images/Penrose_Rh_02.svg) |         65 |         40 |      15 |             |     40 |  64.3&#8239;KiB |  70.3&#8239;KiB |               |
+| [&numsp;3](../images/Penrose_Rh_03.svg) |        190 |        110 |      25 |    184      |     70 |   157&#8239;KiB |   205&#8239;KiB |               |
+| [&numsp;4](../images/Penrose_Rh_04.svg) |        530 |        320 |      55 |    444      |    120 |   338&#8239;KiB |   583&#8239;KiB |               |
+| [&numsp;5](../images/Penrose_Rh_05.svg) |      1,440 |        870 |     105 |   1303      |    200 |   776&#8239;KiB | 1,616&#8239;KiB | 0.1&#8239;s   |
+| [&numsp;6](../images/Penrose_Rh_06.svg) |      3,855 |      2,355 |     215 |   3286      |    330 | 1,912&#8239;KiB | 4,411&#8239;KiB | 0.2&#8239;s   |
+| [&numsp;7](../images/Penrose_Rh_07.svg) |     10,230 |      6,270 |     425 |   9&#8239;k |    540 | 4,911&#8239;KiB |  11.6&#8239;MiB | 0.5&#8239;s   |
+| [&numsp;8](../images/Penrose_Rh_08.svg) |     27,005 |     16,610 |     855 |  23&#8239;k |    880 |  12.5&#8239;MiB |  31.1&#8239;MiB | 1.4&#8239;s   |
+| [&numsp;9](../images/Penrose_Rh_09.svg) |     71,060 |     43,780 |   1,705 |  62&#8239;k |  1,430 |  32.6&#8239;MiB |  83.1&#8239;MiB |   4&#8239;s   |
+|       [10](../images/Penrose_Rh_10.svg) |    186,620 |    115,120 |   3,415 | 162&#8239;k |  2,320 |    85&#8239;MiB |   222&#8239;MiB |  11&#8239;s   |
+|       [11](../images/Penrose_Rh_11.svg) |    489,520 |    302,180 |   6,825 | 427&#8239;k |  3,760 |   224&#8239;MiB |   588&#8239;MiB |  25&#8239;s   |
+|        12                               |  1,283,105 |    792,425 |  13,655 | 1.1&#8239;M |  6,090 |   586&#8239;MiB | 1,560&#8239;MiB |  87&#8239;s   |
+|        13                               |  3,361,680 |  2,076,690 |  27,305 | 2.9&#8239;M |  9,860 | 1,480&#8239;MiB | 4,127&#8239;MiB | 3.8&#8239;min |
+|        14                               |  8,804,985 |  5,440,260 |  54,615 | 7.7&#8239;M | 15,960 | 3,771&#8239;MiB |  10.7&#8239;GiB |  21&#8239;min |
+|        15                               | 23,058,210 | 14,248,290 | 109,225 |  20&#8239;M | 25,830 | 9,772&#8239;MiB |  28.3&#8239;GiB | 100&#8239;min |
 
 
 ### &lsquo;Area&rsquo; ###
