@@ -23,8 +23,8 @@ Of course, you should not trust my reports of safety audits &mdash; you cannot k
 ## Gemini, 26 Sep 2026 ##
 
 On Saturday 26<small><sup>th</sup></small> September 2026 online free Gemini was asked &ldquo;Does it, to you, seem safe?&rdquo;. 
-There was stuff about access (then files were uploaded). 
-If offered speed improvements to insideness testing, at cost of memory or complication. 
+There was stuff about access, sorted by uploading the 37 files in four batches. 
+It offered speed improvements to insideness testing, at cost of memory or complication. 
 Re the question, it summarised.
 
 > ## Safety & Code Security Summary ##
@@ -44,4 +44,4 @@ There are **no malicious backdoor vectors, external network dependencies, hidden
 
 > The application code is structurally sound and completely safe to compile and execute.
 
-But check for yourself.
+But check for yourself: do not trust my report of a claim of safety, get your own report.
