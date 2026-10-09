@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, October 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // tilings.c, in PenroseC
 
@@ -13,8 +13,8 @@ void tiling_descendant(
 {
 	int rhId_Ancestor;
 	clock_t timeBeginThisTiling, timeBeginPart;
-	unsigned long int numRhAtPreviousPurgeDuplicates = 0;
-	long int numSpecialDeduplications = 0;
+	RhombId numRhAtPreviousPurgeDuplicates = 0;
+	RhombId numSpecialDeduplications = 0;
 
 	timeBeginThisTiling = clock();
 	if(timeBeginFirstTiling < 0)
@@ -49,17 +49,17 @@ void tiling_descendant(
 
 	tlngDescendantP->edgeLength = tlngAncestorP->edgeLength * GoldenRatioReciprocal;
 
-	// Scope to hold three temporary long int.
+	// Scope to hold three temporary RhombId.
 	{
-		long int const rhombi_NumMax_A  // Based on the number of rhombi that will appear, with small spare. This is memory efficient.
+		RhombId const rhombi_NumMax_A  // Based on the number of rhombi that will appear, with small spare. This is memory efficient.
 			= (tlngAncestorP->numFats + tlngAncestorP->numThins) * (GoldenRatioSquare * 1.1)   // Final number descendants for ordinary recursion, *1.1 for a little spare. There is here a clash between memory efficiency and speed; 1.1 might be reasonable compromise.
 			+ 6 * sqrt(tlngAncestorP->numFats + tlngAncestorP->numThins)                       // some extras, proportional to boundary length, for hole filling.
 			+ 256;                                                                             // some more spare, especially for small tilings, and to make this irrelevant for very small tilings.
-		long int const rhombi_NumMax_B  // Based on the number of rhombi that will appear, with small spare. This is memory efficient.
+		RhombId const rhombi_NumMax_B  // Based on the number of rhombi that will appear, with small spare. This is memory efficient.
 			= (tlngAncestorP->numFats + tlngAncestorP->numThins) * (GoldenRatioSquare * 1.01)  // Final number descendants for ordinary recursion, *1.01 for a tiny little spare.
 			+ 6 * sqrt(tlngAncestorP->numFats + tlngAncestorP->numThins)                       // some extras, proportional to boundary length, for hole filling.
 			+ 262144;                                                                          // Small proportional extra, large fixed extra. Boundary at Ancestor having 1,112,285 rhombi, Descendant having 3,209,784.
-		long int const rhombi_NumMax_C  // Based on maximum from recursion algorithm.
+		RhombId const rhombi_NumMax_C  // Based on maximum from recursion algorithm.
 			= 5 * tlngAncestorP->numFats   // Recursion makes five new rhombi for each previous fat,  though many subsequently de-duplicated.
 			+ 4 * tlngAncestorP->numThins  // Recursion makes four new rhombi for each previous thin, though many subsequently de-duplicated.
 			+ 64;                          // The extra 64 for, in early recursions, holes_Fill().
@@ -73,7 +73,10 @@ void tiling_descendant(
 		tlngDescendantP->rhombi = malloc(mallocThis);
 		if( NULL == tlngDescendantP->rhombi )
 		{
-			fprintf(stderr, "tiling_descendant(): !!! NULL == tlng.rhombi !!!\n");
+			fprintf(stderr,
+				"tiling_descendant(): !!! NULL == tlng.rhombi !!!, with tilingId=%" PRIi8 ", rhombi_NumMax = %li, mallocThis = %zu ~= %0.3lf GiB \n",
+				tlngDescendantP->tilingId,  tlngDescendantP->rhombi_NumMax,  mallocThis,  (double)mallocThis / 1024.0 / 1024.0 / 1024.0
+			);
 			fflush(stderr);
 			exit(EXIT_FAILURE);
 		}  // NULL == tlngDescendantP->rhombi
@@ -149,7 +152,7 @@ void tiling_descendant(
 	timeBeginPart = clock();
 	pathStats_populate(tlngDescendantP);
 	printf(
-		"tiling_descendant(): tilingId=%" PRIi8 ", %.3lfs for pathStats_populate() with #PathStats=%li,  /prev~=%.4lg\n",
+		"tiling_descendant(): tilingId=%" PRIi8 ", %.3lfs for pathStats_populate() with #PathStats=%hi,  /prev~=%.4lg\n",
 		tlngDescendantP->tilingId,
 		((double)clock() - timeBeginPart) / CLOCKS_PER_SEC,
 		tlngDescendantP->numPathStats,
@@ -203,7 +206,7 @@ void tiling_descendant(
 	RhombId    rhId;
 	PathId     pathId;
 	PathStatId pathStatId;
-	long int numFats_rhombi, numFats_paths, numFats_pathsStats;
+	RhombId numFats_rhombi, numFats_paths, numFats_pathsStats;
 	numFats_rhombi = 0;
 	for( rhId = 0  ;  rhId < tlngDescendantP->numFats + tlngDescendantP->numThins  ;  rhId ++ )
 		if( tlngDescendantP->rhombi[rhId].isFat )
@@ -233,7 +236,7 @@ void tiling_descendant(
 		= tlngDescendantP->SecondsToStartExportFromStartThisTiling  // ==> times consistent
 		+ (timeBeginThisTiling - timeBeginFirstTiling) / CLOCKS_PER_SEC;
 
-	printf("tiling_descendant(): tilingId=%" PRIi8 ", numFats=%li, numThins=%li, numPathsClosed=%li, numPathsOpen=%li, numPathStats=%li"
+	printf("tiling_descendant(): tilingId=%" PRIi8 ", numFats=%li, numThins=%li, numPathsClosed=%li, numPathsOpen=%li, numPathStats=%hi"
 		", execution time ~= %.3lf seconds; all tilings' time = %.3lfs ~= %.3lf mins ~= %.3lf hr ~= %.3lf days. (Both excl. this t's disk-writing time.)\n",
 		tlngDescendantP->tilingId, tlngDescendantP->numFats, tlngDescendantP->numThins,
 		tlngDescendantP->numPathsClosed, tlngDescendantP->numPathsOpen, tlngDescendantP->numPathStats,
@@ -293,7 +296,10 @@ void tiling_initial(Tiling * const tlngP)
 		tlngP->rhombi = malloc(mallocThis);
 		if( NULL == tlngP->rhombi )
 		{
-			fprintf(stderr, "tiling_initial(): !!! NULL == tlng.rhombi !!!\n");
+			fprintf(stderr,
+				"tiling_initial(): !!! NULL == tlng.rhombi !!!, with tilingId=%" PRIi8 ", rhombi_NumMax = %li, mallocThis = %zu ~= %0.3lf GiB \n",
+				tlngP->tilingId,  tlngP->rhombi_NumMax,  mallocThis,  (double)mallocThis / 1024.0 / 1024.0 / 1024.0
+			);
 			fflush(stderr);
 			exit(EXIT_FAILURE);
 		}  // if( NULL == tlngP->rhombi )
@@ -306,7 +312,7 @@ void tiling_initial(Tiling * const tlngP)
 	{
 	case oneThin:
 		xN = xS = 0;
-		yS =  tlngP->edgeLength == 1.0  ?  Cos72  :  Cos72 * tlngP->edgeLength;
+		yS =  tlngP->edgeLength == 1.0  ?  Sin18  :  Sin18 * tlngP->edgeLength;
 		yN = -yS;
 		rhId_new = rhombus_append(tlngP,  false,  false,  xN, yN, xS, yS);  // false ==> not filled hole
 		if( rhId_new < 0 ) {fprintf(stderr, "!!! Error in tiling_initial(): rhombus_append() failed, oneThin. !!!\n");  exit(EXIT_FAILURE);}

@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, October 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // purgeDuplicates.c, in PenroseC
 
@@ -16,11 +16,10 @@ int rhombiGt_ByY(Rhombus const * const rhP0, Rhombus const * const rhP1)
 
 void rhombi_purgeDuplicates(Tiling * const tlngP)
 {
-	RhombId        rhId1, rhId2;
-	long int       numUniques = 0;
+	RhombId        rhId1,  rhId2,  numUniques = 0;
 	bool           isUnique;
 	double const   thresholdSame = tlngP->edgeLength * 0.01 ;  // Arbitrary constant, smaller than 1, bigger than machine-precision epsilon
-	long int const numRhombi = tlngP->numFats + tlngP->numThins;
+	RhombId const  numRhombi = tlngP->numFats + tlngP->numThins;
 
 	if( tlngP->numFats < 2  &&  tlngP->numThins < 2 )
 		return;

@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, October 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // penrose.h, in PenroseC
 
@@ -29,8 +29,8 @@ static double const GoldenRatio               =  1.61803398874989484820458683436
 static double const GoldenRatioReciprocal     =  0.6180339887498948482045868343656381177203091798057628621354486227052604628189024497072072041893911 ;  // (Sqrt[5] - 1) / 2
 static double const HalfRoot5Plus2Sqrt5       =  1.5388417685876267012851452880184549120033510717688962135195781251874316442475454592272968608335527 ;  // Sqrt[2*Sqrt[5] + 5] / 2
 static double const Cos18                     =  0.95105651629515357211643933337938214340569863412575022244730564443015317008519350171879281097081138;  // Sqrt[2*Sqrt[5] + 10] / 4
-static double const Cos36                     =  0.80901699437494742410229341718281905886015458990288143106772431135263023140945122485360360209469557;  // (Sqrt[5] + 1) / 4
-static double const Cos72                     =  0.30901699437494742410229341718281905886015458990288143106772431135263023140945122485360360209469557;  // (Sqrt[5] - 1) / 4 = GoldenRatioReciprocal / 2
+static double const Cos36                     =  0.80901699437494742410229341718281905886015458990288143106772431135263023140945122485360360209469557;  // (Sqrt[5] + 1) / 4 = GoldenRatio / 2
+static double const Sin18                     =  0.30901699437494742410229341718281905886015458990288143106772431135263023140945122485360360209469557;  // (Sqrt[5] - 1) / 4 = GoldenRatioReciprocal / 2
 static double const Quarter5MinusSqrt5        =  0.69098300562505257589770658281718094113984541009711856893227568864736976859054877514639639790530443;  // (5 - Sqrt[5]) / 4
 static double const Quarter3MinusSqrt5        =  0.19098300562505257589770658281718094113984541009711856893227568864736976859054877514639639790530443;  // (3 - Sqrt[5]) / 4 = Half3MinusSqrt5 / 2
 static double const Sin36                     =  0.58778525229247312916870595463907276859765243764314599107227248075727847416235195750850404986274134;  // Sqrt[(5 - Sqrt[5]) / 8]
@@ -91,7 +91,7 @@ __attribute__ ((__packed__))
 	bool      touchesE;
 } Neighbour;
 
-// These large structs, of which large arays malloc'd, have elements ordered to reduce used memory.
+// These large structs, of which large arays malloc'd, have elements ordered to reduce wasteful gaps.
 
 typedef struct  // Rhombus
 #if MEMORY_FRUGALITY_OUTRANKS_SPEED
@@ -155,10 +155,10 @@ __attribute__ ((__packed__))
 	RhombId     yMin_rhId;
 	RhombId     yMax_rhId;
 
-	long int    insideThis_NumFats ;
-	long int    insideDeep_NumFats ;
-	long int    insideThis_NumThins;
-	long int    insideDeep_NumThins;
+	RhombId     insideThis_NumFats ;
+	RhombId     insideDeep_NumFats ;
+	RhombId     insideThis_NumThins;
+	RhombId     insideDeep_NumThins;
 
 	PathId      pathId_ShortestOuter;  // Closed paths only. The smallest enclosing path.
 	PathId      pathId_LongestInner ;  // Closed paths only. The unique largest enclosed path. This has same centre, and Inner.Length = (Outer.Length +- 5) / 4.
@@ -183,16 +183,16 @@ __attribute__ ((__packed__))
 	double     widthMax;
 	double     heightMax;
 	long int   pathLength;
-	long int   numPaths;
+	PathId     numPaths;
 	PathId     examplePathId ;
-	long int   insideThis_MaxNumFats ;
-	long int   insideDeep_MaxNumFats ;
-	long int   insideThis_MaxNumThins;
-	long int   insideDeep_MaxNumThins;
-	long int   insideThis_MaxNumFats_Num ;
-	long int   insideDeep_MaxNumFats_Num ;
-	long int   insideThis_MaxNumThins_Num;
-	long int   insideDeep_MaxNumThins_Num;
+	RhombId    insideThis_MaxNumFats ;
+	RhombId    insideDeep_MaxNumFats ;
+	RhombId    insideThis_MaxNumThins;
+	RhombId    insideDeep_MaxNumThins;
+	RhombId    insideThis_MaxNumFats_Num ;
+	RhombId    insideDeep_MaxNumFats_Num ;
+	RhombId    insideThis_MaxNumThins_Num;
+	RhombId    insideDeep_MaxNumThins_Num;
 	PathStatId pathStatId;
 	int8_t     pathClosedTypeNum;
 	bool       pathClosed;
@@ -213,11 +213,11 @@ typedef struct  // Tiling, never packed because <=20 of them, yet frequent acces
 	double     wantedPostScriptHalfWidth;   // As if edge length is 1; 'wantedPostScriptHalfHeight' = wantedPostScriptHalfWidth * wantedPostScriptAspect
 	long int   wantedPostScriptNumRhombi;
 	long int   wantedPostScriptNumPaths;
-	long int   numFats;
-	long int   numThins;
-	long int   numThins_0T4F;
-	long int   numThins_1T3F;
-	long int   rhombi_NumMax;
+	RhombId    numFats;
+	RhombId    numThins;
+	RhombId    numThins_0T4F;
+	RhombId    numThins_1T3F;
+	RhombId    rhombi_NumMax;
 	long long int boundingPathNumVertices;  // Could, in theory, be two plus twice num rhombi, hence long long. In practice, of order sqrt(num rhombi).
 	Rhombus    * rhombi;
 	RhombId    xMin_rhId;  // Pointer to rhombus, rather than double, because user might want centre, might want extremal corner.
@@ -231,15 +231,15 @@ typedef struct  // Tiling, never packed because <=20 of them, yet frequent acces
 	double     radiusMax;
 	double     radiusShortOpen;
 
-	long int   path_NumMax;
+	PathId     path_NumMax;
+	PathId     numPathsClosed;
+	PathId     numPathsOpen;
 	Path       * path;
-	long int   numPathsClosed;
-	long int   numPathsOpen;
 	bool       anyPathsVeryClosed;
 
 	PathStatId pathStats_NumMax;
+	PathStatId numPathStats;
 	PathStats  * pathStat;
-	long int   numPathStats;
 
 	char       const * filePath;
 	struct tm  const * timeData;

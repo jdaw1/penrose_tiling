@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, October 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // rhombi.c, in PenroseC
 
@@ -117,8 +117,8 @@ void rhombus_append_descendants(Tiling *tlngP, Rhombus* rhP)
 			tlngP,
 			false,  // !isFat, so Thin,
 			0,  // not filled hole
-			rhP->north.x * Quarter5MinusSqrt5  +  rhP->south.x * Cos72  -  yNorthMinusSouth * QuarterRoot50Minus22Sqrt5,
-			rhP->north.y * Quarter5MinusSqrt5  +  rhP->south.y * Cos72  +  xNorthMinusSouth * QuarterRoot50Minus22Sqrt5,
+			rhP->north.x * Quarter5MinusSqrt5  +  rhP->south.x * Sin18  -  yNorthMinusSouth * QuarterRoot50Minus22Sqrt5,
+			rhP->north.y * Quarter5MinusSqrt5  +  rhP->south.y * Sin18  +  xNorthMinusSouth * QuarterRoot50Minus22Sqrt5,
 			rhP->centre.x  -  yNorthMinusSouth * HalfRoot5Minus2Sqrt5,
 			rhP->centre.y  +  xNorthMinusSouth * HalfRoot5Minus2Sqrt5
 		);  // rhombus_append()
@@ -127,8 +127,8 @@ void rhombus_append_descendants(Tiling *tlngP, Rhombus* rhP)
 			tlngP,
 			false,  // !isFat, so Thin,
 			0,  // not filled hole
-			rhP->north.x * Quarter5MinusSqrt5  +  rhP->south.x * Cos72  +  yNorthMinusSouth * QuarterRoot50Minus22Sqrt5,
-			rhP->north.y * Quarter5MinusSqrt5  +  rhP->south.y * Cos72  -  xNorthMinusSouth * QuarterRoot50Minus22Sqrt5,
+			rhP->north.x * Quarter5MinusSqrt5  +  rhP->south.x * Sin18  +  yNorthMinusSouth * QuarterRoot50Minus22Sqrt5,
+			rhP->north.y * Quarter5MinusSqrt5  +  rhP->south.y * Sin18  -  xNorthMinusSouth * QuarterRoot50Minus22Sqrt5,
 			rhP->centre.x  +  yNorthMinusSouth * HalfRoot5Minus2Sqrt5,
 			rhP->centre.y  -  xNorthMinusSouth * HalfRoot5Minus2Sqrt5
 		);  // rhombus_append()

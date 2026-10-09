@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, October 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // export_PaintRhSVG.c, in PenroseC
 
@@ -135,7 +135,7 @@ void tiling_export_PaintRhombiSVG(
 
 	sprintf(scratchString,
 		"d='M 0 0   L %.14lf %.14lf   %.14lf 0   %.14lf %.14lf  Z'",
-		-Cos72,  Cos18,  -GoldenRatioReciprocal,  -Cos72,  -Cos18
+		-Sin18,  Cos18,  -GoldenRatioReciprocal,  -Sin18,  -Cos18
 	);  // sprintf()
 	stringClean(scratchString);
 	(*numCharsThisFileP) += fprintf(fp,

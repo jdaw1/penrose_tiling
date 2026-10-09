@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, October 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // export_PaintArcsSVG.c, in PenroseC
 
@@ -75,16 +75,37 @@ void tiling_export_PaintArcsSVG(
 	const double actual_xMax = min_2( svg_toPaint_xMax(tlngP) * tlngP->edgeLength,  allMaxX );
 	const double actual_yMax = min_2( svg_toPaint_yMax(tlngP) * tlngP->edgeLength,  allMaxY );
 
-	arcdEast = malloc( (tlngP->numFats + tlngP->numThins) * sizeof(bool) );  // Which arcs painted as part of closed path;
-	arcdWest = malloc( (tlngP->numFats + tlngP->numThins) * sizeof(bool) );  // remainder to be stroked individually.
-	if( NULL == arcdEast ) fprintf(stderr, "tiling_export_PaintArcsPS(): !!! NULL == arcdEast, with tilingId=%" PRIi8 ". Continuing, with slight misbehaviour. !!!\n", tlngP->tilingId);
-	if( NULL == arcdWest ) fprintf(stderr, "tiling_export_PaintArcsPS(): !!! NULL == arcdWest, with tilingId=%" PRIi8 ". Continuing, with slight misbehaviour. !!!\n", tlngP->tilingId);
-	for( rhId = 0  ;  rhId < tlngP->numFats + tlngP->numThins  ;  rhId ++ )
-	{
-		if( NULL != arcdEast ) arcdEast[rhId] = false;
-		if( NULL != arcdWest ) arcdWest[rhId] = false;
-	}  // for( rhId ... )
+	// Which arcs painted as part of closed path; remainder to be stroked individually.
+	{  // scope mallocThis
+		size_t const mallocThis = ((size_t)tlngP->numFats + (size_t)tlngP->numThins) * (size_t)sizeof(bool);
+		arcdEast = malloc( mallocThis );
+		if( NULL == arcdEast )
+		{
+			fprintf(stderr,
+				"tiling_export_PaintArcsSVG(): !!! NULL == arcdEast, with tilingId=%" PRIi8
+				", mallocThis = %zu ~= %0.3lf MiB. Continuing, with slight misbehaviour. !!!\n",
+				tlngP->tilingId,  mallocThis,  (double)mallocThis / 1024.0 / 1024.0
+			);  // fprintf()
+			fflush(stderr);
+		}  // NULL
+		else
+			for( rhId = 0  ;  rhId < tlngP->numFats + tlngP->numThins  ;  rhId ++ )
+				arcdEast[rhId] = false;
 
+		arcdWest = malloc( mallocThis );
+		if( NULL == arcdWest )
+		{
+			fprintf(stderr,
+				"tiling_export_PaintArcsSVG(): !!! NULL == arcdWest, with tilingId=%" PRIi8
+				", mallocThis = %zu ~= %0.3lf MiB. Continuing, with slight misbehaviour. !!!\n",
+				tlngP->tilingId,  mallocThis,  (double)mallocThis / 1024.0 / 1024.0
+			);  // fprintf()
+			fflush(stderr);
+		}  // NULL
+		else
+			for( rhId = 0  ;  rhId < tlngP->numFats + tlngP->numThins  ;  rhId ++ )
+				arcdWest[rhId] = false;
+	}  // scope mallocThis
 
 	// Output preamble
 

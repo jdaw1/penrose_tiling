@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, October 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // tiling_simple_tests.c, in PenroseC
 
@@ -32,13 +32,13 @@ bool tiling_simple_tests(const Tiling * const tlngP)
 		rhP = &(tlngP->rhombi[rhId]);
 		if( rhP->isFat )
 		{
-			if( fabs( (rhP->east.x - rhP->north.x)*(rhP->west.x - rhP->north.x) + (rhP->east.y - rhP->north.y)*(rhP->west.y - rhP->north.y) - Cos72 ) > 0.000000001 )
+			if( fabs( (rhP->east.x - rhP->north.x)*(rhP->west.x - rhP->north.x) + (rhP->east.y - rhP->north.y)*(rhP->west.y - rhP->north.y) - Sin18 ) > 0.000000001 )
 				{problem=true;  fprintf(stderr, "!!! Error !!! tiling_simple_tests(): fat rhId=%li, north angle not 72 degrees.\n", rhId);}
-			if( fabs( (rhP->east.x - rhP->south.x)*(rhP->west.x - rhP->south.x) + (rhP->east.y - rhP->south.y)*(rhP->west.y - rhP->south.y) - Cos72 ) > 0.000000001 )
+			if( fabs( (rhP->east.x - rhP->south.x)*(rhP->west.x - rhP->south.x) + (rhP->east.y - rhP->south.y)*(rhP->west.y - rhP->south.y) - Sin18 ) > 0.000000001 )
 				{problem=true;  fprintf(stderr, "!!! Error !!! tiling_simple_tests(): fat rhId=%li, south angle not 72 degrees.\n", rhId);}
-			if( fabs( (rhP->north.x - rhP->east.x)*(rhP->south.x - rhP->east.x) + (rhP->north.y - rhP->east.y)*(rhP->south.y - rhP->east.y) + Cos72 ) > 0.000000001 )
+			if( fabs( (rhP->north.x - rhP->east.x)*(rhP->south.x - rhP->east.x) + (rhP->north.y - rhP->east.y)*(rhP->south.y - rhP->east.y) + Sin18 ) > 0.000000001 )
 				{problem=true;  fprintf(stderr, "!!! Error !!! tiling_simple_tests(): fat rhId=%li, east angle not 108 degrees.\n", rhId);}
-			if( fabs( (rhP->north.x - rhP->west.x)*(rhP->south.x - rhP->west.x) + (rhP->north.y - rhP->west.y)*(rhP->south.y - rhP->west.y) + Cos72 ) > 0.000000001 )
+			if( fabs( (rhP->north.x - rhP->west.x)*(rhP->south.x - rhP->west.x) + (rhP->north.y - rhP->west.y)*(rhP->south.y - rhP->west.y) + Sin18 ) > 0.000000001 )
 				{problem=true;  fprintf(stderr, "!!! Error !!! tiling_simple_tests(): fat rhId=%li, west angle not 108 degrees.\n", rhId);}
 		}
 		else

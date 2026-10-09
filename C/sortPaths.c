@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, October 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // sortPaths.c, in PenroseC
 
@@ -32,6 +32,21 @@ void paths_sort(Tiling * const tlngP,  int orderedFn(const Path * const, const P
 		tlngP->path[pathId].pathId = pathId;
 
 	qsort( tlngP->path,  tlngP->numPathsClosed + tlngP->numPathsOpen,  sizeof (tlngP->path[0]),  (int(*)(const void * const,const void * const)) orderedFn );
+
+	{  // scope mallocThis
+		size_t const mallocThis = ((size_t)tlngP->numPathsClosed + (size_t)tlngP->numPathsOpen)  *  (size_t)sizeof(PathId);
+		pathIdsNew  = malloc( mallocThis );
+		if( NULL == pathIdsNew )
+		{
+			fprintf(stderr,
+				"paths_sort(): !!! NULL == pathIdsNew !!!, with tilingId=%" PRIi8
+				", numPathsClosed = %li, numPathsOpen = %li, mallocThis = %zu ~= %0.3lf GiB \n",
+				tlngP->tilingId,  tlngP->numPathsClosed,  tlngP->numPathsOpen,  mallocThis,  (double)mallocThis / 1024.0 / 1024.0 / 1024.0
+			);
+			fflush(stderr);
+			exit(EXIT_FAILURE);
+		}  // if( NULL == pathIdsNew )
+	}  // scope mallocThis
 
 	pathIdsNew = malloc( ((size_t)tlngP->numPathsClosed + (size_t)tlngP->numPathsOpen)  *  (size_t)sizeof(PathId) );
 	if( pathIdsNew == NULL )

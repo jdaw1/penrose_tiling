@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, October 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // wanted.c, in PenroseC
 
@@ -15,11 +15,11 @@
 
 double const rhAreaAvg = 0.89680224666742;  // (sqrt(5) + sqrt(10 - sqrt(5)*2) - 1) / 4
 
-long int rhombi_count_wanted(Tiling * const tlngP,  double const halfWidth,  bool const assignWantedness)
+RhombId rhombi_count_wanted(Tiling * const tlngP,  double const halfWidth,  bool const assignWantedness)
 {
 	RhombId rhId;
 	Rhombus *rhP;
-	long int numRhombiWanted = 0;
+	RhombId numRhombiWanted = 0;
 
 	// wantedPostScriptCentre and halfWidth are in the units assuming unit edgeLength.
 	// Multiply by actual edge to work in original space.
@@ -63,7 +63,7 @@ double wanted_halfWidth(Tiling * const tlngP)
 	}  // Everything fits into PostScript array: hurray!
 
 	// Know that numFats + numThins > PostScriptArrayLengthMax
-	long int countSmall = PostScriptArrayLengthMax + 1,  countLarge = -1,  countGuess;  // Assignments prevent compiler mis-complaining about possibly not assigned.
+	RhombId countSmall = PostScriptArrayLengthMax + 1,  countLarge = -1,  countGuess;  // Assignments prevent compiler mis-complaining about possibly not assigned.
 	double halfWidthLarge, halfWidthSmall, halfWidthGuess, fractionBetween, halfWidthSmall_Min;
 	int8_t loopCount;
 

@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, October 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // insideness.c, in PenroseC
 
@@ -129,13 +129,20 @@ void insideness_populate(Tiling * const tlngP)
 	if( tlngP->numPathsClosed == 0 )
 		return ;
 
-	pathIdRange = malloc( (size_t)pathIdRangeNum_NumMax  *  (size_t)sizeof(PathIdRange) );
-	if( NULL == pathIdRange )
-	{
-		fprintf(stderr, "insideness_populate(): !!! NULL == pathIdRange !!!\n");
-		fflush(stderr);
-		exit(EXIT_FAILURE);
-	}  // if( NULL == pathIdRange )
+	{  // scope mallocThis
+		size_t const mallocThis = (size_t)pathIdRangeNum_NumMax  *  (size_t)sizeof(PathIdRange);
+		pathIdRange = malloc( mallocThis );
+		if( NULL == pathIdRange )
+		{
+			fprintf(stderr,
+				"insideness_populate(): !!! NULL == pathIdRange, with tilingId=%" PRIi8
+				", mallocThis = %zu ~= %0.3lf MiB ~= %0.3lf GiB.!!!\n",
+				tlngP->tilingId,  mallocThis,  (double)mallocThis / 1024.0 / 1024.0,  (double)mallocThis / 1024.0 / 1024.0 / 1024.0
+			);  // fprintf()
+			fflush(stderr);
+			exit(EXIT_FAILURE);
+		}  // if( NULL == pathIdRange )
+	}  // scope mallocThis
 
 	// Closed paths earlier.  Within which, longer paths earlier.  Then low-Y paths earlier.  Then low-X paths earlier.
 	paths_sort(tlngP, &pathGt_ByClosedEtc);

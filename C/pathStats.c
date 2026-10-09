@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, October 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // pathStats.c, in PenroseC
 
@@ -25,7 +25,10 @@ void pathStats_populate(Tiling * const tlngP)
 		tlngP->pathStat = malloc(mallocThis);
 		if(NULL == tlngP->pathStat)
 		{
-			fprintf(stderr, "pathStats_populate: malloc() failed with tilingId=%" PRIi8 ", pathStats_NumMax=%hi\n", tlngP->tilingId, tlngP->pathStats_NumMax);
+			fprintf(stderr,
+				"pathStats_populate(): !!! NULL == tlngP->path !!!, with tilingId=%" PRIi8 ", pathStats_NumMax = %hi, mallocThis = %zu ~= %0.3lf GiB \n",
+				tlngP->tilingId,  tlngP->pathStats_NumMax,  mallocThis,  (double)mallocThis / 1024.0 / 1024.0 / 1024.0
+			);
 			fflush(stderr);
 			exit( EXIT_FAILURE );
 		}  // NULL == tlngP->pathStat

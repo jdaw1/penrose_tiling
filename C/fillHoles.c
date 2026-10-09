@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, October 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // fillHoles.c, in PenroseC
 
@@ -818,8 +818,15 @@ static inline int8_t fillTypeG(Tiling * const tlngP, RhombId const rhId_Orig)
 
 void holesFill(Tiling * const tlngP)
 {
-	RhombId rhId; 
-	long int numFilledTypeA = 0, numFilledTypeB = 0, numFilledTypeC = 0, numFilledTypeD = 0, numFilledTypeE = 0, numFilledTypeF = 0, numFilledTypeG = 0;
+	RhombId rhId,
+		numFilledTypeA = 0,
+		numFilledTypeB = 0,
+		numFilledTypeC = 0,
+		numFilledTypeD = 0,
+		numFilledTypeE = 0,
+		numFilledTypeF = 0,
+		numFilledTypeG = 0
+	;
 	bool anyChanges, anyChangesThisType;
 	int8_t numInserted;
 	const bool debug_holesFill = false;

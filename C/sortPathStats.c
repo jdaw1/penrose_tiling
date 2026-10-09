@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, October 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // pathStats.c, in PenroseC
 
@@ -38,13 +38,21 @@ void pathStats_sort(Tiling * const tlngP)
 
 	qsort( tlngP->pathStat,  tlngP->numPathStats,  sizeof (tlngP->pathStat[0]),  (int(*)(const void * const,const void * const)) &PathStatsGt );
 
-	pathStatIdsNew = malloc( (size_t)tlngP->numPathStats  *  (size_t)sizeof(pathStatId) );
-	if( pathStatIdsNew == NULL )
-	{
-		fprintf(stderr, "Error in pathStats_sort: malloc(...) == NULL;  tlngP->numPathStats = %li;  sizeof(PathStatId) = %li.", tlngP->numPathStats, sizeof(PathStatId) );
-		fflush(stderr);
-		exit(EXIT_FAILURE) ;
-	}  // pathStatIdsNew == NULL
+	{  // scope mallocThis
+		size_t const mallocThis = (size_t)tlngP->numPathStats * (size_t)sizeof(pathStatId);
+		pathStatIdsNew  = malloc( mallocThis );
+		if( NULL == pathStatIdsNew )
+		{
+			fprintf(stderr,
+				"pathStats_sort(): !!! NULL == pathStatIdsNew !!!, with tilingId=%" PRIi8
+				", numPathStats = %hi, sizeof(PathStatId) = %zu, mallocThis = %zu ~= %0.3lf MiB \n",
+				tlngP->tilingId,  tlngP->numPathStats,  sizeof(PathStatId),  mallocThis,  (double)mallocThis / 1024.0 / 1024.0
+			);
+			fflush(stderr);
+			exit(EXIT_FAILURE);
+		}  // if( NULL == pathStatIdsNew )
+	}  // scope mallocThis
+
 	for( pathStatId = 0  ;  pathStatId < tlngP->numPathStats  ;  pathStatId++ )
 		pathStatIdsNew[ tlngP->pathStat[pathStatId].pathStatId ] = pathStatId;
 

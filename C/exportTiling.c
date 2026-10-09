@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, October 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // exportTiling.c, in PenroseC
 
@@ -151,7 +151,7 @@ void tiling_export(
 		if( exportQ(pathStats, exportFormat, tlngP, *numLinesThisFileP) )
 		{
 			(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
-			(*numCharsThisFileP) += fprintf(fp, "/PathStats [  %% + /PathStats: tilingId=%" PRIi8 ", numPathStats=%li\n", tlngP->tilingId, tlngP->numPathStats);
+			(*numCharsThisFileP) += fprintf(fp, "/PathStats [  %% + /PathStats: tilingId=%" PRIi8 ", numPathStats=%hi\n", tlngP->tilingId, tlngP->numPathStats);
 			(*numLinesThisFileP) ++;
 			PathStarts_MaxPerLine = 48;  // PS
 			for(pathStatId = 0  ;  pathStatId < tlngP->numPathStats  ;  pathStatId++ )
@@ -159,7 +159,7 @@ void tiling_export(
 				pathStat_export(fp, exportFormat, tlngP, &(tlngP->pathStat[pathStatId]), indentDepth, (pathStatId < tlngP->numPathStats - 1), numLinesThisFileP, numCharsThisFileP);
 			}  // pathStatId
 			(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
-			(*numCharsThisFileP) += fprintf(fp, "]  %% - /PathStats: tilingId=%" PRIi8 ", numPathStats=%li\n", tlngP->tilingId, tlngP->numPathStats);
+			(*numCharsThisFileP) += fprintf(fp, "]  %% - /PathStats: tilingId=%" PRIi8 ", numPathStats=%hi\n", tlngP->tilingId, tlngP->numPathStats);
 			(*numLinesThisFileP) ++;
 		}  // if exportpathStats
 
@@ -309,7 +309,7 @@ void tiling_export(
 		(*numCharsThisFileP) += fIndent(fp, 1 + indentDepth);
 		sprintf(scratchString,
 			"\"NumFats\":%li,   \"NumThins\":%li,   \"NumThins_0T4F\":%li,   \"NumThins_1T3F\":%li"
-			",   \"NumPathsClosed\":%li,   \"NumPathsOpen\":%li,   \"NumPathStats\":%li,   \"BoundingPathNumVertices\":%lli,"   "\n",
+			",   \"NumPathsClosed\":%li,   \"NumPathsOpen\":%li,   \"NumPathStats\":%hi,   \"BoundingPathNumVertices\":%lli,"   "\n",
 			tlngP->numFats,  tlngP->numThins,  tlngP->numThins_0T4F,  tlngP->numThins_1T3F,
 			tlngP->numPathsClosed,  tlngP->numPathsOpen,  tlngP->numPathStats,  tlngP->boundingPathNumVertices
 		);  // sprintf()
@@ -515,7 +515,7 @@ void tiling_export(
 		);  // fprintf()
 		(*numCharsThisFileP) += fprintf(fp,
 			"\t%li"    "\t%li"    "\t%li"    "\t%li"
-			"\t%li"    "\t%li"    "\t%li"    "\t%lli"
+			"\t%li"    "\t%li"    "\t%hi"    "\t%lli"
 			"\t%li"    "\t%li"    "\t%li"    "\t%li",
 			tlngP->numFats,  tlngP->numThins,  tlngP->numThins_0T4F,  tlngP->numThins_1T3F,
 			tlngP->numPathsClosed,  tlngP->numPathsOpen,  tlngP->numPathStats,  tlngP->boundingPathNumVertices,

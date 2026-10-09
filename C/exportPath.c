@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, October 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // exportPath.c, in PenroseC
 
@@ -19,7 +19,7 @@ void path_export(
 	extern char scratchString[];
 	long int Paths_MaxPerLine = 48;  // PS only
 	PathId   pathId;
-	long int NumOutputablePaths, pathNumOutput;  // PS only
+	PathId   NumOutputablePaths, pathNumOutput;  // PS only
 	bool multiLine;  // PS only
 
 	switch(exportFormat)

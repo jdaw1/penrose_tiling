@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, October 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // main.c, in PenroseC
 
@@ -22,7 +22,7 @@ int main(void)
 	time_t prog_start;
 	struct tm *timeData;
 	char timeString[250], fileName[256], fileExtension[16];
-	long int pathStatNum,  numPathStatsClosed;
+	PathStatId pathStatNum,  numPathStatsClosed;
 	double totalTimeSeconds;
 	size_t sumsummallocs = 0;
 
@@ -191,7 +191,7 @@ int main(void)
 			fprintf(stdout, "~=%.1lfb", ((double)tlngs[tilingId].numFats + (double)tlngs[tilingId].numThins) / 1000000000.0);
 		fprintf(stdout,
 			";  #PathsClosed=%li; #PathsOpen=%li; C+O=%li;"
-			"  #PathStats=%li;  #PathStats(C)=%li;  #PathStats(O)=%li;"
+			"  #PathStats=%hi;  #PathStats(C)=%hi;  #PathStats(O)=%hi;"
 			"  LongestPathClosed=%li; #LongestPathOpen=%li;  boundingPathNumVertices=%lli.\n",
 			tlngs[tilingId].numPathsClosed,  tlngs[tilingId].numPathsOpen,  tlngs[tilingId].numPathsClosed + tlngs[tilingId].numPathsOpen,
 			tlngs[tilingId].numPathStats,  numPathStatsClosed,  tlngs[tilingId].numPathStats - numPathStatsClosed,

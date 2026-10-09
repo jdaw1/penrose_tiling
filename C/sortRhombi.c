@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, October 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // sortRhombi.c, in PenroseC
 
@@ -57,13 +57,21 @@ void rhombi_sort(
 
 	if( alsoRenumber )
 	{
-		rhombIdsNew = malloc( (size_t)numRhombi  *  (size_t)sizeof(RhombId) );
-		if( rhombIdsNew == NULL )
-		{
-			fprintf(stderr, "Error in rhombi_sort: malloc(...) == NULL;  numRhombi = %li;  sizeof(RhombId) = %li.", numRhombi, sizeof(RhombId) );
-			fflush(stderr);
-			exit(EXIT_FAILURE) ;
-		}  // rhombIdsNew == NULL
+		{  // scope mallocThis
+			size_t const mallocThis = (size_t)numRhombi  *  (size_t)sizeof(RhombId);
+			rhombIdsNew  = malloc( mallocThis );
+			if( NULL == rhombIdsNew )
+			{
+				fprintf(stderr,
+					"rhombi_sort(): !!! NULL == rhombIdsNew !!!, with tilingId=%" PRIi8
+					", numRhombi = %li, sizeof(RhombId) = %zu, mallocThis = %zu ~= %0.3lf GiB \n",
+					tlngP->tilingId,  numRhombi,  sizeof(RhombId),  mallocThis,  (double)mallocThis / 1024.0 / 1024.0 / 1024.0
+				);
+				fflush(stderr);
+				exit(EXIT_FAILURE);
+			}  // if( NULL == rhombIdsNew )
+		}  // scope mallocThis
+
 		for( rhId = 0  ;  rhId < numRhombi  ;  rhId++ )
 			rhombIdsNew[rhId] = -1;
 		for( rhId = 0  ;  rhId < numRhombi  ;  rhId++ )

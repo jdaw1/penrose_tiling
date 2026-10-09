@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, October 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // paths.c, in PenroseC
 
@@ -147,7 +147,10 @@ void paths_populate(Tiling * const tlngP)
 		tlngP->path = malloc(mallocThis);
 		if( NULL == tlngP->path )
 		{
-			fprintf(stderr, "paths_populate(): !!! NULL == tlngP->path !!!\n");
+			fprintf(stderr,
+				"paths_populate(): !!! NULL == tlngP->path !!!, with tilingId=%" PRIi8 ", path_NumMax = %li, mallocThis = %zu ~= %0.3lf GiB \n",
+				tlngP->tilingId,  tlngP->path_NumMax,  mallocThis,  (double)mallocThis / 1024.0 / 1024.0 / 1024.0
+			);
 			fflush(stderr);
 			exit(EXIT_FAILURE);
 		}  // if( NULL == tlngP->path )

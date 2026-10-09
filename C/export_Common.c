@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, August 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, October 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // export_Common.c, in PenroseC
 
@@ -364,7 +364,7 @@ void preamble_export_PS(
 			"/NumThins_1T3F %li def\n"
 			"/NumPathsClosed %li def\n"
 			"/NumPathsOpen %li def\n"
-			"/NumPathsStats %li def\n"
+			"/NumPathsStats %hi def\n"
 			"/BoundingPathNumVertices %lli def\n",
 			tlngP->tilingId,  seedTypeName,  tlngP->axisAligned ? "true" : "false",
 			
