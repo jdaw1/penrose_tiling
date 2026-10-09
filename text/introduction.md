@@ -126,8 +126,9 @@ Hence end users are strongly encouraged to reach into the output to change colou
 The two [distillable PostScript outputs](postscript_distillable.md), and the [two types of SVG](svg.md), are deliberately friendly to those making changes. 
 E.g., in the PostScript search for 
 &ldquo;[<code>setrgbcolor</code>](https://www.adobe.com/jp/print/postscript/pdfs/PLRM.pdf#page=695)&rdquo; and 
-&ldquo;[<code>setgray</code>](https://www.adobe.com/jp/print/postscript/pdfs/PLRM.pdf#page=685)&rdquo;, and change. 
-E.g., in the SVG, search for &ldquo;[<code>fill=</code>](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/fill)&rdquo;, and play.
+&ldquo;[<code>setgray</code>](https://www.adobe.com/jp/print/postscript/pdfs/PLRM.pdf#page=685)&rdquo;, and change, perhaps even to a 
+&ldquo;[<code>setcmykcolor</code>](https://www.adobe.com/jp/print/postscript/pdfs/PLRM.pdf#page=676)&rdquo;. 
+E.g., in the SVG, search for &ldquo;[<code>fill&equals;</code>](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/fill)&rdquo;, and play.
 
 ## Links ##
 

@@ -143,8 +143,11 @@ In the arcs file, `/LongestPathToBeFilled 215 def` is as explained in the [SVG&n
 The `ScaleFactor` is derived from values computed from the `ToPaint_XMin` etc, but can be overidden by the user.
 
 The rhombus output specifies the routine `PaintByRhombus`, which takes parameters off the stack, and then paints the parameter-specified rhombus. 
-It encodes conditions making the choice of which colour, and then a `setrgbcolor` or a `setgray`. 
-The [author](https://jdawiseman.com/author.html) has strong shape perception but very weak colour perception, so you might well want to change the colours. 
+It encodes conditions making the choice of which colour, and then a 
+&ldquo;[<code>setrgbcolor</code>](https://www.adobe.com/jp/print/postscript/pdfs/PLRM.pdf#page=695)&rdquo; or a 
+&ldquo;[<code>setgray</code>](https://www.adobe.com/jp/print/postscript/pdfs/PLRM.pdf#page=685)&rdquo;. 
+The [author](https://jdawiseman.com/author.html) has strong shape perception but very weak colour perception, so you might well want to change the colours, perhaps even to a 
+&ldquo;[<code>setcmykcolor</code>](https://www.adobe.com/jp/print/postscript/pdfs/PLRM.pdf#page=676)&rdquo;. 
 Really, don&rsquo;t love my colours: be not shy about recolouration.
 
 The rhombus code also has multiple sections of commented-out code that were used in debugging, with nearby explanatory comments. 
