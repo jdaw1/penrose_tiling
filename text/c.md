@@ -120,8 +120,9 @@ The average tile area, in edge lengths squared, is &frac14;(&radic;5&nbsp;+&nbsp
 the reciprocal of which is 1&nbsp;+&nbsp;&radic;(10&#8239;&minus;&#8239;2&radic;5)&nbsp;&minus;&nbsp;&radic;5 &asymp;&nbsp;1.1151.
 [My kitchen](../images/20230923_kitchen_tiles.png) uses tile edges of length 150mm, so there are approximately 1.1151&#8239;&divide;&#8239;0.15&sup2; &asymp;&nbsp;49.6 tiles per square metre.
 
-Tiling of a substantial outdoor space might use tiles of edge length 500mm&#8239;&asymp;&#8239;19.7&Prime;, so the physical colourable area in m&sup2; would be the quoted &asymp;&nbsp;&lsquo;Area&rsquo;,&nbsp;&divide;&#8239;4. 
-The tilings have pentagonal symmetry: if it were desired to emphasise aperiodicity by using an asymmetric subset, then the usable part would be much smaller. 
+Tiling of a substantial outdoor space might, as an example much present in this page, use tiles of edge length 500mm&#8239;&asymp;&#8239;19.7&Prime;. 
+For such, the physical colourable area in m&sup2; would be one quarter of the quoted &lsquo;Area&rsquo;. 
+The tilings have pentagonal symmetry: if it were desired to emphasise aperiodicity by using an asymmetric subset, then the maximum area would be much smaller. 
 
 
 ### Speed and limits ###
@@ -136,16 +137,17 @@ Obviously, your execution times might be very different.
 
 Calls are made to `malloc()`, for `.rhombi`, `.path`, and `.pathStat`. 
 The simple total of these three `malloc()`s, for each iteration (i.e., not cumulative sum, ignoring temporary memory assignments, and ignoring alignment and page boundary trickery), is in the &ldquo;&Sum;`malloc()`&rdquo; column, which grows by &asymp;&#8239;&phi;&sup2; per iteration. 
-On the PC the simple total of these was: 4.5&#8239;GiB for `tilingId`&#8239;=&#8239;14; 11.6&#8239;GiB for `tilingId`&#8239;=&#8239;15; and 30.2&#8239;GiB for `tilingId`&#8239;=&#8239;16. 
+On the PC the simple cumulative total of these was: 4.5&#8239;GiB for `tilingId`&#8239;=&#8239;14; 11.6&#8239;GiB for `tilingId`&#8239;=&#8239;15; and 30.2&#8239;GiB for `tilingId`&#8239;=&#8239;16. 
 On the PC `sizeof(Rhombus)` was 192, but on the Mac it was 256: perhaps the PC compiler was better at optimising struct packing. 
-Whatever the reason, execution on the Mac required more memory.
+Whatever the reason, execution on the Mac required&nbsp;+&#8239;&asymp;&#8239;&frac13;&nbsp;more memory.
 
 By me, not tested beyond the table above, the largest of which has 97,689,070 rhombi. 
-With a tile edge of 500mm&nbsp;&asymp;&nbsp;19.7&Prime; this would have a colourable area of about 13&#8239;km&sup2; or 5&nbsp;square&nbsp;miles.
+With a tile edge of 500mm&#8239;&asymp;&#8239;19.7&Prime; this would have a colourable area of about 13&#8239;km&sup2; or 5&nbsp;square&nbsp;miles. 
+For any plausible physical tiling, that&rsquo;s enough with plenty spare.
 
-Even deeper recursions would require more computer memory.
+Deeper recursions would require more computer memory than these machines have.
 
-And beyond 2.1&#8239;bn rhombi (500mm&nbsp;&nbsp;&DoubleLongRightArrow;&nbsp;&nbsp;480&#8239;km&sup2; &asymp;&nbsp;185&#8239;mi&sup2;), there would be a need to enlarge some types from 
+And beyond 2.1&#8239;bn rhombi (500mm&nbsp;&nbsp;&DoubleLongRightArrow;&nbsp;&nbsp;310&#8239;km&sup2; &asymp;&nbsp;120&#8239;mi&sup2;), there would be a need to enlarge some types from 
 <code>long&nbsp;int</code> (&le;&nbsp;2<small><sup>31</sup></small>&#8239;&minus;&#8239;1) to 
 [<code>long&nbsp;long&nbsp;int</code>](https://en.cppreference.com/w/c/language/arithmetic_types.html#Integer_types) 
 (&le;&nbsp;2<small><sup>63</sup></small>&#8239;&minus;&#8239;1 &asymp;&nbsp;9&#8239;&times;&#8239;10<small><sup>18</sup></small> =&nbsp;9&nbsp;quintillion &gap;&nbsp;vast&nbsp;plethora), which needs to be able to hold `-1` so cannot be ~~`unsigned`~~. 
@@ -154,7 +156,7 @@ If this is necessary, perhaps also improve the floating-point precision by repla
 [<code>long&nbsp;double</code>](https://en.cppreference.com/w/c/language/arithmetic_types.html#Real_floating_types) ([wikipedia](https://en.wikipedia.org/wiki/Long_double)), 
 which would necessitate further changes to format strings. 
 In [<kbd>main.c</kbd>](../C/main.c) is 
-<code>static&nbsp;int8_t&nbsp;const <b>numTilings_Max</b>&nbsp;=&nbsp;16;</code>, which prevents the accidental start, by a typing error such as &ldquo;<kbd>116</kbd>&rdquo;, of a task that is certain to fail eventually. 
+<code>static&nbsp;int8_t&nbsp;const <b>numTilings_Max</b>&nbsp;=&nbsp;16;</code>, which prevents the accidental start, by a typing error such as &ldquo;<kbd>116</kbd>&rdquo;, of a task will eventually fail. 
 If you really want to allow larger values&mdash;but almost certainly you don&rsquo;t&mdash;then increase `numTilings_Max`.
 
 
