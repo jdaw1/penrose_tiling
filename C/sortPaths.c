@@ -52,7 +52,7 @@ void paths_sort(Tiling * const tlngP,  int orderedFn(const Path * const, const P
 	if( pathIdsNew == NULL )
 	{
 		fprintf(stderr,
-			"Error in paths_sort: malloc(...) == NULL;  tlngP->numPathsClosed = %li;  tlngP->numPathsOpen = %li;  sizeof(PathId) = %li.",
+			"Error in paths_sort: malloc(...) == NULL;  tlngP->numPathsClosed = %li;  tlngP->numPathsOpen = %li;  sizeof(PathId) = %zu.",
 			tlngP->numPathsClosed,  tlngP->numPathsOpen,  sizeof(PathId)
 		);  // fprintf()
 		fflush(stderr);

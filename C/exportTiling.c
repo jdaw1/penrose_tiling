@@ -40,7 +40,7 @@ void tiling_export(
 		{
 			fprintf(stderr,
 				"Error in wanted_populate: ...wantedPostScriptRhombNum = malloc(...) returned NULL: "
-				"tilingId = %i;  numFats+numThins = %li;  sizeof(RhombId *) = %lu.",
+				"tilingId = %" PRIi8 ";  numFats+numThins = %li;  sizeof(RhombId *) = %zu.",
 				tlngP->tilingId,  tlngP->numFats + tlngP->numThins,  sizeof(RhombId *)
 			);  // fprintf()
 			fflush(stderr);
@@ -52,7 +52,7 @@ void tiling_export(
 		{
 			fprintf(stderr,
 				"Error in wanted_populate: ...wantedPostScriptPathNum = malloc(...) returned NULL: "
-				"tilingId = %i;  numPaths = %li;  sizeof(RhombId *) = %lu.",
+				"tilingId = %" PRIi8 ";  numPaths = %li;  sizeof(RhombId *) = %zu.",
 				tlngP->tilingId,  tlngP->numPathsClosed + tlngP->numPathsOpen,  sizeof(RhombId *)
 			);  // fprintf()
 			fflush(stderr);
