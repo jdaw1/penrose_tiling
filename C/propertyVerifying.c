@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, October 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // propertyVerifying.c, in PenroseC
 
@@ -6,24 +6,21 @@
 
 void verifyHypothesisedProperties(Tiling const * const tlngP)
 {
+	if( tlngP->tilingId <= -1 )  // Always false, to suppress compiler warnings
+		return ;
+
 /*
-	bool hypothesis;
-	RhombId rhId_outer, rhId_inner;
-	long long int numTests;
+	RhombId rhId_outer, rhId_inner = -1;
+	bool hypothesis = true;
+	long long int numTests = 0;
 	Rhombus *rhOuterP, *rhInnerP;
 	const double threshold = tlngP->edgeLength / 16;
-
-	rhId_inner = -1;  // removes incorrect compiler warning about being possibly undefined.
 */
 
-
-	
 /*
 	// Is it true that thin south touches only souths?
 	// Slow, so suppressed.
 
-	hypothesis = true;
-	numTests = 0;
 	for( rhId_outer = 0  ;  rhId_outer < tlngP->numFats + tlngP->numThins  ;  rhId_outer ++ )
 	{
 		rhOuterP = tlngP->rhombi + rhId_outer;
@@ -54,7 +51,6 @@ hypothesis_thin_south:
 			tlngP->tilingId, numTests, rhId_outer, rhId_inner
 		);  // printf()
 */
-
 
 
 /*

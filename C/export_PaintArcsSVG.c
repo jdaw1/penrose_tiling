@@ -161,7 +161,6 @@ void tiling_export_PaintArcsSVG(
 		tiling_export_PaintBoundary(
 			fp,
 			SVG_arcs,
-			1.0 / tlngP->edgeLength,
 			tlngP,
 			0,
 			numLinesThisFileP,

@@ -1,4 +1,4 @@
-// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, September 2026
+// By and copyright Julian D. A. Wiseman of www.jdawiseman.com, October 2026
 // Released under GNU General Public License, Version 3, https://www.gnu.org/licenses/gpl-3.0.txt
 // neighbours.c, in PenroseC
 
@@ -135,7 +135,21 @@ void twoRhombi_Neighbourify(Tiling * const tlngP,  RhombId const rhId_A,  RhombI
 }  // twoRhombi_Neighbourify()
 
 
-bool neighbours_error_true(ExportWhat const exprtWhat, ExportFormat const exportFormat, const Tiling * const tlngP, const unsigned long int numLinesThisFileP) {return true;}
+bool neighbours_error_true(
+	ExportWhat const exprtWhat,
+	ExportFormat const exportFormat,
+	const Tiling * const tlngP,
+	const unsigned long int numLinesThisFileP
+)
+{
+	// Export if error?
+	return
+		tlngP->tilingId >= -1  // Always true, without compiler warning.
+		|| exprtWhat == anything
+		|| exportFormat == TSV
+		|| numLinesThisFileP >= 0
+	;
+}  // neighbours_error_true
 
 
 void neighbours_populate(Tiling * const tlngP)

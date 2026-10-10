@@ -239,7 +239,6 @@ void tiling_export_PaintArcsPS(
 		tiling_export_PaintBoundary(
 			fp,
 			PS_arcs,
-			1.0 / tlngP->edgeLength,
 			tlngP,
 			0,
 			numLinesThisFileP,

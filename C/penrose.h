@@ -357,20 +357,20 @@ extern long int newlinesInString(char const * const str);
 
 const char * filePath(void);
 void file_names_timeString_set(char * const timeString, const struct tm * const timeData);
-const double svg_toPaint_xMin(const Tiling * const tlngP);
-const double svg_toPaint_xMax(const Tiling * const tlngP);
-const double svg_toPaint_yMin(const Tiling * const tlngP);
-const double svg_toPaint_yMax(const Tiling * const tlngP);
-const double svg_displayWidth(const Tiling * const tlngP);
-const double svg_strokeWidth( const Tiling * const tlngP);
-const bool showGridlines(const Tiling * const tlngP, ExportFormat const ef);
-const long int svg_arcs_longestPathToBeColoured(void);
+double svg_toPaint_xMin(const Tiling * const tlngP);
+double svg_toPaint_xMax(const Tiling * const tlngP);
+double svg_toPaint_yMin(const Tiling * const tlngP);
+double svg_toPaint_yMax(const Tiling * const tlngP);
+double svg_displayWidth(const Tiling * const tlngP);
+double svg_strokeWidth( const Tiling * const tlngP);
+bool showGridlines(const Tiling * const tlngP, ExportFormat const ef);
+long int svg_arcs_longestPathToBeColoured(void);
 void execute_SVG_PostProcessing(       const Tiling * const tlngP,  const unsigned long int numLinesThisFile,  const unsigned long long int numCharsThisFile, const char * const fileName,  ExportFormat const ef);
 
-const double postScript_toPaint_xMin(const Tiling * const tlngP);
-const double postScript_toPaint_xMax(const Tiling * const tlngP);
-const double postScript_toPaint_yMin(const Tiling * const tlngP);
-const double postScript_toPaint_yMax(const Tiling * const tlngP);
+double postScript_toPaint_xMin(const Tiling * const tlngP);
+double postScript_toPaint_xMax(const Tiling * const tlngP);
+double postScript_toPaint_yMin(const Tiling * const tlngP);
+double postScript_toPaint_yMax(const Tiling * const tlngP);
 void execute_PostScript_PostProcessing(const Tiling * const tlngP,  const unsigned long int numLinesThisFile,  const unsigned long long int numCharsThisFile, const char * const fileName,  ExportFormat const ef);
 
 bool exportQ(
@@ -401,7 +401,6 @@ void preamble_export_PS(
 long long int tiling_export_PaintBoundary(
 	FILE * const fp,
 	ExportFormat        const exportFormat,
-	double              const scalingFactor,
 	const Tiling      * const tlngP,
 	int8_t              const indentDepth,
 	unsigned long int * const numLinesThisFileP,

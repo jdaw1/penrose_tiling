@@ -48,17 +48,6 @@ void paths_sort(Tiling * const tlngP,  int orderedFn(const Path * const, const P
 		}  // if( NULL == pathIdsNew )
 	}  // scope mallocThis
 
-	pathIdsNew = malloc( ((size_t)tlngP->numPathsClosed + (size_t)tlngP->numPathsOpen)  *  (size_t)sizeof(PathId) );
-	if( pathIdsNew == NULL )
-	{
-		fprintf(stderr,
-			"Error in paths_sort: malloc(...) == NULL;  tlngP->numPathsClosed = %li;  tlngP->numPathsOpen = %li;  sizeof(PathId) = %zu.",
-			tlngP->numPathsClosed,  tlngP->numPathsOpen,  sizeof(PathId)
-		);  // fprintf()
-		fflush(stderr);
-		exit(EXIT_FAILURE) ;
-	}  // pathIdsNew == NULL
-
 	for( pathId = 0  ;  pathId < tlngP->numPathsClosed + tlngP->numPathsOpen  ;  pathId++ )
 		pathIdsNew[ tlngP->path[pathId].pathId ] = pathId;
 

@@ -35,29 +35,36 @@ void tiling_export(
 		break;  // Not applicable here.
 
 	case PS_data:
-		tlngP->wantedPostScriptRhombNum = malloc( (size_t)sizeof(struct RhombId *) * ((size_t)tlngP->numFats + (size_t)tlngP->numThins) );
-		if( tlngP->wantedPostScriptRhombNum == NULL )
-		{
-			fprintf(stderr,
-				"Error in wanted_populate: ...wantedPostScriptRhombNum = malloc(...) returned NULL: "
-				"tilingId = %" PRIi8 ";  numFats+numThins = %li;  sizeof(RhombId *) = %zu.",
-				tlngP->tilingId,  tlngP->numFats + tlngP->numThins,  sizeof(RhombId *)
-			);  // fprintf()
-			fflush(stderr);
-			exit(EXIT_FAILURE) ;
-		}  // tlngP->wantedPostScriptRhombNum == NULL
-	   
-		tlngP->wantedPostScriptPathNum = malloc( ((size_t)tlngP->numPathsClosed + (size_t)tlngP->numPathsOpen)  *  (size_t)sizeof(struct RhombId *) );
-		if( tlngP->wantedPostScriptPathNum == NULL )
-		{
-			fprintf(stderr,
-				"Error in wanted_populate: ...wantedPostScriptPathNum = malloc(...) returned NULL: "
-				"tilingId = %" PRIi8 ";  numPaths = %li;  sizeof(RhombId *) = %zu.",
-				tlngP->tilingId,  tlngP->numPathsClosed + tlngP->numPathsOpen,  sizeof(RhombId *)
-			);  // fprintf()
-			fflush(stderr);
-			exit(EXIT_FAILURE) ;
-		}  // tlngP->wantedPostScriptPathNum == NULL
+		{  // scope mallocThis
+			size_t mallocThis;
+
+			mallocThis = (size_t)sizeof(struct RhombId *) * ((size_t)tlngP->numFats + (size_t)tlngP->numThins);
+			tlngP->wantedPostScriptRhombNum = malloc(mallocThis);
+			if( NULL == tlngP->wantedPostScriptRhombNum )
+			{
+				fprintf(stderr,
+					"wanted_populate(): !!! NULL == wantedPostScriptRhombNum !!!, with tilingId=%" PRIi8 
+					", numFats+numThins = %li, mallocThis = %zu ~= %0.3lf GiB \n",
+					tlngP->tilingId,  tlngP->numFats + tlngP->numThins,  mallocThis,  (double)mallocThis / 1024.0 / 1024.0 / 1024.0
+				);
+				fflush(stderr);
+				exit(EXIT_FAILURE);
+			}  // if( NULL == tlngP->wantedPostScriptRhombNum )
+
+			mallocThis = (size_t)sizeof(struct RhombId *) * ((size_t)tlngP->numPathsClosed + (size_t)tlngP->numPathsOpen);
+			tlngP->wantedPostScriptPathNum = malloc(mallocThis);
+			if( NULL == tlngP->wantedPostScriptPathNum )
+			{
+				fprintf(stderr,
+					"wanted_populate(): !!! NULL == wantedPostScriptPathNum !!!, with tilingId=%" PRIi8 
+					", numPaths = %li, mallocThis = %zu ~= %0.3lf GiB \n",
+					tlngP->tilingId,  tlngP->numPathsClosed + tlngP->numPathsOpen,  mallocThis,  (double)mallocThis / 1024.0 / 1024.0 / 1024.0
+				);
+				fflush(stderr);
+				exit(EXIT_FAILURE);
+			}  // if( NULL == tlngP->wantedPostScriptPathNum )
+
+		}  // scope mallocThis
 
 		// Scope separation
 		{
@@ -247,7 +254,6 @@ void tiling_export(
 			tiling_export_PaintBoundary(
 				fp,
 				PS_data,
-				1.0 / tlngP->edgeLength,
 				tlngP,
 				indentDepth,
 				numLinesThisFileP,
@@ -455,7 +461,6 @@ void tiling_export(
 			(*numLinesThisFileP) ++;
 			tiling_export_PaintBoundary(fp,
 				JSON,
-				1.0 / tlngP->edgeLength,
 				tlngP,
 				2 + indentDepth,
 				numLinesThisFileP,
@@ -623,7 +628,6 @@ void tiling_export(
 			tiling_export_PaintBoundary(
 				fp,
 				TSV,
-				1.0 / tlngP->edgeLength,
 				tlngP,
 				0,
 				numLinesThisFileP,

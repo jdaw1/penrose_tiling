@@ -168,7 +168,6 @@ void tiling_descendant(
 	tlngDescendantP->boundingPathNumVertices = tiling_export_PaintBoundary(
 		NULL,
 		TSV,   // irrelevant
-		0,     // irrelevant
 		tlngDescendantP,
 		0,     // irrelevant
 		NULL,  // not to output
@@ -381,7 +380,6 @@ void tiling_initial(Tiling * const tlngP)
 	tlngP->boundingPathNumVertices = tiling_export_PaintBoundary(
 		NULL,   // irrelevant
 		TSV,    // irrelevant
-		0,      // irrelevant
 		tlngP,
 		0,      // irrelevant
 		NULL,   // signals not to output

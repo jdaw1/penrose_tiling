@@ -238,7 +238,6 @@ void tiling_export_PaintBoundary_OneVertex(
 long long int tiling_export_PaintBoundary(
 	FILE * const fp,
 	ExportFormat        const ef,
-	double              const scalingFactor,
 	const Tiling      * const tlngP,
 	int8_t              const indentDepth,
 	unsigned long int * const numLinesThisFileP,

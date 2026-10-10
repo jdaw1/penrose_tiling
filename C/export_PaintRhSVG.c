@@ -93,7 +93,6 @@ void tiling_export_PaintRhombiSVG(
 		(*numLinesThisFileP) += newlinesInString(scratchString);
 		tiling_export_PaintBoundary(
 			fp,
-			1 / tlngP->edgeLength,
 			SVG_rhomb,
 			tlngP,
 			0,
