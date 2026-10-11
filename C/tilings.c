@@ -52,13 +52,13 @@ void tiling_descendant(
 	// Scope to hold three temporary RhombId.
 	{
 		RhombId const rhombi_NumMax_A  // Based on the number of rhombi that will appear, with small spare. This is memory efficient.
-			= (tlngAncestorP->numFats + tlngAncestorP->numThins) * (GoldenRatioSquare * 1.1)   // Final number descendants for ordinary recursion, *1.1 for a little spare. There is here a clash between memory efficiency and speed; 1.1 might be reasonable compromise.
+			= (tlngAncestorP->numFats + tlngAncestorP->numThins) * (GoldenRatioSquare * 1.15)   // Final number descendants for ordinary recursion, *1.15 for a little spare. There is here a clash between memory efficiency and speed; 1.1 might be reasonable compromise.
 			+ 6 * sqrt(tlngAncestorP->numFats + tlngAncestorP->numThins)                       // some extras, proportional to boundary length, for hole filling.
 			+ 256;                                                                             // some more spare, especially for small tilings, and to make this irrelevant for very small tilings.
 		RhombId const rhombi_NumMax_B  // Based on the number of rhombi that will appear, with small spare. This is memory efficient.
 			= (tlngAncestorP->numFats + tlngAncestorP->numThins) * (GoldenRatioSquare * 1.01)  // Final number descendants for ordinary recursion, *1.01 for a tiny little spare.
 			+ 6 * sqrt(tlngAncestorP->numFats + tlngAncestorP->numThins)                       // some extras, proportional to boundary length, for hole filling.
-			+ 262144;                                                                          // Small proportional extra, large fixed extra. Boundary at Ancestor having 1,112,285 rhombi, Descendant having 3,209,784.
+			+ 262144;                                                                          // Small proportional extra, large fixed extra.
 		RhombId const rhombi_NumMax_C  // Based on maximum from recursion algorithm.
 			= 5 * tlngAncestorP->numFats   // Recursion makes five new rhombi for each previous fat,  though many subsequently de-duplicated.
 			+ 4 * tlngAncestorP->numThins  // Recursion makes four new rhombi for each previous thin, though many subsequently de-duplicated.
@@ -97,21 +97,16 @@ void tiling_descendant(
 		}  // if( 'purge needed' )
 		rhombus_append_descendants( tlngDescendantP,  tlngAncestorP->rhombi + rhId_Ancestor );
 	}  // for( rhId_Ancestor ... )
+
+	rhombi_purgeDuplicates(tlngDescendantP);
+	numSpecialDeduplications++;
+
 	printf("tiling_descendant(): tilingId=%" PRIi8 ", %.3lfs for %li calls of rhombus_append_descendants(), and %li call%s of rhombi_purgeDuplicates(), resulting in #Fats+#Thins=%li\n",
 		tlngDescendantP->tilingId,
 		((double)clock() - timeBeginPart) / CLOCKS_PER_SEC,
 		tlngAncestorP->numFats + tlngAncestorP->numThins,
 		numSpecialDeduplications,  numSpecialDeduplications == 1 ? "" : "s",
 		tlngDescendantP->numThins + tlngDescendantP->numFats
-	);  fflush(stdout);
-
-	timeBeginPart = clock();
-	rhombi_purgeDuplicates(tlngDescendantP);
-	printf("tiling_descendant(): tilingId=%" PRIi8 ", %.3lfs for rhombi_purgeDuplicates(), with #Fats=%li #Thins=%li, #Fats+#Thins=%li, /prev~=%.4lg\n",
-		tlngDescendantP->tilingId,
-		((double)clock() - timeBeginPart) / CLOCKS_PER_SEC,
-		tlngDescendantP->numFats,  tlngDescendantP->numThins,  tlngDescendantP->numFats + tlngDescendantP->numThins,
-		((double)(tlngDescendantP->numThins + tlngDescendantP->numFats)) / (tlngAncestorP->numFats + tlngAncestorP->numThins)
 	);  fflush(stdout);
 
 	timeBeginPart = clock();
