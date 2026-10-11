@@ -138,7 +138,7 @@ Obviously, your execution times might be very different.
 
 Calls are made to `malloc()`, for `.rhombi`, `.path`, and `.pathStat`. 
 The simple total of these three `malloc()`s, for each iteration (i.e., not cumulative sum, ignoring temporary memory assignments, and ignoring alignment and page boundary trickery), is in the &ldquo;&Sum;`malloc()`&rdquo; column, which grows by &asymp;&#8239;&phi;&sup2; per iteration. 
-On the PC the simple cumulative total of these was: 4.5&#8239;GiB for `tilingId`&#8239;=&#8239;14; 11.6&#8239;GiB for `tilingId`&#8239;=&#8239;15; 30.2&#8239;GiB for `tilingId`&#8239;=&#8239;16; and 78.6&#8239;GiB for `tilingId`&#8239;=&#8239;17 (which, as machine only 64&#8239;GiB, suggests that there was memory swapping to disk. 
+On the PC the simple cumulative total of these was: 4.5&#8239;GiB for `tilingId`&#8239;=&#8239;14; 11.6&#8239;GiB for `tilingId`&#8239;=&#8239;15; 30.2&#8239;GiB for `tilingId`&#8239;=&#8239;16; and 78.6&#8239;GiB for `tilingId`&#8239;=&#8239;17 (which, as machine only 64&#8239;GiB, suggests that there was memory swapping to disk). 
 On the PC `sizeof(Rhombus)` was 192, but on the Mac it was 256: perhaps the PC compiler was better at optimising struct packing. 
 Whatever the reason, execution on the Mac required&nbsp;&asymp;&#8239;+&frac13;&nbsp;more memory.
 

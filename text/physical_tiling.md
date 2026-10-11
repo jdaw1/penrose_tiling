@@ -108,7 +108,7 @@ In the following the left diagram has five of these errors visible, so is a part
 
 If two fats are parallel and touching, whether touching at an edge or a vertex, then this is an error, perhaps caused by mis&#8209;rotation of a round&nbsp;5 path.
 
-If two thins are parallel and touching, whether touching at an edge or a vertex, then this is an error.
+If two thins are parallel and touching at an edge, or at a 144&deg; vertex, then this is an error ([acknowledgment](https://github.com/jdaw1/penrose_tiling/pull/2)).
 
 
 ### Laying many tiles ###
