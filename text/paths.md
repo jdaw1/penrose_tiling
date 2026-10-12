@@ -92,8 +92,12 @@ The observed data is consistent with, in a suffiently large tiling, the number o
 2&#8239;&minus;&#8239;&phi; 
 =&nbsp;&frac12;(3&#8239;&minus;&#8239;&radic;5) &asymp;&nbsp;0.381966. 
 A proof or disproof would be welcomed. 
+
 If this is precisely true, then the average of the lengths of paths tends to 5&nbsp;+&nbsp;2&radic;5 &asymp;&nbsp;9.472. 
-If it is not very false, then for a random fat tile, the average of the length of the path containing it is unbounded.
+
+If it is not very false, then for a random fat tile, the average of the length of the path containing it is unbounded. 
+E.g., for the last computed recursion, `tilingId`==17, there are 155,817,025 fat tiles in closed paths, and for a randomly chosen one of these, the expected length of its path is 2375.2. 
+As comparison, for `tilingId`==14, this is &asymp;&nbsp;677.7.
 
 ---
 
