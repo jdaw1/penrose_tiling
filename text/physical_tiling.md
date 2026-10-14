@@ -106,9 +106,12 @@ In the following the left diagram has five of these errors visible, so is a part
 
 </div>
 
+<img align="right" width="168" height="153.667" src="../images/parallel_thins.svg">
+
 If two fats are parallel and touching, whether touching at an edge or a vertex, then this is an error, perhaps caused by mis&#8209;rotation of a round&nbsp;5 path.
 
-If two thins are parallel and touching at an edge, or at a 144&deg; vertex, then this is an error ([acknowledgment](https://github.com/jdaw1/penrose_tiling/pull/2)).
+If two thins are parallel and touching at an edge, or at a 144&deg; vertex, then this is an error. 
+Two parallel thins can touch at a 36&deg; vertex, but only as in the diagram on the right ([acknowledgment](https://github.com/jdaw1/penrose_tiling/pull/2)).
 
 
 ### Laying many tiles ###
@@ -119,6 +122,7 @@ Of course, before starting on the huge space, have the machine practise on a spa
 Expect problems; find them early; fix early; re&#8209;test.
 
 I guess that such a machine should be fed the [JSON&nbsp;output](json.md), or something derived from it, as JSON is the most machine&#8209;comprehensible of the output formats. 
-But never attempted by me &mdash; if tiled by humans, this is on you; if tiled by machine, this is even more on you.
+But never attempted by me &mdash; if tiled by humans then this is on you; if tiled by machine then this is even more on you.
 
-Good luck.
+Good luck. 
+Please send images of progress, and of the final result.

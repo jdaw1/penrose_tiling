@@ -1,0 +1,50 @@
+<svg width='168' height='153.667' viewBox='-2.52 1.28 5.04 4.61' preserveAspectRatio='xMidYMid meet' id='Parallel_thins' xmlns='http://www.w3.org/2000/svg'>
+
+<defs>
+	<g id='t'> <!-- thin -->
+		<path d='M 0 0   L -0.30901699437495 0.95105651629515   -0.61803398874989 0   -0.30901699437495 -0.95105651629515  Z'/> <!-- thin -->
+	</g> <!-- thin -->
+	<g id='f'>
+		<path d='M 0 0   L -0.80901699437495 0.58778525229247   -1.61803398874989 0   -0.80901699437495 -0.58778525229247  Z'/>	</g>
+	<g id='c5r'>
+		<g fill='#CCC' opacity='1'>  <!-- Thins: light grey -->
+			<use href='#t'  transform='translate(0.9511,0.309) rotate(198)'/>
+			<use href='#t'  transform='translate(0.5878,-0.809) rotate(126)'/>
+			<use href='#t'  transform='translate(-0.5878,-0.809) rotate(54)'/>
+			<use href='#t'  transform='translate(-0.9511,0.309) rotate(342)'/>
+			<use href='#t'  transform='translate(0,1) rotate(270)'/>
+		</g>  <!-- thins, fill='#CCC' -->
+		<g fill='#FFF' opacity='1'>  <!-- Fats, closed PathLength=5 round: white -->
+			<use href='#f'  transform='translate(0.9511,1.309) rotate(54)'/>
+			<use href='#f'  transform='translate(1.5388,-0.5) rotate(342)'/>
+			<use href='#f'  transform='translate(0,-1.618) rotate(270)'/>
+			<use href='#f'  transform='translate(-1.5388,-0.5) rotate(198)'/>
+			<use href='#f'  transform='translate(-0.9511,1.309) rotate(126)'/>
+		</g>  <!-- fill='#FFF' -->
+		<circle r='0.25' fill='#FFF' opacity='1'/>
+	</g>  <!-- id='c5r' -->
+</defs>
+
+<!-- <rect fill='#3F3' x='-2.52' width='5.04' y='1.28' height='4.61'/> -->
+
+<g stroke-width='0.0625' stroke='#000' paint-order='fill stroke' stroke-linejoin='round' stroke-opacity='1'>
+	<g fill='#33F' opacity='1'>  <!-- interesting thins -->
+		<use href='#t'  transform='translate(0.9511,2.309) rotate(270)'/>
+		<use href='#t'  transform='translate(-0.9511,2.309) rotate(270)'/>
+	</g>  <!-- thins not otherwise inside a path -->
+	<g fill='#FFF' opacity='1'> 
+		<use href='#f'  transform='translate(0,2.618) rotate(126)'/>
+		<use href='#f'  transform='translate(1.9021,2.618) rotate(54)'/>
+		<use href='#f'  transform='translate(-1.9021,2.618) rotate(126)'/>
+		<use href='#f'  transform='translate(0,2.618) rotate(54)'/>
+		<use href='#f'  transform='translate(-2.4899,3.4271) rotate(162)'/>
+		<use href='#f'  transform='translate(2.4899,3.4271) rotate(18)'/>
+	</g>
+	<use href='#c5r' transform='translate(0,4.2361)'/> <!-- 6 -->
+</g>  <!-- all rhombi, stroke -->
+
+<g font-family='sans-serif' fill='#090' text-anchor='left'>
+	<g font-size='0.1666em' opacity='0.666666' transform='translate(-2.5,5.6)'><text vertical-align='text-bottom'>&#10004;</text></g>
+</g>
+
+</svg>
