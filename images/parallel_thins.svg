@@ -1,11 +1,16 @@
-<svg width='168' height='153.667' viewBox='-2.52 1.28 5.04 4.61' preserveAspectRatio='xMidYMid meet' id='Parallel_thins' xmlns='http://www.w3.org/2000/svg'>
+<svg width='301.2' height='226.5' viewBox='9.56 -14.86 10.04 7.55' preserveAspectRatio='xMidYMid meet' id='Penrose_Rhombi_05' xmlns='http://www.w3.org/2000/svg'>
+<!-- TilingId = 5 -->
 
 <defs>
 	<g id='t'> <!-- thin -->
 		<path d='M 0 0   L -0.30901699437495 0.95105651629515   -0.61803398874989 0   -0.30901699437495 -0.95105651629515  Z'/> <!-- thin -->
 	</g> <!-- thin -->
 	<g id='f'>
-		<path d='M 0 0   L -0.80901699437495 0.58778525229247   -1.61803398874989 0   -0.80901699437495 -0.58778525229247  Z'/>	</g>
+		<path d='M 0 0   L -0.80901699437495 0.58778525229247   -1.61803398874989 0   -0.80901699437495 -0.58778525229247  Z'/> <!-- fat (closed paths) -->
+	</g> <!-- fat in closed path -->
+	<g id='o'>
+		<path d='M 0 0   L -0.80901699437495 0.58778525229247   -1.61803398874989 0   -0.80901699437495 -0.58778525229247  Z'/> <!-- fat in open path, for editability separated from fat-in-closed -->
+	</g> <!-- fat in open path -->
 	<g id='c5r'>
 		<g fill='#CCC' opacity='1'>  <!-- Thins: light grey -->
 			<use href='#t'  transform='translate(0.9511,0.309) rotate(198)'/>
@@ -21,30 +26,106 @@
 			<use href='#f'  transform='translate(-1.5388,-0.5) rotate(198)'/>
 			<use href='#f'  transform='translate(-0.9511,1.309) rotate(126)'/>
 		</g>  <!-- fill='#FFF' -->
-		<circle r='0.25' fill='#FFF' opacity='1'/>
+		<circle r='0.25' fill='#FFF' opacity='1'/>  <!-- circle inside round (so closed) 5 paths If not wanted, delete or comment this one line -->
 	</g>  <!-- id='c5r' -->
 </defs>
 
-<!-- <rect fill='#3F3' x='-2.52' width='5.04' y='1.28' height='4.61'/> -->
+<!-- <rect fill='#F66' x='9.56' y='-14.86' width='10.04' height='7.55'/> -->
 
-<g stroke-width='0.0625' stroke='#000' paint-order='fill stroke' stroke-linejoin='round' stroke-opacity='1'>
-	<g fill='#33F' opacity='1'>  <!-- interesting thins -->
-		<use href='#t'  transform='translate(0.9511,2.309) rotate(270)'/>
-		<use href='#t'  transform='translate(-0.9511,2.309) rotate(270)'/>
-	</g>  <!-- thins not otherwise inside a path -->
-	<g fill='#FFF' opacity='1'> 
-		<use href='#f'  transform='translate(0,2.618) rotate(126)'/>
-		<use href='#f'  transform='translate(1.9021,2.618) rotate(54)'/>
-		<use href='#f'  transform='translate(-1.9021,2.618) rotate(126)'/>
-		<use href='#f'  transform='translate(0,2.618) rotate(54)'/>
-		<use href='#f'  transform='translate(-2.4899,3.4271) rotate(162)'/>
-		<use href='#f'  transform='translate(2.4899,3.4271) rotate(18)'/>
+<g stroke-width='0.0625' stroke='#000' paint-order='fill stroke' stroke-linejoin='round' stroke-opacity='1'>  <!-- all rhombi -->
+
+<g fill='#CCC' opacity='1'>  <!-- thins not otherwise inside a path. -->
+	<use href='#t'  transform='translate(18.6049,-11.2812) rotate(90)'/>
+	<use href='#t'  transform='translate(15.5272,-11.2812) rotate(90)'  fill='#33F'/>
+	<use href='#t'  transform='translate(13.6251,-11.2812) rotate(90)'  fill='#33F'/>
+	<use href='#t'  transform='translate(17.6538,-10.5902) rotate(18)'/>
+	<use href='#t'  transform='translate(16.4782,-10.5902) rotate(162)'/>
+	<use href='#t'  transform='translate(12.674,-10.5902) rotate(18)'/>
+</g>  <!-- thins not otherwise inside a path -->
+
+<!-- Paint open paths -->
+
+<g fill='#FFF' opacity='1'>  <!-- Fats, open PathLength=11: white -->
+</g>  <!-- Fats, open, PathLength=11. Comments, at only start of contiguous part of a path, are: pathId,rhID,withinPathNum -->
+
+<g fill='#FFF' opacity='1'>  <!-- Fats, open PathLength=43: white -->
+	<use href='#o'  transform='translate(19.5559,-11.5902) rotate(306)'/>
+	<use href='#o'  transform='translate(17.6538,-11.5902) rotate(234)'/>
+	<use href='#o'  transform='translate(17.066,-9.7812) rotate(162)'/>
+	<use href='#o'  transform='translate(17.066,-9.7812) rotate(306)'/>
+	<use href='#o'  transform='translate(17.066,-9.7812) rotate(18)'/>
+	<use href='#o'  transform='translate(16.4782,-11.5902) rotate(306)'/>
+	<use href='#o'  transform='translate(14.5761,-11.5902) rotate(234)'/>
+	<use href='#o'  transform='translate(14.5761,-11.5902) rotate(306)'/>
+	<use href='#o'  transform='translate(12.674,-11.5902) rotate(234)'/>
+	<use href='#o'  transform='translate(12.0862,-9.7812) rotate(162)'/>
+	<use href='#o'  transform='translate(12.0862,-9.7812) rotate(234)'/>
+</g>  <!-- Fats, open, PathLength=43. Comments, at only start of contiguous part of a path, are: pathId,rhID,withinPathNum -->
+
+
+<!-- Paint closed paths not otherwise inside a larger path. Comment is pathId. -->
+	<g transform='translate(10.5474,-14.5172)'> <!-- 2 -->
+		<g fill='#FFF' opacity='1'>  <!-- Fats, closed, PathLength=25: dark blue -->
+			<use href='#f'  transform='translate(1.5388,2.118) rotate(342)'/>
+			<use href='#f'  transform='translate(1.5388,2.118) rotate(270)'/>
+			<use href='#f'  transform='translate(1.5388,2.118) rotate(198)'/>
+			<use href='#f'  transform='translate(1.5388,2.118) rotate(126)'/>
+		</g>  <!-- fill='#009' -->
 	</g>
-	<use href='#c5r' transform='translate(0,4.2361)'/> <!-- 6 -->
+
+	<g transform='translate(17.066,-12.3992)'> <!-- 26 -->
+		<g fill='#FFF' opacity='1'>  <!-- Fats, closed PathLength=5 pointy: light green -->
+			<use href='#f'  transform='rotate(270)'/>
+			<use href='#f'  transform='rotate(198)'/>
+			<use href='#f'  transform='rotate(54)'/>
+			<use href='#f'  transform='rotate(342)'/>
+		</g>  <!-- fill='#9F9' -->
+	</g>
+
+	<use href='#c5r' transform='translate(14.5761,-13.2082) rotate(36)'/> <!-- 70 -->
+	<use href='#c5r' transform='translate(14.5761,-8.9721)'/> <!-- 78 -->
+
+	<g transform='translate(10.5474,-10.2812) rotate(36)'> <!-- 73 -->
+		<g fill='#CCC' opacity='1'>  <!-- Thins: light grey -->
+			<use href='#t'  transform='translate(0.5878,-0.809) rotate(126)'/>
+			<use href='#t'  transform='translate(-0.5878,-0.809) rotate(54)'/>
+		</g>  <!-- thins, fill='#CCC' -->
+		<g fill='#FFF' opacity='1'>  <!-- Fats, closed PathLength=5 round: white -->
+			<use href='#f'  transform='translate(1.5388,-0.5) rotate(342)'/>
+			<use href='#f'  transform='translate(0,-1.618) rotate(270)'/>
+			<use href='#f'  transform='translate(-1.5388,-0.5) rotate(198)'/>
+		</g>  <!-- fill='#FFF' -->
+	</g>
 </g>  <!-- all rhombi, stroke -->
 
+<!-- To uncomment gridlines delete this line, and the line at end of this 'paragraph'. -->
+
+<!--
+<path vector-effect='non-scaling-stroke' stroke-width='3px' stroke='#000' opacity='0.25' d='
+	M20 -8  h -11   M20 -9  h -11   M20 -10  h -11   M20 -11  h -11   M20 -12  h -11   M20 -13  h -11   M20 -14  h -11   M20 -15  h -11
+	M9 -15.5 v 8   M10 -15.5 v 8   M12 -15.5 v 6.5   M14 -15.5 v 8   M16 -15.5 v 8   M18 -15.5 v 8   M20 -15.5 v 8
+'/>
+<g font-size='0.5' font-weight='bold' paint-order='stroke fill' stroke-width='0.141' stroke='#FFF' stroke-linejoin='round' fill='#000' opacity='1' text-anchor='middle'>
+	<g transform='translate(19.500, -8)'><text text-anchor='end' alignment-baseline='central'>&#8722;8</text></g>
+	<g transform='translate(19.500, -9)'><text text-anchor='end' alignment-baseline='central'>&#8722;9</text></g>
+	<g transform='translate(19.500,-10)'><text text-anchor='end' alignment-baseline='central'>&#8722;10</text></g>
+	<g transform='translate(19.500,-11)'><text text-anchor='end' alignment-baseline='central'>&#8722;11</text></g>
+	<g transform='translate(19.500,-12)'><text text-anchor='end' alignment-baseline='central'>&#8722;12</text></g>
+	<g transform='translate(19.500,-13)'><text text-anchor='end' alignment-baseline='central'>&#8722;13</text></g>
+	<g transform='translate(19.500,-14)'><text text-anchor='end' alignment-baseline='central'>&#8722;14</text></g>
+	<g transform='translate(19.500,-15)'><text text-anchor='end' alignment-baseline='central'>&#8722;15</text></g>
+	<g transform='translate( 9,-7.5000)'><text text-anchor='middle' alignment-baseline='text-bottom'>9</text></g>
+	<g transform='translate(10,-7.5000)'><text text-anchor='middle' alignment-baseline='text-bottom'>10</text></g>
+	<g transform='translate(12,-7.5000)'><text text-anchor='middle' alignment-baseline='text-bottom'>12</text></g>
+	<g transform='translate(14,-7.5000)'><text text-anchor='middle' alignment-baseline='text-bottom'>14</text></g>
+	<g transform='translate(16,-7.5000)'><text text-anchor='middle' alignment-baseline='text-bottom'>16</text></g>
+	<g transform='translate(18,-7.5000)'><text text-anchor='middle' alignment-baseline='text-bottom'>18</text></g>
+	<g transform='translate(20,-7.5000)'><text text-anchor='middle' alignment-baseline='text-bottom'>20</text></g>
+</g>
+-->
+
 <g font-family='sans-serif' fill='#090' text-anchor='left'>
-	<g font-size='0.1666em' opacity='0.666666' transform='translate(-2.5,5.6)'><text vertical-align='text-bottom'>&#10004;</text></g>
+	<g font-size='0.2em' opacity='0.666666' transform='translate(9.7,-7.5)'><text vertical-align='text-bottom'>&#10004;</text></g>
 </g>
 
 </svg>

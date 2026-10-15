@@ -106,7 +106,7 @@ In the following the left diagram has five of these errors visible, so is a part
 
 </div>
 
-<img align="right" width="168" height="153.667" src="../images/parallel_thins.svg">
+<img align="right" width="301.2" height="226.5" src="../images/parallel_thins.svg">
 
 If two fats are parallel and touching, whether touching at an edge or a vertex, then this is an error, perhaps caused by mis&#8209;rotation of a round&nbsp;5 path.
 
