@@ -3,13 +3,24 @@
 
 <defs>
 	<g id='t'> <!-- thin -->
-		<path d='M 0 0   L -0.30901699437495 0.95105651629515   -0.61803398874989 0   -0.30901699437495 -0.95105651629515  Z'/> <!-- thin -->
+		<path d='M 0 0   L -0.30901699437495 0.95105651629515   -0.61803398874989 0   -0.30901699437495 -0.95105651629515  Z'/>
+		<circle fill='#FF0' stroke='#000' stroke-width='0.04' paint-order='stroke fill' cx='-0.12' cy='0' r='0.04'/>
+		<!-- thin -->
+	</g> <!-- thin -->
+	<g id='t-special'> <!-- thin -->
+		<path fill='#33F' d='M 0 0   L -0.30901699437495 0.95105651629515   -0.61803398874989 0   -0.30901699437495 -0.95105651629515  Z'/>
+		<circle fill='#33F' stroke='#FF0' stroke-width='0.04' paint-order='stroke fill' cx='-0.12' cy='0' r='0.04'/>
+		<!-- thin -->
 	</g> <!-- thin -->
 	<g id='f'>
-		<path d='M 0 0   L -0.80901699437495 0.58778525229247   -1.61803398874989 0   -0.80901699437495 -0.58778525229247  Z'/> <!-- fat (closed paths) -->
+		<path d='M 0 0   L -0.80901699437495 0.58778525229247   -1.61803398874989 0   -0.80901699437495 -0.58778525229247  Z'/>
+		<circle fill='#FF0' stroke='#333' stroke-width='0.04' paint-order='stroke fill' cx='-0.2' cy='0' r='0.04'/>
+		<!-- fat (closed paths) -->
 	</g> <!-- fat in closed path -->
 	<g id='o'>
-		<path d='M 0 0   L -0.80901699437495 0.58778525229247   -1.61803398874989 0   -0.80901699437495 -0.58778525229247  Z'/> <!-- fat in open path, for editability separated from fat-in-closed -->
+		<path d='M 0 0   L -0.80901699437495 0.58778525229247   -1.61803398874989 0   -0.80901699437495 -0.58778525229247  Z'/>
+		<circle fill='#FF0' stroke='#333' stroke-width='0.04' paint-order='stroke fill' cx='-0.2' cy='0' r='0.04'/>
+		<!-- fat in open path, for editability separated from fat-in-closed -->
 	</g> <!-- fat in open path -->
 	<g id='c5r'>
 		<g fill='#CCC' opacity='1'>  <!-- Thins: light grey -->
@@ -36,8 +47,8 @@
 
 <g fill='#CCC' opacity='1'>  <!-- thins not otherwise inside a path. -->
 	<use href='#t'  transform='translate(18.6049,-11.2812) rotate(90)'/>
-	<use href='#t'  transform='translate(15.5272,-11.2812) rotate(90)'  fill='#33F'/>
-	<use href='#t'  transform='translate(13.6251,-11.2812) rotate(90)'  fill='#33F'/>
+	<use href='#t-special'  transform='translate(15.5272,-11.2812) rotate(90)'/>
+	<use href='#t-special'  transform='translate(13.6251,-11.2812) rotate(90)'/>
 	<use href='#t'  transform='translate(17.6538,-10.5902) rotate(18)'/>
 	<use href='#t'  transform='translate(16.4782,-10.5902) rotate(162)'/>
 	<use href='#t'  transform='translate(12.674,-10.5902) rotate(18)'/>
