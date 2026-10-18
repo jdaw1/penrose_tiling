@@ -13,8 +13,7 @@ void tiling_descendant(
 {
 	int rhId_Ancestor;
 	clock_t timeBeginThisTiling, timeBeginPart;
-	RhombId numRhAtPreviousPurgeDuplicates = 0;
-	RhombId numSpecialDeduplications = 0;
+	RhombId numDeduplications = 0;
 
 	timeBeginThisTiling = clock();
 	if(timeBeginFirstTiling < 0)
@@ -84,28 +83,30 @@ void tiling_descendant(
 	}  // scope mallocThis
 
 	timeBeginPart = clock();
+	printf(
+		"tiling_descendant(): about to recurse tiles, occasionally purging duplicates, with tilingId=%" PRIi8 ",  rhNumMax=%li.\n",
+		tlngDescendantP->tilingId,   tlngDescendantP->rhombi_NumMax
+	);  fflush(stdout);
 	for( rhId_Ancestor = 0;  rhId_Ancestor < tlngAncestorP->numFats + tlngAncestorP->numThins;  rhId_Ancestor ++ )
 	{
-		// Purpose: if huge memory assigned, best not to use it all as that might entail copying to and from disk.
-		// An occasional purge of duplicates might lessen this. Also allows less memory to have been malloc'd.
-		if( tlngDescendantP->numFats + tlngDescendantP->numThins >= numRhAtPreviousPurgeDuplicates + 14128176  // 4G of memory, being arbitrarily occasional.
-		||  tlngDescendantP->numFats + tlngDescendantP->numThins >= tlngDescendantP->rhombi_NumMax - 8 )      // Tight against boundary: really need to purge duplicates.
+		// Typically not have mallod'd space for all with-duplicates descendants. Hence need to purge duplicates when space tight.
+		if( tlngDescendantP->numFats + tlngDescendantP->numThins > tlngDescendantP->rhombi_NumMax - 5 )
 		{
 			rhombi_purgeDuplicates(tlngDescendantP);
-			numSpecialDeduplications ++;
-			numRhAtPreviousPurgeDuplicates = tlngDescendantP->numFats + tlngDescendantP->numThins;
+			numDeduplications ++;
 		}  // if( 'purge needed' )
+
 		rhombus_append_descendants( tlngDescendantP,  tlngAncestorP->rhombi + rhId_Ancestor );
 	}  // for( rhId_Ancestor ... )
 
 	rhombi_purgeDuplicates(tlngDescendantP);
-	numSpecialDeduplications++;
+	numDeduplications++;
 
 	printf("tiling_descendant(): tilingId=%" PRIi8 ", %.3lfs for %li calls of rhombus_append_descendants(), and %li call%s of rhombi_purgeDuplicates(), resulting in #Fats+#Thins=%li\n",
 		tlngDescendantP->tilingId,
 		((double)clock() - timeBeginPart) / CLOCKS_PER_SEC,
 		tlngAncestorP->numFats + tlngAncestorP->numThins,
-		numSpecialDeduplications,  numSpecialDeduplications == 1 ? "" : "s",
+		numDeduplications,  numDeduplications == 1 ? "" : "s",
 		tlngDescendantP->numThins + tlngDescendantP->numFats
 	);  fflush(stdout);
 

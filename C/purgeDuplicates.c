@@ -27,10 +27,8 @@ void rhombi_purgeDuplicates(Tiling * const tlngP)
 	rhombi_sort(tlngP,  &rhombiGt_ByY,  false);
 
 	printf(
-		"rhombi_purgeDuplicates(): tilingId=%" PRIi8 ",  rhNumMax=%li,  before numRhombi=%li; ",
-		tlngP->tilingId,
-		tlngP->rhombi_NumMax,
-		tlngP->numFats + tlngP->numThins
+		"rhombi_purgeDuplicates(): tilingId=%" PRIi8 ",  before numRhombi=%li; ",
+		tlngP->tilingId,  tlngP->numFats + tlngP->numThins
 	);  // Erroneously, a fflush() here seems to generates extra newline.
 
 	for (numUniques = rhId1 = 0  ;  rhId1 < numRhombi  ;  rhId1++)  // numRhombi, not Fats+Thins, so sure to reach end despite duplicates being pruned.
