@@ -35,7 +35,7 @@ That is, local texture is quite uniform.
 For big tilings there are &frac12;(1&nbsp;+&nbsp;&radic;5) &asymp;&nbsp;1.618 times as many fats as thins, each of which has an area bigger by the same ratio, 
 so the fats become (5&nbsp;+&nbsp;&radic;5)/10 &asymp;&nbsp;72.36% of the area, 
 and the thins are (5&nbsp;&minus;&nbsp;&radic;5)/10 &asymp; 27.639% of the area. 
-In a tachincal mathematical sense this is true in the limit, but is approximately true even for small areas. 
+In a technical mathematical sense this is true in the limit, but is approximately true even for small areas. 
 I.e., the local texture is quite uniform.
 
 But wait! 
