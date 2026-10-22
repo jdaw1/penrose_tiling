@@ -95,9 +95,9 @@ A proof or disproof would be welcomed.
 If true, then the average of the lengths of paths tends to &asymp;&nbsp;9.355. 
 
 If it is not very false, that is, if the decay is slower than 0.25, then for a random fat tile, the average of the length of the path containing it is unbounded. 
-E.g., for the last computed recursion, `tilingId`&#8239;==&#8239;17, there are 155,817,025 fat tiles in closed paths, and for a randomly chosen one of these, the expected length of its path is &asymp;&nbsp;2375.2. 
+E.g., for the last computed recursion, `tilingId`&#8239;==&#8239;17, there are 155,817,025 fat tiles in closed paths, and for a randomly chosen one of these, the expected length of its path &asymp;&nbsp;2375.2. 
 (Quickie check: longest path is 436,905 fats, is 0.28% of all the fats, so that one path alone contributes to the expectation 436905&nbsp;&times;&nbsp;0.0028&nbsp;&asymp;&nbsp;1225, slighty more than half of it.)
-And for comparison, for `tilingId`&#8239;==&#8239;14, &asymp;&nbsp;677.7.
+And for comparison, for `tilingId`&#8239;==&#8239;14, expected length &asymp;&nbsp;677.7.
 
 ---
 
