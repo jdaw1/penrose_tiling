@@ -88,16 +88,16 @@ Observe that the length of a long path varies as the square root of its area (wh
 That is, long paths are approximately 1.44 dimensional. 
 (Technicality: trivially, ln(2)&#8239;/&#8239;ln(&phi;)&nbsp;&NotElement;&nbsp;[&Qopf;](https://en.wikipedia.org/wiki/Rational_number), and hence by the [Gelfond&#8209;Schneider theorem](https://en.wikipedia.org/wiki/Gelfond%E2%80%93Schneider_theorem#mwNQ) is [transcendental](https://en.wikipedia.org/wiki/Transcendental_number).) 
 
-The observed data is consistent with, in a suffiently large tiling, the number of closed paths of each length being [geometrically distributed](http://en.wikipedia.org/wiki/Geometric_distribution), with decay 
-2&#8239;&minus;&#8239;&phi; 
-=&nbsp;&frac12;(3&#8239;&minus;&#8239;&radic;5) &asymp;&nbsp;0.381966. 
-A proof or disproof would be welcomed. 
+The observed data is consistent with, in a suffiently large tiling, the number of closed paths of each length being [geometrically distributed](http://en.wikipedia.org/wiki/Geometric_distribution), with decay &asymp;&nbsp;0.37991937, being a solution of a hexic with coefficients 
+{&minus;1,&nbsp;3,&nbsp;1,&nbsp;&minus;5,&nbsp;&minus;1,&nbsp;1,&nbsp;1}. 
+A proof or disproof would be welcomed.
 
-If this is precisely true, then the average of the lengths of paths tends to 5&nbsp;+&nbsp;2&radic;5 &asymp;&nbsp;9.472. 
+If true, then the average of the lengths of paths tends to &asymp;&nbsp;9.355. 
 
-If it is not very false, then for a random fat tile, the average of the length of the path containing it is unbounded. 
+If it is not very false, that is, if the decay is slower than 0.25, then for a random fat tile, the average of the length of the path containing it is unbounded. 
 E.g., for the last computed recursion, `tilingId`&#8239;==&#8239;17, there are 155,817,025 fat tiles in closed paths, and for a randomly chosen one of these, the expected length of its path is &asymp;&nbsp;2375.2. 
-As comparison, for `tilingId`&#8239;==&#8239;14, &asymp;&nbsp;677.7.
+(Quickie check: longest path is 436,905 fats, is 0.28% of all the fats, so that one path alone contributes to the expectation 436905&nbsp;&times;&nbsp;0.0028&nbsp;&asymp;&nbsp;1225, slighty more than half of it.)
+And for comparison, for `tilingId`&#8239;==&#8239;14, &asymp;&nbsp;677.7.
 
 ---
 
