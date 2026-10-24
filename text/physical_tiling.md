@@ -28,7 +28,8 @@ My guess is that, for coloured paths, such a room is too small.
 My guess is, for coloured paths to work aesthetically, there would have to be &ge;&#8239;2 instances of paths of length 105, and hence more of the 55s etc. 
 But, for emphasis, this is only a guess: make a map, judge for yourself.
 
-And I want to see a Penrose tiling with coloured paths: please send pictures of the result, or, better, invite me to visit. 
+And I want to see a Penrose tiling with coloured paths: please send pictures of progress and of the result. 
+Even better, invite me to visit.
 
 
 ## Advice ##
@@ -44,7 +45,8 @@ Unless an expert programmer, it is likely easier to rotate the room
 (*x*&#8239;&#11104;&#8239;&pm;*y*, 
 *y*&#8239;&#11104;&#8239;&mp;*x*) than to rotate the tiling. 
 
-Cool off for a day; review; tinker; re&#8209;review; re&#8209;tinker; repeat; re&#8209;repeat; and again.
+Cool off for a day; review; tinker; re&#8209;review; re&#8209;tinker; repeat; re&#8209;repeat; and again. 
+Perhaps send a near-final plan to [me](https://jdawiseman.com/author.html): I might comment (though, busyness etc dependent, I might not).
 
 
 ### Counting ###
