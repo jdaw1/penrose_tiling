@@ -42,7 +42,6 @@ Hence it is the best format for being absorbed by another system.
     - numbers `RadiusMax` being the distance of the point furthest from (0,0), and `RadiusShortOpen` being the largest radius that has paths that are either closed, or of length equal to the longest open path;
     - integers `InternalToC_sizeof_Rhombus`, `InternalToC_sizeof_Path`, `InternalToC_sizeof_PathStats`, `InternalToC_NumForWhichMallocd_Rhombi`, `InternalToC_NumForWhichMallocd_Paths`, `InternalToC_NumForWhichMallocd_PathStats`, and  `PersistentSumSimple_malloc`. The first three are `sizeof()` for `.rhombi`, `.path`, and `.pathStat`. The next three are how many of these are allocated. The last is a sum-product, being as an approximation to the C&rsquo;s memory usage, the plain sum of this tiling&rsquo;s `malloc()`. I.e., not cumulative sum, ignoring temporary memory assignments, and ignoring alignment and page boundary trickery;
     - C execution times `SecondsToStartExportFromStartFirstTiling` and `SecondsToStartExportFromStartThisTiling`;
-    - numbers relating the output chosen for the PostScript-as-data format, because of its 65535 limit; 
     - array `Rhombi` (described below);
     - array `Paths` (described below);
     - array `PathStats` (described below);
@@ -101,7 +100,7 @@ Hence it is the best format for being absorbed by another system.
     - number `Orient`, being an angle distinguishing the two possible orientations, &pm;&#8209;36&deg; apart, of a path of particular Rank.
 
 * Some closed path&rsquo;s dictionaries also contain:
-    - integer `PathId_ShortestOuter`, being the shortest, i.e. most immediate, path enclosed this path. Absent if there is no enclosing path.
+    - integer `PathId_ShortestOuter`, being the shortest, i.e. most immediate, path enclosing this path. Absent if there is no enclosing path.
 
 * Each element of `Paths`, that is open &Longleftrightarrow; `! Closed`, also contains:
     - integer `rhId_OpenPathEnd`, being the fat rhombus end of the open path opposite `RhPathStart`.
