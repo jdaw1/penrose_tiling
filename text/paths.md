@@ -88,11 +88,23 @@ Observe that the length of a long path varies as the square root of its area (wh
 That is, long paths are approximately 1.44 dimensional. 
 (Technicality: trivially, ln(2)&#8239;/&#8239;ln(&phi;)&nbsp;&NotElement;&nbsp;[&Qopf;](https://en.wikipedia.org/wiki/Rational_number), and hence by the [Gelfond&#8209;Schneider theorem](https://en.wikipedia.org/wiki/Gelfond%E2%80%93Schneider_theorem#mwNQ) is [transcendental](https://en.wikipedia.org/wiki/Transcendental_number).) 
 
-The observed data is consistent with, in a suffiently large tiling, the number of closed paths of each length being [geometrically distributed](http://en.wikipedia.org/wiki/Geometric_distribution), with decay &asymp;&nbsp;0.37991937, being a solution of a hexic with coefficients 
-{&minus;1,&nbsp;3,&nbsp;1,&nbsp;&minus;5,&nbsp;&minus;1,&nbsp;1,&nbsp;1}. 
+In the tilings generated tilings, `tilingId`&#8239;&ge;&#8239;4, the observed data is consistent with there being:  
+* 1 closed path of the greatest rank;
+* None of rank one lower;
+* 6 of rank = greatest&nbsp;&minus;&nbsp;2;
+* 10 of rank = greatest&nbsp;&minus;&nbsp;3;
+* 36 of rank = greatest&nbsp;&minus;&nbsp;4;
+* Beyond which the count seems to be 1&nbsp;+&nbsp;[_n_&nbsp;+&nbsp;5]
+&minus;&nbsp;[_n_&nbsp;+&nbsp;4]
+&minus;&nbsp;5&#8239;&times;&#8239;[_n_&nbsp;+&nbsp;3]
++&nbsp;[_n_&nbsp;+&nbsp;2]
++&nbsp;3&#8239;&times;&#8239;[_n_&nbsp;+&nbsp;1].
+
 A proof or disproof would be welcomed.
 
-If true, then the average of the lengths of paths tends to &asymp;&nbsp;9.355. 
+If so, working the other way round, starting at the count of the 5-round path which has rank&nbsp;=&nbsp;1, the number of closed paths of each greater rank would be [geometrically distributed](http://en.wikipedia.org/wiki/Geometric_distribution), with decay &phi;<small><sup>&minus;2</sup></small> =&nbsp;&frac12;(3&nbsp;&minus;&nbsp;&radic;5) &asymp;&nbsp;0.381966.
+
+If true, then the average of the lengths of paths tends to 5&nbsp;+&nbsp;2&radic;5 &asymp;&nbsp;9.472.
 
 If it is not very false, that is, if the decay is slower than 0.25, then for a random fat tile, the average of the length of the path containing it is unbounded. 
 E.g., for the last computed recursion, `tilingId`&#8239;==&#8239;17, there are 155,817,025 fat tiles in closed paths, and for a randomly chosen one of these, the expected length of its path &asymp;&nbsp;2375.2. 
