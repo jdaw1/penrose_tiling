@@ -15,7 +15,7 @@ Documentation pages:&nbsp;
 
 ## Example output ##
 
-[Penrose_09.json.zip](../data/Penrose_09.json.zip) is 8,208,540 bytes.
+[Penrose_09.json.zip](../data/Penrose_09.json.zip) is 8,210,521 bytes.
 
 Subsequent recursions of JSON files are big (table in page about [C&nbsp;code](c.md) has uncompressed sizes). 
 Hence transmitting subsequent JSONs would be less efficient than regenerating them. 
