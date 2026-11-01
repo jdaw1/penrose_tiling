@@ -117,7 +117,7 @@ As comparison, for `tilingId`&#8239;==&#8239;14, expected length &asymp;&nbsp;67
 
 ## Bug, Chromium or Git markdown ##
 
-Bug, [Chromium](https://issues.chromium.org/issues/576944523) or [Git markdown](https://github.com/orgs/community/discussions/206814): frasl works outside tables, not inside. 
+Bug, [Chromium](https://issues.chromium.org/issues/576944523) or [Git markdown](https://github.com/orgs/community/discussions/206814): <code>&amp;frasl;</code> works outside tables, not inside. 
 Observe that fractions work outside tables (5&frasl;3, 25&frasl;66, 5&frasl;6, 5&frasl;33), but not inside:
 
 <div align="center">
