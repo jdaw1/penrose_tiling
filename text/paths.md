@@ -31,7 +31,7 @@ Tiles are orientated.
 That is, for each fat tile, one of its acute 72&deg; corners is &lsquo;north&rsquo;, with east-south-west clockwise from north. 
 For the thins, one of the obtuse 144&deg; corners is &lsquo;north&rsquo;. 
 This need not matter when laying tiles, but matters for the computation. 
-In the following diagram: of tiles north corners have been marked with small circles; and paths have been coloured by length.
+In the following diagram tiles&rsquo; north corners have been marked with small circles, and paths have been coloured by length.
 
 <div align="center">
 
