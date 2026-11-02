@@ -44,16 +44,15 @@ Do search for and play with the three lines containing that &mdash; for thin til
 The output really is user&#8209;changeable.)
 
 
-### Closed paths ###
+## Closed paths ##
 
-Paths that don&rsquo;t reach the edge are closed, and there are such paths only of particular lengths: 
-5,&nbsp;&nbsp; 5 (two types of 5&#8209;path),&nbsp;&nbsp; 15,&nbsp;&nbsp; 25,&nbsp;&nbsp; 55,&nbsp;&nbsp; 105,&nbsp;&nbsp; 215,&nbsp;&nbsp; 425,&nbsp;&nbsp; 855,&nbsp;&nbsp; 1,705,&nbsp;&nbsp; 3,415,&nbsp;&nbsp; 6,825,&nbsp;&nbsp; 13,655,&nbsp;&nbsp; 27,305,&nbsp;&nbsp; 54,615,&nbsp;&nbsp; 109,225,&nbsp;&nbsp; 218,455,&nbsp;&nbsp; 436,905,&nbsp;&nbsp; 873,815,&nbsp;&nbsp; 1,747,625,&nbsp;&nbsp;&nbsp;&hellip;,&nbsp;&nbsp; [<i>n</i>&#8239;&minus;&#8239;2]&#8239;&times;&#8239;2&nbsp;+&nbsp;[<i>n</i>&#8239;&minus;&#8239;1]&nbsp; =&nbsp;&nbsp;(2<small><sup>*n*</sup></small>&nbsp;&minus;&nbsp;(&minus;1)<small><sup>*n*</sup></small>)&#8239;&times;&#8239;5&frasl;3. 
+Paths that don&rsquo;t reach the edge are closed, and there are such paths only of particular lengths:&nbsp;&nbsp; 5,&nbsp;&nbsp; 5 (two types of 5&#8209;path),&nbsp;&nbsp; 15,&nbsp;&nbsp; 25,&nbsp;&nbsp; 55,&nbsp;&nbsp; 105,&nbsp;&nbsp; 215,&nbsp;&nbsp; 425,&nbsp;&nbsp; 855,&nbsp;&nbsp; 1,705,&nbsp;&nbsp; 3,415,&nbsp;&nbsp; 6,825,&nbsp;&nbsp; 13,655,&nbsp;&nbsp; 27,305,&nbsp;&nbsp; 54,615,&nbsp;&nbsp; 109,225,&nbsp;&nbsp; 218,455,&nbsp;&nbsp; 436,905,&nbsp;&nbsp; 873,815,&nbsp;&nbsp; 1,747,625,&nbsp;&nbsp;&nbsp;&hellip;,&nbsp;&nbsp; [<i>n</i>&#8239;&minus;&#8239;2]&#8239;&times;&#8239;2&nbsp;+&nbsp;[<i>n</i>&#8239;&minus;&#8239;1]&nbsp; =&nbsp;&nbsp;(2<small><sup>*n*</sup></small>&nbsp;&minus;&nbsp;(&minus;1)<small><sup>*n*</sup></small>)&#8239;&times;&#8239;5&frasl;3. 
 All closed paths have rotational symmetry of order&nbsp;5, and have lines of reflection symmetry every 36&deg;.
 
 Within a closed path of rank *n*&nbsp;&ge;&nbsp;3, the largest enclosed path is of rank *n*&nbsp;&minus;&nbsp;2, of which there is only one.
 Inside the *n* are none of the *n*&nbsp;&minus;&nbsp;1; none of the *n*&nbsp;&minus;&nbsp;3; and, assuming *n*&nbsp;&ge;&nbsp;5, of the *n*&nbsp;&minus;&nbsp;4 there are six, being five directly inside and one inside the *n*&nbsp;&minus;&nbsp;2.
 
-### Specific closed paths ###
+## Specific closed paths ##
 
 The next table contains much about such closed paths. 
 In it:
@@ -89,14 +88,14 @@ In it:
 | Limit&nbsp;&#8784; | 2<small><sup>*n*</sup></small>&nbsp;&times;&nbsp;5&frasl;3<br>&#8784;&ThinSpace;3.97&times;<br>&ThinSpace;(&radic;*thin*)<small><sup>ln(2)/ln(&phi;)</sup></small><br>&asymp;&nbsp;2.81&ThinSpace;&times;<br>(&radic;*fat*)<small><sup>ln(2)/ln(&phi;)</sup></small> | *fat*&nbsp;=<br>&phi;<small><sup>2*n*</sup></small>&nbsp;(7&radic;5&nbsp;&minus;&nbsp;5)/22<br>&asymp;&nbsp;0.484&nbsp;&phi;<small><sup>2*n*</sup></small> | *thin*&nbsp;=&nbsp;&phi;<small><sup>&minus;1</sup></small>&ThinSpace;*fat*&nbsp;=<br>&phi;<small><sup>2*n*</sup></small>&nbsp;(10&nbsp;&minus;&nbsp;3&radic;5)/11<br>&asymp;&nbsp;0.299&nbsp;&phi;<small><sup>2*n*</sup></small>  | &NotExists; | &phi;<small><sup>*n*&minus;3</sup></small> | &phi;<small><sup>*n*&minus;1</sup></small> |
 
 
-### Dimensionality ###
+## Dimensionality ##
 
 Observe that the length of a long path varies as the square root of its area (which is a linear measure) to the power of [ln(2)](https://en.wikipedia.org/wiki/Natural_logarithm_of_2)&#8239;/&#8239;[ln](https://en.wikipedia.org/wiki/Natural_logarithm)([&phi;](https://en.wikipedia.org/wiki/Golden_ratio))&nbsp;&asymp;&nbsp;1.44042. 
 That is, long paths are approximately 1.44 dimensional. 
 (Technicality: trivially, ln(2)&#8239;/&#8239;ln(&phi;)&nbsp;&NotElement;&nbsp;[&Qopf;](https://en.wikipedia.org/wiki/Rational_number), and hence by the [Gelfond&#8209;Schneider theorem](https://en.wikipedia.org/wiki/Gelfond%E2%80%93Schneider_theorem#mwNQ) is [transcendental](https://en.wikipedia.org/wiki/Transcendental_number).) 
 
 
-### Counts of closed paths ###
+## Counts of closed paths ##
 
 In the tilings generated tilings, `tilingId`&#8239;&ge;&#8239;4, the observed data is consistent with there being:  
 * 1 closed path of the greatest rank;
@@ -110,11 +109,14 @@ In the tilings generated tilings, `tilingId`&#8239;&ge;&#8239;4, the observed da
 +&nbsp;[_n_&nbsp;+&nbsp;2]
 +&nbsp;3&#8239;&times;&#8239;[_n_&nbsp;+&nbsp;1].
 
-If correct, path counts are&nbsp;&nbsp; 1,&nbsp;&nbsp; 0,&nbsp;&nbsp; 6,&nbsp;&nbsp; 10,&nbsp;&nbsp; 36,&nbsp;&nbsp; 90,&nbsp;&nbsp; 251,&nbsp;&nbsp; 660,&nbsp;&nbsp; 1,756,&nbsp;&nbsp; 4,620,&nbsp;&nbsp; 12,156,&nbsp;&nbsp; 31,900,&nbsp;&nbsp; 83,661,&nbsp;&nbsp; 219,240,&nbsp;&nbsp; 574,346,&nbsp;&nbsp; 1,504,230,&nbsp;&nbsp; 3,939,076,&nbsp;&nbsp; 10,314,150,&nbsp;&nbsp; 27,005,271,&nbsp;&nbsp; 70,704,700,&nbsp;&nbsp;&nbsp;&hellip;.
+If correct, path counts are:&nbsp;&nbsp; 1,&nbsp;&nbsp; 0,&nbsp;&nbsp; 6,&nbsp;&nbsp; 10,&nbsp;&nbsp; 36,&nbsp;&nbsp; 90,&nbsp;&nbsp; 251,&nbsp;&nbsp; 660,&nbsp;&nbsp; 1,756,&nbsp;&nbsp; 4,620,&nbsp;&nbsp; 12,156,&nbsp;&nbsp; 31,900,&nbsp;&nbsp; 83,661,&nbsp;&nbsp; 219,240,&nbsp;&nbsp; 574,346,&nbsp;&nbsp; 1,504,230,&nbsp;&nbsp; 3,939,076,&nbsp;&nbsp; 10,314,150,&nbsp;&nbsp; 27,005,271,&nbsp;&nbsp; 70,704,700,&nbsp;&nbsp;&nbsp;&hellip;.
 
 A proof or disproof would be welcomed.
 
-If so, working the other way round, starting at the count of the 5-round path which has rank&nbsp;=&nbsp;1 and is the most numerous, being &asymp;&#8239;61.8% of all paths, the number of closed paths of each greater rank (until the longest few) is close to [geometrically distributed](http://en.wikipedia.org/wiki/Geometric_distribution), with decay &phi;<small><sup>&minus;2</sup></small> =&nbsp;&frac12;(3&nbsp;&minus;&nbsp;&radic;5) &asymp;&nbsp;0.381966.
+If so, working the other way round, starting at the count of the 5-round path which has rank&nbsp;=&nbsp;1 and is the most numerous, being &asymp;&#8239;61.8% of all paths, the number of closed paths of each greater rank (until the longest few) is close to [geometrically distributed](http://en.wikipedia.org/wiki/Geometric_distribution), with decay &phi;<small><sup>&minus;2</sup></small> &asymp;&nbsp;0.381966.
+
+
+## Average lengths ##
 
 If true, then the average of the lengths of paths tends to 5&nbsp;+&nbsp;2&radic;5 &asymp;&nbsp;9.472.
 
