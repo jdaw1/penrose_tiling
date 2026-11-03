@@ -90,9 +90,14 @@ In it:
 
 ## Dimensionality ##
 
+<img align="right" width="256" height="256" src="../images/dimension_ln7or8_ln4.svg">
+
 Observe that the length of a long path varies as the square root of its area (which is a linear measure) to the power of [ln(2)](https://en.wikipedia.org/wiki/Natural_logarithm_of_2)&#8239;/&#8239;[ln](https://en.wikipedia.org/wiki/Natural_logarithm)([&phi;](https://en.wikipedia.org/wiki/Golden_ratio))&nbsp;&asymp;&nbsp;1.44042. 
-That is, long paths are approximately 1.44 dimensional. 
+That is, the [Hausdorff dimension](https://en.wikipedia.org/wiki/Hausdorff_dimension) of a long path is approximately 1.44. 
 (Technicality: trivially, ln(2)&#8239;/&#8239;ln(&phi;)&nbsp;&NotElement;&nbsp;[&Qopf;](https://en.wikipedia.org/wiki/Rational_number), and hence by the [Gelfond&#8209;Schneider theorem](https://en.wikipedia.org/wiki/Gelfond%E2%80%93Schneider_theorem#mwNQ) is [transcendental](https://en.wikipedia.org/wiki/Transcendental_number).) 
+
+As a comparison, on the right is an image which switches between two variations of a [Sierpi&nacute;ski gasket](https://en.wikipedia.org/wiki/Sierpi%C5%84ski_triangle), the sparser of dimension ln(7)&#8239;/&#8239;ln(4) &asymp;&nbsp;1.4037 &asymp;&nbsp;Penrose path &minus;&nbsp;0.0367, and the fuller of dimension ln(8)&#8239;/&#8239;ln(4) =&nbsp;1.5 &asymp;&nbsp;Penrose path +&nbsp;0.0596. 
+So these straddle the dimension of long fat&#8209;tile path.
 
 
 ## Counts of closed paths ##
