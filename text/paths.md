@@ -103,13 +103,19 @@ In the tilings generated tilings, `tilingId`&#8239;&ge;&#8239;4, the observed da
 * 6 of rank = greatest&nbsp;&minus;&nbsp;2;
 * 10 of rank = greatest&nbsp;&minus;&nbsp;3;
 * 36 of rank = greatest&nbsp;&minus;&nbsp;4;
-* Beyond which the count seems to be 1&nbsp;+&nbsp;[_n_&nbsp;+&nbsp;5]
-&minus;&nbsp;[_n_&nbsp;+&nbsp;4]
-&minus;&nbsp;5&#8239;&times;&#8239;[_n_&nbsp;+&nbsp;3]
-+&nbsp;[_n_&nbsp;+&nbsp;2]
-+&nbsp;3&#8239;&times;&#8239;[_n_&nbsp;+&nbsp;1].
+* Beyond which the count seems to be 1&nbsp;+&nbsp;[_n_+5]
+&minus;&nbsp;[_n_+4]
+&minus;&nbsp;5&#8239;&times;&#8239;[_n_+3]
++&nbsp;[_n_+2]
++&nbsp;3&#8239;&times;&#8239;[_n_+1].
 
-If correct, path counts are:&nbsp;&nbsp; 1,&nbsp;&nbsp; 0,&nbsp;&nbsp; 6,&nbsp;&nbsp; 10,&nbsp;&nbsp; 36,&nbsp;&nbsp; 90,&nbsp;&nbsp; 251,&nbsp;&nbsp; 660,&nbsp;&nbsp; 1,756,&nbsp;&nbsp; 4,620,&nbsp;&nbsp; 12,156,&nbsp;&nbsp; 31,900,&nbsp;&nbsp; 83,661,&nbsp;&nbsp; 219,240,&nbsp;&nbsp; 574,346,&nbsp;&nbsp; 1,504,230,&nbsp;&nbsp; 3,939,076,&nbsp;&nbsp; 10,314,150,&nbsp;&nbsp; 27,005,271,&nbsp;&nbsp; 70,704,700,&nbsp;&nbsp;&nbsp;&hellip;.
+If correct, for paths of rank =&nbsp;greatest&nbsp;&minus;&nbsp;_k_&nbsp;&ge;&nbsp;1, the number of instances is&nbsp; 
+&frac12;&nbsp; 
++&nbsp;&nbsp;5&frasl;2&#8239;(&minus;1)<small><sup>_k_</sup></small>&nbsp; 
+&minus;&nbsp;&nbsp;&frac12;&radic;5&#8239;(&phi;<small><sup>*k*&minus;1</sup></small>&nbsp;&minus;&nbsp;(&minus;&phi;)<small><sup>1&minus;_k_</sup></small>)&nbsp; 
++&nbsp;&nbsp;&frac12;(&phi;<small><sup>2*k*+1</sup></small>&nbsp;&minus;&nbsp;&nbsp;&phi;<small><sup>&minus;2*k*&minus;1</sup></small>), and
+path counts are&nbsp;&nbsp; 1,&nbsp;&nbsp; 0,&nbsp;&nbsp; 6,&nbsp;&nbsp; 10,&nbsp;&nbsp; 36,&nbsp;&nbsp; 90,&nbsp;&nbsp; 251,&nbsp;&nbsp; 660,&nbsp;&nbsp; 1,756,&nbsp;&nbsp; 4,620,&nbsp;&nbsp; 12,156,&nbsp;&nbsp; 31,900,&nbsp;&nbsp; 83,661,&nbsp;&nbsp; 219,240,&nbsp;&nbsp; 574,346,&nbsp;&nbsp; 1,504,230,&nbsp;&nbsp; 3,939,076,&nbsp;&nbsp; 10,314,150,&nbsp;&nbsp; 27,005,271,&nbsp;&nbsp; 70,704,700,&nbsp;&nbsp;&nbsp;&hellip; 
+(terminating at rank&nbsp;=&nbsp;1&nbsp;&nbsp;&Longleftrightarrow;&nbsp;&nbsp;round&nbsp;5).
 
 A proof or disproof would be welcomed.
 
