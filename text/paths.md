@@ -102,7 +102,7 @@ So a long fat&#8209;tile path has dimension between these two.
 
 ## Counts of closed paths ##
 
-In the generated tilings (listed on C&nbsp;code](c.md) page), `tilingId`&#8239;&ge;&#8239;4, the observed data is consistent with there being:  
+In the generated tilings (listed on [C&nbsp;code](c.md) page), `tilingId`&#8239;&ge;&#8239;4, the observed data is consistent with there being:  
 * 1 closed path of the greatest rank;
 * None of rank one lower;
 * 6 of rank = greatest&nbsp;&minus;&nbsp;2;
