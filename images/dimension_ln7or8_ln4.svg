@@ -1,4 +1,4 @@
-<svg width='256' height='256' viewBox='0 0 1 1' preserveAspectRatio='xMidYMid meet' id='Penrose_Rhombi_06' xmlns='http://www.w3.org/2000/svg'>
+<svg width='256' height='256' viewBox='0 0 1 1' id='Sierpinski_gasket_4by4' xmlns='http://www.w3.org/2000/svg'>
 <!-- From https://github.com/jdaw1/penrose_tiling/blob/main/images/dimension_ln7or8_ln4.svg -->
 <style>
 	.on-off {animation: toggleOpacity 5s infinite steps(1);} <!-- time is whole-loop time; steps(1) switches instantly -->
