@@ -96,8 +96,8 @@ Observe that the length of a long path varies as the square root of its area (wh
 That is, the [Hausdorff dimension](https://en.wikipedia.org/wiki/Hausdorff_dimension) of a long path is approximately 1.44. 
 (Technicality: trivially, ln(2)&#8239;/&#8239;ln(&phi;)&nbsp;&NotElement;&nbsp;[&Qopf;](https://en.wikipedia.org/wiki/Rational_number), and hence by the [Gelfond&#8209;Schneider theorem](https://en.wikipedia.org/wiki/Gelfond%E2%80%93Schneider_theorem#mwNQ) is [transcendental](https://en.wikipedia.org/wiki/Transcendental_number).) 
 
-As a comparison, on the right is an image which switches between two variations of a [Sierpi&nacute;ski gasket](https://en.wikipedia.org/wiki/Sierpi%C5%84ski_triangle), the sparser of dimension ln(7)&#8239;/&#8239;ln(4) &asymp;&nbsp;1.4037 &asymp;&nbsp;Penrose path &minus;&nbsp;0.0367, and the fuller of dimension ln(8)&#8239;/&#8239;ln(4) =&nbsp;1.5 &asymp;&nbsp;Penrose path +&nbsp;0.0596. 
-So these straddle the dimension of long fat&#8209;tile path.
+As a comparison, on the right is an image which switches between two variations of a [Sierpi&nacute;ski gasket](https://en.wikipedia.org/wiki/Sierpi%C5%84ski_triangle), the sparser of dimension ln(7)&#8239;/&#8239;ln(4) &asymp;&nbsp;1.4037 &asymp;&nbsp;Penrose path <b>&minus;</b>&nbsp;0.0367, and the fuller of dimension ln(8)&#8239;/&#8239;ln(4) =&nbsp;1.5 &asymp;&nbsp;Penrose path <b>+</b>&nbsp;0.0596. 
+So a long fat&#8209;tile path has dimension between these two.
 
 
 ## Counts of closed paths ##
@@ -123,7 +123,7 @@ path counts are&nbsp;&nbsp; 1,&nbsp;&nbsp; 0,&nbsp;&nbsp; 6,&nbsp;&nbsp; 10,&nbs
 
 A proof or disproof would be welcomed.
 
-If so, working the other way round, starting at the count of the 5-round path which has rank&nbsp;=&nbsp;1 and is the most numerous, being &asymp;&#8239;61.8% of all paths, the number of closed paths of each greater rank (until the longest few) is close to [geometrically distributed](http://en.wikipedia.org/wiki/Geometric_distribution), with decay &phi;<small><sup>&minus;2</sup></small> &asymp;&nbsp;0.381966.
+Working in the reverse direction, starting at the count of the round&#8209;5s which are &asymp;&#8239;62% of all paths, the number of closed paths of each greater rank, until the longest few, is thus close to [geometrically distributed](http://en.wikipedia.org/wiki/Geometric_distribution) with decay &phi;<small><sup>&minus;2</sup></small>&nbsp;&asymp;&nbsp;0.38.
 
 
 ## Average lengths ##
