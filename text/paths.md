@@ -65,8 +65,8 @@ In it:
 
 | *n*&nbsp;=<br>Path<br>Rank |   Length | Num<br>Interior<br>Fats | Num<br>Interior<br>Thins | Outward<br>direction | Radius<br>Min<br>&divide;Edge | Radius<br>Max<br>&divide;Edge |
 |----:|---------:|-----------:|----------:|------:|--------:|--------:|
-|   1 |  Round 5 |          0 |         0 | North |    0.81 |    0.81 |
-|   2 | Pointy 5 |          0 |         0 | South |    0.81 |    0.81 |
+|   1 |  Round&#8209;5 |    0 |         0 | North |    0.81 |    0.81 |
+|   2 | Pointy&#8209;5 |    0 |         0 | South |    0.81 |    0.81 |
 |   3 |       15 |          5 |         5 | North |    2.02 |    2.43 |
 |   4 |       25 |          5 |        10 | South |    1.81 |    3.31 |
 |   5 |       55 |         45 |        40 | North |    3.61 |    6.66 |
@@ -119,7 +119,7 @@ If correct, for paths of rank =&nbsp;greatest&nbsp;&minus;&nbsp;_k_&nbsp;&ge;&nb
 &minus;&nbsp;&nbsp;&frac12;&radic;5&#8239;(&phi;<small><sup>*k*&minus;1</sup></small>&nbsp;&minus;&nbsp;(&minus;&phi;)<small><sup>1&minus;_k_</sup></small>)&nbsp; 
 +&nbsp;&nbsp;&frac12;(&phi;<small><sup>2*k*+1</sup></small>&nbsp;&minus;&nbsp;&nbsp;&phi;<small><sup>&minus;2*k*&minus;1</sup></small>), and
 path counts are&nbsp;&nbsp; 1,&nbsp;&nbsp; 0,&nbsp;&nbsp; 6,&nbsp;&nbsp; 10,&nbsp;&nbsp; 36,&nbsp;&nbsp; 90,&nbsp;&nbsp; 251,&nbsp;&nbsp; 660,&nbsp;&nbsp; 1,756,&nbsp;&nbsp; 4,620,&nbsp;&nbsp; 12,156,&nbsp;&nbsp; 31,900,&nbsp;&nbsp; 83,661,&nbsp;&nbsp; 219,240,&nbsp;&nbsp; 574,346,&nbsp;&nbsp; 1,504,230,&nbsp;&nbsp; 3,939,076,&nbsp;&nbsp; 10,314,150,&nbsp;&nbsp; 27,005,271,&nbsp;&nbsp; 70,704,700,&nbsp;&nbsp;&nbsp;&hellip; 
-(terminating at rank&nbsp;=&nbsp;1&nbsp;&nbsp;&Longleftrightarrow;&nbsp;&nbsp;round&nbsp;5).
+(terminating at rank&nbsp;=&nbsp;1&nbsp;&nbsp;&Longleftrightarrow;&nbsp;&nbsp;round&#8209;5).
 
 A proof or disproof would be welcomed.
 
