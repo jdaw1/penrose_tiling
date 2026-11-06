@@ -38,7 +38,7 @@ Behold!
 </div>
 
 There are blocks of data, each block beginning with a row intended to become range names. 
-To assist with range name management there is VBA, discussed below. 
+To assist with range name management there is [VBA](https://github.com/jdaw1/penrose_tiling/tree/main/vba/), discussed below. 
 
 But the overall structure of the data, and the meaning of its fields, resembles that in the [JSON&nbsp;output](json.md), to which readers are referred. 
 
