@@ -97,8 +97,9 @@ That is, the [Hausdorff dimension](https://en.wikipedia.org/wiki/Hausdorff_dimen
 (Technicality: trivially, ln(2)&#8239;/&#8239;ln(&phi;)&nbsp;&NotElement;&nbsp;[&Qopf;](https://en.wikipedia.org/wiki/Rational_number), and hence by the [Gelfond&#8209;Schneider theorem](https://en.wikipedia.org/wiki/Gelfond%E2%80%93Schneider_theorem#mwNQ) is [transcendental](https://en.wikipedia.org/wiki/Transcendental_number).) 
 
 As a comparison, on the right is an image which switches between two variations of a [Sierpi&nacute;ski gasket](https://en.wikipedia.org/wiki/Sierpi%C5%84ski_triangle), the sparser of dimension ln(7)&#8239;/&#8239;ln(4) &asymp;&nbsp;1.4037 &asymp;&nbsp;Penrose path <b>&minus;</b>&nbsp;0.0367, and the fuller of dimension ln(8)&#8239;/&#8239;ln(4) =&nbsp;1.5 &asymp;&nbsp;Penrose path <b>+</b>&nbsp;0.0596. 
-So a long fat&#8209;tile path has dimension between these two.
-
+So a long fat&#8209;tile path has dimension between these two. 
+Better Sierpi&nacute;ski approximations include ln(20)&#8239;/&#8239;ln(8), ln(2507)&#8239;/&#8239;ln(229), and ln(22356)&#8239;/&#8239;ln(1046).
+	
 
 ## Counts of closed paths ##
 
