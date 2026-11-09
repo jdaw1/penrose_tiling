@@ -93,13 +93,14 @@ In it:
 <img align="right" width="256" height="256" src="../images/dimension_ln7or8_ln4.svg">
 
 Observe that the length of a long path varies as the square root of its area (which is a linear measure) to the power of [ln(2)](https://en.wikipedia.org/wiki/Natural_logarithm_of_2)&#8239;/&#8239;[ln](https://en.wikipedia.org/wiki/Natural_logarithm)([&phi;](https://en.wikipedia.org/wiki/Golden_ratio))&nbsp;&asymp;&nbsp;1.44042. 
-That is, the [box&#8209;counting dimension](https://en.wikipedia.org/wiki/Minkowski%E2%80%93Bouligand_dimension) of long paths tends to ln(2)&#8239;/&#8239;ln(&phi;)&nbsp;&asymp;&nbsp;1.44. 
+Given that, the [box&#8209;counting dimension](https://en.wikipedia.org/wiki/Minkowski%E2%80%93Bouligand_dimension) of long paths tends to ln(2)&#8239;/&#8239;ln(&phi;)&nbsp;&asymp;&nbsp;1.44. 
 (Technicality: trivially, ln(2)&#8239;/&#8239;ln(&phi;)&nbsp;&NotElement;&nbsp;[&Qopf;](https://en.wikipedia.org/wiki/Rational_number), and hence by the [Gelfond&#8209;Schneider theorem](https://en.wikipedia.org/wiki/Gelfond%E2%80%93Schneider_theorem#mwNQ) is [transcendental](https://en.wikipedia.org/wiki/Transcendental_number).) 
 
-As a comparison, on the right is an image which switches between two variations of a [Sierpi&nacute;ski gasket](https://en.wikipedia.org/wiki/Sierpi%C5%84ski_triangle), the sparser of dimension ln(7)&#8239;/&#8239;ln(4) &asymp;&nbsp;1.4037 &asymp;&nbsp;Penrose path <b>&minus;&nbsp;0.0367</b>, and the fuller of dimension ln(8)&#8239;/&#8239;ln(4) =&nbsp;1.5 &asymp;&nbsp;Penrose path <b>+&nbsp;0.0596</b>. 
-So a long fat&#8209;tile path has dimension between these two. 
+As a comparison, on the right is an image which switches between two variations of a [Sierpi&nacute;ski gasket](https://en.wikipedia.org/wiki/Sierpi%C5%84ski_triangle), the sparser of dimension ln(7)&#8239;/&#8239;ln(4) &asymp;&nbsp;1.4037 &asymp;&nbsp;Penrose path <b>&minus;&nbsp;0.0367</b>, 
+and the fuller of dimension ln(8)&#8239;/&#8239;ln(4) =&nbsp;1.5 &asymp;&nbsp;Penrose path <b>+&nbsp;0.0596</b>. 
+So a long fat&#8209;tile path has limiting dimension between these two. 
 Better Sierpi&nacute;ski approximations include [ln(20)&#8239;/&#8239;ln(8)](../images/dimension_ln20_ln8.svg), ln(2507)&#8239;/&#8239;ln(229), and ln(22356)&#8239;/&#8239;ln(1046).
-	
+
 
 ## Counts of closed paths ##
 
