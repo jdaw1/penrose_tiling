@@ -89,8 +89,9 @@ In it:
 
 The min|max radii are from the centre of the path to the centre of the closest|furthest tile. 
 From these the closest|furthest vertices of even|odd paths are &mp;&#8239;Cos[36&deg;]&nbsp;=&nbsp;&mp;&#8239;&frac12;&#8239;&phi;. 
-For odd|even paths, by Pythagorus, the radius to the extremal vertex is, from the max|min of the path of rank <i>n</i>&mp;2: &radic;(&nbsp;(<i>r</i><small><sub><i>n</i>&mp;2</sub></small>&nbsp;&pm;&nbsp;Cos[36&deg;]&nbsp;&mp;&nbsp;Sin[18&deg;])&sup2;&nbsp;+&nbsp;Cos[18&deg;]&sup2;&nbsp;) 
-=&nbsp;&radic;(&nbsp;(<i>r</i><small><sub><i>n</i>&mp;2</sub></small>&nbsp;&pm;&nbsp;&frac12;)&sup2;&nbsp;+&nbsp;&frac18;(5&#8239;+&#8239;&radic;5)&nbsp;).
+For odd|even paths, by Pythagorus, the radius to the extremal vertex is, from the max|min of the path of rank <i>n</i>&mp;2:&nbsp; 
+&radic;(&nbsp;Cos[18&deg;]&sup2;&nbsp;+&nbsp;(<i>r</i><small><sub><i>n</i>&mp;2</sub></small>&nbsp;&pm;&nbsp;Cos[36&deg;]&nbsp;&mp;&nbsp;Sin[18&deg;])&sup2;&nbsp;)&nbsp; 
+=&nbsp;&nbsp;&radic;(&nbsp;&frac58;&#8239;+&#8239;&frac18;&radic;5&#8239;+&#8239;(<i>r</i><small><sub><i>n</i>&mp;2</sub></small>&#8239;&pm;&#8239;&frac12;)&sup2;&nbsp;), which will not much simplify.
 
 
 ## Dimensionality ##
