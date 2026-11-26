@@ -36,7 +36,7 @@ Even better, invite me to visit.
 
 ### Digital ###
 
-If your room size is, in tiles, not much larger than mine, then duplicate one of the files which has a map of my kitchen ([SVG](../images/Penrose_Rh_08_kitchen_zoom.svg), [PostScript](../postscript_pdf/Kitchen_Rh_09.ps)). 
+If your room size is, in tiles, not much larger than mine, then duplicate one of the files which has a map of my kitchen ([instructions](postscript_distillable.md#kitchen), [SVG&nbsp;image](../images/Penrose_Rh_08_kitchen_zoom.svg), [PostScript&nbsp;code](../postscript_pdf/Kitchen_Rh_09.ps)). 
 (If your room is much larger, then pick an equivalent output from a larger `tilingId`, and transfer over the relevant pieces.) 
 Measure your room carefully. 
 In the file, make the outline of the room match your measurements. 
@@ -58,7 +58,7 @@ How many tiles are needed?
 * \# Thins&nbsp;&asymp;&nbsp;0.47&#8239;&times;&#8239;Area&#8239;/&#8239;EdgeLength&sup2;&nbsp;&times;&nbsp;1.1.
 
 The &ldquo;&times;&nbsp;1.1&rdquo;, the safety-margin extra +10%, is for cutting of edge tiles, etc. 
-Check the areas ands counts yourself&mdash;it&rsquo;s your risk, not my liability. 
+Check the areas and counts yourself&mdash;it&rsquo;s your risk, not my liability. 
 In the formulae the other two constants are rounded versions of &frac15;&radic;(10&#8239;&plusmn;&#8239;2&radic;5).
 
 If paths are to be coloured, then the tile counting is more complicated: there must be counting of paths and partial counting of boundary-overlapping paths. 
@@ -75,13 +75,15 @@ If there is a particular corner that is the most visible, the most important cor
 
 Active supervision is essential. 
 If this is the tiler&rsquo;s first Penrose tiling, as is likely, then mistakes will be made. 
-Tilers get a &lsquo;feel&rsquo; for how things are going, then ignore the map, and soon after it will go wrong. 
-With probability&nbsp;1 there will be an error. 
-Pull up the erroneous tiles; go back a few steps. 
+Tilers can mistakenly believe they get a &lsquo;feel&rsquo; for the pattern, and then ignore the map. 
+Soon after, it goes wrong. 
+More strongly, with probability&nbsp;1 there will be an error. 
+Supervise&nbsp;&asymp;&nbsp;check; pull up the erroneous tiles; go back a few steps. 
 I have been there.
  
 So, when work starts, check every thirty minutes or so &mdash; where &ldquo;check&rdquo; means check every tile against the map, most easily done by following paths. 
-I did; it was necessary; without the active supervision it would have gone very wrong; you have been warned; heed this warning.
+I did; it was necessary; without the active supervision it would have gone very wrong; you have been warned; heed this warning. 
+You have been warned; heed this warning.
 
 
 <img align="right" width="91.39388" height="96" src="../images/round5.svg">
